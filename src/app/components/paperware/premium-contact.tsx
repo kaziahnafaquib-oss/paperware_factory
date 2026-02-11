@@ -1,6 +1,7 @@
-import React from "react";
-import { motion } from "motion/react";
+import { FormEvent, useState } from 'react';
+import { motion } from "framer-motion";
 import { Send, Mail, Phone, MapPin, ArrowRight, Sparkles } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface PremiumContactProps {
   onSubmit?: (data: ContactFormData) => void;
@@ -15,7 +16,8 @@ interface ContactFormData {
 }
 
 export function PremiumContact({ onSubmit }: PremiumContactProps) {
-  const [formData, setFormData] = React.useState<ContactFormData>({
+  const { t } = useLanguage();
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
@@ -23,24 +25,24 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
     message: ""
   });
 
-  const [focusedField, setFocusedField] = React.useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
+
     if (onSubmit) {
       onSubmit(formData);
     }
-    
+
     setIsSubmitting(false);
     setSubmitted(true);
-    
+
     // Reset after 3 seconds
     setTimeout(() => {
       setSubmitted(false);
@@ -79,7 +81,7 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
     <section className="relative bg-white py-24 md:py-32 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E')] mix-blend-soft-light opacity-40" />
         <motion.div
           animate={{
             background: [
@@ -118,17 +120,17 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
               >
                 <Sparkles className="size-4 text-[#fabf37]" />
                 <span className="text-xs font-black uppercase tracking-widest text-[#fabf37]">
-                  Get in Touch
+                  {t('get_in_touch_tag')}
                 </span>
               </motion.div>
 
-              <motion.h2 
+              <motion.h2
                 initial={{ scale: 0.9, rotateX: -20, opacity: 0 }}
                 whileInView={{ scale: 1, rotateX: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="text-4xl md:text-6xl font-black text-black leading-tight"
-                style={{ 
+                style={{
                   perspective: "1000px",
                   transformStyle: "preserve-3d"
                 }}
@@ -136,28 +138,28 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
                 <motion.span
                   className="inline-block"
                   whileHover={{ x: -8, scale: 1.05, rotateY: -5 }}
-                  style={{ 
+                  style={{
                     transform: "translateZ(40px)",
                     textShadow: "5px 5px 10px rgba(0, 0, 0, 0.1)"
                   }}
                 >
-                  Let's Create
+                  {t('lets_create')}
                 </motion.span>
                 <br />
-                <motion.span 
+                <motion.span
                   className="text-[#fabf37] inline-block"
                   whileHover={{ x: 8, scale: 1.08, rotateY: 5 }}
-                  style={{ 
+                  style={{
                     transform: "translateZ(60px)",
                     textShadow: "3px 3px 20px rgba(250, 191, 55, 0.4)"
                   }}
                 >
-                  Something Amazing
+                  {t('something_amazing')}
                 </motion.span>
               </motion.h2>
 
               <p className="text-zinc-400 text-lg leading-relaxed max-w-xl mx-auto">
-                Ready to transform your packaging needs? Our team is here to help bring your vision to life with premium, eco-friendly solutions.
+                {t('contact_desc_premium')}
               </p>
             </div>
 
@@ -172,7 +174,7 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#fabf37] text-zinc-900 font-black text-lg rounded-full hover:bg-[#e5ad2f] transition-all shadow-lg shadow-[#fabf37]/25 group"
             >
-              <span>Contact Us</span>
+              <span>{t('contact_us_btn')}</span>
               <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
             </motion.a>
           </motion.div>

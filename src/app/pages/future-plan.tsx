@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   TrendingUp, Zap, Target, Globe, 
   ArrowRight, Download, Cpu, Leaf, 

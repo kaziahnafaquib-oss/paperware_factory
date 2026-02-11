@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Rotate3d, Maximize2, MousePointer2, ChevronLeft, ChevronRight, Share2, Info, ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { useLanguage } from "../../context/LanguageContext";
@@ -16,7 +16,7 @@ export function ProductViewer3D() {
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-30deg", "30deg"]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;

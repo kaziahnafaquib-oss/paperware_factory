@@ -1,8 +1,9 @@
-import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { useState, useEffect, useRef, useMemo, type ReactNode, type MouseEvent as ReactMouseEvent } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
+import { getDevicePerformanceTier } from '../../lib/performance';
 
 interface Card3DProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   intensity?: number;
 }
@@ -17,7 +18,7 @@ export function Card3D({ children, className = '', intensity = 15 }: Card3DProps
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [intensity, -intensity]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-intensity, intensity]);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -34,17 +35,19 @@ export function Card3D({ children, className = '', intensity = 15 }: Card3DProps
     y.set(0);
   };
 
+  const isLowEnd = getDevicePerformanceTier() === 'low';
+
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isLowEnd ? undefined : handleMouseMove}
+      onMouseLeave={isLowEnd ? undefined : handleMouseLeave}
       style={{
-        rotateX,
-        rotateY,
-        transformStyle: 'preserve-3d',
+        rotateX: isLowEnd ? 0 : rotateX,
+        rotateY: isLowEnd ? 0 : rotateY,
+        transformStyle: isLowEnd ? 'flat' : 'preserve-3d',
         perspective: '1000px',
       }}
-      className={className}
+      className={`${className} hardware-accelerated`}
     >
       {children}
     </motion.div>
@@ -52,16 +55,18 @@ export function Card3D({ children, className = '', intensity = 15 }: Card3DProps
 }
 
 interface FloatingCard3DProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   delay?: number;
 }
 
 export function FloatingCard3D({ children, className = '', delay = 0 }: FloatingCard3DProps) {
+  const isLowEnd = getDevicePerformanceTier() === 'low';
+
   return (
     <motion.div
       initial={{ y: 0, z: 0 }}
-      animate={{
+      animate={isLowEnd ? { y: [0, -10, 0] } : {
         y: [0, -20, 0],
         z: [0, 30, 0],
         rotateX: [0, 5, 0],
@@ -73,8 +78,8 @@ export function FloatingCard3D({ children, className = '', delay = 0 }: Floating
         ease: "easeInOut",
         delay,
       }}
-      style={{ transformStyle: 'preserve-3d' }}
-      className={className}
+      style={{ transformStyle: isLowEnd ? 'flat' : 'preserve-3d' }}
+      className={`${className} hardware-accelerated`}
     >
       {children}
     </motion.div>
@@ -82,7 +87,7 @@ export function FloatingCard3D({ children, className = '', delay = 0 }: Floating
 }
 
 interface ParallaxLayer3DProps {
-  children: React.ReactNode;
+  children: ReactNode;
   depth?: number;
   className?: string;
 }
@@ -94,8 +99,8 @@ export function ParallaxLayer3D({ children, depth = 50, className = '' }: Parall
 
   return (
     <motion.div
-      style={{ 
-        y, 
+      style={{
+        y,
         z,
         transformStyle: 'preserve-3d',
       }}
@@ -108,16 +113,16 @@ export function ParallaxLayer3D({ children, depth = 50, className = '' }: Parall
 
 // Advanced 3D Parallax Container with Mouse Tracking
 interface Parallax3DContainerProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   intensity?: number;
 }
 
 export function Parallax3DContainer({ children, className = '', intensity = 20 }: Parallax3DContainerProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
@@ -148,7 +153,7 @@ export function Parallax3DContainer({ children, className = '', intensity = 20 }
 
 // 3D Particle Field Background
 export function Particle3DField() {
-  const particles = React.useMemo(() => 
+  const particles = useMemo(() =>
     Array.from({ length: 30 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -158,18 +163,18 @@ export function Particle3DField() {
       duration: Math.random() * 10 + 10,
       delay: Math.random() * 5,
     }))
-  , []);
+    , []);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ perspective: '1000px' }}>
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          initial={{ 
-            x: `${particle.x}%`, 
+          initial={{
+            x: `${particle.x}%`,
             y: `${particle.y}%`,
             z: particle.z,
-            opacity: 0 
+            opacity: 0
           }}
           animate={{
             y: [`${particle.y}%`, `${particle.y - 30}%`, `${particle.y}%`],
@@ -183,7 +188,7 @@ export function Particle3DField() {
             delay: particle.delay,
             ease: "easeInOut",
           }}
-          style={{ 
+          style={{
             transformStyle: 'preserve-3d',
             width: particle.size,
             height: particle.size,
@@ -217,7 +222,7 @@ export function Grid3DBackground() {
           <motion.div
             key={`h-${i}`}
             initial={{ opacity: 0.3 }}
-            animate={{ 
+            animate={{
               opacity: [0.3, 0.6, 0.3],
               scaleX: [1, 1.1, 1]
             }}
@@ -238,7 +243,7 @@ export function Grid3DBackground() {
           <motion.div
             key={`v-${i}`}
             initial={{ opacity: 0.3 }}
-            animate={{ 
+            animate={{
               opacity: [0.3, 0.6, 0.3],
               scaleY: [1, 1.1, 1]
             }}
@@ -261,7 +266,7 @@ export function Grid3DBackground() {
 
 // Depth Layers Component
 interface DepthLayersProps {
-  children: React.ReactNode;
+  children: ReactNode;
   layers?: number;
   spacing?: number;
 }
@@ -287,19 +292,4 @@ export function DepthLayers({ children, layers = 5, spacing = 20 }: DepthLayersP
       <div style={{ transform: 'translateZ(0px)' }}>{children}</div>
     </div>
   );
-}
-
-function useScroll() {
-  const scrollY = useMotionValue(0);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      scrollY.set(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollY]);
-
-  return { scrollY };
 }

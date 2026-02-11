@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ReactElement, cloneElement, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Globe, ShieldCheck, Truck, ChartBar, 
   Settings, Cpu, Database, Activity, 
@@ -13,8 +13,8 @@ import { ERPSyncTerminal } from "../components/paperware/erp-sync-terminal";
 
 export function OurERPPage() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = React.useState<'factory' | 'logistics'>('factory');
-  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const [activeTab, setActiveTab] = useState<'factory' | 'logistics'>('factory');
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const factoryWorkflow = [
     { icon: <ClipboardList />, title: "Digital Entry", desc: "Automated order processing via Cloud ERP." },
@@ -123,7 +123,7 @@ export function OurERPPage() {
                     <div key={i} className="flex flex-col items-center text-center space-y-6 group">
                       <div className="size-20 rounded-[32px] bg-zinc-50 border border-black/5 flex items-center justify-center text-black group-hover:bg-[#fabf37] group-hover:rotate-12 transition-all duration-500 shadow-sm relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        {React.cloneElement(step.icon as React.ReactElement, { className: "size-8 relative z-10" })}
+                        {cloneElement(step.icon as ReactElement, { className: "size-8 relative z-10" })}
                       </div>
                       <div className="space-y-2">
                         <h4 className="text-[11px] font-black uppercase tracking-widest text-black">{step.title}</h4>
@@ -235,7 +235,7 @@ export function OurERPPage() {
                    ].map((pill, i) => (
                      <div key={i} className="p-10 rounded-[50px] border-2 border-zinc-100 space-y-6 hover:border-black transition-all">
                         <div className="size-16 rounded-2xl bg-[#fabf37]/10 flex items-center justify-center text-black">
-                           {React.cloneElement(pill.icon as React.ReactElement, { className: "size-8" })}
+                           {cloneElement(pill.icon as ReactElement, { className: "size-8" })}
                         </div>
                         <div className="space-y-2">
                            <h4 className="text-xl font-black uppercase tracking-tight">{pill.mode}</h4>

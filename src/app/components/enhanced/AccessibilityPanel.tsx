@@ -1,10 +1,10 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Settings, X, Eye, Volume2, Zap, Moon, Sun } from "lucide-react";
 
 export function AccessibilityPanel() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [settings, setSettings] = React.useState({
+  const [isOpen, setIsOpen] = useState(false);
+  const [settings, setSettings] = useState({
     fontSize: 100,
     contrast: false,
     darkMode: false,
@@ -12,7 +12,7 @@ export function AccessibilityPanel() {
     soundEffects: false,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Apply font size
     document.documentElement.style.fontSize = `${settings.fontSize}%`;
 

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { memo, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Beaker, Droplets, Wind, ShieldCheck, Box, Fingerprint, Layers, Cpu } from "lucide-react";
 
-export const MaterialLab = React.memo(function MaterialLab() {
+export const MaterialLab = memo(function MaterialLab() {
   const [activeMaterial, setActiveMaterial] = useState(0);
 
   const materials = [

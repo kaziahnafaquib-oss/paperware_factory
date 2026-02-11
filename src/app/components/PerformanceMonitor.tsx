@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface WebVital {
   name: string;
@@ -19,7 +19,7 @@ export function PerformanceMonitor() {
       // First Contentful Paint (FCP)
       const paintEntries = performance.getEntriesByType('paint');
       const fcpEntry = paintEntries.find(entry => entry.name === 'first-contentful-paint');
-      
+
       if (fcpEntry) {
         const fcpValue = fcpEntry.startTime;
         setVitals(prev => [...prev, {
@@ -33,7 +33,7 @@ export function PerformanceMonitor() {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1] as any;
-        
+
         if (lastEntry) {
           const lcpValue = lastEntry.renderTime || lastEntry.loadTime;
           setVitals(prev => {
@@ -61,7 +61,7 @@ export function PerformanceMonitor() {
             clsValue += entry.value;
           }
         }
-        
+
         setVitals(prev => {
           const filtered = prev.filter(v => v.name !== 'CLS');
           return [...filtered, {
@@ -120,7 +120,7 @@ export function PerformanceMonitor() {
           ✕
         </button>
       </div>
-      
+
       {vitals.length === 0 ? (
         <div className="text-white/50">Measuring...</div>
       ) : (
@@ -128,13 +128,12 @@ export function PerformanceMonitor() {
           {vitals.map((vital) => (
             <div key={vital.name} className="flex items-center justify-between">
               <span className="text-white/70">{vital.name}:</span>
-              <span className={`font-bold ${
-                vital.rating === 'good' ? 'text-green-400' :
+              <span className={`font-bold ${vital.rating === 'good' ? 'text-green-400' :
                 vital.rating === 'needs-improvement' ? 'text-yellow-400' :
-                'text-red-400'
-              }`}>
-                {vital.name === 'CLS' 
-                  ? vital.value.toFixed(3) 
+                  'text-red-400'
+                }`}>
+                {vital.name === 'CLS'
+                  ? vital.value.toFixed(3)
                   : `${Math.round(vital.value)}ms`
                 }
               </span>
@@ -142,7 +141,7 @@ export function PerformanceMonitor() {
           ))}
         </div>
       )}
-      
+
       <div className="mt-3 pt-2 border-t border-[#fabf37]/20 text-[10px] text-white/40">
         Press Ctrl+Shift+P to toggle
       </div>
@@ -162,7 +161,7 @@ export function PerformanceTips() {
       if ((performance as any).memory) {
         const memory = (performance as any).memory;
         const usedMemoryPercent = (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100;
-        
+
         if (usedMemoryPercent > 90) {
           newTips.push('High memory usage detected. Consider clearing cache.');
         }

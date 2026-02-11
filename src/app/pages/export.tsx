@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { FC, MouseEvent as ReactMouseEvent, useState } from 'react';
+import { motion } from "framer-motion";
 import { 
   Globe, ShieldCheck, Truck, ChartBar, 
   Map as MapIcon, Box, CircleCheck, 
@@ -12,7 +12,7 @@ import { ExportRequestForm } from "../components/paperware/export-request-form";
 
 export function ExportPage() {
   const { t } = useLanguage();
-  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
     <div className="bg-[#fdfaf3] min-h-screen pt-24 md:pt-32 pb-20 font-['Poppins',sans-serif]">
@@ -169,13 +169,13 @@ export function ExportPage() {
   );
 }
 
-function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: React.FC<{ className: string }> }, index: number }) {
-  const [rotateX, setRotateX] = React.useState(0);
-  const [rotateY, setRotateY] = React.useState(0);
-  const [glareX, setGlareX] = React.useState(50);
-  const [glareY, setGlareY] = React.useState(50);
+function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: FC<{ className: string }> }, index: number }) {
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+  const [glareX, setGlareX] = useState(50);
+  const [glareY, setGlareY] = useState(50);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -287,11 +287,11 @@ function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: 
   );
 }
 
-function OptimizationCard({ icon: Icon, label, value, delay }: { icon: React.FC<{ className: string }>, label: string, value: string, delay: number }) {
-  const [rotateX, setRotateX] = React.useState(0);
-  const [rotateY, setRotateY] = React.useState(0);
+function OptimizationCard({ icon: Icon, label, value, delay }: { icon: FC<{ className: string }>, label: string, value: string, delay: number }) {
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -349,10 +349,10 @@ function OptimizationCard({ icon: Icon, label, value, delay }: { icon: React.FC<
 }
 
 function CTACard({ onClick, t }: { onClick: () => void, t: (key: string) => string }) {
-  const [rotateX, setRotateX] = React.useState(0);
-  const [rotateY, setRotateY] = React.useState(0);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;

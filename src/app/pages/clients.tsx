@@ -1,8 +1,8 @@
-import React from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue, useAnimationFrame } from "motion/react";
-import { 
-  Filter, Star, Globe, TrendingUp, Users, Quote, ArrowRight, 
-  MessageSquare, Zap, Cpu, ShieldCheck, Facebook, Instagram, 
+import { MouseEvent as ReactMouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue, useAnimationFrame } from "framer-motion";
+import {
+  Filter, Star, Globe, TrendingUp, Users, Quote, ArrowRight,
+  MessageSquare, Zap, Cpu, ShieldCheck, Facebook, Instagram,
   Linkedin, Youtube, Coffee, Package, ShoppingBag, Layers2,
   Twitter, Send, Heart, Music2, LayoutGrid, Building2,
   Activity, Database, Lock, Terminal, Share2, Layers,
@@ -53,7 +53,7 @@ import { toast } from "sonner";
 
 // --- YOU CAN CHANGE THE VIDEO LINK HERE ---
 // Using a high-performance global CDN link (Pexels) for maximum stability
-const FEATURED_VIDEO_URL = "https://player.vimeo.com/external/370338531.sd.mp4?s=70d1d511efd500148283471491bb0ad8&profile_id=164&oauth2_token_id=57447761"; 
+const FEATURED_VIDEO_URL = "https://player.vimeo.com/external/370338531.sd.mp4?s=70d1d511efd500148283471491bb0ad8&profile_id=164&oauth2_token_id=57447761";
 // ------------------------------------------
 
 // Removed unused 3D components for better performance
@@ -96,57 +96,57 @@ const clientsData = [
   { img: imgTawaz, category: "Beverage" }
 ];
 
-const categories = ["ALL", "BEVERAGE", "HOSPITALITY", "HEALTHCARE", "RETAIL", "OTHERS"];
+const categories = ["clients_all", "clients_beverage", "clients_hospitality", "clients_healthcare", "clients_retail", "clients_others"];
 
 const testimonialsData = [
   {
     stars: 5,
-    text: "You often live customer service and 'wow... high-quality paper cup, I highly recommend it.'",
-    author: "ALICIA SANFORD"
+    text: "testimonial_1_text",
+    author: "testimonial_1_author"
   },
   {
     stars: 5,
-    text: "Everything was perfect! From the order process, made easier with 30-day payment, to the delivery. Thank you so much.",
-    author: "EVAN GAULTIER"
+    text: "testimonial_2_text",
+    author: "testimonial_2_author"
   },
   {
     stars: 5,
-    text: "Fast results, and great quality! I recommend! <3",
-    author: "JOCELYN MAUSET"
+    text: "testimonial_3_text",
+    author: "testimonial_3_author"
   },
   {
     isFeatured: true,
     isVideo: true,
     videoUrl: FEATURED_VIDEO_URL,
     stars: 5,
-    text: "We've been working with Paperware for a few years now. We're consistently satisfied. The quality of the cups is great, service is fast, prices are fair, and our customers are very happy.",
-    author: "CERTIFIED COFFEE",
+    text: "testimonial_4_text",
+    author: "testimonial_4_author",
     image: "https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=1000"
   },
   {
     stars: 5,
-    text: "I highly recommend Paperware! The print quality is excellent, and the team is attentive and responsive! In short, I'm very happy with my first cups :)",
-    author: "JUSTINE BOUDARD"
+    text: "testimonial_5_text",
+    author: "testimonial_5_author"
   },
   {
     stars: 5,
-    text: "I have had the chance to print several products with them and the quality has always been consistent. Special mention to the team and responsive team, especially Elsa. It is a pleasure working with them.",
-    author: "AURÉLIEN TERRADE"
+    text: "testimonial_6_text",
+    author: "testimonial_6_author"
   },
   {
     stars: 5,
-    text: "Great support and high quality products! It met our expectations. Thank you Paperware :)",
-    author: "MARIE & MEESHA (ON MY DESK)"
+    text: "testimonial_7_text",
+    author: "testimonial_7_author"
   },
   {
     stars: 5,
-    text: "Great communication and clarity at every stage: from ordering, designing, and delivery!",
-    author: "RENEE DEEB"
+    text: "testimonial_8_text",
+    author: "testimonial_8_author"
   },
   {
     stars: 5,
-    text: "A team that listens to our brand needs and gives good advice. Responsive and delivers quality products. I absolutely recommend working with them!",
-    author: "N-D-VALLON"
+    text: "testimonial_9_text",
+    author: "testimonial_9_author"
   }
 ];
 
@@ -154,10 +154,10 @@ const testimonialsData = [
 
 
 function OperationalNodesSection() {
-  const [activeNode, setActiveNode] = React.useState(0);
-  
+  const [activeNode, setActiveNode] = useState(0);
+
   // Auto-cycle through nodes for the "telemetry" effect
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setActiveNode(prev => (prev + 1) % 5);
     }, 2000);
@@ -165,48 +165,48 @@ function OperationalNodesSection() {
   }, []);
 
   const metrics = [
-    { 
-      label: "SYSTEM THROUGHPUT", 
-      value: "4.2M", 
-      unit: "Units/Day", 
-      icon: Box, 
-      progress: 90 
+    {
+      label: "system_throughput",
+      value: "4.2M",
+      unit: "units_day",
+      icon: Box,
+      progress: 90
     },
-    { 
-      label: "ECO EFFICIENCY", 
-      value: "94.8", 
-      unit: "%Rating", 
-      icon: Wind, 
-      progress: 95 
+    {
+      label: "eco_efficiency",
+      value: "94.8",
+      unit: "percent_rating",
+      icon: Wind,
+      progress: 95
     },
-    { 
-      label: "THERMAL LOAD", 
-      value: "32", 
-      unit: "°CAvg", 
-      icon: Thermometer, 
-      progress: 35 
+    {
+      label: "thermal_load",
+      value: "32",
+      unit: "deg_c_avg",
+      icon: Thermometer,
+      progress: 35
     }
   ];
 
   return null;
 }
 
-export function ClientsPage({ 
-  videoUrl, 
-  productionStats: initialProductionStats, 
+export function ClientsPage({
+  videoUrl,
+  productionStats: initialProductionStats,
   onPageChange,
   partnersData = []
-}: {  
-  videoUrl?: string, 
-  productionStats?: any, 
+}: {
+  videoUrl?: string,
+  productionStats?: any,
   onPageChange?: (page: string) => void,
   partnersData?: any[]
 }) {
   // Use partnersData from props if available, otherwise fallback to static clientsData
   // We explicitly prioritize admin data, but keep static as a robust fallback
   const hasExternalData = partnersData && partnersData.length > 0;
-  
-  const displayClients = React.useMemo(() => {
+
+  const displayClients = useMemo(() => {
     if (hasExternalData) {
       return partnersData.map(p => ({
         img: p.logo || p.img, // Handle both 'logo' (admin) and 'img' (legacy) keys
@@ -218,11 +218,11 @@ export function ClientsPage({
   }, [partnersData, hasExternalData]);
 
   // Dynamically generate categories from data, ensuring ALL is first
-  const dynamicCategories = React.useMemo(() => {
+  const dynamicCategories = useMemo(() => {
     const uniqueCats = Array.from(new Set(displayClients.map(c => c.category.toUpperCase())));
     // predefined order for standard categories if they exist
     const standardOrder = ["BEVERAGE", "HOSPITALITY", "HEALTHCARE", "RETAIL", "OTHERS"];
-    
+
     uniqueCats.sort((a, b) => {
       const idxA = standardOrder.indexOf(a);
       const idxB = standardOrder.indexOf(b);
@@ -232,16 +232,25 @@ export function ClientsPage({
       return a.localeCompare(b);
     });
 
-    return ["ALL", ...uniqueCats];
+    const categoryKeys: Record<string, string> = {
+      "ALL": "clients_all",
+      "BEVERAGE": "clients_beverage",
+      "HOSPITALITY": "clients_hospitality",
+      "HEALTHCARE": "clients_healthcare",
+      "RETAIL": "clients_retail",
+      "OTHERS": "clients_others"
+    };
+
+    return ["ALL", ...uniqueCats].map(cat => categoryKeys[cat] || cat);
   }, [displayClients]);
 
-  const [activeTab, setActiveTab] = React.useState("ALL");
-  const [isPlaying, setIsPlaying] = React.useState(false);
-  const [videoError, setVideoError] = React.useState(false);
+  const [activeTab, setActiveTab] = useState("clients_all");
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const { t } = useLanguage();
-  const videoRef = React.useRef<HTMLVideoElement>(null);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const heroRef = React.useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress: heroShrinkProgress, scrollY: heroScrollY } = useScroll({
     target: heroRef,
@@ -257,11 +266,11 @@ export function ClientsPage({
   // 3D Tilt Logic for Hero Cards
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
+
   const springTiltX = useSpring(useTransform(y, [-300, 300], [15, -15]), { stiffness: 100, damping: 30 });
   const springTiltY = useSpring(useTransform(x, [-300, 300], [-15, 15]), { stiffness: 100, damping: 30 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -275,14 +284,14 @@ export function ClientsPage({
   };
 
   // Live Counter Logic
-  const [liveCups, setLiveCups] = React.useState(initialProductionStats?.totalCups || 69550257);
-  const [liveBusinesses, setLiveBusinesses] = React.useState(initialProductionStats?.wonderfulBusinesses || 5754);
+  const [liveCups, setLiveCups] = useState(initialProductionStats?.totalCups || 69550257);
+  const [liveBusinesses, setLiveBusinesses] = useState(initialProductionStats?.wonderfulBusinesses || 5754);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       // ERP Simulation: Increment cups by a random amount (0-3) every 2 seconds
       setLiveCups(prev => prev + Math.floor(Math.random() * 3));
-      
+
       // Occasionally increment business count (very rare in real time but for demo...)
       if (Math.random() > 0.995) {
         setLiveBusinesses(prev => prev + 1);
@@ -293,13 +302,13 @@ export function ClientsPage({
 
   const FEATURED_VIDEO_SOURCE = videoUrl || FEATURED_VIDEO_URL;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     // Reset error state
     setVideoError(false);
-    
+
     // Crucial for browser autoplay compliance
     video.muted = true;
     video.defaultMuted = true;
@@ -312,7 +321,7 @@ export function ClientsPage({
           if (entry.isIntersecting) {
             // Attempt to play and store the promise
             playPromise = video.play();
-            
+
             if (playPromise !== undefined) {
               playPromise
                 .then(() => {
@@ -324,7 +333,7 @@ export function ClientsPage({
                   if (err.name !== "AbortError") {
                     console.log("Autoplay prevented, retrying...", err);
                     video.muted = true;
-                    video.play().then(() => setIsPlaying(true)).catch(() => {});
+                    video.play().then(() => setIsPlaying(true)).catch(() => { });
                   }
                 });
             }
@@ -334,7 +343,7 @@ export function ClientsPage({
               playPromise.then(() => {
                 video.pause();
                 setIsPlaying(false);
-              }).catch(() => {});
+              }).catch(() => { });
             } else {
               video.pause();
               setIsPlaying(false);
@@ -358,9 +367,9 @@ export function ClientsPage({
     };
   }, [FEATURED_VIDEO_SOURCE]);
 
-  const filteredClients = activeTab === "ALL" 
-    ? displayClients 
-    : displayClients.filter(c => c.category.toUpperCase() === activeTab);
+  const filteredClients = activeTab === "clients_all"
+    ? displayClients
+    : displayClients.filter(c => ("clients_" + c.category.toLowerCase()) === activeTab || c.category.toUpperCase() === activeTab.replace("clients_", "").toUpperCase());
 
   return (
     <div className="relative pb-24 bg-white min-h-screen overflow-x-hidden selection:bg-[#fabf37] selection:text-black">
@@ -373,8 +382,8 @@ export function ClientsPage({
       <div className="container mx-auto px-4 pt-0 relative z-20">
         {/* Simplified Hero Section */}
         <div ref={heroRef} className="h-[120vh] md:h-[150vh] relative -mx-4">
-          <motion.div 
-            style={{ 
+          <motion.div
+            style={{
               scale: smoothHeroScale,
               borderRadius: heroBorderRadius,
               opacity: heroOpacity
@@ -389,15 +398,15 @@ export function ClientsPage({
             </div>
 
             <div className="relative z-10 text-center px-6">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="inline-flex items-center gap-3 bg-black text-white px-5 py-2.5 rounded-xl mb-10 shadow-lg border border-white/10 mx-auto"
               >
                 <Cpu className="size-3.5 text-[#fabf37] animate-pulse" />
-                <span className="text-[8px] font-black uppercase tracking-[0.3em]">CORE_v4.2.0</span>
+                <span className="text-[8px] font-black uppercase tracking-[0.3em]">{t('core_v4')}</span>
               </motion.div>
-              
+
               <h1 className="text-[60px] md:text-[120px] lg:text-[160px] font-black uppercase tracking-tighter leading-[0.8] text-black">
                 {t('building_legacies').split(" ").map((word, wi) => (
                   <span key={wi} className="inline-block mr-4 last:mr-0">
@@ -408,9 +417,9 @@ export function ClientsPage({
 
               <div className="mt-12 flex flex-col items-center gap-6">
                 <p className="text-black/60 font-black uppercase tracking-[0.4em] text-[10px] md:text-xs">
-                  Next Generation Manufacturing Ecosystem
+                  {t('next_gen_mfg_eco')}
                 </p>
-                <motion.div 
+                <motion.div
                   animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                   className="size-10 rounded-full border border-black/10 flex items-center justify-center"
@@ -423,7 +432,7 @@ export function ClientsPage({
         </div>
 
         {/* Filter Bar - Simplified */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -434,11 +443,10 @@ export function ClientsPage({
             <button
               key={cat}
               onClick={() => setActiveTab(cat)}
-              className={`px-8 md:px-12 py-4 rounded-2xl font-black tracking-[0.2em] text-[10px] md:text-[12px] transition-all duration-300 ${
-                activeTab === cat 
-                  ? "bg-black text-[#fabf37] shadow-lg" 
-                  : "text-zinc-500 hover:text-black hover:bg-white"
-              }`}
+              className={`px-8 md:px-12 py-4 rounded-2xl font-black tracking-[0.2em] text-[10px] md:text-[12px] transition-all duration-300 ${activeTab === cat
+                ? "bg-black text-[#fabf37] shadow-lg"
+                : "text-zinc-500 hover:text-black hover:bg-white"
+                }`}
             >
               {cat}
             </button>
@@ -457,23 +465,23 @@ export function ClientsPage({
 
               return (
                 <div key={rowIndex} className="relative overflow-visible">
-                  <motion.div 
+                  <motion.div
                     animate={{ x: direction > 0 ? ["0%", "-33.33%"] : ["-33.33%", "0%"] }}
-                    transition={{ 
-                        duration: duration, 
-                        repeat: Infinity, 
-                        ease: "linear" 
+                    transition={{
+                      duration: duration,
+                      repeat: Infinity,
+                      ease: "linear"
                     }}
                     className="flex items-center gap-6 md:gap-10 whitespace-nowrap w-max"
                   >
                     {rowData.map((client, i) => (
-                      <div 
-                        key={`${rowIndex}-${i}`} 
+                      <div
+                        key={`${rowIndex}-${i}`}
                         className="bg-white size-24 md:size-32 rounded-full p-5 md:p-7 flex items-center justify-center shadow-[0_8px_20px_-8px_rgba(0,0,0,0.08)] border border-zinc-100 shrink-0 hover:border-[#fabf37]/50 transition-colors cursor-pointer"
                       >
-                        <ImageWithFallback 
-                          src={client.img} 
-                          alt="Client" 
+                        <ImageWithFallback
+                          src={client.img}
+                          alt="Client"
                           className="w-full h-full object-contain"
                         />
                       </div>
@@ -483,7 +491,7 @@ export function ClientsPage({
               );
             })}
           </div>
-          
+
           {/* Edge gradients for smooth transition */}
           <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#f4f4f5] to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#f4f4f5] to-transparent z-10 pointer-events-none" />
@@ -499,24 +507,24 @@ export function ClientsPage({
                   <TrendingUp className="size-4 text-black" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-black uppercase tracking-tight">
-                  Growth Timeline
+                  {t('clients_growth_timeline')}
                 </h3>
               </div>
-              
+
               <div className="flex items-center gap-4 text-xs font-mono">
-                <span className="text-zinc-400">+900% <span className="text-[#fabf37]">Total</span></span>
-                <span className="text-zinc-400">96.2% <span className="text-black">Retention</span></span>
+                <span className="text-zinc-400">+900% <span className="text-[#fabf37]">{t('system_total')}</span></span>
+                <span className="text-zinc-400">96.2% <span className="text-black">{t('system_retention')}</span></span>
               </div>
             </div>
 
             {/* Horizontal Scrolling Compact Cards */}
             <div className="relative overflow-hidden -mx-4 px-4">
-              <motion.div 
+              <motion.div
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ 
-                  duration: 35, 
-                  repeat: Infinity, 
-                  ease: "linear" 
+                transition={{
+                  duration: 35,
+                  repeat: Infinity,
+                  ease: "linear"
                 }}
                 className="flex items-center gap-4 w-max"
               >
@@ -551,13 +559,13 @@ export function ClientsPage({
                       {item.clients}
                     </div>
                     <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-wide mb-3">
-                      Clients
+                      {t('clients')}
                     </div>
 
                     {/* Growth Badge */}
                     <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#fabf37]/10 rounded-full">
                       <ChevronRight className="size-3 text-[#fabf37]" />
-                      <span className="text-[10px] font-black text-[#fabf37]">{item.growth}</span>
+                      <span className="text-[10px] font-black text-[#fabf37]">{item.growth === "Start" ? t('clients_start') : item.growth}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -589,10 +597,10 @@ export function ClientsPage({
                   <ArrowRight className="size-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">
-                  All Products
+                  {t('banner_all_products')}
                 </h3>
                 <p className="text-sm text-white/80 font-medium">
-                  Explore our complete range of eco-friendly paper solutions
+                  {t('banner_all_products_desc')}
                 </p>
               </div>
             </motion.div>
@@ -612,10 +620,10 @@ export function ClientsPage({
                   <ArrowRight className="size-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">
-                  Solutions
+                  {t('banner_solutions')}
                 </h3>
                 <p className="text-sm text-zinc-400 font-medium">
-                  Custom packaging solutions tailored to your business needs
+                  {t('banner_solutions_desc')}
                 </p>
               </div>
             </motion.div>
@@ -635,10 +643,10 @@ export function ClientsPage({
                   <ArrowRight className="size-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-2">
-                  Export
+                  {t('banner_export')}
                 </h3>
                 <p className="text-sm text-white/80 font-medium">
-                  Interested in international expansion & export markets
+                  {t('banner_export_desc')}
                 </p>
               </div>
             </motion.div>
@@ -658,10 +666,10 @@ export function ClientsPage({
                   <ArrowRight className="size-5 text-zinc-400 group-hover:text-black group-hover:translate-x-1 transition-all" />
                 </div>
                 <h3 className="text-2xl md:text-3xl font-black text-black uppercase tracking-tight mb-2">
-                  Contact Paperware
+                  {t('banner_contact_paperware')}
                 </h3>
                 <p className="text-sm text-zinc-600 font-medium">
-                  Get in touch with our team for inquiries and partnerships
+                  {t('banner_contact_desc')}
                 </p>
               </div>
             </motion.div>
@@ -671,7 +679,7 @@ export function ClientsPage({
         {/* Filtered Grid - Enhanced Visibility & Contrast */}
         <div className="mb-12 md:mb-20 relative bg-zinc-50/50 py-16 md:py-24 -mx-4 px-4 border-y border-zinc-100 shadow-inner">
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={activeTab}
               initial={{ opacity: 0, z: -500 }}
               animate={{ opacity: 1, z: 0 }}
@@ -686,23 +694,23 @@ export function ClientsPage({
                   // Column items * (item height + gap)
                   const itemsPerColumn = Math.ceil(filteredClients.length / 5);
                   const cycleDistance = itemsPerColumn * (144 + 32); // size-36 (144px) + gap-8 (32px)
-                  
+
                   return (
-                    <motion.div 
-                      key={colIndex} 
+                    <motion.div
+                      key={colIndex}
                       className="relative h-full"
-                      style={{ 
-                          transformStyle: "preserve-3d"
+                      style={{
+                        transformStyle: "preserve-3d"
                       }}
                     >
                       <motion.div
-                        animate={{ 
-                          y: colIndex % 2 === 0 ? [0, -cycleDistance] : [-cycleDistance, 0] 
+                        animate={{
+                          y: colIndex % 2 === 0 ? [0, -cycleDistance] : [-cycleDistance, 0]
                         }}
-                        transition={{ 
-                          duration: 30 + (colIndex * 5), 
-                          repeat: Infinity, 
-                          ease: "linear" 
+                        transition={{
+                          duration: 30 + (colIndex * 5),
+                          repeat: Infinity,
+                          ease: "linear"
                         }}
                         className="flex flex-col gap-8"
                       >
@@ -712,17 +720,17 @@ export function ClientsPage({
                             <motion.div
                               key={`${client.img}-${i}`}
                               initial={{ z: 0 }}
-                              whileHover={{ 
-                                  scale: 1.1, 
-                                  z: 100,
-                                  boxShadow: "0 30px 60px -15px rgba(0,0,0,0.15)"
+                              whileHover={{
+                                scale: 1.1,
+                                z: 100,
+                                boxShadow: "0 30px 60px -15px rgba(0,0,0,0.15)"
                               }}
                               className="bg-white size-28 md:size-36 rounded-full p-6 md:p-8 flex items-center justify-center shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)] border border-zinc-100 shrink-0 group hover:border-[#fabf37] transition-all duration-500 relative mx-auto"
                               style={{ transformStyle: "preserve-3d" }}
                             >
-                              <ImageWithFallback 
-                                src={client.img} 
-                                alt="Client" 
+                              <ImageWithFallback
+                                src={client.img}
+                                alt="Client"
                                 className="w-full h-full object-contain filter grayscale-[0.8] group-hover:grayscale-0 transition-all duration-500 opacity-80 group-hover:opacity-100"
                               />
                             </motion.div>
@@ -732,7 +740,7 @@ export function ClientsPage({
                   );
                 })}
               </div>
-              
+
               <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none z-10" />
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-10" />
             </motion.div>
@@ -744,7 +752,7 @@ export function ClientsPage({
           <div className="text-center mb-10 space-y-2 relative z-10">
             <div className="flex items-center justify-center gap-1.5 mb-1">
               <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[7px] font-black text-zinc-400 uppercase tracking-[0.2em]">ERP LIVE STREAM</span>
+              <span className="text-[7px] font-black text-zinc-400 uppercase tracking-[0.2em]">{t('clients_erp_live_stream')}</span>
             </div>
             <h2 className="text-[22px] md:text-[32px] font-black uppercase tracking-tighter leading-none text-black max-w-2xl mx-auto">
               <motion.span
@@ -754,12 +762,12 @@ export function ClientsPage({
                 className="text-[#fabf37]"
               >
                 {liveCups.toLocaleString()}
-              </motion.span> units produced
+              </motion.span> {t('clients_units_produced')}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto relative z-10">
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
@@ -777,42 +785,42 @@ export function ClientsPage({
               ))}
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="h-full flex items-center justify-center py-12 md:py-0"
               initial={{ opacity: 0, x: 150, rotateY: -25, scale: 0.8 }}
               whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 40, 
+              transition={{
+                type: "spring",
+                stiffness: 40,
                 damping: 12,
                 duration: 1.5,
                 delay: 0.2
               }}
             >
-              <motion.div 
-                className="h-full flex items-center justify-center cursor-none" 
+              <motion.div
+                className="h-full flex items-center justify-center cursor-none"
                 ref={containerRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 style={{ rotateX: springTiltX, rotateY: springTiltY, perspective: 2000 }}
               >
-                <div 
+                <div
                   className="relative w-[360px] sm:w-[400px] md:w-[200px] lg:w-[200px] aspect-[9/19] rounded-[48px] sm:rounded-[56px] md:rounded-[36px] overflow-hidden group border-[8px] md:border-[4px] border-zinc-950 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] bg-black transition-all duration-700"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   {/* Sleek Dynamic Island */}
                   <div className="absolute top-5 left-1/2 -translate-x-1/2 w-[35%] h-4.5 md:h-3 bg-zinc-900 rounded-full z-20 border border-white/5" />
-                  
+
                   {/* Screen Reflection */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 z-10 pointer-events-none" />
-                  
-                  <video 
+
+                  <video
                     ref={videoRef}
                     key={FEATURED_VIDEO_SOURCE}
-                    autoPlay 
-                    muted 
-                    loop 
+                    autoPlay
+                    muted
+                    loop
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{ filter: 'brightness(0.9) contrast(1.1)' }}
@@ -824,11 +832,11 @@ export function ClientsPage({
                   >
                     <source src={FEATURED_VIDEO_SOURCE} type="video/mp4" />
                   </video>
-                  
+
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
 
                   {/* Scanning Line Motion */}
-                  <motion.div 
+                  <motion.div
                     animate={{ top: ["-10%", "110%"] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-[#fabf37]/20 to-transparent z-10 pointer-events-none"
@@ -841,7 +849,7 @@ export function ClientsPage({
                   </div>
 
                   {/* Bottom HUD Badge */}
-                  <div 
+                  <div
                     className="absolute bottom-10 md:bottom-4 left-6 md:left-2.5 right-6 md:right-2.5 p-5 md:p-2 rounded-3xl md:rounded-xl bg-black/60 backdrop-blur-xl border border-white/10 text-center space-y-2 md:space-y-1 z-10 shadow-2xl"
                     style={{ transform: "translateZ(20px)" }}
                   >
@@ -859,7 +867,7 @@ export function ClientsPage({
               </motion.div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
@@ -877,7 +885,7 @@ export function ClientsPage({
               ))}
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
@@ -899,7 +907,7 @@ export function ClientsPage({
 
         {/* Feature: Compact Case Study */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-12 md:mb-20" style={{ transformStyle: "preserve-3d" }}>
-          <motion.div 
+          <motion.div
             style={{ rotateY: useTransform(x, [-500, 500], [-5, 5]) }}
             className="bg-black text-white p-8 md:p-12 rounded-[32px] md:rounded-[48px] flex flex-col justify-between shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)] relative overflow-hidden"
           >
@@ -924,18 +932,18 @@ export function ClientsPage({
           </motion.div>
 
           <div className="glass-premium p-8 md:p-12 rounded-[32px] md:rounded-[48px] flex flex-col justify-between group cursor-pointer relative overflow-hidden transition-all duration-700 hover:scale-[1.01] border border-white/40 shadow-xl"
-               onMouseMove={handleMouseMove}
-               onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
             {/* 3D Interactive Layer */}
-            <motion.div 
+            <motion.div
               className="absolute inset-0 pointer-events-none"
               style={{ rotateX: springTiltX, rotateY: springTiltY }}
             />
 
             {/* Background HUD Element */}
             <div className="absolute -top-16 -right-16 size-72 bg-[#fabf37]/5 rounded-full blur-[80px] group-hover:bg-[#fabf37]/10 transition-colors duration-700" />
-            
+
             <div className="space-y-8 relative z-10">
               <div className="flex items-start justify-between">
                 <div className="space-y-3">
@@ -948,7 +956,7 @@ export function ClientsPage({
                   </h3>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4 border-y border-black/5 py-6">
                 <div>
                   <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-0.5">Uptime</p>
@@ -964,7 +972,7 @@ export function ClientsPage({
                 Bypass traditional supply chains. Connect your ERP directly to our robotic manufacturing floor.
               </p>
             </div>
-            
+
             <div className="mt-8 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <button className="flex items-center gap-3 font-black uppercase tracking-[0.2em] text-[9px] text-black/40 bg-white/50 px-5 py-3 rounded-full border border-black/5 cursor-not-allowed">
@@ -978,7 +986,7 @@ export function ClientsPage({
 
 
         {/* Technical Protocols Section - Removed as per request */}
-        
+
         {/* Futuristic Product Showcase Scroll - In new container */}
         <div className="bg-white rounded-[32px] md:rounded-[48px] border border-black/5 p-8 md:p-12 shadow-xl relative overflow-hidden mt-12 md:mt-20">
           <div className="space-y-12 relative z-10">
@@ -998,7 +1006,7 @@ export function ClientsPage({
             </div>
 
             <div className="relative -mx-4 overflow-hidden group/scroll">
-              <motion.div 
+              <motion.div
                 animate={{ x: [0, -1000] }}
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
                 className="flex items-center gap-8 px-4 w-max"
@@ -1007,7 +1015,7 @@ export function ClientsPage({
                   <ProductCard key={`prod-${i}`} product={product} />
                 ))}
               </motion.div>
-              
+
               {/* Fade Gradients for the scroll */}
               <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
               <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
@@ -1072,14 +1080,14 @@ export function ClientsPage({
                 <div className="size-1.5 rounded-full bg-[#fabf37] animate-ping" />
                 <span className="text-[8px] font-black uppercase tracking-[0.2em]">Live Data Stream</span>
               </div>
-              <h2 
+              <h2
                 onClick={() => onPageChange?.('socials')}
                 className="text-[32px] md:text-[48px] font-black uppercase tracking-tighter leading-none text-black cursor-pointer hover:text-[#fabf37] transition-colors group"
               >
                 Social <span className="text-[#fabf37] group-hover:text-black transition-colors">Grid</span>
               </h2>
             </div>
-            
+
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2 p-1.5 bg-zinc-100 rounded-2xl border border-zinc-200">
                 {[
@@ -1116,7 +1124,7 @@ export function ClientsPage({
 
           <div className="relative overflow-hidden py-10 -mx-4">
             {/* Social Marquee - Row 1 */}
-            <motion.div 
+            <motion.div
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
               className="flex items-center gap-6 whitespace-nowrap w-max px-4"
@@ -1127,7 +1135,7 @@ export function ClientsPage({
             </motion.div>
 
             {/* Social Marquee - Row 2 (Reverse) */}
-            <motion.div 
+            <motion.div
               animate={{ x: ["-50%", "0%"] }}
               transition={{ duration: 65, repeat: Infinity, ease: "linear" }}
               className="flex items-center gap-6 whitespace-nowrap w-max mt-6 px-4"
@@ -1148,57 +1156,57 @@ export function ClientsPage({
 }
 
 const socialFeeds = [
-  { 
-    platform: 'Instagram', 
-    handle: '@paperware_intl', 
-    time: '2m ago', 
-    content: 'Unveiling the new Eco-Series 2025. Sustainable engineering meets premium design.', 
-    icon: Instagram, 
+  {
+    platform: 'Instagram',
+    handle: '@paperware_intl',
+    time: '2m ago',
+    content: 'Unveiling the new Eco-Series 2025. Sustainable engineering meets premium design.',
+    icon: Instagram,
     color: '#E4405F',
     image: 'https://images.unsplash.com/photo-1612456914681-6f6111a7c973?auto=format&fit=crop&q=80&w=400'
   },
-  { 
-    platform: 'Linkedin', 
-    handle: 'Paperware Manufacturing', 
-    time: '15m ago', 
-    content: 'Proud to announce our expansion into the European market with 3 new distribution nodes.', 
-    icon: Linkedin, 
+  {
+    platform: 'Linkedin',
+    handle: 'Paperware Manufacturing',
+    time: '15m ago',
+    content: 'Proud to announce our expansion into the European market with 3 new distribution nodes.',
+    icon: Linkedin,
     color: '#0A66C2',
     image: 'https://images.unsplash.com/photo-1739204618173-3e89def7140f?auto=format&fit=crop&q=80&w=400'
   },
-  { 
-    platform: 'Youtube', 
-    handle: 'Paperware Factory Live', 
-    time: '1h ago', 
-    content: 'Watch: Inside the Quantum Factory - How we achieve 0.002mm precision.', 
-    icon: Youtube, 
+  {
+    platform: 'Youtube',
+    handle: 'Paperware Factory Live',
+    time: '1h ago',
+    content: 'Watch: Inside the Quantum Factory - How we achieve 0.002mm precision.',
+    icon: Youtube,
     color: '#FF0000',
     image: 'https://images.unsplash.com/photo-1606733788345-094932d6dc8c?auto=format&fit=crop&q=80&w=400'
   },
-  { 
-    platform: 'Facebook', 
-    handle: 'Paperware Official', 
-    time: '3h ago', 
-    content: 'Our 24/7 client support system just got a major upgrade. Experience the difference.', 
-    icon: Facebook, 
+  {
+    platform: 'Facebook',
+    handle: 'Paperware Official',
+    time: '3h ago',
+    content: 'Our 24/7 client support system just got a major upgrade. Experience the difference.',
+    icon: Facebook,
     color: '#1877F2',
     image: 'https://images.unsplash.com/photo-1646579886741-12b59840c63f?auto=format&fit=crop&q=80&w=400'
   },
-  { 
-    platform: 'Instagram', 
-    handle: '@paperware_intl', 
-    time: '5h ago', 
-    content: 'Morning vibes at the production floor. Excellence in every cup. #Manufacturing', 
-    icon: Instagram, 
+  {
+    platform: 'Instagram',
+    handle: '@paperware_intl',
+    time: '5h ago',
+    content: 'Morning vibes at the production floor. Excellence in every cup. #Manufacturing',
+    icon: Instagram,
     color: '#E4405F',
     image: 'https://images.unsplash.com/photo-1756737335084-d150708d249d?auto=format&fit=crop&q=80&w=400'
   },
-  { 
-    platform: 'Linkedin', 
-    handle: 'Paperware HR', 
-    time: '8h ago', 
-    content: 'We are hiring! Join the team building the future of industrial packaging.', 
-    icon: Linkedin, 
+  {
+    platform: 'Linkedin',
+    handle: 'Paperware HR',
+    time: '8h ago',
+    content: 'We are hiring! Join the team building the future of industrial packaging.',
+    icon: Linkedin,
     color: '#0A66C2',
     image: 'https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=400'
   },
@@ -1206,8 +1214,8 @@ const socialFeeds = [
 
 function SocialFeedCard({ feed }: { feed: any }) {
   const Icon = feed.icon;
-  
-  const handleLike = (e: React.MouseEvent) => {
+
+  const handleLike = (e: ReactMouseEvent) => {
     e.stopPropagation();
     toast.success("Added to favorites", {
       description: `You liked ${feed.handle}'s post`,
@@ -1215,7 +1223,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
     });
   };
 
-  const handleShare = (e: React.MouseEvent) => {
+  const handleShare = (e: ReactMouseEvent) => {
     e.stopPropagation();
     navigator.clipboard.writeText(`https://paperware.com/feed/${feed.handle}`);
     toast.success("Link copied", {
@@ -1225,7 +1233,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ borderColor: "#f4f4f5" }}
       whileHover={{ y: -5, scale: 1.02, borderColor: "#fabf37" }}
       onClick={() => window.open(`https://${feed.platform.toLowerCase()}.com/${feed.handle.replace('@', '')}`, '_blank')}
@@ -1233,7 +1241,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div 
+          <div
             className="size-10 rounded-xl flex items-center justify-center text-white shadow-lg"
             style={{ backgroundColor: feed.color }}
           >
@@ -1246,29 +1254,29 @@ function SocialFeedCard({ feed }: { feed: any }) {
         </div>
         <span className="text-[8px] font-black text-zinc-300 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
       </div>
-      
+
       {feed.image && (
         <div className="relative h-40 w-full overflow-hidden rounded-xl border border-zinc-100">
-          <ImageWithFallback 
-            src={feed.image} 
-            className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700" 
+          <ImageWithFallback
+            src={feed.image}
+            className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
             <div className="flex gap-2">
-               <motion.button 
-                 whileHover={{ scale: 1.2 }} 
-                 onClick={handleLike}
-                 className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
-               >
-                 <Heart className="size-4" />
-               </motion.button>
-               <motion.button 
-                 whileHover={{ scale: 1.2 }} 
-                 onClick={handleShare}
-                 className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
-               >
-                 <Send className="size-4" />
-               </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                onClick={handleLike}
+                className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
+              >
+                <Heart className="size-4" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.2 }}
+                onClick={handleShare}
+                className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
+              >
+                <Send className="size-4" />
+              </motion.button>
             </div>
           </div>
         </div>
@@ -1280,14 +1288,14 @@ function SocialFeedCard({ feed }: { feed: any }) {
 
       <div className="flex items-center justify-between pt-3 border-t border-zinc-50 px-1">
         <div className="flex gap-4">
-          <div 
+          <div
             className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
             onClick={(e) => { e.stopPropagation(); toast("Comments coming soon..."); }}
           >
             <MessageSquare className="size-3" />
             <span className="text-[8px] font-black uppercase">Comment</span>
           </div>
-          <div 
+          <div
             className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
             onClick={handleShare}
           >
@@ -1296,11 +1304,11 @@ function SocialFeedCard({ feed }: { feed: any }) {
           </div>
         </div>
         <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1" onClick={handleLike}>
-               <Heart className="size-3 text-zinc-300 group-hover:text-red-500 transition-colors" />
-               <span className="text-[8px] font-black text-zinc-300 group-hover:text-zinc-500">2.4k</span>
-            </div>
-            <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="flex items-center gap-1" onClick={handleLike}>
+            <Heart className="size-3 text-zinc-300 group-hover:text-red-500 transition-colors" />
+            <span className="text-[8px] font-black text-zinc-300 group-hover:text-zinc-500">2.4k</span>
+          </div>
+          <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
         </div>
       </div>
     </motion.div>
@@ -1321,7 +1329,7 @@ function ProductCard({ product }: { product: any }) {
   const rotateX = useSpring(useTransform(y, [-150, 150], [10, -10]), { stiffness: 100, damping: 30 });
   const rotateY = useSpring(useTransform(x, [-150, 150], [-10, 10]), { stiffness: 100, damping: 30 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -1335,29 +1343,29 @@ function ProductCard({ product }: { product: any }) {
   };
 
   return (
-    <motion.div 
+    <motion.div
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={{ y: -10, scale: 1.02 }}
       className="w-[280px] md:w-[320px] bg-white border border-zinc-100 p-4 rounded-[32px] shadow-xl group cursor-pointer overflow-hidden relative"
     >
-      <div 
+      <div
         className="relative h-60 w-full rounded-[24px] overflow-hidden mb-6 border border-zinc-50"
         style={{ transform: "translateZ(50px)" }}
       >
-        <ImageWithFallback 
-          src={product.image} 
-          className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-1000" 
+        <ImageWithFallback
+          src={product.image}
+          className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-1000"
         />
-        <div 
+        <div
           className="absolute top-4 right-4 px-3 py-1 bg-black/80 backdrop-blur-md text-[#fabf37] text-[8px] font-black rounded-full border border-white/10 uppercase tracking-widest"
           style={{ transform: "translateZ(20px)" }}
         >
           {product.status}
         </div>
       </div>
-      
+
       <div className="space-y-4 px-2" style={{ transform: "translateZ(30px)" }}>
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -1369,7 +1377,7 @@ function ProductCard({ product }: { product: any }) {
           </div>
         </div>
 
-        <div 
+        <div
           className="flex items-center justify-between pt-4 border-t border-zinc-50"
           style={{ transform: "translateZ(10px)" }}
         >
@@ -1389,6 +1397,7 @@ function ProductCard({ product }: { product: any }) {
 // Removed unused MagneticButton for better performance
 
 function TestimonialCard({ item, index, highlighted = false }: { item: any, index: number, highlighted?: boolean }) {
+  const { t } = useLanguage();
   return (
     <motion.div
       variants={{
@@ -1404,12 +1413,12 @@ function TestimonialCard({ item, index, highlighted = false }: { item: any, inde
         ))}
       </div>
       <p className="text-zinc-800 font-bold text-xs leading-snug tracking-tight italic flex-grow">
-        "{item.text}"
+        "{t(item.text)}"
       </p>
       <div className="flex items-center justify-between pt-3 border-t border-zinc-50">
         <div className="space-y-0">
           <p className="text-black font-black uppercase tracking-[0.15em] text-[8px]">
-            {item.author}
+            {t(item.author)}
           </p>
           <p className="text-zinc-400 text-[6px] font-bold uppercase">Partner</p>
         </div>

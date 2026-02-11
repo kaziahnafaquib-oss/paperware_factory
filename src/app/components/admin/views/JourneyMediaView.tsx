@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { useState } from 'react';
+import { motion } from "framer-motion";
 import { Upload, Youtube, Video, Trash2, Plus, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
 
@@ -18,8 +18,8 @@ interface JourneyMediaViewProps {
 }
 
 export function JourneyMediaView({ milestones: initialMilestones, onMilestonesUpdate }: JourneyMediaViewProps) {
-  const [milestones, setMilestones] = React.useState<JourneyMilestone[]>(initialMilestones);
-  const [isSaving, setIsSaving] = React.useState(false);
+  const [milestones, setMilestones] = useState<JourneyMilestone[]>(initialMilestones);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Helper to extract YouTube video ID
   const getYouTubeEmbed = (url: string): string | null => {

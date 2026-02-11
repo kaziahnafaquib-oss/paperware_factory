@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   ShoppingBasket, Shirt, Package, CircleCheck, 
   ArrowRight, ShieldCheck, Zap, Layers, Cpu, Box,

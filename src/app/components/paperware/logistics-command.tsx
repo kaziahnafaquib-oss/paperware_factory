@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Globe, Anchor, Ship, Truck, Activity, Box, MapPin, Search, ChevronRight } from "lucide-react";
 
 export function LogisticsCommand() {

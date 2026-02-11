@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { FormEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Lock, Eye, EyeOff, Phone, AlertCircle, Shield, Fingerprint, Clock, Smartphone, CheckCircle2, QrCode } from "lucide-react";
 import { ContactSupportModal } from "./ContactSupportModal";
 
@@ -27,7 +27,7 @@ export function ClientLoginModal({ isOpen, onClose, onLoginSuccess, onViewFaq }:
   const [showSecurityInfo, setShowSecurityInfo] = useState(false);
   const [showContactSupport, setShowContactSupport] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);

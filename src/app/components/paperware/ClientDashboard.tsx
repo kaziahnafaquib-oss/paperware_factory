@@ -1,6 +1,6 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { LayoutDashboard, Package, Truck, FileText, Settings, Bell, Search, Filter, ArrowUpRight, Clock, MapPin, CircleCheck, ChevronRight, Download, CreditCard, Activity, User, Lock, Mail, Building2, ArrowRight, Eye, EyeOff, X, MoreHorizontal, ShieldCheck, History, ChartBar, Globe, Zap, Phone, Map, Briefcase, Ticket, Plus, RefreshCw, MessageSquare, FileQuestion, Gift, Megaphone, AlertCircle, ShoppingBag, Tag, Star, Share2, Camera, Play, Facebook, Instagram, Linkedin, Copy, Sparkles, Trash2, Users, ChevronDown } from "lucide-react";
+import { useState, useCallback, useMemo, useEffect, lazy, Suspense, type MouseEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { LayoutDashboard, Package, Truck, FileText, Settings, Bell, Search, Filter, ArrowUpRight, Clock, MapPin, CircleCheck, ChevronRight, Download, CreditCard, Activity, User, Lock, Mail, Building2, ArrowRight, Eye, EyeOff, X, MoreHorizontal, ShieldCheck, History, ChartBar, Globe, Zap, Phone, Map, Briefcase, Ticket, Plus, RefreshCw, MessageSquare, FileQuestion, Gift, Megaphone, AlertCircle, ShoppingBag, Tag, Star, Share2, Camera, Play, Facebook, Instagram, Linkedin, Copy, Sparkles, Trash2, Users, ChevronDown, Rotate3d, Home } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { toast } from "sonner";
@@ -14,143 +14,16 @@ import { AccountOverview } from "./AccountOverview";
 import { DigitalVault } from "./DigitalVault";
 import { OrderHistory } from "./OrderHistory";
 import { GlobalSettings } from "./GlobalSettings";
+import { CommandPalette } from "./CommandPalette";
+import {
+  SustainabilityReport,
+  AIInventoryForecasting,
+  LogisticsNeuralNetwork,
+  WarehouseManagement,
+  DigitalTwinShowcase
+} from "./DashboardAdditionalFeatures";
 
-const SpendingChart = React.lazy(() => import('./SpendingChart'));
-
-const inviteProducts = [
-  "Custom Kraft Boxes",
-  "Premium Coffee Cups",
-  "Food Containers",
-  "Corrugated Cartons",
-  "Paper Bags",
-  "Label Stickers"
-];
-
-const orders = [
-  {
-    id: "#PW-8821", date: "Oct 24, 2024", item: "Custom Kraft Boxes", qty: "25,000 Pcs", status: "In Transit", progress: 75, destination: "Dhaka, BD", origin: "Singapore", steps: [
-      { label: "Order Placed", date: "Oct 24", status: "completed" },
-      { label: "Production", date: "Oct 28", status: "completed" },
-      { label: "Quality Check", date: "Oct 30", status: "completed" },
-      { label: "Shipping", date: "Nov 02", status: "active" },
-      { label: "Delivery", date: "Est. Nov 05", status: "pending" }
-    ]
-  },
-  {
-    id: "#PW-8815", date: "Oct 20, 2024", item: "Premium Coffee Cups", qty: "50,000 Pcs", status: "Production", progress: 40, destination: "Chittagong, BD", origin: "Shanghai", steps: [
-      { label: "Order Placed", date: "Oct 20", status: "completed" },
-      { label: "Production", date: "Oct 22", status: "active" },
-      { label: "Quality Check", date: "Pending", status: "pending" },
-      { label: "Shipping", date: "Pending", status: "pending" },
-      { label: "Delivery", date: "Est. Nov 15", status: "pending" }
-    ]
-  },
-  {
-    id: "#PW-8792", date: "Oct 12, 2024", item: "Food Containers", qty: "10,000 Pcs", status: "Delivered", progress: 100, destination: "Sylhet, BD", origin: "Dubai", steps: [
-      { label: "Order Placed", date: "Oct 12", status: "completed" },
-      { label: "Production", date: "Oct 14", status: "completed" },
-      { label: "Quality Check", date: "Oct 16", status: "completed" },
-      { label: "Shipping", date: "Oct 18", status: "completed" },
-      { label: "Delivery", date: "Oct 20", status: "completed" }
-    ]
-  }
-];
-
-const stats = [
-  {
-    label: "Active Orders",
-    val: "12",
-    icon: Package,
-    trend: "+2 this month",
-    detail: "8 items in production, 4 in transit",
-    breakdown: [
-      { label: "Production", count: 8, color: "bg-[#fabf37]" },
-      { label: "Shipping", count: 4, color: "bg-emerald-500" }
-    ]
-  },
-  {
-    label: "Pending Quotes",
-    val: "04",
-    icon: FileText,
-    trend: "Requires Action",
-    detail: "Review quotes for Custom Kraft Boxes",
-    breakdown: [
-      { label: "Draft", count: 1, color: "bg-zinc-200" },
-      { label: "Awaiting Review", count: 3, color: "bg-[#fabf37]" }
-    ]
-  },
-  {
-    label: "Total Savings",
-    val: "14%",
-    icon: CreditCard,
-    trend: "Sustainable Credit",
-    detail: "Eco-friendly discount applied",
-    breakdown: [
-      { label: "Eco Credit", count: "8%", color: "bg-emerald-500" },
-      { label: "Bulk Discount", count: "6%", color: "bg-black" }
-    ]
-  }
-];
-
-const docs = [
-  { name: "Proforma Invoice #92", date: "Oct 12", type: "Financial", size: "1.2MB" },
-  { name: "Packing List - PW8821", date: "Oct 10", type: "Logistics", size: "845KB" },
-  { name: "SGS Quality Cert", date: "Sep 28", type: "Quality", size: "2.4MB" }
-];
-
-const spendingData = [
-  { month: 'Jan', amount: 45000 },
-  { month: 'Feb', amount: 52000 },
-  { month: 'Mar', amount: 48000 },
-  { month: 'Apr', amount: 61000 },
-  { month: 'May', amount: 55000 },
-  { month: 'Jun', amount: 67000 },
-];
-
-const supportTickets = [
-  { id: "TK-204", subject: "Custom Logo Adjustment", status: "Open", date: "2h ago", priority: "High" },
-  { id: "TK-198", subject: "Shipping Delay Inquiry", status: "Closed", date: "1d ago", priority: "Medium" },
-  { id: "TK-185", subject: "Billing Question", status: "Closed", date: "3d ago", priority: "Low" },
-  { id: "TK-172", subject: "Product Specification", status: "Closed", date: "1w ago", priority: "Medium" },
-];
-
-const suggestedProducts = [
-  { name: "Eco-Friendly Straws", price: "$0.02/unit", image: "https://images.unsplash.com/photo-1572048572872-2394404cf1f3?auto=format&fit=crop&q=80&w=200", tag: "New Arrival" },
-  { name: "Custom Napkins", price: "$0.01/unit", image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&q=80&w=200", tag: "Best Seller" },
-  { name: "Kraft Paper Bags", price: "$0.15/unit", image: "https://images.unsplash.com/photo-1623945033469-450f3c5f4035?auto=format&fit=crop&q=80&w=200", tag: "Trending" },
-  { name: "Compostable Cutlery", price: "$0.05/unit", image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?auto=format&fit=crop&q=80&w=200", tag: "Eco Choice" },
-  { name: "Bamboo Plates", price: "$0.12/unit", image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=200", tag: "Organic" },
-  { name: "Salad Bowls", price: "$0.18/unit", image: "https://images.unsplash.com/photo-1534939561126-855f86218185?auto=format&fit=crop&q=80&w=200", tag: "Popular" },
-  { name: "Hot Cups", price: "$0.08/unit", image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=200", tag: "Winter Special" },
-  { name: "Paper Carriers", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1605642913174-2c634c0587d5?auto=format&fit=crop&q=80&w=200", tag: "Durable" },
-  { name: "Wooden Spoons", price: "$0.04/unit", image: "https://images.unsplash.com/photo-1627995964724-c155d0459c0d?auto=format&fit=crop&q=80&w=200", tag: "Eco-Friendly" },
-  { name: "Burger Boxes", price: "$0.09/unit", image: "https://images.unsplash.com/photo-1594910069352-78d2b9986345?auto=format&fit=crop&q=80&w=200", tag: "Greaseproof" },
-  { name: "Clear Cups", price: "$0.06/unit", image: "https://images.unsplash.com/photo-1596450514734-60c7f2025359?auto=format&fit=crop&q=80&w=200", tag: "Recyclable" },
-  { name: "Pizza Boxes", price: "$0.25/unit", image: "https://images.unsplash.com/photo-1593560708920-639846018318?auto=format&fit=crop&q=80&w=200", tag: "Customizable" },
-  { name: "Sushi Trays", price: "$0.20/unit", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&q=80&w=200", tag: "Premium" },
-  { name: "Tissue Packs", price: "$0.03/unit", image: "https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&q=80&w=200", tag: "Soft" },
-  { name: "Trash Bags", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1610444391696-6d24495574c8?auto=format&fit=crop&q=80&w=200", tag: "Bio-Degradable" },
-];
-
-const feedItems = [
-  "🚀 Production capacity increased by 20% for Q4 2024.",
-  "🌱 New sustainable material options available for food packaging.",
-  "📅 Holiday shipping schedule updated - please review.",
-  "🌍 Track your carbon footprint with our new dashboard."
-];
-
-const quickActions = [
-  { icon: Plus, label: "New Order", color: "bg-black text-white", action: 'order' },
-  { icon: RefreshCw, label: "Re-Order", color: "bg-[#fabf37] text-black", action: 'reorder' },
-  { icon: FileQuestion, label: "Request Quote", color: "bg-zinc-100 text-black", action: 'quote' },
-  { icon: MessageSquare, label: "Support", color: "bg-zinc-100 text-black", action: 'support' },
-];
-
-const notifications = [
-  { title: "Order Shipped", desc: "Order #PW-8821 has left Singapore Port", time: "2h ago", type: "logistics" },
-  { title: "Invoice Ready", desc: "Proforma Invoice #93 is ready for review", time: "5h ago", type: "finance" },
-  { title: "Quality Check", desc: "Custom Kraft Boxes passed SGS inspection", time: "1d ago", type: "quality" }
-];
+const SpendingChart = lazy(() => import('./SpendingChart'));
 
 interface ClientDashboardProps {
   onLogout: () => void;
@@ -158,45 +31,202 @@ interface ClientDashboardProps {
 
 export function ClientDashboard({ onLogout }: ClientDashboardProps) {
   const { t, isRTL } = useLanguage();
-  const [selectedOrder, setSelectedOrder] = React.useState<any>(null);
-  const [selectedDoc, setSelectedDoc] = React.useState<any>(null);
-  const [selectedStat, setSelectedStat] = React.useState<any>(null);
-  const [showAllOrders, setShowAllOrders] = React.useState(false);
-  const [showNotifications, setShowNotifications] = React.useState(false);
-  const [showProfileMenu, setShowProfileMenu] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
+  useEffect(() => {
+    // Simulate premium neural sync
+    const timer = setTimeout(() => setIsLoading(false), 1800);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const inviteProducts = useMemo(() => [
+    t('prod_kraft_boxes'),
+    t('prod_coffee_cups'),
+    t('prod_food_containers'),
+    t('prod_cartons'),
+    t('prod_paper_bags'),
+    t('prod_stickers')
+  ], [t]);
+
+  const orders = useMemo(() => [
+    {
+      id: "#PW-8821", date: "Oct 24, 2024", item: t('prod_kraft_boxes'), qty: `25,000 ${t('unit_pcs')}`, status: t('order_status_in_transit'), progress: 75, destination: "Dhaka, BD", origin: "Singapore", steps: [
+        { label: t('order_step_placed'), date: "Oct 24", status: "completed" },
+        { label: t('order_step_production'), date: "Oct 28", status: "completed" },
+        { label: t('order_step_qc'), date: "Oct 30", status: "completed" },
+        { label: t('order_step_shipping'), date: "Nov 02", status: "active" },
+        { label: t('order_step_delivery'), date: "Est. Nov 05", status: "pending" }
+      ]
+    },
+    {
+      id: "#PW-8815", date: "Oct 20, 2024", item: t('prod_coffee_cups'), qty: `50,000 ${t('unit_pcs')}`, status: t('order_status_production'), progress: 40, destination: "Chittagong, BD", origin: "Shanghai", steps: [
+        { label: t('order_step_placed'), date: "Oct 20", status: "completed" },
+        { label: t('order_step_production'), date: "Oct 22", status: "active" },
+        { label: t('order_step_qc'), date: t('order_step_pending'), status: "pending" },
+        { label: t('order_step_shipping'), date: t('order_step_pending'), status: "pending" },
+        { label: t('order_step_delivery'), date: "Est. Nov 15", status: "pending" }
+      ]
+    },
+    {
+      id: "#PW-8792", date: "Oct 12, 2024", item: t('prod_food_containers'), qty: `10,000 ${t('unit_pcs')}`, status: t('order_status_delivered'), progress: 100, destination: "Sylhet, BD", origin: "Dubai", steps: [
+        { label: t('order_step_placed'), date: "Oct 12", status: "completed" },
+        { label: t('order_step_production'), date: "Oct 14", status: "completed" },
+        { label: t('order_step_qc'), date: "Oct 16", status: "completed" },
+        { label: t('order_step_shipping'), date: "Oct 18", status: "completed" },
+        { label: t('order_step_delivery'), date: "Oct 20", status: "completed" }
+      ]
+    }
+  ], [t]);
+
+  const docs = useMemo(() => [
+    { name: "Proforma Invoice #92", date: "Oct 12", type: "Financial", size: "1.2MB" },
+    { name: "Packing List - PW8821", date: "Oct 10", type: "Logistics", size: "845KB" },
+    { name: "SGS Quality Cert", date: "Sep 28", type: "Quality", size: "2.4MB" }
+  ], []);
+
+  const spendingData = useMemo(() => [
+    { month: t('month_jan'), amount: 45000 },
+    { month: t('month_feb'), amount: 52000 },
+    { month: t('month_mar'), amount: 48000 },
+    { month: t('month_apr'), amount: 61000 },
+    { month: t('month_may'), amount: 55000 },
+    { month: t('month_jun'), amount: 67000 },
+  ], [t]);
+
+  const supportTickets = useMemo(() => [
+    { id: "TK-204", subject: t('ticket_logo_adj'), status: t('ticket_status_open'), date: "2h ago", priority: t('ticket_priority_high') },
+    { id: "TK-198", subject: t('ticket_shipping_delay'), status: t('ticket_status_closed'), date: "1d ago", priority: t('ticket_priority_medium') },
+    { id: "TK-185", subject: t('ticket_billing_quest'), status: t('ticket_status_closed'), date: "3d ago", priority: t('ticket_priority_low') },
+    { id: "TK-172", subject: t('ticket_prod_spec'), status: t('ticket_status_closed'), date: "1w ago", priority: t('ticket_priority_medium') },
+  ], [t]);
+
+  const suggestedProducts = useMemo(() => [
+    { name: t('prod_straws'), price: "$0.02/unit", image: "https://images.unsplash.com/photo-1572048572872-2394404cf1f3?auto=format&fit=crop&q=80&w=200", tag: t('tag_new_arrival') },
+    { name: t('prod_napkins'), price: "$0.01/unit", image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&q=80&w=200", tag: t('tag_best_seller') },
+    { name: t('prod_paper_bags'), price: "$0.15/unit", image: "https://images.unsplash.com/photo-1623945033469-450f3c5f4035?auto=format&fit=crop&q=80&w=200", tag: t('tag_trending') },
+    { name: t('prod_cutlery'), price: "$0.05/unit", image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?auto=format&fit=crop&q=80&w=200", tag: t('tag_eco_choice') },
+    { name: t('prod_plates'), price: "$0.12/unit", image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=200", tag: t('tag_organic') },
+    { name: t('prod_salad_bowls'), price: "$0.18/unit", image: "https://images.unsplash.com/photo-1534939561126-855f86218185?auto=format&fit=crop&q=80&w=200", tag: t('tag_popular') },
+    { name: t('prod_hot_cups'), price: "$0.08/unit", image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=200", tag: t('tag_winter_special') },
+    { name: t('prod_carriers'), price: "$0.10/unit", image: "https://images.unsplash.com/photo-1605642913174-2c634c0587d5?auto=format&fit=crop&q=80&w=200", tag: t('tag_durable') },
+    { name: t('prod_spoons'), price: "$0.04/unit", image: "https://images.unsplash.com/photo-1627995964724-c155d0459c0d?auto=format&fit=crop&q=80&w=200", tag: t('tag_eco_friendly') },
+    { name: t('prod_burger_boxes'), price: "$0.09/unit", image: "https://images.unsplash.com/photo-1594910069352-78d2b9986345?auto=format&fit=crop&q=80&w=200", tag: t('tag_greaseproof') },
+    { name: t('prod_clear_cups'), price: "$0.06/unit", image: "https://images.unsplash.com/photo-1596450514734-60c7f2025359?auto=format&fit=crop&q=80&w=200", tag: t('tag_recyclable') },
+    { name: t('prod_pizza_boxes'), price: "$0.25/unit", image: "https://images.unsplash.com/photo-1593560708920-639846018318?auto=format&fit=crop&q=80&w=200", tag: t('tag_customizable') },
+    { name: t('prod_sushi_trays'), price: "$0.20/unit", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&q=80&w=200", tag: t('tag_premium') },
+    { name: t('prod_tissue_packs'), price: "$0.03/unit", image: "https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&q=80&w=200", tag: t('tag_soft') },
+    { name: t('prod_trash_bags'), price: "$0.10/unit", image: "https://images.unsplash.com/photo-1610444391696-6d24495574c8?auto=format&fit=crop&q=80&w=200", tag: t('tag_biodegradable') },
+  ], [t]);
+
+  const feedItems = useMemo(() => [
+    t('feed_item_1'),
+    t('feed_item_2'),
+    t('feed_item_3'),
+    t('feed_item_4')
+  ], [t]);
+
+  const notifications = useMemo(() => [
+    { title: t('notif_order_shipped'), desc: t('notif_order_shipped_desc'), time: "2h ago", type: "logistics" },
+    { title: t('notif_invoice_ready'), desc: t('notif_invoice_ready_desc'), time: "5h ago", type: "finance" },
+    { title: t('notif_qc_passed'), desc: t('notif_qc_passed_desc'), time: "1d ago", type: "quality" }
+  ], [t]);
+
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [selectedDoc, setSelectedDoc] = useState<any>(null);
+  const [selectedStat, setSelectedStat] = useState<any>(null);
+  const [showAllOrders, setShowAllOrders] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   // New State for Modals
-  const [activeModal, setActiveModal] = React.useState<'order' | 'reorder' | 'quote' | 'support' | null>(null);
-  const [showAllTickets, setShowAllTickets] = React.useState(false);
-  const [selectedTicket, setSelectedTicket] = React.useState<any>(null);
-  const [showTracking, setShowTracking] = React.useState(false);
-  const [selectedInvoice, setSelectedInvoice] = React.useState<any>(null);
-  const [showAllInvoices, setShowAllInvoices] = React.useState(false);
-  const [selectedChallan, setSelectedChallan] = React.useState<any>(null);
-  const [feedbackChallan, setFeedbackChallan] = React.useState<any>(null);
-  const [showInviteModal, setShowInviteModal] = React.useState(false);
+  const [activeModal, setActiveModal] = useState<'order' | 'reorder' | 'quote' | 'support' | 'sample' | null>(null);
+  const [showAllTickets, setShowAllTickets] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<any>(null);
+  const [showTracking, setShowTracking] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<any>(null);
+  const [showAllInvoices, setShowAllInvoices] = useState(false);
+  const [selectedChallan, setSelectedChallan] = useState<any>(null);
+  const [feedbackChallan, setFeedbackChallan] = useState<any>(null);
+  const [showInviteModal, setShowInviteModal] = useState(false);
 
   // Invite Modal State
-  const [inviteList, setInviteList] = React.useState<{ value: string, type: 'email' | 'phone' }[]>([]);
-  const [inviteInput, setInviteInput] = React.useState('');
-  const [inviteMessage, setInviteMessage] = React.useState('');
-  const [selectedInviteProduct, setSelectedInviteProduct] = React.useState<string | null>(null);
-  const [isAiGenerating, setIsAiGenerating] = React.useState(false);
+  const [inviteList, setInviteList] = useState<{ value: string, type: 'email' | 'phone' }[]>([]);
+  const [inviteInput, setInviteInput] = useState('');
+  const [inviteMessage, setInviteMessage] = useState('');
+  const [selectedInviteProduct, setSelectedInviteProduct] = useState<string | null>(null);
+  const [isAiGenerating, setIsAiGenerating] = useState(false);
+
+  const stats = useMemo(() => [
+    {
+      label: t('portal_active_orders'),
+      val: "12",
+      icon: Package,
+      trend: "+2 this month",
+      detail: t('portal_production_status_desc'),
+      breakdown: [
+        { label: t('portal_production'), count: 8, color: "bg-[#fabf37]" },
+        { label: t('portal_shipping'), count: 4, color: "bg-emerald-500" }
+      ]
+    },
+    {
+      label: t('portal_pending_quotes'),
+      val: "04",
+      icon: FileText,
+      trend: t('requires_action') || "Requires Action",
+      detail: t('portal_quotes_review_desc'),
+      breakdown: [
+        { label: t('portal_status_draft'), count: 1, color: "bg-zinc-200" },
+        { label: t('portal_awaiting_review'), count: 3, color: "bg-[#fabf37]" }
+      ]
+    },
+    {
+      label: t('portal_total_savings'),
+      val: "14%",
+      icon: CreditCard,
+      trend: t('sustainable_credit') || "Sustainable Credit",
+      detail: t('portal_eco_discount_desc') || "Eco-friendly discount applied",
+      breakdown: [
+        { label: t('portal_eco_credit'), count: "8%", color: "bg-emerald-500" },
+        { label: t('portal_bulk_discount'), count: "6%", color: "bg-black" }
+      ]
+    }
+  ], [t]);
+
+  const quickActions = useMemo(() => [
+    { icon: Plus, label: t('portal_new_order_label'), color: "bg-black text-white", action: 'order' },
+    { icon: RefreshCw, label: t('portal_re_order'), color: "bg-[#fabf37] text-black", action: 'reorder' },
+    { icon: FileQuestion, label: t('portal_request_quote'), color: "bg-zinc-100 text-black", action: 'quote' },
+    { icon: MessageSquare, label: t('portal_support'), color: "bg-zinc-100 text-black", action: 'support' },
+    { icon: Gift, label: t('portal_request_sample'), color: "bg-purple-100 text-purple-600", action: 'sample' },
+  ], [t]);
 
   // Profile Menu Pages
-  const [showAccountOverview, setShowAccountOverview] = React.useState(false);
-  const [showDigitalVault, setShowDigitalVault] = React.useState(false);
-  const [showOrderHistory, setShowOrderHistory] = React.useState(false);
-  const [showGlobalSettings, setShowGlobalSettings] = React.useState(false);
+  const [showAccountOverview, setShowAccountOverview] = useState(false);
+  const [showDigitalVault, setShowDigitalVault] = useState(false);
+  const [showOrderHistory, setShowOrderHistory] = useState(false);
+  const [showGlobalSettings, setShowGlobalSettings] = useState(false);
+  const [showDigitalTwin, setShowDigitalTwin] = useState(false);
 
-  const handleAddContact = React.useCallback(() => {
+  const handleAddContact = useCallback(() => {
     if (!inviteInput) return;
     const type = inviteInput.includes('@') ? 'email' : 'phone';
     setInviteList(prev => [...prev, { value: inviteInput, type }]);
     setInviteInput('');
   }, [inviteInput]);
 
-  const handleAiGenerate = React.useCallback(() => {
+  const handleAiGenerate = useCallback(() => {
     setIsAiGenerating(true);
     setTimeout(() => {
       const productText = selectedInviteProduct ? `specifically our ${selectedInviteProduct}` : "our sustainable packaging solutions";
@@ -211,7 +241,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
     }, 1000);
   }, [selectedInviteProduct]);
 
-  const filteredStatOrders = React.useMemo(() => {
+  const filteredStatOrders = useMemo(() => {
     if (!selectedStat?.activeCategory) return [];
     return orders.filter(o => {
       if (selectedStat.activeCategory === 'Production') return o.status === 'Production';
@@ -220,9 +250,39 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
     });
   }, [selectedStat?.activeCategory]);
 
-  const isOverlayOpen = selectedOrder || selectedDoc || selectedStat || showAllOrders || activeModal || showAllTickets || selectedTicket || showTracking || selectedInvoice || showAllInvoices || selectedChallan || feedbackChallan || showInviteModal || showAccountOverview || showDigitalVault || showOrderHistory || showGlobalSettings;
+  const isOverlayOpen = selectedOrder || selectedDoc || selectedStat || showAllOrders || activeModal || showAllTickets || selectedTicket || showTracking || selectedInvoice || showAllInvoices || selectedChallan || feedbackChallan || showInviteModal || showAccountOverview || showDigitalVault || showOrderHistory || showGlobalSettings || showDigitalTwin || isCommandPaletteOpen;
 
   // Render logic from lines 427-2283 of original file, with adjustments for props/state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-8">
+        <div className="relative">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            className="size-24 border-2 border-zinc-100 rounded-full border-t-[#fabf37]"
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="size-12 bg-black rounded-2xl flex items-center justify-center text-[#fabf37] font-black text-xl shadow-2xl">
+              P
+            </div>
+          </div>
+        </div>
+        <div className="space-y-2 text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.5em] text-zinc-400 animate-pulse">Establishing Neural Link...</p>
+          <div className="h-1 w-48 bg-zinc-100 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="h-full bg-black"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen bg-zinc-50 pt-32 pb-20 ${isRTL ? 'rtl' : 'ltr'} relative transition-all duration-150 ${isOverlayOpen ? 'overflow-hidden' : ''}`}>
       {/* Dynamic Background Blur Overlay */}
@@ -233,7 +293,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[100] transition-all duration-150"
+            className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[100] transition-all duration-150"
             onClick={() => {
               setSelectedOrder(null);
               setSelectedDoc(null);
@@ -261,17 +321,17 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 md:gap-8 mb-10 md:mb-16">
           <div className="space-y-1 md:space-y-2">
             <div className="flex items-center gap-2 md:gap-3">
-              <div className="px-3 md:px-4 py-1 bg-black text-[#fabf37] text-[8px] md:text-[9px] font-black rounded-full uppercase tracking-widest">Enterprise</div>
+              <div className="px-3 md:px-4 py-1 bg-black text-[#fabf37] text-[8px] md:text-[9px] font-black rounded-full uppercase tracking-widest">{t('portal_enterprise')}</div>
               <div className="h-px w-6 md:w-8 bg-zinc-200" />
             </div>
             <h1 className="text-5xl md:text-9xl font-black uppercase tracking-tighter text-black flex flex-wrap items-baseline gap-x-3 md:gap-x-4 leading-[0.85]">
-              Client <span className="text-zinc-300">Hub</span>
+              {t('portal_client')} <span className="text-zinc-300">{t('portal_hub')}</span>
             </h1>
           </div>
 
           <div className="flex items-center gap-3 md:gap-4 relative w-full md:w-auto justify-between md:justify-start z-50">
             <button
-              onClick={(e) => {
+              onClick={(e: MouseEvent) => {
                 e.stopPropagation();
                 setShowInviteModal(true);
               }}
@@ -282,7 +342,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
 
             <div className="relative z-50">
               <button
-                onClick={(e) => {
+                onClick={(e: MouseEvent) => {
                   e.stopPropagation();
                   setShowNotifications(!showNotifications);
                 }}
@@ -309,10 +369,10 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                       exit={{ opacity: 0, scale: 0.95, y: 10 }}
                       transition={{ type: "spring", stiffness: 500, damping: 25 }}
                       className="fixed top-24 right-4 md:right-8 w-96 max-w-[calc(100vw-2rem)] max-h-[calc(100vh-8rem)] overflow-y-auto bg-white rounded-[40px] border border-black/5 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] p-8 z-[250]"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e: MouseEvent) => e.stopPropagation()}
                     >
                       <div className="flex items-center justify-between mb-8">
-                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-black">Live Production Feed</p>
+                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-black">{t('portal_live_feed')}</p>
                         <button onClick={() => setShowNotifications(false)} className="size-8 rounded-full bg-zinc-50 flex items-center justify-center hover:bg-black hover:text-white transition-all"><X className="size-4" /></button>
                       </div>
                       <div className="space-y-6">
@@ -357,7 +417,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
 
             <div className="relative z-50">
               <button
-                onClick={(e) => {
+                onClick={(e: MouseEvent) => {
                   e.stopPropagation();
                   setShowProfileMenu(!showProfileMenu);
                   toast.info("Accessing Enterprise Profile: John Doe", {
@@ -376,7 +436,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                     <ChevronRight className={`size-3 transition-transform duration-150 ${showProfileMenu ? 'rotate-90' : ''}`} />
                   </p>
                   <div className="flex items-center gap-2">
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Logistics Director</p>
+                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{t('role_logistics_director')}</p>
                     <div className="size-1 bg-zinc-200 rounded-full" />
                     <p className="text-[10px] font-black text-[#fabf37]">ID: 8821-B</p>
                   </div>
@@ -400,12 +460,12 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                       exit={{ opacity: 0, scale: 0.95, y: 10 }}
                       transition={{ type: "spring", stiffness: 500, damping: 25 }}
                       className="fixed top-24 right-4 md:right-8 w-72 max-w-[calc(100vw-2rem)] max-h-[calc(100vh-8rem)] overflow-y-auto bg-white border border-black/5 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] rounded-[40px] z-[250]"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e: MouseEvent) => e.stopPropagation()}
                     >
                       <div className="p-8 space-y-4">
                         <button
                           type="button"
-                          onClick={(e) => {
+                          onClick={(e: MouseEvent) => {
                             e.stopPropagation();
                             setShowProfileMenu(false);
                             setShowAccountOverview(true);
@@ -413,12 +473,12 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                           className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-zinc-50 transition-all group"
                         >
                           <User className="size-5 text-zinc-400 group-hover:text-black transition-colors" />
-                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">Account Overview</span>
+                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">{t('portal_account_overview')}</span>
                         </button>
 
                         <button
                           type="button"
-                          onClick={(e) => {
+                          onClick={(e: MouseEvent) => {
                             e.stopPropagation();
                             setShowProfileMenu(false);
                             setShowDigitalVault(true);
@@ -426,12 +486,12 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                           className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-zinc-50 transition-all group"
                         >
                           <ShieldCheck className="size-5 text-zinc-400 group-hover:text-black transition-colors" />
-                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">Digital Vault</span>
+                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">{t('portal_digital_vault')}</span>
                         </button>
 
                         <button
                           type="button"
-                          onClick={(e) => {
+                          onClick={(e: MouseEvent) => {
                             e.stopPropagation();
                             setShowProfileMenu(false);
                             setShowOrderHistory(true);
@@ -439,12 +499,12 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                           className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-zinc-50 transition-all group"
                         >
                           <History className="size-5 text-zinc-400 group-hover:text-black transition-colors" />
-                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">Order History</span>
+                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">{t('portal_order_history')}</span>
                         </button>
 
                         <button
                           type="button"
-                          onClick={(e) => {
+                          onClick={(e: MouseEvent) => {
                             e.stopPropagation();
                             setShowProfileMenu(false);
                             setShowGlobalSettings(true);
@@ -452,13 +512,13 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                           className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-zinc-50 transition-all group"
                         >
                           <Settings className="size-5 text-zinc-400 group-hover:text-black transition-colors" />
-                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">Global Settings</span>
+                          <span className="text-[11px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-black">{t('portal_global_settings')}</span>
                         </button>
 
                         <div className="h-px bg-zinc-100 my-4" />
                         <button
                           type="button"
-                          onClick={(e) => {
+                          onClick={(e: MouseEvent) => {
                             e.stopPropagation();
                             setShowProfileMenu(false);
                             onLogout();
@@ -467,7 +527,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                           className="w-full flex items-center gap-4 p-4 rounded-2xl bg-red-50 text-red-600 transition-all hover:bg-red-100"
                         >
                           <Lock className="size-5" />
-                          <span className="text-[11px] font-black uppercase tracking-widest">Logout Session</span>
+                          <span className="text-[11px] font-black uppercase tracking-widest">{t('portal_logout_session')}</span>
                         </button>
                       </div>
                     </motion.div>
@@ -477,10 +537,6 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             </div>
           </div>
         </div>
-
-        {/* ... Rest of the component (copying 2000 lines of UI code ...) */}
-        {/* Due to space limits, I will just paste the structure and the critical parts. The read content had almost 2200 lines. */}
-        {/* I am pasting the whole structure now */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
           <div className="lg:col-span-8 space-y-10">
@@ -496,20 +552,20 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                     <h2 className="text-2xl font-black uppercase tracking-tight">Global Logistics</h2>
                     <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">ID: C-8821 • Gulshan 1, Dhaka</p>
                     <div className="flex items-center gap-2 mt-2">
-                      <span className="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest">Premium Tier</span>
-                      <span className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[9px] font-black uppercase tracking-widest">Verified</span>
+                      <span className="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest">{t('portal_premium_tier')}</span>
+                      <span className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[9px] font-black uppercase tracking-widest">{t('portal_verified')}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-col gap-3 w-full md:w-auto">
                   <div className="flex items-center gap-8 px-6 py-3 bg-zinc-50 rounded-2xl border border-black/5">
                     <div>
-                      <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Total Orders</p>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t('portal_total_orders')}</p>
                       <p className="text-xl font-black">142</p>
                     </div>
                     <div className="h-8 w-px bg-zinc-200" />
                     <div>
-                      <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Total Spent</p>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t('portal_total_spent')}</p>
                       <p className="text-xl font-black">৳ 4.2M</p>
                     </div>
                   </div>
@@ -517,11 +573,14 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                     onClick={() => setShowAllOrders(true)}
                     className="w-full py-3 bg-black text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all"
                   >
-                    View All Sales Orders
+                    {t('portal_view_all_sales')}
                   </button>
                 </div>
               </div>
             </div>
+
+            {/* AI Inventory Forecasting */}
+            <AIInventoryForecasting t={t} />
 
             {/* Invoice Reminder */}
             <div className="bg-red-50 border border-red-100 rounded-[32px] p-6 flex items-center justify-between gap-4 relative overflow-hidden group">
@@ -531,8 +590,8 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                   <AlertCircle className="size-5" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-black uppercase tracking-wide text-red-900">Invoice Due Soon</h4>
-                  <p className="text-[10px] font-bold text-red-700 mt-0.5">Invoice #INV-2024-009 is due in 3 days.</p>
+                  <h4 className="text-sm font-black uppercase tracking-wide text-red-900">{t('portal_invoice_due')}</h4>
+                  <p className="text-[10px] font-bold text-red-700 mt-0.5">{t('portal_invoice_reminder_desc')}</p>
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2 relative z-10">
@@ -543,9 +602,9 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                   })}
                   className="px-5 py-2.5 bg-red-500 text-white rounded-full text-[9px] font-black uppercase tracking-widest hover:bg-red-600 transition-colors shadow-lg shadow-red-200"
                 >
-                  Pay Now
+                  {t('portal_pay_now')}
                 </button>
-                <span className="text-[8px] font-bold text-red-400 uppercase tracking-widest">Coming Soon</span>
+                <span className="text-[8px] font-bold text-red-400 uppercase tracking-widest">{t('portal_coming_soon')}</span>
               </div>
             </div>
 
@@ -592,9 +651,9 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             </motion.div>
 
             {/* Spending Analytics Chart */}
-            <React.Suspense fallback={<div className="h-[250px] w-full bg-zinc-100 rounded-[40px] animate-pulse" />}>
+            <Suspense fallback={<div className="h-[250px] w-full bg-zinc-100 rounded-[40px] animate-pulse" />}>
               <SpendingChart data={spendingData} />
-            </React.Suspense>
+            </Suspense>
 
             {/* Active Orders List */}
             <ActiveOrders
@@ -615,10 +674,10 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                   <div className="size-10 rounded-xl bg-zinc-100 flex items-center justify-center text-black">
                     <Truck className="size-5" />
                   </div>
-                  <h3 className="text-lg md:text-2xl font-black uppercase tracking-tight">Delivery Challans</h3>
+                  <h3 className="text-lg md:text-2xl font-black uppercase tracking-tight">{t('portal_delivery_challans')}</h3>
                 </div>
                 <span className="px-4 py-2 bg-emerald-100 text-emerald-600 rounded-full text-[9px] font-black uppercase tracking-widest">
-                  Total Received: 12
+                  {t('portal_total_received')}: 12
                 </span>
               </div>
               <div className="divide-y divide-zinc-100">
@@ -637,11 +696,11 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                       </div>
                     </div>
                     <button
-                      onClick={(e) => { e.stopPropagation(); setFeedbackChallan(challan); }}
+                      onClick={(e: MouseEvent) => { e.stopPropagation(); setFeedbackChallan(challan); }}
                       className="px-5 py-2.5 bg-zinc-100 text-zinc-600 rounded-full text-[9px] font-black uppercase tracking-widest hover:bg-black hover:text-[#fabf37] transition-all flex items-center gap-2"
                     >
                       <Star className="size-3" />
-                      Product Feedback
+                      {t('portal_product_feedback')}
                     </button>
                   </div>
                 ))}
@@ -655,6 +714,21 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
 
             {/* Quick Actions Grid */}
             <div className="grid grid-cols-2 gap-4">
+              <button
+                onClick={() => setShowDigitalTwin(true)}
+                className="col-span-2 p-6 rounded-[32px] bg-gradient-to-br from-[#fabf37] to-black text-white flex items-center justify-between gap-4 transition-transform hover:scale-[1.02] group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center">
+                    <Rotate3d className="size-6 text-[#fabf37]" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Pro Feature</p>
+                    <p className="text-sm font-black uppercase">3D Digital Twin Lab</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="size-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </button>
               {quickActions.map((action, i) => (
                 <button
                   key={i}
@@ -670,8 +744,8 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             {/* Support Tickets Preview */}
             <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-sm space-y-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-black uppercase tracking-widest">Support Tickets</h3>
-                <span className="px-2 py-1 bg-red-100 text-red-600 rounded-lg text-[9px] font-black">{supportTickets.filter(t => t.status === 'Open').length} Open</span>
+                <h3 className="text-sm font-black uppercase tracking-widest">{t('portal_support_tickets')}</h3>
+                <span className="px-2 py-1 bg-red-100 text-red-600 rounded-lg text-[9px] font-black">{supportTickets.filter(t => t.status === 'Open').length} {t('portal_open')}</span>
               </div>
               <div className="space-y-3">
                 {supportTickets.slice(0, 2).map((ticket, i) => (
@@ -688,13 +762,13 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 ))}
               </div>
               <button onClick={() => setShowAllTickets(true)} className="w-full py-3 border border-black/10 rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
-                View All Tickets
+                {t('portal_view_all_tickets')}
               </button>
             </div>
 
             <div className="bg-white p-10 rounded-[60px] border border-black/5 shadow-sm space-y-8">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-black uppercase tracking-tight">Vault</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight">{t('portal_vault')}</h3>
                 <button onClick={() => toast("Vault filter applied")}><Filter className="size-4 text-zinc-300 hover:text-black transition-colors" /></button>
               </div>
               <div className="space-y-4">
@@ -711,8 +785,8 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                   </div>
                 ))}
               </div>
-              <button onClick={(e) => { e.preventDefault(); toast.success("Accessing Secure Vault..."); setSelectedDoc({ name: "All Documents", date: "Archive", type: "Directory", size: "N/A" }); }} className="w-full py-5 bg-zinc-50 border border-black/5 rounded-[32px] text-[9px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
-                Access All Documents
+              <button onClick={(e: MouseEvent) => { e.preventDefault(); toast.success("Accessing Secure Vault..."); setSelectedDoc({ name: "All Documents", date: "Archive", type: "Directory", size: "N/A" }); }} className="w-full py-5 bg-zinc-50 border border-black/5 rounded-[32px] text-[9px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
+                {t('portal_access_all_docs')}
               </button>
             </div>
 
@@ -726,8 +800,8 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                     <Megaphone className="size-5 text-[#fabf37]" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-black uppercase tracking-widest">Offers & Updates</h3>
-                    <p className="text-[9px] font-bold text-zinc-500">Latest from Paperware HQ</p>
+                    <h3 className="text-sm font-black uppercase tracking-widest">{t('portal_offers_updates')}</h3>
+                    <p className="text-[9px] font-bold text-zinc-500">{t('portal_latest_updates')}</p>
                   </div>
                 </div>
 
@@ -752,17 +826,73 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 </div>
 
                 <button onClick={() => toast.success("Loading all active offers...")} className="w-full py-4 bg-[#fabf37] text-black rounded-2xl text-[9px] font-black uppercase tracking-widest hover:scale-[1.02] transition-transform">
-                  View All Offers
+                  {t('portal_view_all_offers')}
                 </button>
               </div>
             </div>
 
             <ManagerCard />
+
+            {/* Security & Compliance Section */}
+            <div className="bg-white rounded-[40px] p-6 md:p-10 border border-black/5 shadow-sm space-y-8 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-emerald-100 rounded-2xl text-emerald-600 shadow-inner">
+                    <ShieldCheck className="size-6 md:size-8" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h3 className="text-sm md:text-base font-black uppercase tracking-tight text-zinc-900">{t('portal_security_compliance')}</h3>
+                    <p className="text-[7px] md:text-[8px] font-bold text-zinc-400 uppercase tracking-widest text-emerald-600/60">Enterprise Grade Protection • Last Audit: 24h ago</p>
+                  </div>
+                </div>
+                <button className="w-full md:w-auto px-4 py-2.5 bg-black text-[#fabf37] rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all flex items-center justify-center gap-2 shadow-xl group/btn active:scale-95">
+                  <FileText className="size-3 group-hover/btn:scale-110 transition-transform" />
+                  <span className="truncate">{t('portal_download_report')}</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 relative z-10">
+                {[
+                  { id: "ISO", title: "ISO 9001:2015", label: "Certification", desc: "Quality Management System certified for global manufacturing standards.", icon: <CircleCheck className="size-3" /> },
+                  { id: "GDPR", title: "GDPR Compliant", label: "Data Privacy", desc: "All client data is encrypted and processed according to EU regulations.", icon: <Lock className="size-3" /> },
+                  { id: "FSC", title: "FSC Certified", label: "Sustainability", desc: "Sourced from responsibly managed forests catering to eco-goals.", icon: <Globe className="size-3" /> }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex flex-col space-y-2 group/card">
+                    <div className="flex items-center gap-1.5 px-1">
+                      <div className="size-4 rounded bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                        <span className="text-emerald-600 scale-75">{item.icon}</span>
+                      </div>
+                      <span className="text-[7.5px] font-black uppercase tracking-[0.1em] text-zinc-400">{item.label}</span>
+                    </div>
+
+                    <div className="bg-zinc-50/50 rounded-[20px] p-3.5 border border-black/5 hover:bg-white hover:shadow-xl transition-all flex flex-col items-start gap-3 h-full">
+                      <div className="size-8 bg-white border border-black/5 rounded-lg flex items-center justify-center font-black text-[9px] shadow-sm transform group-hover/card:scale-105 transition-all">{item.id}</div>
+                      <div className="space-y-1">
+                        <h4 className="font-black text-[10px] leading-tight uppercase tracking-tight text-zinc-800">{item.title}</h4>
+                        <p className="text-[8px] text-zinc-500 font-medium leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* End of Security & Compliance Section */}
           </div>
+          {/* End of lg:col-span-4 column */}
         </div>
+        {/* End of main grid (lg:col-span-8 and lg:col-span-4) */}
 
         {/* Full Width Sections */}
         <div className="space-y-10 mt-10">
+
+          <SustainabilityReport t={t} />
+
+          <LogisticsNeuralNetwork t={t} />
+
+          <WarehouseManagement t={t} />
+
           {/* Section Divider/Header */}
           <div className="flex items-center gap-4 px-4 opacity-50">
             <div className="h-px bg-black/10 flex-1" />
@@ -869,8 +999,6 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
           <SocialFeed />
         </div>
       </motion.div>
-
-      {/* Modals & Popups - Now outside the container to prevent stacking context/blur issues */}
       <ActionModal isOpen={!!activeModal} onClose={() => setActiveModal(null)} type={activeModal} />
 
       <AnimatePresence mode="wait">
@@ -881,7 +1009,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
             onClick={() => setShowAllTickets(false)}
           >
             <motion.div
@@ -889,7 +1017,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
               transition={{ type: "spring", stiffness: 500, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent) => e.stopPropagation()}
               className="w-full max-w-2xl bg-white rounded-[40px] shadow-2xl border border-black/5 p-8 md:p-12 overflow-hidden"
             >
               <div className="flex items-center justify-between mb-8">
@@ -936,7 +1064,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
             onClick={() => setSelectedStat(null)}
           >
             <motion.div
@@ -944,7 +1072,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               animate={{ scale: 1, rotateX: 0 }}
               exit={{ scale: 0.9, rotateX: 10 }}
               transition={{ type: "spring", stiffness: 500, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent) => e.stopPropagation()}
               className="w-full max-w-xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden"
             >
               <div className="absolute top-8 right-8">
@@ -973,7 +1101,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                         className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-black transition-colors mb-4 group mx-auto"
                       >
                         <ChevronRight className="size-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
-                        Back to Overview
+                        {t('portal_back_to_overview')}
                       </button>
                       <div className="space-y-3 h-[300px] overflow-y-auto pr-2 custom-scrollbar text-left">
                         {filteredStatOrders.map((order: any, i: number) => (
@@ -1026,7 +1154,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                   )}
                 </div>
                 <button onClick={() => setSelectedStat(null)} className="w-full py-5 bg-black text-[#fabf37] rounded-[28px] text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">
-                  Close Report
+                  {t('portal_close_report')}
                 </button>
               </div>
             </motion.div>
@@ -1041,7 +1169,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[250] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[250] flex items-center justify-center p-4"
             onClick={() => setShowInviteModal(false)}
           >
             <motion.div
@@ -1049,7 +1177,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
               transition={{ type: "spring", stiffness: 500, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent) => e.stopPropagation()}
               className="w-full max-w-3xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-8 md:p-12 overflow-hidden flex flex-col md:flex-row gap-8"
             >
               <div className="flex-1 space-y-6">
@@ -1153,7 +1281,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
             onClick={() => setShowTracking(false)}
           >
             <motion.div
@@ -1161,7 +1289,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
               transition={{ type: "spring", stiffness: 500, damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent) => e.stopPropagation()}
               className="w-full max-w-4xl bg-black text-white rounded-[60px] shadow-2xl p-12 overflow-hidden relative"
             >
               <button onClick={() => setShowTracking(false)} className="absolute top-8 right-8 size-12 rounded-2xl bg-zinc-900 flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all z-20">
@@ -1238,14 +1366,14 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setShowAllOrders(false)}
             >
               <motion.div
                 initial={{ scale: 0.95, y: 50 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 50 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-5xl h-[80vh] bg-white rounded-[60px] shadow-2xl border border-black/5 p-8 md:p-12 overflow-hidden flex flex-col"
               >
                 <div className="flex items-center justify-between mb-8 shrink-0">
@@ -1273,7 +1401,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setSelectedOrder(null)}
             >
               <motion.div
@@ -1281,7 +1409,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-2xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -1345,7 +1473,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setSelectedDoc(null)}
             >
               <motion.div
@@ -1353,7 +1481,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden text-center"
               >
                 <div className="size-24 bg-zinc-50 rounded-[32px] mx-auto flex items-center justify-center mb-6">
@@ -1383,7 +1511,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setSelectedInvoice(null)}
             >
               <motion.div
@@ -1391,7 +1519,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-2xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -1452,14 +1580,14 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setShowAllInvoices(false)}
             >
               <motion.div
                 initial={{ scale: 0.95, y: 50 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 50 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-4xl h-[80vh] bg-white rounded-[60px] shadow-2xl border border-black/5 p-8 md:p-12 overflow-hidden flex flex-col"
               >
                 <div className="flex items-center justify-between mb-8 shrink-0">
@@ -1488,7 +1616,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setSelectedChallan(null)}
             >
               <motion.div
@@ -1496,7 +1624,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-2xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -1544,7 +1672,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setFeedbackChallan(null)}
             >
               <motion.div
@@ -1552,7 +1680,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-lg bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden text-center"
               >
                 <div className="flex justify-end mb-4">
@@ -1596,7 +1724,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-white/60 backdrop-blur-[40px] z-[120] flex items-center justify-center p-4"
+              className="fixed inset-0 bg-white/60 backdrop-blur-xl z-[120] flex items-center justify-center p-4"
               onClick={() => setSelectedTicket(null)}
             >
               <motion.div
@@ -1604,7 +1732,7 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 50 }}
                 transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: MouseEvent) => e.stopPropagation()}
                 className="w-full max-w-2xl bg-white rounded-[40px] md:rounded-[60px] shadow-2xl border border-black/5 p-12 overflow-hidden"
               >
                 <div className="flex items-center justify-between mb-8">
@@ -1676,6 +1804,17 @@ export function ClientDashboard({ onLogout }: ClientDashboardProps) {
           <GlobalSettings onClose={() => setShowGlobalSettings(false)} />
         )}
       </AnimatePresence>
-    </div >
+
+      <AnimatePresence>
+        {showDigitalTwin && (
+          <DigitalTwinShowcase t={t} onClose={() => setShowDigitalTwin(false)} />
+        )}
+      </AnimatePresence>
+
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+      />
+    </div>
   );
 }

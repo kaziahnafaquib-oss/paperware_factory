@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
+import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
 export const WhatsAppButton = () => {
@@ -8,7 +8,7 @@ export const WhatsAppButton = () => {
   const phoneNumber = "+8801901459110";
   const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\+/g, '')}`;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;

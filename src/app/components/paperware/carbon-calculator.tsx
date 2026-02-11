@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Leaf, Recycle, Wind, Droplets, Zap, ChevronRight, Calculator, PieChart } from "lucide-react";
 
 export function CarbonCalculator() {

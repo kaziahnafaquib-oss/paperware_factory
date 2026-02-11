@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { 
@@ -49,13 +49,13 @@ export function PartnerProgramPage() {
   const blobY = useTransform(scrollY, [0, 1000], [0, -200]);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [contactNumbers, setContactNumbers] = React.useState([{ number: '', apps: [] as string[] }]);
-  const [emails, setEmails] = React.useState(['']);
-  const [attachment, setAttachment] = React.useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [contactNumbers, setContactNumbers] = useState([{ number: '', apps: [] as string[] }]);
+  const [emails, setEmails] = useState(['']);
+  const [attachment, setAttachment] = useState<File | null>(null);
 
   // Scroll animation for Partner Portal section
-  const portalSectionRef = React.useRef(null);
+  const portalSectionRef = useRef(null);
   const { scrollYProgress: portalScrollProgress } = useScroll({
     target: portalSectionRef,
     offset: ["start start", "end end"]

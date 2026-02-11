@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { ReactElement, cloneElement, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { 
   Code, 
   MessageSquare, 
@@ -32,7 +32,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 
 export function MorePage({ onPageChange }: { onPageChange: (id: string) => void }) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -239,7 +239,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
                     className="size-14 md:size-20 rounded-[22px] md:rounded-[30px] bg-white border border-black/5 flex items-center justify-center text-black group-hover:bg-[#fabf37] transition-all duration-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] group-hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
                     style={{ transform: "translateZ(40px)" }}
                   >
-                    {React.cloneElement(item.icon as React.ReactElement, { className: "size-8 md:size-10" })}
+                    {cloneElement(item.icon as ReactElement, { className: "size-8 md:size-10" })}
                   </motion.div>
                   <div className="size-10 md:size-12 rounded-full border border-black/5 flex items-center justify-center group-hover:border-[#fabf37]/30 transition-colors shadow-sm" style={{ transform: "translateZ(30px)" }}>
                     <ArrowUpRight className="size-5 md:size-6 text-zinc-300 group-hover:text-[#fabf37] transition-colors" />

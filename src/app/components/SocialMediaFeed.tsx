@@ -1,12 +1,12 @@
-import React from "react";
-import { motion } from "motion/react";
+import { useState } from 'react';
+import { motion } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Youtube, ThumbsUp, MessageCircle, Share2 } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useSocialMedia } from "../context/SocialMediaContext";
 
 export function SocialMediaFeed() {
   const { posts } = useSocialMedia();
-  const [isPaused, setIsPaused] = React.useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Filter visible posts and duplicate for infinite scroll effect
   const visiblePosts = posts.filter(p => !p.isHidden);

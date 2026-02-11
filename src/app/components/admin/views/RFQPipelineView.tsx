@@ -1,10 +1,10 @@
-import React from "react";
+import { useState } from 'react';
 import { FileText, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { ViewContainer } from "../ViewContainer";
 
 export default function RFQPipelineView() {
-  const [rfqs, setRfqs] = React.useState([
+  const [rfqs, setRfqs] = useState([
     { id: "RFQ-10293", client: "Arabica Coffee Co.", product: "8oz Double Wall", quantity: "50,000 pcs", status: "pending", time: "2h ago", value: "$4,500" },
     { id: "RFQ-10294", client: "Green Leaf Cafe", product: "Eco-Friendly Tray", quantity: "10,000 pcs", status: "reviewing", time: "4h ago", value: "$1,200" },
     { id: "RFQ-10295", client: "Global Catering", product: "Single Wall (Custom)", quantity: "250,000 pcs", status: "quoted", time: "6h ago", value: "$18,500" },

@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   MessageSquare, Star, Send, ChartBar, 
   Smile, Meh, Frown, CircleCheck, 
@@ -19,40 +19,40 @@ interface ProductFeedbackPageProps {
 
 export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps) {
   const { t } = useLanguage();
-  const [submitted, setSubmitted] = React.useState(false);
-  const [rating, setRating] = React.useState(0);
-  const [comment, setComment] = React.useState("");
-  const [isScanning, setIsScanning] = React.useState(false);
-  const [scanError, setScanError] = React.useState<string | null>(null);
-  const [manualId, setManualId] = React.useState("");
-  const [isSimulating, setIsSimulating] = React.useState(false);
-  const [hasCheckedCamera, setHasCheckedCamera] = React.useState(false);
-  const [uploadedImages, setUploadedImages] = React.useState<string[]>([]);
-  const [isCameraOpen, setIsCameraOpen] = React.useState(false);
-  const [cameraStream, setCameraStream] = React.useState<MediaStream | null>(null);
-  const videoRef = React.useRef<HTMLVideoElement>(null);
-  const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState<string | null>(null);
+  const [manualId, setManualId] = useState("");
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [hasCheckedCamera, setHasCheckedCamera] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // New states for additional features
-  const [qualityMetrics, setQualityMetrics] = React.useState({
+  const [qualityMetrics, setQualityMetrics] = useState({
     durability: 0,
     printQuality: 0,
     materialQuality: 0,
     design: 0
   });
-  const [selectedIssues, setSelectedIssues] = React.useState<string[]>([]);
-  const [comparisonRating, setComparisonRating] = React.useState<'better' | 'same' | 'worse' | null>(null);
-  const [deliveryRating, setDeliveryRating] = React.useState(0);
-  const [packagingRating, setPackagingRating] = React.useState(0);
-  const [sustainabilityRating, setSustainabilityRating] = React.useState(0);
-  const [isRecording, setIsRecording] = React.useState(false);
-  const [audioBlob, setAudioBlob] = React.useState<Blob | null>(null);
-  const [isAnonymous, setIsAnonymous] = React.useState(false);
-  const [selectedImprovements, setSelectedImprovements] = React.useState<string[]>([]);
-  const [feedbackCategory, setFeedbackCategory] = React.useState<string>("quality");
+  const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
+  const [comparisonRating, setComparisonRating] = useState<'better' | 'same' | 'worse' | null>(null);
+  const [deliveryRating, setDeliveryRating] = useState(0);
+  const [packagingRating, setPackagingRating] = useState(0);
+  const [sustainabilityRating, setSustainabilityRating] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [selectedImprovements, setSelectedImprovements] = useState<string[]>([]);
+  const [feedbackCategory, setFeedbackCategory] = useState<string>("quality");
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Check if camera is even available to prevent unnecessary errors
     if (isScanning && !hasCheckedCamera) {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -63,7 +63,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
   }, [isScanning, hasCheckedCamera]);
 
   // Cleanup camera stream on unmount
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (cameraStream) {
         cameraStream.getTracks().forEach(track => track.stop());
@@ -71,7 +71,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
     };
   }, [cameraStream]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
 
@@ -144,7 +144,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
     setUploadedImages(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);

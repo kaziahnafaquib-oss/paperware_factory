@@ -1,13 +1,13 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Box, Layers, ShieldCheck, Zap, ArrowRight, Expand, RefreshCw, Smartphone, Package, Info, CircleCheck, Factory } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 export function Catalog3DPage() {
   const { t, isRTL } = useLanguage();
-  const [selectedProduct, setSelectedProduct] = React.useState(0);
-  const [rotation, setRotation] = React.useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(0);
+  const [rotation, setRotation] = useState(0);
 
   const products = [
     {

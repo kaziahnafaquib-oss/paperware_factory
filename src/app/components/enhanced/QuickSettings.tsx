@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ReactNode, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Sliders, X, Sparkles, Eye, Mouse, Bell, Volume2 } from "lucide-react";
 
 interface QuickSettingsProps {
@@ -15,8 +15,8 @@ export function QuickSettings({
   onToggleNotifications,
   onToggleSound,
 }: QuickSettingsProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [settings, setSettings] = React.useState({
+  const [isOpen, setIsOpen] = useState(false);
+  const [settings, setSettings] = useState({
     particles: true,
     cursor: true,
     notifications: true,
@@ -122,7 +122,7 @@ function SettingToggle({
   enabled,
   onToggle,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
   description: string;
   enabled: boolean;

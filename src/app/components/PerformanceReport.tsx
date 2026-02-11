@@ -1,14 +1,14 @@
 // 📊 Performance Report Component - Live Monitoring
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 export function PerformanceReport() {
-  const [show, setShow] = React.useState(false);
-  const [fps, setFps] = React.useState(60);
-  const [bundleSize, setBundleSize] = React.useState<any>(null);
-  const [memory, setMemory] = React.useState<string>('');
-  const [networkQuality, setNetworkQuality] = React.useState<string>('fast');
+  const [show, setShow] = useState(false);
+  const [fps, setFps] = useState(60);
+  const [bundleSize, setBundleSize] = useState<any>(null);
+  const [memory, setMemory] = useState<string>('');
+  const [networkQuality, setNetworkQuality] = useState<string>('fast');
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       // Simple FPS monitor
       let lastTime = performance.now();
@@ -92,7 +92,7 @@ export function PerformanceReport() {
   }, []);
 
   // Toggle with keyboard shortcut (Ctrl+Shift+P)
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'P') {
         setShow(prev => !prev);

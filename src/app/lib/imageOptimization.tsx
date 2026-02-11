@@ -3,7 +3,7 @@
  * Provides responsive images, WebP support, and lazy loading
  */
 
-import React, { useState, useEffect, useRef, ImgHTMLAttributes } from 'react';
+import { ImgHTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 
 interface OptimizedImageProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> {
   src: string;
@@ -259,7 +259,7 @@ export function ProgressiveImage({
  */
 interface BackgroundImageProps {
   src: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   className?: string;
   overlay?: boolean;
   overlayOpacity?: number;

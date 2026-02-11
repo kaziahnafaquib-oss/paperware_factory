@@ -192,9 +192,9 @@ export function trackWebVitals() {
     // Largest Contentful Paint (LCP)
     const lcpObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
+      const lastEntry = entries[entries.length - 1] as any;
       const lcp = lastEntry.renderTime || lastEntry.loadTime;
-      
+
       trackEvent('web_vitals', {
         metric_name: 'LCP',
         metric_value: Math.round(lcp),
@@ -213,7 +213,7 @@ export function trackWebVitals() {
       const entries = list.getEntries();
       entries.forEach((entry: any) => {
         const fid = entry.processingStart - entry.startTime;
-        
+
         trackEvent('web_vitals', {
           metric_name: 'FID',
           metric_value: Math.round(fid),
@@ -236,7 +236,7 @@ export function trackWebVitals() {
           clsScore += entry.value;
         }
       }
-      
+
       trackEvent('web_vitals', {
         metric_name: 'CLS',
         metric_value: Math.round(clsScore * 1000) / 1000,
@@ -260,7 +260,7 @@ export function setupInteractionTracking() {
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
     const link = target.closest('a');
-    
+
     if (link && link.hostname !== window.location.hostname) {
       trackEvent('outbound_link', {
         link_url: link.href,
@@ -278,9 +278,9 @@ export function setupInteractionTracking() {
     const scrollPercent = Math.round(
       ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight) * 100
     );
-    
+
     maxScroll = Math.max(maxScroll, scrollPercent);
-    
+
     scrollMilestones.forEach(milestone => {
       if (maxScroll >= milestone && !trackedMilestones.has(milestone)) {
         trackedMilestones.add(milestone);
@@ -293,10 +293,10 @@ export function setupInteractionTracking() {
 
   // Track time on page
   let startTime = Date.now();
-  
+
   const trackTimeOnPage = () => {
     const timeSpent = Math.round((Date.now() - startTime) / 1000);
-    
+
     if (timeSpent > 10) { // Only track if spent more than 10 seconds
       trackEvent('time_on_page', {
         seconds: timeSpent,
@@ -316,9 +316,9 @@ export function initializeFacebookPixel(pixelId: string) {
   if (isDev) return;
 
   // Load Facebook Pixel
-  (function(f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
+  (function (f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
     if (f.fbq) return;
-    n = f.fbq = function() {
+    n = f.fbq = function () {
       n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
     };
     if (!f._fbq) f._fbq = n;
@@ -351,4 +351,78 @@ export function trackDeviceInfo() {
   };
 
   trackEvent('device_info', deviceInfo);
+}
+
+/**
+ * 🎥 Advanced User Engagement Recording (Session Replay)
+ */
+import * as rrweb from 'rrweb';
+import { projectId, publicAnonKey } from "../../../utils/supabase/info";
+
+export function setupSessionRecording() {
+  const isDev = typeof import.meta !== 'undefined' && import.meta.env?.DEV;
+  if (isDev) return; // Uncomment to disable in dev
+
+  const userId = localStorage.getItem('paperware_visitor_id') || `user_${Math.random().toString(36).substring(2, 11)}`;
+  localStorage.setItem('paperware_visitor_id', userId);
+
+  let events: any[] = [];
+
+  // Start recording
+  const stopFn = rrweb.record({
+    emit(event) {
+      events.push(event);
+      // Optional: limit queue size
+      if (events.length > 500) {
+        uploadSession();
+      }
+    },
+    // Don't record sensitive fields
+    checkoutEveryNms: 30000, // New snapshot every 30s
+  });
+
+  const uploadSession = async () => {
+    if (events.length === 0) return;
+
+    const sessionData = [...events];
+    events = []; // Clear for next batch
+
+    const metadata = {
+      userId,
+      timestamp: new Date().toISOString(),
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      screenWidth: window.screen.width,
+      screenHeight: window.screen.height,
+      duration: Math.round(performance.now() / 1000)
+    };
+
+    try {
+      await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5/engagement/sessions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${publicAnonKey}`
+        },
+        body: JSON.stringify({ sessionData, metadata })
+      });
+      console.log('🎥 Session chunk uploaded');
+    } catch (error) {
+      console.warn('Failed to upload session chunk:', error);
+      // Restore events if upload failed
+      // events = [...sessionData, ...events]; 
+    }
+  };
+
+  // Upload on page leave
+  window.addEventListener('beforeunload', uploadSession);
+
+  // Periodic upload every 60 seconds
+  const interval = setInterval(uploadSession, 60000);
+
+  return () => {
+    if (stopFn) stopFn();
+    clearInterval(interval);
+    uploadSession();
+  };
 }

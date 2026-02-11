@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Terminal, Cpu, Database, Activity, 
   RefreshCw, ShieldCheck, Zap, ArrowUpRight
@@ -14,16 +14,16 @@ interface LogEntry {
 }
 
 export function ERPSyncTerminal() {
-  const [logs, setLogs] = React.useState<LogEntry[]>([]);
-  const [metrics, setMetrics] = React.useState({
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [metrics, setMetrics] = useState({
     throughput: 1240,
     latency: 12,
     syncRate: 99.9,
     activeLines: 24
   });
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sources = ["LINE_01", "LINE_04", "QC_SCAN_3", "LOGISTICS_HUB", "INVENTORY_SYNC"];
     const messages = [
       "Substrate feed alignment optimized.",
@@ -51,7 +51,7 @@ export function ERPSyncTerminal() {
     return () => clearInterval(interval);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setMetrics(prev => ({
         throughput: prev.throughput + Math.floor(Math.random() * 10 - 5),
@@ -63,7 +63,7 @@ export function ERPSyncTerminal() {
     return () => clearInterval(interval);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }

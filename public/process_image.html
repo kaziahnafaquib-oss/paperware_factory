@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <img id="source" src="temp_source.png" style="display:none;" onload="processImage()">
+    <div id="output"></div>
+    <script>
+        function processImage() {
+            const img = document.getElementById('source');
+            const canvas = document.createElement('canvas');
+            // Reduce size to 96x96 to ensure base64 fits in response
+            const size = 96;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Draw circle mask
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.clip();
+
+            // Draw image centered and scaled to cover
+            const scale = Math.max(size / img.width, size / img.height);
+            const x = (size - (img.width * scale)) / 2;
+            const y = (size - (img.height * scale)) / 2;
+
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+            // Get base64 (strip prefix)
+            const dataURL = canvas.toDataURL('image/png');
+            const base64 = dataURL.replace(/^data:image\/png;base64,/, '');
+
+            document.getElementById('output').innerText = base64;
+        }
+    </script>
+</body>
+
+</html>

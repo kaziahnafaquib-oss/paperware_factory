@@ -1,10 +1,10 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 
 export function AdvancedLoader() {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Instant loading - blazing fast!
     const timer = setTimeout(() => {
       setIsLoading(false);

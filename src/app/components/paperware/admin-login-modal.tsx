@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState, type FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Lock, Mail, Eye, EyeOff, ArrowRight, ShieldCheck, Activity, Bot, Sparkles, Terminal } from "lucide-react";
 
 interface AdminLoginModalProps {
@@ -9,11 +9,11 @@ interface AdminLoginModalProps {
 }
 
 export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalProps) {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onLogin();
   };
@@ -22,14 +22,14 @@ export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalPro
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
             className="absolute inset-0 bg-black/80 backdrop-blur-2xl"
           />
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -38,8 +38,8 @@ export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalPro
           >
             {/* Top Branding Bar */}
             <div className="h-2 bg-[#fabf37] w-full" />
-            
-            <button 
+
+            <button
               onClick={onClose}
               className="absolute top-8 right-8 size-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all z-10"
             >
@@ -66,13 +66,13 @@ export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalPro
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Authorized Email</label>
                   <div className="relative">
                     <Mail className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
-                    <input 
-                      required 
-                      type="email" 
+                    <input
+                      required
+                      type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="admin@paperware.global" 
-                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-14 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" 
+                      placeholder="admin@paperware.global"
+                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-14 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -81,16 +81,16 @@ export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalPro
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Access Secret</label>
                   <div className="relative">
                     <Lock className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
-                    <input 
-                      required 
-                      type={showPassword ? "text" : "password"} 
+                    <input
+                      required
+                      type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••" 
-                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-14 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" 
+                      placeholder="••••••••"
+                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-14 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all"
                     />
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-[#fabf37] transition-colors"
                     >
@@ -105,7 +105,7 @@ export function AdminLoginModal({ isOpen, onClose, onLogin }: AdminLoginModalPro
                 </button>
 
                 {/* Bypass Login for Testing */}
-                <button 
+                <button
                   type="button"
                   onClick={onLogin}
                   className="w-full py-4 mt-4 bg-white/5 text-zinc-500 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-3 hover:bg-white/10 hover:text-white transition-all border border-white/5"

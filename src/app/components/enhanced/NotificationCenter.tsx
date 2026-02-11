@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Bell, X, CheckCircle, AlertCircle, Info, XCircle } from "lucide-react";
 
 interface Notification {
@@ -11,8 +11,8 @@ interface Notification {
 }
 
 export function NotificationCenter() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [notifications, setNotifications] = React.useState<Notification[]>([
+  const [isOpen, setIsOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: "1",
       type: "success",

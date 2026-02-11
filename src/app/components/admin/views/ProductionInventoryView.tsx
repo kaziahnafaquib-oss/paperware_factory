@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from 'react';
 import { 
   Activity, 
   Box, 
@@ -17,7 +17,7 @@ import {
   AlertTriangle,
   CheckCircle2
 } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 // Mock Data
@@ -76,7 +76,7 @@ const products = [
 ];
 
 export default function ProductionInventoryView() {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   
   const handleExport = () => {
     toast.promise(

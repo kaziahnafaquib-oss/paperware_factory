@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import ReactDOM from "react-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Shield, FileText, Lock, Download, Eye, Trash2, Upload, Search, Filter, Calendar, File, FileCheck, FileLock, Award, CheckCircle2, Clock, Share2, Copy, Mail, MessageCircle, Link } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from '../../context/LanguageContext';
 
 interface DigitalVaultProps {
   onClose: () => void;
 }
 
 export function DigitalVault({ onClose }: DigitalVaultProps) {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [shareMenuOpen, setShareMenuOpen] = useState<string | null>(null);
   const [previewDocument, setPreviewDocument] = useState<any>(null);
 
   const categories = [
-    { id: "all", label: "All Documents", count: 24 },
+    { id: "all", label: t('portal_all_documents'), count: 24 },
     { id: "contracts", label: "Contracts", count: 8 },
     { id: "invoices", label: "Invoices", count: 12 },
     { id: "certificates", label: "Certificates", count: 4 },
@@ -104,7 +106,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     toast.success(`Download Started!`, {
       description: `${docName}.pdf is being downloaded`,
     });
@@ -154,7 +156,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ type: "spring", stiffness: 500, damping: 25 }}
         className="fixed inset-2 md:inset-4 lg:inset-8 bg-white rounded-2xl shadow-2xl z-[10000] overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: MouseEvent) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="px-4 md:px-5 py-3 border-b border-black/5 flex items-center justify-between bg-gradient-to-r from-blue-50 to-white shrink-0">
@@ -163,7 +165,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
               <Shield className="size-2.5 text-blue-600" />
               <p className="text-[6px] font-[900] uppercase tracking-[0.3em] text-zinc-400">Secure Document Storage</p>
             </div>
-            <h2 className="text-base md:text-lg font-[900] uppercase tracking-tight text-black">Digital Vault</h2>
+            <h2 className="text-base md:text-lg font-[900] uppercase tracking-tight text-black">{t('portal_digital_vault')}</h2>
           </div>
           <button
             onClick={onClose}
@@ -183,7 +185,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search documents..."
+                placeholder={t('portal_search_docs')}
                 className="w-full pl-9 pr-3 py-2 bg-white border border-black/5 rounded-xl text-[11px] font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 text-[rgb(0,0,0)]"
               />
             </div>
@@ -191,7 +193,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
             {/* Upload Button */}
             <button className="px-4 py-2 bg-black text-white text-[9px] font-semibold uppercase tracking-wider rounded-xl hover:bg-[#fabf37] hover:text-black transition-all flex items-center gap-1.5">
               <Upload className="size-3" />
-              Upload Document
+              {t('portal_upload_document')}
             </button>
           </div>
 
@@ -201,11 +203,10 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-full text-[9px] font-semibold uppercase tracking-wider transition-all ${
-                  selectedCategory === cat.id
+                className={`px-3 py-1.5 rounded-full text-[9px] font-semibold uppercase tracking-wider transition-all ${selectedCategory === cat.id
                     ? "bg-blue-600 text-white"
                     : "bg-white text-zinc-600 border border-black/5 hover:bg-zinc-100"
-                }`}
+                  }`}
               >
                 {cat.label} ({cat.count})
               </button>
@@ -225,7 +226,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-3">
-                  <div 
+                  <div
                     onClick={() => setPreviewDocument(doc)}
                     className="flex items-start gap-3 flex-1 cursor-pointer"
                   >
@@ -257,13 +258,12 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
                 {/* Status Badge */}
                 <div className="mb-3">
                   <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-semibold uppercase tracking-wider ${
-                      doc.status === "Active" || doc.status === "Valid" || doc.status === "Paid"
+                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-semibold uppercase tracking-wider ${doc.status === "Active" || doc.status === "Valid" || doc.status === "Paid"
                         ? "bg-green-50 text-green-600 border border-green-200"
                         : doc.status === "Pending"
-                        ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
-                        : "bg-blue-50 text-blue-600 border border-blue-200"
-                    }`}
+                          ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                          : "bg-blue-50 text-blue-600 border border-blue-200"
+                      }`}
                   >
                     <CheckCircle2 className="size-2.5" />
                     {doc.status}
@@ -353,7 +353,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
   return ReactDOM.createPortal(
     <>
       {modalContent}
-      
+
       {/* Document Preview Modal */}
       <AnimatePresence>
         {previewDocument && (
@@ -373,7 +373,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 40 }}
               transition={{ type: "spring", damping: 20, stiffness: 500 }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: MouseEvent) => e.stopPropagation()}
               className="fixed inset-0 bg-white z-[10200] overflow-hidden flex flex-col"
             >
               {/* Preview Header */}
@@ -391,13 +391,12 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
                       <p className="text-[9px] font-semibold uppercase tracking-wider text-zinc-400">{previewDocument.type} • {previewDocument.id}</p>
                       <div className="flex items-center gap-2 mt-1.5">
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-semibold uppercase tracking-wider ${
-                            previewDocument.status === "Active" || previewDocument.status === "Valid" || previewDocument.status === "Paid"
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[8px] font-semibold uppercase tracking-wider ${previewDocument.status === "Active" || previewDocument.status === "Valid" || previewDocument.status === "Paid"
                               ? "bg-green-50 text-green-600 border border-green-200"
                               : previewDocument.status === "Pending"
-                              ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
-                              : "bg-blue-50 text-blue-600 border border-blue-200"
-                          }`}
+                                ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                                : "bg-blue-50 text-blue-600 border border-blue-200"
+                            }`}
                         >
                           <CheckCircle2 className="size-2.5" />
                           {previewDocument.status}

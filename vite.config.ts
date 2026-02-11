@@ -6,20 +6,21 @@ import path from 'path'
 export default defineConfig({
   plugins: [
     react({
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
       babel: {
-        plugins: [
-          // Enable automatic JSX runtime optimization
-          ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
-        ]
+        plugins: []
       }
     }),
     tailwindcss(),
   ],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      'figma:asset': path.resolve(__dirname, './src/assets'),
-    },
+    alias: [
+      { find: '@', replacement: path.resolve(process.cwd(), './src') },
+      { find: 'figma:asset', replacement: path.resolve(process.cwd(), './src/assets') },
+    ],
+    // CRITICAL: Deduplicate React to prevent multiple instances
+    dedupe: ['react', 'react-dom', 'framer-motion', 'use-sync-external-store'],
   },
   build: {
     // Optimize chunk splitting for better caching
@@ -28,7 +29,7 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks for better caching
           'react-vendor': ['react', 'react-dom'],
-          'motion-vendor': ['motion'],
+          'motion-vendor': ['framer-motion'],
           'ui-vendor': [
             '@radix-ui/react-accordion',
             '@radix-ui/react-alert-dialog',
@@ -47,18 +48,26 @@ export default defineConfig({
     // Enable source maps for debugging (can be disabled for production)
     sourcemap: false,
   },
-  // Optimize dependencies
+  // Optimize dependencies - CRITICAL for React hook stability
   optimizeDeps: {
     include: [
       'react',
       'react-dom',
-      'motion',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
+      'framer-motion',
       'lucide-react',
+      'rrweb',
+      'rrweb-player',
     ],
     exclude: ['@react-three/fiber', '@react-three/drei', 'three'],
+    // Force optimization on every start to prevent cache issues
+    force: true,
   },
   // Server configuration
   server: {
+    port: 5174,
+    host: true,
     hmr: {
       overlay: true,
     },

@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { 
   ArrowRight, Sparkles, ShieldCheck, Thermometer, Leaf, Zap, 
   Settings, Box, Truck, CheckCircle2, Recycle, Globe, MapPin,
@@ -107,12 +107,12 @@ export function PaperCupsPage({
   videoUrl?: string;
   videoUrls?: any[];
 }) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [cupCount, setCupCount] = React.useState(50000);
-  const [activeStudioColor, setActiveStudioColor] = React.useState("#ffffff");
-  const [logoUrl, setLogoUrl] = React.useState<string | null>(null);
-  const [rotation, setRotation] = React.useState({ x: 0, y: 0 });
-  const [heroRotation, setHeroRotation] = React.useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [cupCount, setCupCount] = useState(50000);
+  const [activeStudioColor, setActiveStudioColor] = useState("#ffffff");
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [heroRotation, setHeroRotation] = useState({ x: 0, y: 0 });
   const { t } = useLanguage();
 
   const handleGetCertificate = () => {
@@ -126,14 +126,14 @@ export function PaperCupsPage({
   };
 
   // Scroll logic for Hero Cup (Exiting)
-  const heroRef = React.useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
 
   // Scroll logic for Blueprint Section (Landing)
-  const blueprintRef = React.useRef<HTMLDivElement>(null);
+  const blueprintRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: blueprintScroll } = useScroll({
     target: blueprintRef,
     offset: ["start end", "center center"]
@@ -159,7 +159,7 @@ export function PaperCupsPage({
   const blueprintCupRotate = useTransform(smoothBlueprint, [0, 1], [-15, 0]);
   const boxShadowOpacity = useTransform(smoothBlueprint, [0.8, 1], [0, 0.6]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     // Increased range for a more dynamic 360-degree interactive feel
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 160; 
@@ -171,7 +171,7 @@ export function PaperCupsPage({
     setRotation({ x: 0, y: 0 });
   };
 
-  const handleHeroMouseMove = (e: React.MouseEvent) => {
+  const handleHeroMouseMove = (e: ReactMouseEvent) => {
     const { clientX, clientY, currentTarget } = e;
     const { width, height, left, top } = currentTarget.getBoundingClientRect();
     const x = ((clientX - left) / width - 0.5) * 40;

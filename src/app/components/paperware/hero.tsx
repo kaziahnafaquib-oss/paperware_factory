@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { memo, useEffect, useMemo, useState } from 'react';
+import { motion } from "framer-motion";
 import { Download, ArrowRight } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -12,7 +12,7 @@ interface HeroProps {
   subtitle2?: string;
 }
 
-export const Hero = React.memo(function Hero({
+export const Hero = memo(function Hero({
   onExplore,
   videoUrl,
   mobileVideoUrl,
@@ -21,22 +21,22 @@ export const Hero = React.memo(function Hero({
   subtitle2,
 }: HeroProps) {
   const { t } = useLanguage();
-  const [isMobile, setIsMobile] = React.useState(false);
-  const [videoLoaded, setVideoLoaded] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
-    
+
     // Use requestIdleCallback for non-urgent resize check
     let timeoutId: any;
     const handleResize = () => {
       if (timeoutId) cancelAnimationFrame(timeoutId);
       timeoutId = requestAnimationFrame(checkMobile);
     };
-    
+
     window.addEventListener("resize", handleResize, { passive: true });
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -44,9 +44,9 @@ export const Hero = React.memo(function Hero({
     };
   }, []);
 
-  const activeVideo = React.useMemo(() => 
+  const activeVideo = useMemo(() =>
     (isMobile && mobileVideoUrl) ? mobileVideoUrl : videoUrl
-  , [isMobile, mobileVideoUrl, videoUrl]);
+    , [isMobile, mobileVideoUrl, videoUrl]);
 
   return (
     <section className="relative min-h-[85vh] md:min-h-screen flex flex-col items-center justify-center pt-20 md:pt-24 pb-16 md:pb-24 overflow-hidden bg-[#fabf37]">
@@ -64,7 +64,8 @@ export const Hero = React.memo(function Hero({
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
+              poster="/Users/kazi.ahnaf.aquib/.gemini/antigravity/brain/af3e4491-f1f4-4d4e-bc14-f7809e749edc/hero_video_poster_1769602402026.png"
               onLoadedData={() => setVideoLoaded(true)}
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
@@ -72,13 +73,24 @@ export const Hero = React.memo(function Hero({
               suppressHydrationWarning
               ref={(el) => {
                 if (!el) return;
-                const startVideo = () => {
-                  if (window.scrollY > 20) {
-                    el.play().catch(() => {});
-                    window.removeEventListener('scroll', startVideo);
+                // Auto-play when ready if visible
+                const handlePlay = () => {
+                  if (el.paused) {
+                    el.play().catch(() => { });
                   }
                 };
-                window.addEventListener('scroll', startVideo);
+
+                if (window.scrollY < 100) {
+                  handlePlay();
+                } else {
+                  const startVideo = () => {
+                    if (window.scrollY < 500) {
+                      handlePlay();
+                      window.removeEventListener('scroll', startVideo);
+                    }
+                  };
+                  window.addEventListener('scroll', startVideo, { passive: true });
+                }
               }}
               className={`w-full h-full object-cover opacity-50 mix-blend-multiply grayscale transition-opacity duration-1000 ${videoLoaded ? 'opacity-50' : 'opacity-0'}`}
             />
@@ -117,7 +129,7 @@ export const Hero = React.memo(function Hero({
               {t("premium_manufacturing")}
             </motion.span>
             <h1 className="text-[32px] sm:text-[45px] md:text-[96px] font-black text-white leading-[0.95] uppercase tracking-tighter drop-shadow-2xl">
-              {title || t("hero_title")}
+              {t("hero_title")}
             </h1>
           </div>
 
@@ -137,10 +149,10 @@ export const Hero = React.memo(function Hero({
             className="max-w-4xl mx-auto space-y-4 px-4"
           >
             <p className="text-[14px] md:text-[26px] font-black text-black leading-tight uppercase tracking-tighter">
-              {subtitle1 || t("hero_subtitle_1")}
+              {t("hero_subtitle_1")}
             </p>
             <p className="text-[12px] md:text-[18px] font-bold text-white/90 leading-relaxed tracking-widest uppercase">
-              {subtitle2 || t("hero_subtitle_2")}
+              {t("hero_subtitle_2")}
             </p>
           </motion.div>
 
@@ -173,7 +185,7 @@ export const Hero = React.memo(function Hero({
                 strokeWidth={3}
               />
               <span>{t("e_brochure")}</span>
-              
+
               {/* HUD Decor within button */}
               <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#fabf37] opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#fabf37] opacity-0 group-hover:opacity-100 transition-opacity" />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import {
   Download,
   Map,
@@ -34,7 +34,7 @@ import {
   Pie,
   Cell
 } from "recharts";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { projectId, publicAnonKey } from "../../../../../utils/supabase/info";
 import { supabase } from "../../../../../utils/supabase/client";
 import { toast } from "sonner";
@@ -54,7 +54,7 @@ export const BrochureAnalyticsView = () => {
   const [logs, setLogs] = useState<DownloadLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -78,7 +78,7 @@ export const BrochureAnalyticsView = () => {
     fetchLogs();
   }, []);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 

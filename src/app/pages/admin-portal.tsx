@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Trash2, Image as ImageIcon, Users, X, Edit2, Check, MessageSquare, TrendingUp, Ticket, CheckCircle, XCircle, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
@@ -122,7 +122,7 @@ export function AdminPortal() {
     }
   };
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "logo" | "team") => {
+  const handleFileUpload = async (e: ChangeEvent<HTMLInputElement>, type: "logo" | "team") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Trash2, Plus, Minus, FileText,
   ShieldCheck, Factory, ArrowRight,
@@ -14,7 +14,7 @@ interface QuotationBasketPageProps {
 }
 
 export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder }: QuotationBasketPageProps) {
-  const [items, setItems] = React.useState(basket.map((p, i) => ({ 
+  const [items, setItems] = useState(basket.map((p, i) => ({ 
     ...p, 
     qty: 1000, 
     grade: "Premium Swedish Pulp",
@@ -26,15 +26,15 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
   })));
 
   // State to track carousel hover
-  const [isCarouselHovered, setIsCarouselHovered] = React.useState(false);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
   // Ensure scroll starts from the absolute top on mount
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   // Sync state if basket changes
-  React.useEffect(() => {
+  useEffect(() => {
     setItems(basket.map((p, i) => ({ 
       ...p, 
       qty: 1000, 

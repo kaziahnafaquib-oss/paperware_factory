@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Leaf, Droplets, Wind, Zap, ChartBar, Globe, Award, Recycle, TreePine, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";

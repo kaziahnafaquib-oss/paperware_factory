@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import ReactDOM from "react-dom";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { X, Package, Search, Filter, Calendar, Truck, CheckCircle2, Clock, XCircle, Download, Eye, RefreshCw, MapPin, DollarSign, Box } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from '../../context/LanguageContext';
 
 interface OrderHistoryProps {
   onClose: () => void;
 }
 
 export function OrderHistory({ onClose }: OrderHistoryProps) {
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
   const statusOptions = [
-    { id: "all", label: "All Orders", count: 847 },
+    { id: "all", label: t('portal_all_orders'), count: 847 },
     { id: "delivered", label: "Delivered", count: 782 },
     { id: "in-transit", label: "In Transit", count: 43 },
     { id: "processing", label: "Processing", count: 18 },
@@ -102,7 +104,7 @@ export function OrderHistory({ onClose }: OrderHistoryProps) {
   ];
 
   const filteredOrders = orders.filter(order => {
-    const matchesSearch = 
+    const matchesSearch =
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.product.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter === "all" || order.status === statusFilter;
@@ -145,7 +147,7 @@ export function OrderHistory({ onClose }: OrderHistoryProps) {
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ type: "spring", stiffness: 500, damping: 25 }}
         className="fixed inset-2 md:inset-4 lg:inset-8 bg-white rounded-3xl shadow-2xl z-[10000] overflow-hidden flex flex-col"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: MouseEvent) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="px-5 md:px-6 py-4 border-b border-black/5 flex items-center justify-between bg-gradient-to-r from-orange-50 to-white shrink-0">
@@ -154,7 +156,7 @@ export function OrderHistory({ onClose }: OrderHistoryProps) {
               <Package className="size-3 text-orange-600" />
               <p className="text-[7px] font-[900] uppercase tracking-[0.3em] text-zinc-400">Complete Order Timeline</p>
             </div>
-            <h2 className="text-xl md:text-2xl font-[900] uppercase tracking-tight text-black">Order History</h2>
+            <h2 className="text-xl md:text-2xl font-[900] uppercase tracking-tight text-black">{t('portal_order_history')}</h2>
           </div>
           <button
             onClick={onClose}
@@ -186,18 +188,16 @@ export function OrderHistory({ onClose }: OrderHistoryProps) {
               <button
                 key={status.id}
                 onClick={() => setStatusFilter(status.id)}
-                className={`px-3 py-1.5 rounded-lg text-[10px] font-[800] uppercase tracking-wider transition-all ${
-                  statusFilter === status.id
-                    ? "bg-black text-white shadow-md"
-                    : "bg-white text-zinc-600 border border-zinc-200 hover:border-black hover:bg-zinc-50"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-[10px] font-[800] uppercase tracking-wider transition-all ${statusFilter === status.id
+                  ? "bg-black text-white shadow-md"
+                  : "bg-white text-zinc-600 border border-zinc-200 hover:border-black hover:bg-zinc-50"
+                  }`}
               >
                 <span className="opacity-70">{status.label}</span>
-                <span className={`ml-1.5 px-1.5 py-0.5 rounded text-[8px] font-[900] ${
-                  statusFilter === status.id
-                    ? "bg-white/20 text-white"
-                    : "bg-zinc-100 text-zinc-500"
-                }`}>
+                <span className={`ml-1.5 px-1.5 py-0.5 rounded text-[8px] font-[900] ${statusFilter === status.id
+                  ? "bg-white/20 text-white"
+                  : "bg-zinc-100 text-zinc-500"
+                  }`}>
                   {status.count}
                 </span>
               </button>
@@ -224,15 +224,14 @@ export function OrderHistory({ onClose }: OrderHistoryProps) {
                       <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{order.date}</p>
                     </div>
                     <span
-                      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider ${
-                        order.color === "green"
-                          ? "bg-green-50 text-green-600 border border-green-200"
-                          : order.color === "blue"
+                      className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider ${order.color === "green"
+                        ? "bg-green-50 text-green-600 border border-green-200"
+                        : order.color === "blue"
                           ? "bg-blue-50 text-blue-600 border border-blue-200"
                           : order.color === "yellow"
-                          ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
-                          : "bg-red-50 text-red-600 border border-red-200"
-                      }`}
+                            ? "bg-yellow-50 text-yellow-600 border border-yellow-200"
+                            : "bg-red-50 text-red-600 border border-red-200"
+                        }`}
                     >
                       <order.icon className="size-4" />
                       {order.statusLabel}

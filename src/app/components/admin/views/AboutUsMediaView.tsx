@@ -1,8 +1,8 @@
-import React from "react";
+import { memo, useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { Youtube, Video, Save, RefreshCw, Eye, Play, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface AboutUsMediaViewProps {
   aboutUsVideos?: {
@@ -20,16 +20,16 @@ interface AboutUsMediaViewProps {
 }
 
 export function AboutUsMediaView({ aboutUsVideos = {}, onUpdateAboutUsVideos }: AboutUsMediaViewProps) {
-  const [heroBackgroundUrl, setHeroBackgroundUrl] = React.useState(aboutUsVideos.heroBackground || '');
-  const [heroBackgroundType, setHeroBackgroundType] = React.useState<'image' | 'video' | 'youtube'>(aboutUsVideos.heroBackgroundType || 'image');
+  const [heroBackgroundUrl, setHeroBackgroundUrl] = useState(aboutUsVideos.heroBackground || '');
+  const [heroBackgroundType, setHeroBackgroundType] = useState<'image' | 'video' | 'youtube'>(aboutUsVideos.heroBackgroundType || 'image');
   
-  const [smartManufacturingUrl, setSmartManufacturingUrl] = React.useState(aboutUsVideos.smartManufacturing || '');
-  const [smartManufacturingType, setSmartManufacturingType] = React.useState<'image' | 'video' | 'youtube'>(aboutUsVideos.smartManufacturingType || 'image');
+  const [smartManufacturingUrl, setSmartManufacturingUrl] = useState(aboutUsVideos.smartManufacturing || '');
+  const [smartManufacturingType, setSmartManufacturingType] = useState<'image' | 'video' | 'youtube'>(aboutUsVideos.smartManufacturingType || 'image');
   
-  const [galleryVideos, setGalleryVideos] = React.useState(aboutUsVideos.galleryVideos || []);
-  const [newGalleryUrl, setNewGalleryUrl] = React.useState('');
-  const [newGalleryType, setNewGalleryType] = React.useState<'image' | 'video' | 'youtube'>('image');
-  const [newGalleryAlt, setNewGalleryAlt] = React.useState('');
+  const [galleryVideos, setGalleryVideos] = useState(aboutUsVideos.galleryVideos || []);
+  const [newGalleryUrl, setNewGalleryUrl] = useState('');
+  const [newGalleryType, setNewGalleryType] = useState<'image' | 'video' | 'youtube'>('image');
+  const [newGalleryAlt, setNewGalleryAlt] = useState('');
 
   const handleSave = () => {
     if (onUpdateAboutUsVideos) {
@@ -322,4 +322,4 @@ export function AboutUsMediaView({ aboutUsVideos = {}, onUpdateAboutUsVideos }: 
   );
 }
 
-export default React.memo(AboutUsMediaView);
+export default memo(AboutUsMediaView);

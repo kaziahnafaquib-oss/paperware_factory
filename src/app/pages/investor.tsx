@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { ReactNode } from 'react';
+import { motion } from "framer-motion";
 import { TrendingUp, Database, ChartBar, CircleCheck as CheckCircle2 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -31,7 +31,7 @@ const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) =>
   </section>
 );
 
-const ContentBlock = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+const ContentBlock = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
   <section className={`py-20 px-4 bg-white ${className}`}>
     <div className="container mx-auto max-w-6xl">
       {children}

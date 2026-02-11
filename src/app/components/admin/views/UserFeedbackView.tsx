@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { Star, MessageSquare, ThumbsUp, ThumbsDown, Search, Filter, Mail, User, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ShareStatsModal } from "../share-stats-modal";
 
 const initialFeedback = [
@@ -53,9 +53,9 @@ const initialFeedback = [
 ];
 
 export function UserFeedbackView() {
-  const [feedback, setFeedback] = React.useState(initialFeedback);
-  const [filter, setFilter] = React.useState("All");
-  const [showShareModal, setShowShareModal] = React.useState(false);
+  const [feedback, setFeedback] = useState(initialFeedback);
+  const [filter, setFilter] = useState("All");
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const handleStatusChange = (id: number, newStatus: string) => {
     setFeedback(prev => prev.map(f => f.id === id ? { ...f, status: newStatus } : f));

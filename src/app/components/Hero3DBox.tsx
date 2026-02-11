@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
 
 // Import provided Figma assets
 import iconSheetImg from "figma:asset/135e5c818885312b22073a240021cd1b9d50f297.png";
@@ -13,13 +13,13 @@ const iconPositions = [
 ];
 
 export function Hero3DBox() {
-  const [boxRotation, setBoxRotation] = React.useState({ x: 20, y: 0 });
+  const [boxRotation, setBoxRotation] = useState({ x: 20, y: 0 });
   
   // Independent indices for each face to allow staggered updates
   // 0: Front, 1: Right, 2: Back, 3: Left
-  const [faceIndices, setFaceIndices] = React.useState([0, 1, 2, 3]);
+  const [faceIndices, setFaceIndices] = useState([0, 1, 2, 3]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
         const { clientX, clientY } = e;
         const centerX = window.innerWidth / 2;
@@ -34,7 +34,7 @@ export function Hero3DBox() {
   }, []);
 
   // Update faces one by one (staggered effect)
-  React.useEffect(() => {
+  useEffect(() => {
     let step = 0;
     const interval = setInterval(() => {
       setFaceIndices(prev => {

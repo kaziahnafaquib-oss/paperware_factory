@@ -4,7 +4,7 @@ type WrapperProps = {
   additionalClassNames?: string;
 };
 
-function Wrapper({ children, additionalClassNames = "" }: React.PropsWithChildren<WrapperProps>) {
+function Wrapper({ children, additionalClassNames = "" }: PropsWithChildren<WrapperProps>) {
   return (
     <div className={clsx("relative shrink-0", additionalClassNames)}>
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-end relative w-full">{children}</div>

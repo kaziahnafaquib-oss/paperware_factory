@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
+import { MouseEvent as ReactMouseEvent, ReactNode, useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 import { 
   Globe, Ship, Handshake, ArrowRight, Mail, ShieldCheck, TrendingUp,
   Leaf, Search, Check, Box, Plane, Truck
@@ -9,7 +9,7 @@ import bangladeshFlagImage from 'figma:asset/ce6bea61e31dd50e8cbf06060db17726c1c
 import paperwareShippingImage from 'figma:asset/19e5679ad58f7a50390ebe911dd3186e6a891ce7.png';
 
 // --- 3D Tilt Component with Glare - REDUCED ROTATION FOR SMOOTH EXPERIENCE ---
-const TiltCard = ({ children, className = "", glare = true }: { children: React.ReactNode; className?: string, glare?: boolean }) => {
+const TiltCard = ({ children, className = "", glare = true }: { children: ReactNode; className?: string, glare?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -25,7 +25,7 @@ const TiltCard = ({ children, className = "", glare = true }: { children: React.
   const glareY = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
   const glareOpacity = useTransform(mouseX, [-0.5, 0.5], [0, 0.2]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const width = rect.width;

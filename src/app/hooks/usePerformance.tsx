@@ -1,7 +1,7 @@
-import React from 'react';
+import { ComponentType, ReactNode, RefObject, memo, useEffect, useRef, useState } from 'react';
 
 interface IntersectionObserverWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
   threshold?: number;
   rootMargin?: string;
   triggerOnce?: boolean;
@@ -21,10 +21,10 @@ export function IntersectionObserverWrapper({
   className = '',
   onIntersect,
 }: IntersectionObserverWrapperProps) {
-  const [isIntersecting, setIsIntersecting] = React.useState(false);
-  const ref = React.useRef<HTMLDivElement>(null);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!ref.current) return;
 
     const observer = new IntersectionObserver(
@@ -60,19 +60,19 @@ export function IntersectionObserverWrapper({
  * Memoized version of a component to prevent unnecessary re-renders
  */
 export function withMemo<P extends object>(
-  Component: React.ComponentType<P>,
+  Component: ComponentType<P>,
   propsAreEqual?: (prevProps: Readonly<P>, nextProps: Readonly<P>) => boolean
 ) {
-  return React.memo(Component, propsAreEqual);
+  return memo(Component, propsAreEqual);
 }
 
 /**
  * Custom hook for debounced values
  */
 export function useDebouncedValue<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
@@ -89,10 +89,10 @@ export function useDebouncedValue<T>(value: T, delay: number): T {
  * Custom hook for throttled values
  */
 export function useThrottledValue<T>(value: T, limit: number): T {
-  const [throttledValue, setThrottledValue] = React.useState<T>(value);
-  const lastRan = React.useRef(Date.now());
+  const [throttledValue, setThrottledValue] = useState<T>(value);
+  const lastRan = useRef(Date.now());
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = setTimeout(() => {
       if (Date.now() - lastRan.current >= limit) {
         setThrottledValue(value);
@@ -112,12 +112,12 @@ export function useThrottledValue<T>(value: T, limit: number): T {
  * Custom hook for intersection observer
  */
 export function useIntersectionObserver(
-  ref: React.RefObject<Element>,
+  ref: RefObject<Element>,
   options: IntersectionObserverInit = {}
 ): boolean {
-  const [isIntersecting, setIsIntersecting] = React.useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!ref.current) return;
 
     const observer = new IntersectionObserver(([entry]) => {
@@ -138,14 +138,14 @@ export function useIntersectionObserver(
  * Custom hook for media query
  */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = React.useState(() => {
+  const [matches, setMatches] = useState(() => {
     if (typeof window !== 'undefined') {
       return window.matchMedia(query).matches;
     }
     return false;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const mediaQuery = window.matchMedia(query);
     const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
 
@@ -175,9 +175,9 @@ export function usePrefersReducedMotion(): boolean {
  * Custom hook for device performance tier
  */
 export function useDevicePerformance(): 'low' | 'medium' | 'high' {
-  const [tier, setTier] = React.useState<'low' | 'medium' | 'high'>('high');
+  const [tier, setTier] = useState<'low' | 'medium' | 'high'>('high');
 
-  React.useEffect(() => {
+  useEffect(() => {
     const cores = navigator.hardwareConcurrency || 1;
     const memory = (navigator as any).deviceMemory || 4;
     const connection = (navigator as any).connection;
@@ -199,7 +199,7 @@ export function useDevicePerformance(): 'low' | 'medium' | 'high' {
  * Custom hook for idle callback
  */
 export function useIdleCallback(callback: () => void, timeout = 2000) {
-  React.useEffect(() => {
+  useEffect(() => {
     if ('requestIdleCallback' in window) {
       const id = (window as any).requestIdleCallback(callback, { timeout });
       return () => (window as any).cancelIdleCallback(id);

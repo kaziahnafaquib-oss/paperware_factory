@@ -1,8 +1,8 @@
-import React from "react";
+import { FormEvent, useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { Search, Filter, Mail, User, Phone, Globe, Calendar, Clock, Edit, Lock, MoreHorizontal, MessageSquare, Plus, Trash2, Check, Bell } from "lucide-react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,14 +50,14 @@ const initialLeads = [
 ];
 
 export function LeadManagementView() {
-  const [leads, setLeads] = React.useState(initialLeads);
-  const [filter, setFilter] = React.useState("All");
-  const [search, setSearch] = React.useState("");
-  const [selectedLead, setSelectedLead] = React.useState<any>(null);
+  const [leads, setLeads] = useState(initialLeads);
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [selectedLead, setSelectedLead] = useState<any>(null);
   
   // Modal States
-  const [isManageAccountOpen, setIsManageAccountOpen] = React.useState(false);
-  const [isReminderOpen, setIsReminderOpen] = React.useState(false);
+  const [isManageAccountOpen, setIsManageAccountOpen] = useState(false);
+  const [isReminderOpen, setIsReminderOpen] = useState(false);
 
   const filteredLeads = leads.filter(lead => {
     const matchesFilter = filter === "All" || lead.status === filter;
@@ -66,7 +66,7 @@ export function LeadManagementView() {
     return matchesFilter && matchesSearch;
   });
 
-  const handleUpdateCredentials = (e: React.FormEvent) => {
+  const handleUpdateCredentials = (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
@@ -85,7 +85,7 @@ export function LeadManagementView() {
     }, 800);
   };
 
-  const handleAddReminder = (e: React.FormEvent) => {
+  const handleAddReminder = (e: FormEvent) => {
       e.preventDefault();
       toast.success("Reminder Set", { description: "You will be notified at the scheduled time." });
       setIsReminderOpen(false);

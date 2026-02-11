@@ -4,7 +4,8 @@
 @import './enhancements.css';
 
 /* Ensure body and root have proper positioning for scroll tracking */
-html, body {
+html,
+body {
   position: relative;
   margin: 0;
   padding: 0;
@@ -34,6 +35,7 @@ html, body {
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -61,10 +63,25 @@ img {
 }
 
 /* Hardware acceleration for frequently animated elements */
-.hw-accelerate {
+.hw-accelerate,
+.hardware-accelerated,
+.optimize-gpu {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* Aggressive layout containment for sections */
+section {
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+.optimize-layout {
+  contain: layout style;
 }
 
 /* Paint containment for isolated sections */
@@ -81,22 +98,41 @@ img {
 }
 
 /* Optimize for slow devices */
-@media (prefers-reduced-motion: reduce), (prefers-contrast: high) {
+@media (prefers-reduced-motion: reduce),
+(prefers-contrast: high) {
   .hw-accelerate {
     transform: none;
   }
 }
 
-/* Resource hints for fonts */
-@supports (font-display: swap) {
-  @font-face {
-    font-display: swap;
+/* Font display optimization is handled in fonts.css */
+
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
   }
 }
 
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -109,6 +145,7 @@ img {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -116,12 +153,10 @@ img {
 
 .skeleton {
   animation: shimmer 2s infinite linear;
-  background: linear-gradient(
-    90deg,
-    #f0f0f0 0%,
-    #f8f8f8 50%,
-    #f0f0f0 100%
-  );
+  background: linear-gradient(90deg,
+      #f0f0f0 0%,
+      #f8f8f8 50%,
+      #f0f0f0 100%);
   background-size: 1000px 100%;
 }
 
@@ -147,12 +182,10 @@ video {
 
 /* Lazy loading placeholder */
 .lazy-placeholder {
-  background: linear-gradient(
-    90deg,
-    rgba(240, 240, 240, 1) 0%,
-    rgba(248, 248, 248, 1) 50%,
-    rgba(240, 240, 240, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(240, 240, 240, 1) 0%,
+      rgba(248, 248, 248, 1) 50%,
+      rgba(240, 240, 240, 1) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -230,10 +263,11 @@ table {
 .aspect-ratio-box::before {
   content: "";
   display: block;
-  padding-top: var(--aspect-ratio, 56.25%); /* Default 16:9 */
+  padding-top: var(--aspect-ratio, 56.25%);
+  /* Default 16:9 */
 }
 
-.aspect-ratio-box > * {
+.aspect-ratio-box>* {
   position: absolute;
   top: 0;
   left: 0;

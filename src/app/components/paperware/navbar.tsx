@@ -1,8 +1,9 @@
-import React from "react";
-import image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2 from 'figma:asset/2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2.png';
+import { useState, useEffect, useRef, useMemo, useCallback, memo, type MouseEvent } from "react";
+import logo from '../../../assets/paperware_logo_new.png';
+import logoBn from '../../../assets/paperware_logo_bn.png';
 import { Button } from "../ui/button";
 import { Search, Phone, Send, ChevronDown, ShoppingBasket, Globe, Menu, X, Zap, Activity, Cpu, Facebook, Instagram, Linkedin, MapPin, Youtube } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { useLanguage } from "../../context/LanguageContext";
 import { useSocialMedia } from "../../context/SocialMediaContext";
@@ -10,6 +11,8 @@ import { LanguageCode, TranslationKey } from "../../lib/translations";
 import { prefetchPage } from "../../lib/performance";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+
+import { getNavbarLinks, NavLink } from "./navbar-data";
 
 interface NavbarProps {
   onPageChange: (id: string) => void;
@@ -21,116 +24,8 @@ interface NavbarProps {
   quoteBasketCount?: number;
 }
 
-const getLinks = (t: (key: string) => string) => [
-  { name: t('home') || "Home", id: "home" },
-  {
-    name: t('company') || "Company",
-    id: "company",
-    hasDropdown: true,
-    items: [
-      { name: t('about'), id: "about" },
-      { name: t('clients'), id: "clients" },
-      { name: t('sustainability'), id: "sustainability" },
-      { name: t('compliance'), id: "compliance" },
-      { name: "Our Partners", id: "partners" },
-      { name: t('future_plan'), id: "future-plan" }
-    ]
-  },
-  {
-    name: t('all_products') || "All products",
-    id: "products",
-    isMega: true,
-    categories: [
-      {
-        title: "OFFICE STATIONARY SUPPLIES",
-        id: "office-stationary",
-        items: ["Business Card", "Envelope", "Invoice Pad", "Letterhead Pad", "Money Receipt Book", "Delivery Note Book", "Note Book", "Diary", "File Folder"]
-      },
-      {
-        title: "PAPER CUP SUPPLIES",
-        id: "papercups",
-        items: ["Paper Cup", "Paper Cup Holder", "Paper Cup Jacket/Sleeve", "Paper Cup Carrier"]
-      },
-      {
-        title: "RESTAURANT SUPPLIES",
-        id: "restaurant-supplies",
-        items: ["Food Box", "Chowmein Box", "Meat Box", "Sandwich Box", "Burger Box", "Pizza Box", "Cake Box", "Sweet Box", "Fries Box", "Shawarma Box", "Waffle Box & Tray", "Wedges Cone", "Ice Cream Cone", "Sugar Sachet", "Table Mat", "Carry Bag", "Food Menu"]
-      },
-      {
-        title: "MARKETING MATERIALS SUPPLIES",
-        id: "marketing-materials",
-        items: ["Paper Bag", "Brochure / Catalog", "Premium Magazine", "Flyer & Leaflet", "Sticker", "Calendar", "Tissue Box"]
-      },
-      {
-        title: "HOSPITALS & PHARMACEUTICALS SUPPLIES",
-        id: "pharma-supplies",
-        items: ["Patient File", "X-Ray File", "Doctor's Prescription Pad", "Report Envelope", "Medicine Box", "Medicine Literature"]
-      },
-      {
-        title: "FMCG PRODUCTS SUPPLIES",
-        id: "fmcg-supplies",
-        items: ["Food & Beverage Packaging", "Personal Care Product Packaging", "Home Care Product Packaging", "Confectionary Goods Packaging"]
-      },
-      {
-        title: "GARMENTS ACCESSORIES SUPPLIES",
-        id: "garments-supplies",
-        items: ["Hangtag", "Label", "Sticker"]
-      }
-    ]
-  },
-  {
-    name: t('solutions') || "Solutions",
-    id: "solutions",
-    hasDropdown: true,
-    items: [
-      { name: "For Restaurants", id: "restaurant-supplies" },
-      { name: "For Pharma", id: "pharma-supplies" },
-      { name: "For FMCG", id: "fmcg-supplies" },
-      { name: "For Marketing", id: "marketing-materials" }
-    ]
-  },
-  {
-    name: t('business') || "Business",
-    id: "business",
-    hasDropdown: true,
-    items: [
-      { name: "Business Solutions", id: "business" },
-      { name: "Partner Program", id: "partner-program" },
-      { name: "Investor Relations", id: "investor" },
-      { name: "Franchise", id: "franchise" }
-    ]
-  },
-  {
-    name: t('manufacturing'),
-    id: "manufacturing",
-    hasDropdown: true,
-    items: [
-      { name: t('factory_live') || "Factory Live", id: "factory-live" },
-      { name: t('machinery') || "Machinery", id: "manufacturing" },
-      { name: t('material_lab') || "Material Lab", id: "manufacturing" }
-    ]
-  },
-  { name: t('export_intelligence') || "Export", id: "export" },
-  { name: t('contact'), id: "contact" },
-  {
-    name: t('more'),
-    id: "more",
-    hasDropdown: true,
-    items: [
-      { name: t('erp_smart_factory'), id: "erp" },
-      { name: t('impact_dashboard'), id: "impact-dashboard" },
-      { name: t('studio_interactive'), id: "studio" },
-      { name: t('track_order'), id: "tracking" },
-      { name: t('product_gallery'), id: "gallery" },
-      { name: t('social_hub'), id: "socials" },
-      { name: t('career'), id: "career" },
-      { name: t('faq'), id: "faq" },
-      { name: "CSR", id: "csr" }
-    ]
-  }
-];
 
-export const Navbar = React.memo(({
+export const Navbar = memo(({
   onPageChange,
   onProductClick,
   currentPage,
@@ -141,21 +36,13 @@ export const Navbar = React.memo(({
 }: NavbarProps) => {
   const { t, language, setLanguage, tone, setTone } = useLanguage();
   const { posts } = useSocialMedia();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null);
-  const [mobileExpanded, setMobileExpanded] = React.useState<string | null>(null);
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
-  const [time, setTime] = React.useState(new Date());
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-  const isOpeningRef = React.useRef(false);
-  const closeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const isOpeningRef = useRef(false);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = (id: string) => {
     if (closeTimeoutRef.current) {
@@ -171,17 +58,11 @@ export const Navbar = React.memo(({
     }, 150);
   };
 
-  const links = React.useMemo(() => getLinks(t), [t]);
+  const links = useMemo(() => getNavbarLinks(t), [t]);
 
-  React.useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
     const bottomNav = document.querySelector('nav.fixed.bottom-0');
     if (bottomNav) {
       (bottomNav as HTMLElement).style.display = isMobileMenuOpen ? 'none' : '';
@@ -198,7 +79,7 @@ export const Navbar = React.memo(({
     };
   }, [isMobileMenuOpen]);
 
-  const handleDropdownToggle = (id: string, e: React.MouseEvent) => {
+  const handleDropdownToggle = (id: string, e: MouseEvent) => {
     e.stopPropagation();
     // e.preventDefault(); // Removed preventDefault to allow natural click behavior
     if (activeDropdown === id) {
@@ -208,8 +89,8 @@ export const Navbar = React.memo(({
     }
   };
 
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
+  useEffect(() => {
+    const handleClickOutside = (e: globalThis.MouseEvent) => {
       if (isOpeningRef.current) return;
       const target = e.target as HTMLElement;
       if (target.closest('[data-dropdown]') || target.closest('[data-dropdown-trigger]')) return;
@@ -219,16 +100,22 @@ export const Navbar = React.memo(({
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const handleInternalPageChange = React.useCallback((id: string) => {
-    onPageChange(id);
+  const handleInternalPageChange = useCallback((id: string) => {
+    if (id === 'portal-client') {
+      onAuthOpen('client');
+    } else if (id === 'portal-admin') {
+      onAuthOpen('admin');
+    } else {
+      onPageChange(id);
+    }
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
-  }, [onPageChange]);
+  }, [onPageChange, onAuthOpen]);
 
   return (
     <Tooltip.Provider>
       <nav
-        className={`${isMobileMenuOpen ? 'top-0 left-0 w-full h-full z-[99999]' : 'top-0 left-0 w-full z-[1001]'} font-['Poppins',sans-serif]`}
+        className={`${isMobileMenuOpen ? 'top-0 left-0 w-full h-full z-[99999]' : 'top-0 left-0 w-full z-[1001]'} font-['Poppins',sans-serif] hardware-accelerated`}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0,
           transform: 'translate3d(0, 0, 0)', willChange: 'transform',
@@ -255,26 +142,26 @@ export const Navbar = React.memo(({
         <div className="fixed top-0 left-0 right-0 flex flex-col items-center pointer-events-none z-[5000]">
           <div className="w-full h-8 bg-[#fabf37]/90 backdrop-blur-sm flex items-center justify-between px-4 md:px-8 pointer-events-auto relative z-[5001] shadow-sm border-b border-white/10">
             <div className="flex items-center gap-2">
-              <Cpu className="size-3 text-black" />
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black">Factory Automation: Active</span>
+              <img src="/favicon.png" alt="Icon" className="size-3 object-contain bg-white rounded-full p-0.5" />
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black">{t('factory_automation')}: {t('active')}</span>
               <span className="hidden md:flex items-center gap-2 ml-4 px-2 py-0.5 bg-black/5 rounded text-[9px] font-black uppercase tracking-[0.2em] text-black">
-                Made In Bangladesh <img src="https://flagcdn.com/bd.svg" className="w-3 h-auto" alt="BD" />
+                {t('made_in_bangladesh')} <img src="https://flagcdn.com/bd.svg" className="w-3 h-auto" alt="BD" />
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="hidden md:inline-block text-[9px] font-black uppercase tracking-[0.2em] text-black/60">System v4.0</span>
+              <span className="hidden md:inline-block text-[9px] font-black uppercase tracking-[0.2em] text-black/60">{t('core_v4')}</span>
               <div className="flex items-center gap-1.5 px-2 py-0.5 bg-black/10 rounded-full border border-black/5">
                 <motion.div
                   animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
                   className="size-1.5 bg-red-500 rounded-full"
                 />
-                <span className="text-[8px] font-black uppercase tracking-widest text-black">LIVE</span>
+                <span className="text-[8px] font-black uppercase tracking-widest text-black">{t('status_live')}</span>
               </div>
             </div>
           </div>
 
           <div
-            className="w-[95%] max-w-[1440px] mt-4 relative flex items-center justify-between h-[48px] md:h-[58px] rounded-full px-2 md:px-4 border border-black/10 group/nav z-[1100] overflow-visible pointer-events-auto"
+            className="w-[95%] max-w-[1440px] mt-4 relative flex items-center justify-between h-[48px] md:h-[58px] rounded-full px-2 md:px-4 border border-black/10 group/nav z-[100] overflow-visible pointer-events-auto"
             style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(250,249,246,0.96) 100%)',
               backdropFilter: 'blur(40px) saturate(200%)',
@@ -301,14 +188,23 @@ export const Navbar = React.memo(({
               </motion.div>
             ))}
 
-            <div className="flex-shrink-0 pl-1 md:pl-3 relative z-30">
+            <div className="absolute top-0 right-10 -translate-y-1/2 flex items-center gap-1">
+              <span className="font-mono text-[6px] text-black/20 uppercase tracking-[0.2em]">{t('dhaka_hub')}</span>
+              <div className="w-10 h-[1px] bg-black/[0.05]" />
+            </div>
+
+            <div className="flex-shrink-0 pl-1.5 md:pl-3 relative z-30">
               <button onClick={() => handleInternalPageChange("home")} className="focus:outline-none relative active:scale-95 transition-transform">
-                <motion.img src={image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2} alt="Paperware Logo" className="h-[50px] md:h-[64px] w-auto object-contain py-1 scale-110 md:scale-115 translate-y-1" />
+                <motion.img
+                  src={language === 'BN' ? logoBn : logo}
+                  alt="Paperware Logo"
+                  className="h-[42px] md:h-[64px] w-auto object-contain mix-blend-multiply translate-y-0.5 md:translate-y-1"
+                />
               </button>
             </div>
 
             <div className="hidden lg:flex items-center gap-0 flex-1 justify-start pl-2 md:pl-4 relative z-20">
-              {links.map((link) => {
+              {links.map((link: NavLink) => {
                 const isHome = link.id === "home";
                 const isActive = currentPage === link.id || activeDropdown === link.id;
 
@@ -385,7 +281,7 @@ export const Navbar = React.memo(({
               })}
 
               <AnimatePresence>
-                {links.map((link) => (
+                {links.map((link: NavLink) => (
                   activeDropdown === link.id && link.isMega && (
                     <motion.div
                       key={link.id}
@@ -487,70 +383,68 @@ export const Navbar = React.memo(({
 
                 <div className="relative z-10">
                   <Tooltip.Root>
-                    <Tooltip.Trigger asChild>
-                      <button
-                        data-dropdown-trigger="true"
-                        onMouseEnter={() => handleMouseEnter("portal")}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (closeTimeoutRef.current) {
-                            clearTimeout(closeTimeoutRef.current);
-                            closeTimeoutRef.current = null;
-                          }
-                          setActiveDropdown("portal");
-                        }}
-                        className="flex items-center gap-1 px-2.5 md:px-3 h-[28px] md:h-[34px] bg-white rounded-full shadow-sm border border-black/5 hover:border-[#fabf37]/20 transition-all group relative overflow-hidden"
-                      >
-                        <motion.div className="absolute inset-0 bg-gradient-to-r from-[#fabf37]/0 via-[#fabf37]/10 to-[#fabf37]/0" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.6 }} />
-                        <span className="text-[7.5px] md:text-[8px] font-black uppercase tracking-widest text-black relative z-10">Portal</span>
-                        <ChevronDown className={`size-2 text-black/30 transition-transform relative z-10 ${activeDropdown === "portal" ? "rotate-180" : ""}`} />
+                    <DropdownMenu.Root
+                      open={activeDropdown === 'portal'}
+                      onOpenChange={(open) => setActiveDropdown(open ? 'portal' : null)}
+                    >
+                      <Tooltip.Trigger asChild>
+                        <DropdownMenu.Trigger asChild>
+                          <button
+                            data-dropdown-trigger="true"
+                            className="flex items-center gap-1 px-2.5 md:px-3 h-[28px] md:h-[34px] bg-white rounded-full shadow-sm border border-black/5 hover:border-[#fabf37]/20 transition-all group relative overflow-hidden outline-none"
+                          >
+                            <motion.div className="absolute inset-0 bg-gradient-to-r from-[#fabf37]/0 via-[#fabf37]/10 to-[#fabf37]/0" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.6 }} />
+                            <span className="text-[7.5px] md:text-[8px] font-black uppercase tracking-widest text-black relative z-10">{t('portal')}</span>
+                            <ChevronDown className={`size-2 text-black/30 transition-transform relative z-10 ${activeDropdown === "portal" ? "rotate-180" : ""}`} />
+                          </button>
+                        </DropdownMenu.Trigger>
+                      </Tooltip.Trigger>
 
-                        <DropdownMenu.Root open={activeDropdown === 'portal'} onOpenChange={(open) => !open && setActiveDropdown(null)}>
-                          <DropdownMenu.Trigger asChild>
-                            <div className="absolute inset-0 pointer-events-none opacity-0" />
-                          </DropdownMenu.Trigger>
-                          <DropdownMenu.Portal>
-                            <DropdownMenu.Content className="z-[6000] outline-none" side="bottom" align="end" sideOffset={8}>
-                              <motion.div initial={{ opacity: 0, y: 5, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.15 }} className="min-w-[200px]">
-                                <div className="bg-white border border-black/10 rounded-2xl p-2.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden font-['Poppins',sans-serif]">
-                                  <div className="absolute top-0 left-0 w-full h-1 bg-[#fabf37]" />
+                      <DropdownMenu.Portal>
+                        <DropdownMenu.Content className="z-[6000] outline-none" side="bottom" align="end" sideOffset={8}>
+                          <motion.div initial={{ opacity: 0, y: 5, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.15 }} className="min-w-[200px]">
+                            <div className="bg-white border border-black/10 rounded-2xl p-2.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden font-['Poppins',sans-serif]">
+                              <div className="absolute top-0 left-0 w-full h-1 bg-[#fabf37]" />
 
-                                  <div className="mb-2 px-2 pt-1 flex items-center justify-between">
-                                    <span className="text-[8px] font-black uppercase tracking-widest text-black/40">Secure Access</span>
-                                    <div className="size-1.5 bg-green-500 rounded-full animate-pulse" />
-                                  </div>
+                              <div className="mb-2 px-2 pt-1 flex items-center justify-between">
+                                <span className="text-[8px] font-black uppercase tracking-widest text-black/40">{t('secure_access')}</span>
+                                <div className="size-1.5 bg-green-500 rounded-full animate-pulse" />
+                              </div>
 
-                                  <div className="space-y-1 relative z-10">
-                                    <div className="absolute left-2 top-2 bottom-2 w-[1px] h-auto bg-black/5 z-0" />
-                                    <div className="absolute top-2 left-2 right-2 h-[1px] w-auto bg-black/5 z-0" />
-                                    <div className="absolute bottom-2 left-2 right-2 h-[1px] w-auto bg-black/5 z-0" />
-                                    <div className="absolute right-2 top-2 bottom-2 w-[1px] h-auto bg-black/5 z-0" />
-
-                                    <div className="absolute top-0 left-0 w-1.5 h-[1px] bg-[#fabf37]/30" />
-                                    <div className="absolute top-0 left-0 w-[1px] h-1.5 bg-[#fabf37]/30" />
-                                  </div>
-                                  <motion.button onClick={() => { onAuthOpen('client'); setActiveDropdown(null); }} className="w-full text-left px-4 py-3 text-[9px] font-black uppercase bg-[#f4f4f5] hover:bg-[#eaeaea] rounded-xl transition-all group flex items-center justify-between relative overflow-hidden mb-2" whileHover={{ x: 2 }}>
+                              <div className="space-y-1 relative z-10">
+                                <DropdownMenu.Item asChild>
+                                  <motion.button
+                                    onClick={() => { onAuthOpen('client'); setActiveDropdown(null); }}
+                                    className="w-full text-left px-4 py-3 text-[9px] font-black uppercase bg-[#f4f4f5] hover:bg-[#eaeaea] rounded-xl transition-all group flex items-center justify-between relative overflow-hidden mb-2 outline-none"
+                                    whileHover={{ x: 2 }}
+                                  >
                                     <div className="flex items-center gap-2.5">
                                       <Globe className="size-3 text-black/40 group-hover:text-black transition-colors" />
-                                      <span className="relative z-10 text-black tracking-wider">Client Portal</span>
+                                      <span className="relative z-10 text-black tracking-wider">{t('clients')} {t('portal')}</span>
                                     </div>
                                     <motion.span className="text-black/20 group-hover:text-black text-[10px]" initial={{ x: -5, opacity: 0 }} whileHover={{ x: 0, opacity: 1 }}>→</motion.span>
                                   </motion.button>
-                                  <motion.button onClick={() => { onAuthOpen('admin'); setActiveDropdown(null); }} className="w-full text-left px-4 py-3 text-[9px] font-black uppercase bg-gradient-to-r from-[#fabf37] to-[#ffd060] rounded-xl shadow-sm hover:shadow-md transition-all group flex items-center justify-between relative overflow-hidden" whileHover={{ x: 2, scale: 1.02 }}>
+                                </DropdownMenu.Item>
+
+                                <DropdownMenu.Item asChild>
+                                  <motion.button
+                                    onClick={() => { onAuthOpen('admin'); setActiveDropdown(null); }}
+                                    className="w-full text-left px-4 py-3 text-[9px] font-black uppercase bg-gradient-to-r from-[#fabf37] to-[#ffd060] rounded-xl shadow-sm hover:shadow-md transition-all group flex items-center justify-between relative overflow-hidden outline-none"
+                                    whileHover={{ x: 2, scale: 1.02 }}
+                                  >
                                     <motion.div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
                                     <div className="flex items-center gap-2.5">
                                       <Cpu className="size-3 text-black/40 group-hover:text-black relative z-10" />
-                                      <span className="relative z-10 text-black tracking-wider">Admin HQ</span>
+                                      <span className="relative z-10 text-black tracking-wider">Admin {t('portal')}</span>
                                     </div>
                                   </motion.button>
-                                </div>
-                              </motion.div>
-                            </DropdownMenu.Content>
-                          </DropdownMenu.Portal>
-                        </DropdownMenu.Root>
-                      </button>
-                    </Tooltip.Trigger>
+                                </DropdownMenu.Item>
+                              </div>
+                            </div>
+                          </motion.div>
+                        </DropdownMenu.Content>
+                      </DropdownMenu.Portal>
+                    </DropdownMenu.Root>
                     <Tooltip.Portal>
                       <Tooltip.Content className="bg-black text-[#fabf37] px-2 py-1 rounded-md text-[7px] font-black uppercase tracking-wider shadow-xl border border-[#fabf37]/20" sideOffset={5}>
                         Access Portal
@@ -617,8 +511,13 @@ export const Navbar = React.memo(({
                                 {(() => {
                                   const flags: Record<string, string> = {
                                     'EN': '🇺🇸', 'BN': '🇧🇩', 'AR': '🇸🇦', 'TR': '🇹🇷', 'ES': '🇪🇸', 'FR': '🇫🇷',
-                                    'DE': '🇩🇪', 'JP': '🇯🇵', 'CN': '🇨🇳', 'IN': '🇮🇳', 'RU': '🇷🇺', 'PT': '🇵🇹',
-                                    'IT': '🇮🇹', 'KR': '🇰🇷', 'VN': '🇻🇳', 'TH': '🇹🇭', 'NL': '🇳🇱', 'ID': '🇮🇩'
+                                    'DE': '🇩🇪', 'IT': '🇮🇹', 'PT': '🇵🇹', 'RU': '🇷🇺', 'ZH': '🇨🇳', 'JA': '🇯🇵',
+                                    'KO': '🇰🇷', 'HI': '🇮🇳', 'ID': '🇮🇩', 'MS': '🇲🇾', 'VI': '🇻🇳', 'TH': '🇹🇭',
+                                    'NL': '🇳🇱', 'PL': '🇵🇱', 'SV': '🇸🇪', 'NO': '🇳🇴', 'FI': '🇫🇮', 'DA': '🇩🇰',
+                                    'EL': '🇬🇷', 'HE': '🇮🇱', 'CS': '🇨🇿', 'HU': '🇭🇺', 'RO': '🇷🇴', 'UK': '🇺🇦',
+                                    'SK': '🇸🇰', 'BG': '🇧🇬', 'HR': '🇭🇷', 'LT': '🇱🇹', 'LV': '🇱🇻', 'ET': '🇪🇪',
+                                    'SL': '🇸🇮', 'MT': '🇲🇹', 'IS': '🇮🇸', 'GA': '🇮🇪', 'SQ': '🇦🇱', 'MK': '🇲🇰',
+                                    'HY': '🇦🇲', 'KA': '🇬🇪', 'FA': '🇮🇷', 'UR': '🇵🇰'
                                   };
                                   return flags[language] || '🌐';
                                 })()}
@@ -697,7 +596,9 @@ export const Navbar = React.memo(({
                               { code: "SQ", name: "Shqip", flag: "🇦🇱" },
                               { code: "MK", name: "Македонски", flag: "🇲🇰" },
                               { code: "HY", name: "Հայերեն", flag: "🇦🇲" },
-                              { code: "KA", name: "ქართული", flag: "🇬🇪" }
+                              { code: "KA", name: "ქართული", flag: "🇬🇪" },
+                              { code: "FA", name: "فارسی", flag: "🇮🇷" },
+                              { code: "UR", name: "اردو", flag: "🇵🇰" }
                             ].map((lang) => (
                               <DropdownMenu.Item
                                 asChild
@@ -743,7 +644,7 @@ export const Navbar = React.memo(({
                       <Tooltip.Trigger asChild>
                         <motion.button
                           type="button"
-                          onClick={(e: React.MouseEvent) => { e.stopPropagation(); item.action(); }}
+                          onClick={(e: MouseEvent) => { e.stopPropagation(); item.action(); }}
                           className="p-1 text-black/60 hover:text-black transition-all relative group"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
@@ -773,7 +674,7 @@ export const Navbar = React.memo(({
 
               <motion.button
                 type="button"
-                onClick={(e: React.MouseEvent) => {
+                onClick={(e: MouseEvent) => {
                   e.stopPropagation();
                   setIsMobileMenuOpen(prev => !prev);
                 }}
@@ -818,7 +719,7 @@ export const Navbar = React.memo(({
               className="fixed top-[115px] right-[10%] w-[320px] bg-[#d6c8a9] border-2 border-black rounded-[24px] shadow-2xl p-4 font-['Poppins',sans-serif] max-h-[40vh] overflow-y-auto custom-scrollbar z-[4000] pointer-events-auto"
             >
               <div className="flex flex-col gap-2">
-                {links.map((link) => (
+                {links.map((link: NavLink) => (
                   <div key={link.id} className="border-b border-black/10 last:border-0 pb-2 last:pb-0">
                     <div className="flex items-center justify-between gap-2">
                       {/* Clicking text navigates directly */}
@@ -877,7 +778,7 @@ export const Navbar = React.memo(({
                       <div className="size-1.5 rounded-full bg-green-500 animate-pulse" />
                       <span className="text-[9px] font-black uppercase text-[rgb(255,255,255)] tracking-widest">Sustainability</span>
                     </div>
-                    <h4 className="text-base font-black text-black mb-1 uppercase tracking-tight">100% Eco-Friendly</h4>
+                    <h4 className="text-base font-black text-black mb-1 uppercase tracking-tight">{t('sustainability_ecofriendly')}</h4>
                     <p className="text-[11px] font-medium text-black/60 leading-relaxed max-w-[90%]">Our commitment to a greener future starts with every package we produce.</p>
                   </div>
                 </div>
@@ -998,7 +899,7 @@ export const Navbar = React.memo(({
 
 
                     <div className="flex flex-col items-center gap-4 mt-6 mb-2">
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black -mt-8">Made in Bangladesh 🇧🇩</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black -mt-8">{t('made_in_bangladesh')}</span>
                       <div className="flex items-center gap-3">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all border border-black/5"><Facebook className="size-5" /></a>
                         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all border border-black/5"><Instagram className="size-5" /></a>
@@ -1082,8 +983,8 @@ export const Navbar = React.memo(({
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
-    </Tooltip.Provider>
+      </nav >
+    </Tooltip.Provider >
   );
 });
 

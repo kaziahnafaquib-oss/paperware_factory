@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Building2, User, Phone, MapPin, Briefcase, ChevronRight, Activity, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { toast } from "sonner";
@@ -10,8 +10,8 @@ interface ClientLoginProps {
 
 export function ClientLogin({ onLogin }: ClientLoginProps) {
   const { t, isRTL } = useLanguage();
-  const [authMode, setAuthMode] = React.useState<'login' | 'signup'>('login');
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={`min-h-screen bg-zinc-50 flex flex-col items-center justify-center p-4 pt-32 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>

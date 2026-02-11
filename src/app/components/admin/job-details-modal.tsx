@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, 
   Briefcase, 
@@ -28,14 +28,14 @@ interface JobDetailsModalProps {
 }
 
 export function JobDetailsModal({ job, onClose, onUpdate, onDelete }: JobDetailsModalProps) {
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [editedJob, setEditedJob] = React.useState(job);
-  const [activeTab, setActiveTab] = React.useState<'details' | 'ai'>('details');
-  const [isGeneratingQuestions, setIsGeneratingQuestions] = React.useState(false);
-  const [generatedQuestions, setGeneratedQuestions] = React.useState<string[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedJob, setEditedJob] = useState(job);
+  const [activeTab, setActiveTab] = useState<'details' | 'ai'>('details');
+  const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
+  const [generatedQuestions, setGeneratedQuestions] = useState<string[]>([]);
 
   // Reset edited job when job prop changes
-  React.useEffect(() => {
+  useEffect(() => {
     setEditedJob(job);
     setIsEditing(false);
     setActiveTab('details');

@@ -1,40 +1,42 @@
-import React from "react";
+import { useState } from 'react';
 import ReactDOM from "react-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Mail, Phone, Building2, MapPin, Calendar, Shield, Award, TrendingUp, Package, DollarSign, Clock, CheckCircle2, AlertCircle, Edit2, Camera, Globe, Briefcase, CreditCard, Download, FileText, Users, Bell, Zap, BarChart3, Target, Gift, Star, Sparkles, Activity, Link2, HelpCircle, Send, MessageCircle, Upload, AlertTriangle, Info, Headphones, Video, Paperclip } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from '../../context/LanguageContext';
 
 interface AccountOverviewProps {
   onClose: () => void;
 }
 
 export function AccountOverview({ onClose }: AccountOverviewProps) {
-  const [showInviteModal, setShowInviteModal] = React.useState(false);
-  const [showAnalyticsModal, setShowAnalyticsModal] = React.useState(false);
-  const [showSupportModal, setShowSupportModal] = React.useState(false);
-  const [inviteEmail, setInviteEmail] = React.useState("");
-  const [inviteRole, setInviteRole] = React.useState("Team Member");
-  const [supportMessage, setSupportMessage] = React.useState("");
-  const [inviteName, setInviteName] = React.useState("");
-  const [inviteWhatsApp, setInviteWhatsApp] = React.useState("");
-  const [inviteDepartment, setInviteDepartment] = React.useState("Procurement");
-  
+  const { t } = useLanguage();
+  const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
+  const [showSupportModal, setShowSupportModal] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteRole, setInviteRole] = useState("Team Member");
+  const [supportMessage, setSupportMessage] = useState("");
+  const [inviteName, setInviteName] = useState("");
+  const [inviteWhatsApp, setInviteWhatsApp] = useState("");
+  const [inviteDepartment, setInviteDepartment] = useState("Procurement");
+
   // Support Modal States
-  const [supportSubject, setSupportSubject] = React.useState("");
-  const [supportCategory, setSupportCategory] = React.useState("General Inquiry");
-  const [supportPriority, setSupportPriority] = React.useState("Medium");
-  const [supportContactMethod, setSupportContactMethod] = React.useState("Email");
-  const [supportPhone, setSupportPhone] = React.useState("");
-  const [supportAttachment, setSupportAttachment] = React.useState<File | null>(null);
-  const [showQuickTemplates, setShowQuickTemplates] = React.useState(false);
+  const [supportSubject, setSupportSubject] = useState("");
+  const [supportCategory, setSupportCategory] = useState("General Inquiry");
+  const [supportPriority, setSupportPriority] = useState("Medium");
+  const [supportContactMethod, setSupportContactMethod] = useState("Email");
+  const [supportPhone, setSupportPhone] = useState("");
+  const [supportAttachment, setSupportAttachment] = useState<File | null>(null);
+  const [showQuickTemplates, setShowQuickTemplates] = useState(false);
 
   // Download Reports Function
   const handleDownloadReports = () => {
     toast.success("Generating reports...");
-    
+
     // Create CSV content
     const csvContent = `Account Report - Generated on ${new Date().toLocaleDateString()}\n\nAccount Statistics:\nTotal Orders,847\nTotal Spent,$1.2M\nActive Projects,12\nAccount Status,Premium\n\nRecent Activity:\nOrder Placed,Custom Paper Bags x5000,2 hours ago\nInvoice Paid,Invoice #PW-2024-1847,1 day ago\nQuote Requested,Sustainable Packaging,3 days ago\nDocument Downloaded,Master Agreement 2024,1 week ago`;
-    
+
     // Create blob and download
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -45,7 +47,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-    
+
     toast.success("Report downloaded successfully!");
   };
 
@@ -55,7 +57,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
       toast.error("Please enter an email address");
       return;
     }
-    
+
     toast.success(`Invitation sent to ${inviteEmail}!`);
     setShowInviteModal(false);
     setInviteEmail("");
@@ -71,7 +73,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
       toast.error("Please fill in subject and message");
       return;
     }
-    
+
     const ticketNumber = `PW-${Date.now().toString().slice(-8)}`;
     toast.success(`Support ticket #${ticketNumber} created! Our team will respond within 24 hours.`);
     setShowSupportModal(false);
@@ -96,10 +98,10 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
   };
 
   const accountStats = [
-    { label: "Total Orders", value: "847", icon: Package, trend: "+23% this quarter", color: "bg-blue-50 text-blue-600" },
-    { label: "Total Spent", value: "$1.2M", icon: DollarSign, trend: "+18% vs last year", color: "bg-green-50 text-green-600" },
+    { label: t('portal_total_orders'), value: "847", icon: Package, trend: "+23% this quarter", color: "bg-blue-50 text-blue-600" },
+    { label: t('portal_total_spent'), value: "$1.2M", icon: DollarSign, trend: "+18% vs last year", color: "bg-green-50 text-green-600" },
     { label: "Active Projects", value: "12", icon: Clock, trend: "3 pending delivery", color: "bg-yellow-50 text-yellow-600" },
-    { label: "Account Status", value: "Premium", icon: Award, trend: "Enterprise tier", color: "bg-purple-50 text-purple-600" },
+    { label: t('portal_account_status'), value: "Premium", icon: Award, trend: "Enterprise tier", color: "bg-purple-50 text-purple-600" },
   ];
 
   const personalInfo = [
@@ -145,10 +147,10 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
   };
 
   const quickActions = [
-    { label: "Download Reports", icon: Download, action: handleDownloadReports },
-    { label: "Invite Team Member", icon: Users, action: () => setShowInviteModal(true) },
-    { label: "View Analytics", icon: BarChart3, action: () => setShowAnalyticsModal(true) },
-    { label: "Contact Support", icon: HelpCircle, action: () => setShowSupportModal(true) },
+    { label: t('portal_download_report'), icon: Download, action: handleDownloadReports },
+    { label: t('portal_invite_team'), icon: Users, action: () => setShowInviteModal(true) },
+    { label: t('portal_view_analytics'), icon: BarChart3, action: () => setShowAnalyticsModal(true) },
+    { label: t('portal_contact_support'), icon: HelpCircle, action: () => setShowSupportModal(true) },
   ];
 
   const modalContent = (
@@ -176,7 +178,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
         <div className="px-5 md:px-6 py-4 border-b border-black/5 flex items-center justify-between bg-gradient-to-r from-zinc-50 to-white shrink-0">
           <div className="space-y-0.5">
             <p className="text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400">Enterprise Profile</p>
-            <h2 className="text-base md:text-lg font-black uppercase tracking-tight text-black">Account Overview</h2>
+            <h2 className="text-base md:text-lg font-black uppercase tracking-tight text-black">{t('portal_account_overview')}</h2>
           </div>
           <button
             onClick={onClose}
@@ -208,7 +210,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                 <User className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[900] uppercase tracking-tight text-black">Personal Information</h3>
+              <h3 className="text-xs font-[900] uppercase tracking-tight text-black">{t('portal_personal_info')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               {personalInfo.map((info, i) => (
@@ -236,7 +238,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
                 <Shield className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Security Overview</h3>
+              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_security_overview')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
               {securityInfo.map((info, i) => (
@@ -261,7 +263,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
                 <CreditCard className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Billing Information</h3>
+              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_billing_info')}</h3>
             </div>
             <div className="p-4 bg-gradient-to-br from-black to-zinc-800 rounded-xl text-white border border-black/10">
               <div className="flex items-start justify-between mb-3">
@@ -289,7 +291,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-yellow-50 text-yellow-600 flex items-center justify-center">
                 <Activity className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Recent Activity</h3>
+              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_recent_activity')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {recentActivity.map((activity, i) => (
@@ -315,7 +317,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Users className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Team Members</h3>
+              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_team_members')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
               {teamMembers.map((member, i) => (
@@ -343,7 +345,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
                 <div className="size-6 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
                   <Shield className="size-3.5 stroke-[2.5]" />
                 </div>
-                <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Account Health</h3>
+                <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_account_health')}</h3>
               </div>
               <div className="p-3 bg-white border border-black/5 rounded-xl flex items-center hover:shadow-md transition-all">
                 <div className="flex items-center gap-2">
@@ -365,7 +367,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
                 <div className="size-6 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
                   <Award className="size-3.5 stroke-[2.5]" />
                 </div>
-                <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Loyalty Points</h3>
+                <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_loyalty_points')}</h3>
               </div>
               <div className="p-3 bg-white border border-black/5 rounded-xl flex items-center hover:shadow-md transition-all">
                 <div className="flex items-center gap-2">
@@ -388,7 +390,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
               <div className="size-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Edit2 className="size-3.5 stroke-[2.5]" />
               </div>
-              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">Quick Actions</h3>
+              <h3 className="text-xs font-[800] uppercase tracking-tight text-black">{t('portal_quick_actions')}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {quickActions.map((action, i) => (
@@ -852,11 +854,10 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
                       <button
                         key={method}
                         onClick={() => setSupportContactMethod(method)}
-                        className={`px-2 py-2 rounded-lg border-2 transition-all text-[10px] font-[800] uppercase tracking-wider ${
-                          supportContactMethod === method
-                            ? 'bg-blue-500 border-blue-500 text-white'
-                            : 'bg-white border-zinc-200 text-zinc-600 hover:border-blue-300'
-                        }`}
+                        className={`px-2 py-2 rounded-lg border-2 transition-all text-[10px] font-[800] uppercase tracking-wider ${supportContactMethod === method
+                          ? 'bg-blue-500 border-blue-500 text-white'
+                          : 'bg-white border-zinc-200 text-zinc-600 hover:border-blue-300'
+                          }`}
                       >
                         {method}
                       </button>

@@ -1,28 +1,32 @@
-import React from "react";
-import { 
-  ChevronRight, 
-  Monitor, 
-  Camera, 
-  Sparkles, 
-  Pencil as Edit, 
-  RefreshCw, 
-  CircleCheck, 
-  AlertTriangle, 
-  Plus, 
-  Trash2, 
-  Link, 
-  Activity, 
-  TrendingUp, 
-  Box, 
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import {
+  ChevronRight,
+  Monitor,
+  Camera,
+  Sparkles,
+  Pencil as Edit,
+  RefreshCw,
+  CircleCheck,
+  AlertTriangle,
+  Plus,
+  Trash2,
+  Link,
+  Activity,
+  TrendingUp,
+  Box,
   Users,
   Play,
   Star,
   Zap,
-  FileText
+  FileText,
+  Upload,
+  Loader2,
+  Award
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { ViewContainer } from "../ViewContainer";
+import { supabase } from "../../../lib/supabaseClient";
 
 interface CMSViewProps {
   heroVideoUrl?: string;
@@ -31,10 +35,18 @@ interface CMSViewProps {
   onUpdateHeroVideoMobile?: (url: string) => void;
   clientsVideoUrl?: string;
   onUpdateClientsVideo?: (url: string) => void;
+  clients?: any[];
+  onUpdateClients?: (clients: any[]) => void;
   heroContent?: {
     title: string;
     subtitle1: string;
     subtitle2: string;
+    titleSize?: string;
+    titleFont?: string;
+    subtitle1Size?: string;
+    subtitle1Font?: string;
+    subtitle2Size?: string;
+    subtitle2Font?: string;
   };
   onUpdateHeroContent?: (content: any) => void;
   products?: any[];
@@ -51,13 +63,17 @@ interface CMSViewProps {
   onUpdateClientProjects?: (projects: any[]) => void;
   partners?: any[];
   onUpdatePartners?: (partners: any[]) => void;
+  teamMembers?: any[];
+  onUpdateTeamMembers?: (members: any[]) => void;
   brochureUrl?: string;
   onUpdateBrochure?: (url: string) => void;
+  teamSectionContent?: any;
+  onUpdateTeamSectionContent?: (content: any) => void;
   defaultCategory?: string | null;
 }
 
-export default function CMSView({ 
-  heroVideoUrl, 
+export default function CMSView({
+  heroVideoUrl,
   heroVideoMobileUrl,
   onUpdateHeroVideo,
   onUpdateHeroVideoMobile,
@@ -79,32 +95,47 @@ export default function CMSView({
   onUpdateClientProjects,
   partners = [],
   onUpdatePartners,
+  teamMembers = [],
+  onUpdateTeamMembers,
+  teamSectionContent,
+  onUpdateTeamSectionContent,
+  clients = [],
+  onUpdateClients,
   brochureUrl,
   onUpdateBrochure,
   defaultCategory = null
 }: CMSViewProps) {
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(defaultCategory);
-  const [screenSize, setScreenSize] = React.useState({ w: 1920, h: 1080 });
-  const [editingProduct, setEditingProduct] = React.useState<any>(null);
-  const [isAddProductOpen, setIsAddProductOpen] = React.useState(false);
-  const [editingProject, setEditingProject] = React.useState<any>(null);
-  const [isAddProjectOpen, setIsAddProjectOpen] = React.useState(false);
-  const [editingPartner, setEditingPartner] = React.useState<any>(null);
-  const [isAddPartnerOpen, setIsAddPartnerOpen] = React.useState(false);
-  const [isVideoLive, setIsVideoLive] = React.useState(true);
-  const [videoInput, setVideoInput] = React.useState(heroVideoUrl || "");
-  const [videoMobileInput, setVideoMobileInput] = React.useState(heroVideoMobileUrl || "");
-  const [brochureInput, setBrochureInput] = React.useState(brochureUrl || "");
-  const [heroTitle, setHeroTitle] = React.useState(heroContent?.title || "");
-  const [heroSub1, setHeroSub1] = React.useState(heroContent?.subtitle1 || "");
-  const [heroSub2, setHeroSub2] = React.useState(heroContent?.subtitle2 || "");
-  const [loadError, setLoadError] = React.useState(false);
-  const isInternalChange = React.useRef(false);
-  const [pageVideoInput, setPageVideoInput] = React.useState(clientsVideoUrl || "");
-  const prevVideoRef = React.useRef(clientsVideoUrl || "");
-  const videoRef = React.useRef<HTMLVideoElement>(null);
-  const heroDesktopRef = React.useRef<HTMLVideoElement>(null);
-  const heroMobileRef = React.useRef<HTMLVideoElement>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(defaultCategory);
+  const [screenSize, setScreenSize] = useState({ w: 1920, h: 1080 });
+  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<any>(null);
+  const [isAddProjectOpen, setIsAddProjectOpen] = useState(false);
+  const [editingPartner, setEditingPartner] = useState<any>(null);
+  const [isAddPartnerOpen, setIsAddPartnerOpen] = useState(false);
+  const [editingTeamMember, setEditingTeamMember] = useState<any>(null);
+  const [isVideoLive, setIsVideoLive] = useState(true);
+  const [videoInput, setVideoInput] = useState(heroVideoUrl || "");
+  const [videoMobileInput, setVideoMobileInput] = useState(heroVideoMobileUrl || "");
+  const [brochureInput, setBrochureInput] = useState(brochureUrl || "");
+  const [heroTitle, setHeroTitle] = useState(heroContent?.title || "");
+  const [heroSub1, setHeroSub1] = useState(heroContent?.subtitle1 || "");
+  const [heroSub2, setHeroSub2] = useState(heroContent?.subtitle2 || "");
+  const [heroTitleSize, setHeroTitleSize] = useState(heroContent?.titleSize || "");
+  const [heroTitleFont, setHeroTitleFont] = useState(heroContent?.titleFont || "Poppins");
+  const [heroSub1Size, setHeroSub1Size] = useState(heroContent?.subtitle1Size || "");
+  const [heroSub1Font, setHeroSub1Font] = useState(heroContent?.subtitle1Font || "Poppins");
+  const [heroSub2Size, setHeroSub2Size] = useState(heroContent?.subtitle2Size || "");
+  const [heroSub2Font, setHeroSub2Font] = useState(heroContent?.subtitle2Font || "Poppins");
+  const [loadError, setLoadError] = useState(false);
+  const isInternalChange = useRef(false);
+  const [pageVideoInput, setPageVideoInput] = useState(clientsVideoUrl || "");
+  const prevVideoRef = useRef(clientsVideoUrl || "");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const heroDesktopRef = useRef<HTMLVideoElement>(null);
+  const heroMobileRef = useRef<HTMLVideoElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const PRESETS = [
     { label: "Preset 1", url: "" },
@@ -118,6 +149,25 @@ export default function CMSView({
     toast.success("Video Preset Applied");
   };
 
+  const FONT_OPTIONS = [
+    { label: "Poppins (Default)", value: "Poppins" },
+    { label: "Inter", value: "Inter" },
+    { label: "Roboto", value: "Roboto" },
+    { label: "Open Sans", value: "Open Sans" },
+    { label: "Montserrat", value: "Montserrat" },
+    { label: "Lato", value: "Lato" },
+    { label: "Playfair Display", value: "Playfair Display" },
+    { label: "Merriweather", value: "Merriweather" },
+    { label: "--- Bengali Fonts ---", value: "disabled", disabled: true },
+    { label: "Hind Siliguri", value: "Hind Siliguri" },
+    { label: "Noto Sans Bengali", value: "Noto Sans Bengali" },
+    { label: "Tiro Bangla", value: "Tiro Bangla" },
+    { label: "Galada", value: "Galada" },
+    { label: "Baloo Da 2", value: "Baloo Da 2" },
+    { label: "Arial (System)", value: "Arial" },
+    { label: "Serif (System)", value: "serif" },
+  ];
+
   const handleClear = () => {
     setVideoInput("");
     setVideoMobileInput("");
@@ -125,19 +175,19 @@ export default function CMSView({
     toast.info("Fields Cleared");
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (heroDesktopRef.current) {
       heroDesktopRef.current.load();
     }
   }, [videoInput]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (heroMobileRef.current) {
       heroMobileRef.current.load();
     }
   }, [videoMobileInput, videoInput]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       setScreenSize({ w: window.innerWidth, h: window.innerHeight });
       const handleResize = () => setScreenSize({ w: window.innerWidth, h: window.innerHeight });
@@ -147,7 +197,7 @@ export default function CMSView({
   }, []);
 
   // Safe play effect
-  React.useEffect(() => {
+  useEffect(() => {
     let isMounted = true;
     const playVideo = async () => {
       // Only attempt play if it's a video element and not a youtube link
@@ -166,7 +216,7 @@ export default function CMSView({
         }
       }
     };
-    
+
     if (isVideoLive) {
       const timeout = setTimeout(playVideo, 150);
       return () => {
@@ -177,24 +227,24 @@ export default function CMSView({
   }, [pageVideoInput, isVideoLive]);
 
   // Auto-verify fallback logic
-  React.useEffect(() => {
+  useEffect(() => {
     if (pageVideoInput && pageVideoInput !== prevVideoRef.current) {
-      setIsVideoLive(false); 
+      setIsVideoLive(false);
       prevVideoRef.current = pageVideoInput;
       const timer = setTimeout(() => {
         setIsVideoLive(true);
-      }, 2000); 
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [pageVideoInput]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Reset error state when video input changes to allow new attempt
     setLoadError(false);
   }, [videoInput, videoMobileInput]);
 
   // Sync with props when category changes or initial load
-  React.useEffect(() => {
+  useEffect(() => {
     if (heroVideoUrl) setVideoInput(heroVideoUrl);
     if (heroVideoMobileUrl) setVideoMobileInput(heroVideoMobileUrl);
     if (brochureUrl) setBrochureInput(brochureUrl);
@@ -203,6 +253,12 @@ export default function CMSView({
       setHeroTitle(heroContent.title);
       setHeroSub1(heroContent.subtitle1);
       setHeroSub2(heroContent.subtitle2);
+      if (heroContent.titleSize) setHeroTitleSize(heroContent.titleSize);
+      if (heroContent.titleFont) setHeroTitleFont(heroContent.titleFont);
+      if (heroContent.subtitle1Size) setHeroSub1Size(heroContent.subtitle1Size);
+      if (heroContent.subtitle1Font) setHeroSub1Font(heroContent.subtitle1Font);
+      if (heroContent.subtitle2Size) setHeroSub2Size(heroContent.subtitle2Size);
+      if (heroContent.subtitle2Font) setHeroSub2Font(heroContent.subtitle2Font);
     }
   }, [heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent]);
 
@@ -214,7 +270,13 @@ export default function CMSView({
       onUpdateHeroContent({
         title: heroTitle,
         subtitle1: heroSub1,
-        subtitle2: heroSub2
+        subtitle2: heroSub2,
+        titleSize: heroTitleSize,
+        titleFont: heroTitleFont,
+        subtitle1Size: heroSub1Size,
+        subtitle1Font: heroSub1Font,
+        subtitle2Size: heroSub2Size,
+        subtitle2Font: heroSub2Font
       });
     }
     toast.success("Hero Content Updated Successfully");
@@ -227,12 +289,18 @@ export default function CMSView({
     setHeroTitle("PREMIUM PAPER SOLUTIONS");
     setHeroSub1("Global Standard. Sustainable Impact. Industrial Precision.");
     setHeroSub2("YOUR PARTNER IN SUSTAINABLE MANUFACTURING EXCELLENCE.");
+    setHeroTitleSize("");
+    setHeroTitleFont("Poppins");
+    setHeroSub1Size("");
+    setHeroSub1Font("Poppins");
+    setHeroSub2Size("");
+    setHeroSub2Font("Poppins");
     setLoadError(false);
   };
 
   const handleSaveProject = () => {
     if (!onUpdateClientProjects) return;
-    
+
     if (editingProject?.index !== undefined) {
       // Update existing
       const updated = [...clientProjects];
@@ -259,11 +327,11 @@ export default function CMSView({
 
   if (selectedCategory === "Hero Banner") {
     return (
-      <ViewContainer 
-        title="Hero Section Configuration" 
+      <ViewContainer
+        title="Hero Section Configuration"
         subtitle="Manage Main Banner Assets & Visuals"
         actions={
-          <button 
+          <button
             onClick={() => setSelectedCategory(null)}
             className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
           >
@@ -289,12 +357,12 @@ export default function CMSView({
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Desktop Video URL (MP4 or YouTube)</label>
                   <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                     <Monitor className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={videoInput}
                       onChange={(e) => {
                         let value = e.target.value;
-                        
+
                         // Handle iframe paste
                         if (value.includes("<iframe") && value.includes("src=")) {
                           const srcMatch = value.match(/src=["'](.*?)["']/);
@@ -313,7 +381,7 @@ export default function CMSView({
                         setVideoInput(value);
                         isInternalChange.current = true;
                       }}
-                      placeholder="Paste Video URL (MP4 or YouTube)..." 
+                      placeholder="Paste Video URL (MP4 or YouTube)..."
                       className="w-full bg-transparent text-white text-sm outline-none"
                     />
                   </div>
@@ -323,12 +391,12 @@ export default function CMSView({
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Mobile Video URL (MP4 or YouTube)</label>
                   <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                     <Camera className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={videoMobileInput}
                       onChange={(e) => {
                         let value = e.target.value;
-                        
+
                         // Handle iframe paste
                         if (value.includes("<iframe") && value.includes("src=")) {
                           const srcMatch = value.match(/src=["'](.*?)["']/);
@@ -347,7 +415,7 @@ export default function CMSView({
                         setVideoMobileInput(value);
                         isInternalChange.current = true;
                       }}
-                      placeholder="Paste Mobile Video URL..." 
+                      placeholder="Paste Mobile Video URL..."
                       className="w-full bg-transparent text-white text-sm outline-none"
                     />
                   </div>
@@ -357,14 +425,14 @@ export default function CMSView({
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Brochure Download Link (PDF)</label>
                   <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                     <FileText className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={brochureInput}
                       onChange={(e) => {
                         setBrochureInput(e.target.value);
                         isInternalChange.current = true;
                       }}
-                      placeholder="Paste PDF Link..." 
+                      placeholder="Paste PDF Link..."
                       className="w-full bg-transparent text-white text-sm outline-none"
                     />
                   </div>
@@ -372,70 +440,150 @@ export default function CMSView({
 
                 {/* Quick Actions & Presets */}
                 <div className="space-y-3 pt-2">
-                   <div className="flex items-center justify-between px-2">
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Quick Presets</span>
-                      <button onClick={handleClear} className="text-[9px] font-bold text-red-400 uppercase tracking-widest hover:text-red-300">Clear All</button>
-                   </div>
-                   <div className="grid grid-cols-3 gap-2">
-                      {PRESETS.map((preset, i) => (
-                        <button
-                          key={i}
-                          onClick={() => handleApplyPreset(preset.url)}
-                          className="px-3 py-2 rounded-lg bg-zinc-900 border border-white/5 hover:border-[#fabf37]/50 hover:bg-zinc-800 transition-all text-left group"
+                  <div className="flex items-center justify-between px-2">
+                    <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">Quick Presets</span>
+                    <button onClick={handleClear} className="text-[9px] font-bold text-red-400 uppercase tracking-widest hover:text-red-300">Clear All</button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {PRESETS.map((preset, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleApplyPreset(preset.url)}
+                        className="px-3 py-2 rounded-lg bg-zinc-900 border border-white/5 hover:border-[#fabf37]/50 hover:bg-zinc-800 transition-all text-left group"
+                      >
+                        <span className="block text-[9px] font-black text-white/60 group-hover:text-white uppercase tracking-wider truncate">{preset.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4 border-t border-white/5 pt-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Hero Main Title</label>
+                    <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
+                      <Sparkles className="size-4 text-zinc-500" />
+                      <input
+                        type="text"
+                        value={heroTitle}
+                        onChange={(e) => setHeroTitle(e.target.value)}
+                        placeholder="Hero Title..."
+                        className="w-full bg-transparent text-white text-sm outline-none"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Size</label>
+                        <input
+                          type="text"
+                          value={heroTitleSize}
+                          onChange={(e) => setHeroTitleSize(e.target.value)}
+                          placeholder="e.g. 80px, 5rem"
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Family</label>
+                        <select
+                          value={heroTitleFont}
+                          onChange={(e) => setHeroTitleFont(e.target.value)}
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
                         >
-                          <span className="block text-[9px] font-black text-white/60 group-hover:text-white uppercase tracking-wider truncate">{preset.label}</span>
-                        </button>
-                      ))}
-                   </div>
-                </div>
+                          {FONT_OPTIONS.map((font) => (
+                            <option key={font.value} value={font.value} disabled={font.disabled}>
+                              {font.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Hero Main Title</label>
-                  <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
-                    <Sparkles className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
-                      value={heroTitle}
-                      onChange={(e) => setHeroTitle(e.target.value)}
-                      placeholder="Hero Title..." 
-                      className="w-full bg-transparent text-white text-sm outline-none"
-                    />
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Subtitle 01 (Top)</label>
+                    <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
+                      <Edit className="size-4 text-zinc-500" />
+                      <input
+                        type="text"
+                        value={heroSub1}
+                        onChange={(e) => setHeroSub1(e.target.value)}
+                        placeholder="Subtitle 1..."
+                        className="w-full bg-transparent text-white text-sm outline-none"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Size</label>
+                        <input
+                          type="text"
+                          value={heroSub1Size}
+                          onChange={(e) => setHeroSub1Size(e.target.value)}
+                          placeholder="Default"
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Family</label>
+                        <select
+                          value={heroSub1Font}
+                          onChange={(e) => setHeroSub1Font(e.target.value)}
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
+                        >
+                          {FONT_OPTIONS.map((font) => (
+                            <option key={font.value} value={font.value} disabled={font.disabled}>
+                              {font.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Subtitle 02 (Bottom)</label>
+                    <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
+                      <Edit className="size-4 text-zinc-500" />
+                      <input
+                        type="text"
+                        value={heroSub2}
+                        onChange={(e) => setHeroSub2(e.target.value)}
+                        placeholder="Subtitle 2..."
+                        className="w-full bg-transparent text-white text-sm outline-none"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 mt-2">
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Size</label>
+                        <input
+                          type="text"
+                          value={heroSub2Size}
+                          onChange={(e) => setHeroSub2Size(e.target.value)}
+                          placeholder="Default"
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest ml-1">Font Family</label>
+                        <select
+                          value={heroSub2Font}
+                          onChange={(e) => setHeroSub2Font(e.target.value)}
+                          className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-2 text-white text-xs outline-none focus:border-[#fabf37]/50"
+                        >
+                          {FONT_OPTIONS.map((font) => (
+                            <option key={font.value} value={font.value} disabled={font.disabled}>
+                              {font.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Subtitle 01 (Top)</label>
-                  <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
-                    <Edit className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
-                      value={heroSub1}
-                      onChange={(e) => setHeroSub1(e.target.value)}
-                      placeholder="Subtitle 1..." 
-                      className="w-full bg-transparent text-white text-sm outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Subtitle 02 (Bottom)</label>
-                  <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
-                    <Edit className="size-4 text-zinc-500" />
-                    <input 
-                      type="text" 
-                      value={heroSub2}
-                      onChange={(e) => setHeroSub2(e.target.value)}
-                      placeholder="Subtitle 2..." 
-                      className="w-full bg-transparent text-white text-sm outline-none"
-                    />
-                  </div>
-                </div>
-
-                <button 
+                <button
                   onClick={handleSaveHero}
                   className="w-full py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_40px_rgba(250,191,55,0.2)]"
                 >
-                  <RefreshCw className="size-4" /> 
+                  <RefreshCw className="size-4" />
                   Sync Changes
                 </button>
               </div>
@@ -459,16 +607,101 @@ export default function CMSView({
           </div>
 
           <div className="space-y-10">
-             <div className="space-y-4">
-               <h3 className="text-xl font-black text-white uppercase tracking-tight ml-4 flex items-center gap-3">
-                 <Monitor className="size-5" /> Desktop Preview
-               </h3>
-               <div className="bg-black border border-white/5 rounded-[48px] p-4 aspect-video relative overflow-hidden group">
+            <div className="space-y-4">
+              <h3 className="text-xl font-black text-white uppercase tracking-tight ml-4 flex items-center gap-3">
+                <Monitor className="size-5" /> Desktop Preview
+              </h3>
+              <div className="bg-black border border-white/5 rounded-[48px] p-4 aspect-video relative overflow-hidden group">
+                {(() => {
+                  const getYouTubeId = (url: string) => {
+                    if (!url) return null;
+                    const cleanUrl = url.replace(/['"]/g, '').trim();
+
+                    // 1. Try to find ID from URL
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/)([^#&?]*).*/;
+                    const match = cleanUrl.match(regExp);
+                    if (match && match[2]) {
+                      const idMatch = match[2].match(/^[a-zA-Z0-9_-]{11}/);
+                      if (idMatch) return idMatch[0];
+                      if (match[2].length === 11) return match[2];
+                    }
+
+                    // 2. Fallback: Is the input ITSELF just the ID?
+                    const rawIdMatch = cleanUrl.match(/^[a-zA-Z0-9_-]{11}$/);
+                    if (rawIdMatch) return rawIdMatch[0];
+
+                    return null;
+                  };
+                  const inputValue = (videoInput || "").trim();
+                  const videoId = getYouTubeId(inputValue);
+                  const isInvalidFormat = inputValue.length > 5 && !videoId && (inputValue.includes("youtube") || inputValue.includes("youtu.be"));
+
+                  return (
+                    <>
+                      {isInvalidFormat && (
+                        <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center p-8 text-center backdrop-blur-xl transition-all duration-500">
+                          <div className="size-16 rounded-full bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20">
+                            <AlertTriangle className="size-8 text-red-500 animate-pulse" />
+                          </div>
+                          <p className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-3">Invalid Source</p>
+                          <p className="text-[9px] font-bold text-zinc-400 uppercase leading-loose max-w-[240px] tracking-widest mb-6">
+                            The provided URL is not supported. <br />
+                            <span className="text-[#fabf37] mt-2 block italic">Please use a valid YouTube link.</span>
+                          </p>
+                        </div>
+                      )}
+
+                      {videoId ? (
+                        <div className="w-full h-full rounded-[36px] overflow-hidden relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
+                          <img
+                            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                            alt="Video thumbnail"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              // Fallback to hqdefault if maxresdefault doesn't exist
+                              e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all flex items-center justify-center">
+                            <div className="size-20 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                              <Play className="size-10 text-white ml-1" fill="white" />
+                            </div>
+                          </div>
+                          <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-full">
+                            <p className="text-[9px] font-black text-white uppercase tracking-widest">Click to Test</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full h-full bg-zinc-900 rounded-[36px] flex items-center justify-center">
+                          <div className="text-center text-zinc-600 space-y-2">
+                            <div className="text-4xl">🎥</div>
+                            <p className="text-sm font-bold">No Video Selected</p>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="text-center">
+                    <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 opacity-40">Paperware Global</h2>
+                    <div className="h-0.5 w-12 bg-[#fabf37] mx-auto opacity-20" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-black text-white uppercase tracking-tight ml-4 flex items-center gap-3">
+                <Camera className="size-5" /> Mobile Preview
+              </h3>
+              <div className="flex justify-center">
+                <div className="bg-black border-[12px] border-zinc-900 rounded-[60px] w-[280px] aspect-[9/19] relative overflow-hidden shadow-2xl">
                   {(() => {
                     const getYouTubeId = (url: string) => {
                       if (!url) return null;
                       const cleanUrl = url.replace(/['"]/g, '').trim();
-                      
+
                       // 1. Try to find ID from URL
                       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/)([^#&?]*).*/;
                       const match = cleanUrl.match(regExp);
@@ -484,136 +717,51 @@ export default function CMSView({
 
                       return null;
                     };
-                    const inputValue = (videoInput || "").trim();
-                    const videoId = getYouTubeId(inputValue);
-                    const isInvalidFormat = inputValue.length > 5 && !videoId && (inputValue.includes("youtube") || inputValue.includes("youtu.be"));
 
-                    return (
-                      <>
-                        {isInvalidFormat && (
-                           <div className="absolute inset-0 z-20 bg-black/80 flex flex-col items-center justify-center p-8 text-center backdrop-blur-xl transition-all duration-500">
-                              <div className="size-16 rounded-full bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20">
-                                <AlertTriangle className="size-8 text-red-500 animate-pulse" />
-                              </div>
-                              <p className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-3">Invalid Source</p>
-                              <p className="text-[9px] font-bold text-zinc-400 uppercase leading-loose max-w-[240px] tracking-widest mb-6">
-                                The provided URL is not supported. <br/>
-                                <span className="text-[#fabf37] mt-2 block italic">Please use a valid YouTube link.</span>
-                              </p>
-                           </div>
-                        )}
-                        
-                        {videoId ? (
-                          <div className="w-full h-full rounded-[36px] overflow-hidden relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
-                            <img 
-                              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                              alt="Video thumbnail"
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                // Fallback to hqdefault if maxresdefault doesn't exist
-                                e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all flex items-center justify-center">
-                              <div className="size-20 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                                <Play className="size-10 text-white ml-1" fill="white" />
-                              </div>
-                            </div>
-                            <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-4 py-2 rounded-full">
-                              <p className="text-[9px] font-black text-white uppercase tracking-widest">Click to Test</p>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="w-full h-full bg-zinc-900 rounded-[36px] flex items-center justify-center">
-                            <div className="text-center text-zinc-600 space-y-2">
-                              <div className="text-4xl">🎥</div>
-                              <p className="text-sm font-bold">No Video Selected</p>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    );
-                  })()}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="text-center">
-                      <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 opacity-40">Paperware Global</h2>
-                      <div className="h-0.5 w-12 bg-[#fabf37] mx-auto opacity-20" />
-                    </div>
-                  </div>
-               </div>
-             </div>
+                    const rawUrl = videoMobileInput || videoInput;
+                    const activeUrl = (rawUrl || "").trim();
+                    const videoId = getYouTubeId(activeUrl);
 
-             <div className="space-y-4">
-               <h3 className="text-xl font-black text-white uppercase tracking-tight ml-4 flex items-center gap-3">
-                 <Camera className="size-5" /> Mobile Preview
-               </h3>
-               <div className="flex justify-center">
-                 <div className="bg-black border-[12px] border-zinc-900 rounded-[60px] w-[280px] aspect-[9/19] relative overflow-hidden shadow-2xl">
-                     {(() => {
-                      const getYouTubeId = (url: string) => {
-                        if (!url) return null;
-                        const cleanUrl = url.replace(/['"]/g, '').trim();
-                        
-                        // 1. Try to find ID from URL
-                        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/)([^#&?]*).*/;
-                        const match = cleanUrl.match(regExp);
-                        if (match && match[2]) {
-                          const idMatch = match[2].match(/^[a-zA-Z0-9_-]{11}/);
-                          if (idMatch) return idMatch[0];
-                          if (match[2].length === 11) return match[2];
-                        }
-
-                        // 2. Fallback: Is the input ITSELF just the ID?
-                        const rawIdMatch = cleanUrl.match(/^[a-zA-Z0-9_-]{11}$/);
-                        if (rawIdMatch) return rawIdMatch[0];
-                        
-                        return null;
-                      };
-                      
-                      const rawUrl = videoMobileInput || videoInput;
-                      const activeUrl = (rawUrl || "").trim();
-                      const videoId = getYouTubeId(activeUrl);
-
-                      if (videoId) {
-                        return (
-                          <div className="w-full h-full relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
-                            <img 
-                              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                              alt="Mobile video thumbnail"
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all flex items-center justify-center">
-                              <div className="size-16 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                                <Play className="size-8 text-white ml-1" fill="white" />
-                              </div>
-                            </div>
-                            <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                              <p className="text-[8px] font-black text-white uppercase tracking-widest">Tap to Test</p>
-                            </div>
-                          </div>
-                        );
-                      }
-
+                    if (videoId) {
                       return (
-                        <div className="w-full h-full bg-zinc-900 flex items-center justify-center">
-                          <div className="text-center text-zinc-600 space-y-2">
-                            <div className="text-2xl">🎥</div>
-                            <p className="text-xs font-bold">No Video</p>
+                        <div className="w-full h-full relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
+                          <img
+                            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                            alt="Mobile video thumbnail"
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all flex items-center justify-center">
+                            <div className="size-16 rounded-full bg-red-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                              <Play className="size-8 text-white ml-1" fill="white" />
+                            </div>
+                          </div>
+                          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                            <p className="text-[8px] font-black text-white uppercase tracking-widest">Tap to Test</p>
                           </div>
                         </div>
                       );
-                    })()}
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-zinc-900 rounded-full z-20" />
-                    <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-                    <div className="absolute bottom-12 left-0 w-full px-6 text-center">
-                      <p className="text-[10px] font-black text-white uppercase tracking-tighter opacity-60">Responsive Mobile Feed</p>
-                    </div>
-                 </div>
-               </div>
-             </div>
+                    }
+
+                    return (
+                      <div className="w-full h-full bg-zinc-900 flex items-center justify-center">
+                        <div className="text-center text-zinc-600 space-y-2">
+                          <div className="text-2xl">🎥</div>
+                          <p className="text-xs font-bold">No Video</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-zinc-900 rounded-full z-20" />
+                  <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+                  <div className="absolute bottom-12 left-0 w-full px-6 text-center">
+                    <p className="text-[10px] font-black text-white uppercase tracking-tighter opacity-60">Responsive Mobile Feed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </ViewContainer>
@@ -621,7 +769,7 @@ export default function CMSView({
   }
 
   if (selectedCategory === "Product Gallery") {
-    const handleAddProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddProduct = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newProduct = {
@@ -636,7 +784,7 @@ export default function CMSView({
       toast.success("Product Added Successfully");
     };
 
-    const handleUpdateProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateProduct = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const updatedProducts = products.map(p => p.id === editingProduct.id ? {
@@ -658,12 +806,12 @@ export default function CMSView({
     };
 
     return (
-      <ViewContainer 
-        title="Product Gallery" 
+      <ViewContainer
+        title="Product Gallery"
         subtitle="Manage Industrial Catalog"
         actions={
           <div className="flex gap-4">
-            <button 
+            <button
               onClick={() => setIsAddProductOpen(true)}
               className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 transition-all"
             >
@@ -681,13 +829,13 @@ export default function CMSView({
               <div className="aspect-video relative">
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                 <div className="absolute top-4 right-4 flex gap-2">
-                  <button 
+                  <button
                     onClick={() => setEditingProduct(p)}
                     className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"
                   >
                     <Edit className="size-3.5" />
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleDeleteProduct(p.id)}
                     className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-red-500 transition-all"
                   >
@@ -711,7 +859,7 @@ export default function CMSView({
         <AnimatePresence>
           {(isAddProductOpen || editingProduct) && (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -730,7 +878,7 @@ export default function CMSView({
                 <form onSubmit={isAddProductOpen ? handleAddProduct : handleUpdateProduct} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Product Name</label>
-                    <input 
+                    <input
                       name="name"
                       required
                       defaultValue={editingProduct?.name || ""}
@@ -740,7 +888,7 @@ export default function CMSView({
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Industrial Category</label>
-                    <input 
+                    <input
                       name="category"
                       required
                       defaultValue={editingProduct?.category || ""}
@@ -750,7 +898,7 @@ export default function CMSView({
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Image URL (Visual Data)</label>
-                    <input 
+                    <input
                       name="image"
                       required
                       defaultValue={editingProduct?.image || ""}
@@ -759,14 +907,14 @@ export default function CMSView({
                     />
                   </div>
                   <div className="flex gap-4 pt-4">
-                    <button 
+                    <button
                       type="button"
                       onClick={() => { setIsAddProductOpen(false); setEditingProduct(null); }}
                       className="flex-1 py-5 bg-white/5 text-white rounded-2xl font-black uppercase tracking-widest text-[11px] border border-white/5 hover:bg-white/10 transition-all"
                     >
                       Cancel
                     </button>
-                    <button 
+                    <button
                       type="submit"
                       className="flex-1 py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-[0_20px_40px_rgba(250,191,55,0.2)] hover:scale-105 transition-all"
                     >
@@ -790,12 +938,12 @@ export default function CMSView({
       }
     };
 
-    const handleAddTestimonial = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddTestimonial = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const isFeatured = formData.get('isFeatured') === 'on';
       const isVideo = formData.get('isVideo') === 'on';
-      
+
       const newTestimonial = {
         id: Date.now(),
         client: formData.get('client') as string,
@@ -819,12 +967,12 @@ export default function CMSView({
     };
 
     return (
-      <ViewContainer 
-        title="Client Testimonials" 
+      <ViewContainer
+        title="Client Testimonials"
         subtitle="Manage Social Proof & Feedback"
         actions={
           <div className="flex gap-4">
-            <button 
+            <button
               onClick={() => setIsAddProductOpen(true)}
               className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 transition-all"
             >
@@ -852,17 +1000,17 @@ export default function CMSView({
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                 <Link className="size-4 text-zinc-500" />
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={pageVideoInput}
                   onChange={(e) => {
                     setPageVideoInput(e.target.value.trim());
                   }}
-                  placeholder="Paste Featured Video MP4 URL..." 
+                  placeholder="Paste Featured Video MP4 URL..."
                   className="w-full bg-transparent text-white text-sm outline-none"
                 />
               </div>
-              <button 
+              <button
                 onClick={handleSavePageVideo}
                 className="bg-[#fabf37] text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-105 active:scale-95 transition-all"
               >
@@ -896,13 +1044,13 @@ export default function CMSView({
                       }
 
                       return (
-                        <video 
+                        <video
                           ref={videoRef}
                           key={pageVideoInput}
                           src={pageVideoInput}
-                          autoPlay 
-                          muted 
-                          loop 
+                          autoPlay
+                          muted
+                          loop
                           playsInline
                           onCanPlay={() => setIsVideoLive(true)}
                           onLoadedData={() => setIsVideoLive(true)}
@@ -917,53 +1065,53 @@ export default function CMSView({
                       );
                     })()}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
-                    
+
                     {/* READY TO PLAY Badge */}
                     <div className="absolute top-8 left-1/2 -translate-x-1/2">
-                        <motion.div 
-                          initial={{ y: -20, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          className="px-5 py-2 bg-[#fabf37] rounded-full flex items-center gap-2 shadow-lg shadow-[#fabf37]/20"
-                        >
-                            <div className="size-1.5 rounded-full bg-black animate-pulse" />
-                            <span className="text-[9px] font-black text-black uppercase tracking-[0.2em]">Ready to Play</span>
-                        </motion.div>
+                      <motion.div
+                        initial={{ y: -20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        className="px-5 py-2 bg-[#fabf37] rounded-full flex items-center gap-2 shadow-lg shadow-[#fabf37]/20"
+                      >
+                        <div className="size-1.5 rounded-full bg-black animate-pulse" />
+                        <span className="text-[9px] font-black text-black uppercase tracking-[0.2em]">Ready to Play</span>
+                      </motion.div>
                     </div>
 
                     {/* HUD Elements */}
                     <div className="absolute top-8 left-8 flex items-center gap-3">
                       <div className={`size-2 rounded-full ${isVideoLive ? 'bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-red-500'}`} />
-                      
+
                       {/* Visible Screen Size HUD */}
                       <div className="px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-2">
-                          <Monitor className="size-3 text-[#fabf37]" />
-                          <span className="text-[7px] font-black text-[#fabf37] uppercase tracking-widest whitespace-nowrap">
-                            {screenSize.w} x {screenSize.h}
-                          </span>
+                        <Monitor className="size-3 text-[#fabf37]" />
+                        <span className="text-[7px] font-black text-[#fabf37] uppercase tracking-widest whitespace-nowrap">
+                          {screenSize.w} x {screenSize.h}
+                        </span>
                       </div>
                     </div>
 
                     {/* Central Play Button */}
                     <AnimatePresence>
                       {!isVideoLive && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 1.1 }}
                           className="absolute inset-0 flex items-center justify-center z-20"
                         >
-                            <motion.div 
-                              onClick={() => setIsVideoLive(true)}
-                              whileHover={{ scale: 1.1 }}
-                              whileTap={{ scale: 0.9 }}
-                              className="size-20 rounded-full bg-[#fabf37] flex items-center justify-center text-black shadow-[0_0_40px_rgba(250,191,55,0.4)] cursor-pointer"
-                            >
-                                <Play className="size-8 fill-current ml-1" />
-                            </motion.div>
+                          <motion.div
+                            onClick={() => setIsVideoLive(true)}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="size-20 rounded-full bg-[#fabf37] flex items-center justify-center text-black shadow-[0_0_40px_rgba(250,191,55,0.4)] cursor-pointer"
+                          >
+                            <Play className="size-8 fill-current ml-1" />
+                          </motion.div>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                    
+
                     {/* Bottom Content Area */}
                     <div className="absolute bottom-10 left-6 right-6 p-6 rounded-[32px] bg-black/40 backdrop-blur-xl border border-white/10 text-center space-y-4">
                       <div className="flex justify-center gap-1">
@@ -971,18 +1119,18 @@ export default function CMSView({
                           <Star key={i} className="size-3 text-[#fabf37] fill-current" />
                         ))}
                       </div>
-                      
+
                       <div className="group relative">
                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#fabf37] text-black text-[7px] font-black px-2 py-0.5 rounded uppercase">Click to Edit</div>
-                        <h4 
-                          contentEditable 
+                        <h4
+                          contentEditable
                           suppressContentEditableWarning
                           className="text-xl font-black text-white uppercase tracking-tight mb-1 outline-none hover:text-[#fabf37] transition-colors cursor-text focus:ring-1 focus:ring-[#fabf37]/50 rounded px-1"
                         >
                           Verified Story
                         </h4>
-                        <p 
-                          contentEditable 
+                        <p
+                          contentEditable
                           suppressContentEditableWarning
                           className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest leading-relaxed outline-none hover:text-white transition-colors cursor-text focus:ring-1 focus:ring-[#fabf37]/50 rounded px-1"
                         >
@@ -992,15 +1140,15 @@ export default function CMSView({
 
                       <div className="flex justify-center">
                         <div className="px-4 py-1.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2">
-                            <Zap className="size-3 text-[#fabf37]" />
-                            <span className="text-[8px] font-black text-white uppercase tracking-widest">4K Pipeline Sync</span>
+                          <Zap className="size-3 text-[#fabf37]" />
+                          <span className="text-[8px] font-black text-white uppercase tracking-widest">4K Pipeline Sync</span>
                         </div>
                       </div>
                     </div>
 
                     <AnimatePresence>
                       {!isVideoLive && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
@@ -1009,23 +1157,23 @@ export default function CMSView({
                         >
                           <div className="flex flex-col items-center gap-4 text-center px-8">
                             <div className="relative">
-                                <RefreshCw className="size-10 text-[#fabf37] animate-spin" />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="size-1.5 rounded-full bg-white animate-ping" />
-                                </div>
+                              <RefreshCw className="size-10 text-[#fabf37] animate-spin" />
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="size-1.5 rounded-full bg-white animate-ping" />
+                              </div>
                             </div>
                             <div>
-                                <p className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Neural Verification</p>
-                                <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mt-1">Establishing Secure Stream...</p>
+                              <p className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Neural Verification</p>
+                              <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mt-1">Establishing Secure Stream...</p>
                             </div>
-                            <button 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsVideoLive(true);
-                                }}
-                                className="mt-4 px-5 py-2.5 bg-white/5 hover:bg-[#fabf37] hover:text-black rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-white/10 group/btn shadow-xl"
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsVideoLive(true);
+                              }}
+                              className="mt-4 px-5 py-2.5 bg-white/5 hover:bg-[#fabf37] hover:text-black rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-white/10 group/btn shadow-xl"
                             >
-                                <span className="group-hover/btn:scale-105 inline-block">Force Sync Bypass</span>
+                              <span className="group-hover/btn:scale-105 inline-block">Force Sync Bypass</span>
                             </button>
                           </div>
                         </motion.div>
@@ -1035,66 +1183,66 @@ export default function CMSView({
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center space-y-4 text-zinc-800 p-12 text-center">
                     <div className="size-20 rounded-full bg-white/5 border border-white/5 flex items-center justify-center mb-4">
-                        <Monitor className="size-8 opacity-20" />
+                      <Monitor className="size-8 opacity-20" />
                     </div>
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Awaiting Video Input for Verified Story Card</p>
                   </div>
                 )}
               </div>
             </div>
-            
+
             <p className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest leading-relaxed ml-2">
               Note: This video appears as the main background of the "Featured Video" card on the Clients page.
             </p>
           </div>
 
           <div className="space-y-4">
-          {testimonials.map((t: any) => (
-            <div key={t.id} className="bg-zinc-900/50 border border-white/5 rounded-[32px] p-8 flex justify-between items-center group hover:border-[#fabf37]/50 transition-all">
-              <div className="flex items-center gap-8">
-                <div className="relative">
-                  <div className="size-16 rounded-2xl bg-black flex items-center justify-center text-[#fabf37] font-black text-xl overflow-hidden border border-white/5">
-                    {t.image ? (
-                      <img src={t.image} alt="" className="w-full h-full object-cover opacity-60" />
-                    ) : (
-                      <span>{t.client[0]}</span>
-                    )}
-                  </div>
-                  {t.isVideo && (
-                    <div className="absolute -top-1 -right-1 size-5 bg-[#fabf37] rounded-full flex items-center justify-center border-2 border-black">
-                      <Play className="size-2 text-black fill-current" />
+            {testimonials.map((t: any) => (
+              <div key={t.id} className="bg-zinc-900/50 border border-white/5 rounded-[32px] p-8 flex justify-between items-center group hover:border-[#fabf37]/50 transition-all">
+                <div className="flex items-center gap-8">
+                  <div className="relative">
+                    <div className="size-16 rounded-2xl bg-black flex items-center justify-center text-[#fabf37] font-black text-xl overflow-hidden border border-white/5">
+                      {t.image ? (
+                        <img src={t.image} alt="" className="w-full h-full object-cover opacity-60" />
+                      ) : (
+                        <span>{t.client[0]}</span>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div>
-                  <div className="flex items-center gap-3">
-                    <h4 className="text-xl font-black text-white uppercase tracking-tight">{t.client}</h4>
-                    {t.isFeatured && (
-                      <span className="px-2 py-0.5 bg-[#fabf37]/10 text-[#fabf37] text-[8px] font-black uppercase tracking-widest rounded-md border border-[#fabf37]/20">Featured</span>
+                    {t.isVideo && (
+                      <div className="absolute -top-1 -right-1 size-5 bg-[#fabf37] rounded-full flex items-center justify-center border-2 border-black">
+                        <Play className="size-2 text-black fill-current" />
+                      </div>
                     )}
                   </div>
-                  <p className="text-sm font-bold text-zinc-500 mt-1">"{t.quote}"</p>
-                  {t.isVideo && <p className="text-[10px] text-[#fabf37] mt-1 font-black uppercase tracking-widest">Neural Video Pipeline Active</p>}
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <h4 className="text-xl font-black text-white uppercase tracking-tight">{t.client}</h4>
+                      {t.isFeatured && (
+                        <span className="px-2 py-0.5 bg-[#fabf37]/10 text-[#fabf37] text-[8px] font-black uppercase tracking-widest rounded-md border border-[#fabf37]/20">Featured</span>
+                      )}
+                    </div>
+                    <p className="text-sm font-bold text-zinc-500 mt-1">"{t.quote}"</p>
+                    {t.isVideo && <p className="text-[10px] text-[#fabf37] mt-1 font-black uppercase tracking-widest">Neural Video Pipeline Active</p>}
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => handleDeleteTestimonial(t.id)}
+                    className="size-10 rounded-xl bg-white/5 text-zinc-400 hover:text-red-500 flex items-center justify-center transition-colors"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <button 
-                  onClick={() => handleDeleteTestimonial(t.id)}
-                  className="size-10 rounded-xl bg-white/5 text-zinc-400 hover:text-red-500 flex items-center justify-center transition-colors"
-                >
-                  <Trash2 className="size-4" />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Simple Add Modal for Testimonials */}
-      <AnimatePresence>
+        {/* Simple Add Modal for Testimonials */}
+        <AnimatePresence>
           {isAddProductOpen && (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -1124,7 +1272,7 @@ export default function CMSView({
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Testimonial Content</label>
                     <textarea name="quote" required className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all h-24" />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex items-center gap-3 p-4 bg-black rounded-2xl border border-white/5">
                       <input type="checkbox" name="isFeatured" id="feat" className="size-4 accent-[#fabf37]" />
@@ -1162,18 +1310,18 @@ export default function CMSView({
 
   if (selectedCategory === "Client Projects") {
     return (
-      <ViewContainer 
-        title="Recent Deployments" 
+      <ViewContainer
+        title="Recent Deployments"
         subtitle="Manage Client Project Showcase"
         actions={
           <div className="flex gap-4">
-             <button 
+            <button
               onClick={() => setSelectedCategory(null)}
               className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
             >
               <ChevronRight className="size-4 rotate-180" /> Back to CMS
             </button>
-            <button 
+            <button
               onClick={() => {
                 setEditingProject({});
                 setIsAddProjectOpen(true);
@@ -1188,35 +1336,35 @@ export default function CMSView({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {clientProjects.map((project: any, idx: number) => (
             <div key={idx} className="bg-zinc-900/50 border border-white/5 rounded-[32px] overflow-hidden group hover:border-[#fabf37]/50 transition-all">
-               <div className="relative h-48">
-                 <img src={project.image} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all" />
-                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                    <button 
-                      onClick={() => {
-                        setEditingProject({ ...project, index: idx });
-                        setIsAddProjectOpen(true);
-                      }}
-                      className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"
-                    >
-                      <Edit className="size-3.5" />
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteProject(idx)}
-                      className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-red-500 transition-all"
-                    >
-                      <Trash2 className="size-3.5" />
-                    </button>
-                 </div>
-                 <div className="absolute bottom-4 left-4 right-4">
-                    <span className="px-2 py-1 bg-black/60 backdrop-blur-md rounded-md text-[8px] font-black text-[#fabf37] uppercase tracking-widest border border-[#fabf37]/20">
-                      {project.company}
-                    </span>
-                 </div>
-               </div>
-               <div className="p-6">
-                 <h4 className="text-lg font-black text-white uppercase tracking-tight mb-2 leading-none">{project.project}</h4>
-                 <p className="text-[10px] font-bold text-zinc-500 leading-relaxed line-clamp-2">{project.desc}</p>
-               </div>
+              <div className="relative h-48">
+                <img src={project.image} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all" />
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                  <button
+                    onClick={() => {
+                      setEditingProject({ ...project, index: idx });
+                      setIsAddProjectOpen(true);
+                    }}
+                    className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"
+                  >
+                    <Edit className="size-3.5" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProject(idx)}
+                    className="size-8 rounded-lg bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-red-500 transition-all"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="px-2 py-1 bg-black/60 backdrop-blur-md rounded-md text-[8px] font-black text-[#fabf37] uppercase tracking-widest border border-[#fabf37]/20">
+                    {project.company}
+                  </span>
+                </div>
+              </div>
+              <div className="p-6">
+                <h4 className="text-lg font-black text-white uppercase tracking-tight mb-2 leading-none">{project.project}</h4>
+                <p className="text-[10px] font-bold text-zinc-500 leading-relaxed line-clamp-2">{project.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -1224,7 +1372,7 @@ export default function CMSView({
         <AnimatePresence>
           {isAddProjectOpen && (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -1243,48 +1391,48 @@ export default function CMSView({
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Company Name</label>
-                    <input 
+                    <input
                       value={editingProject?.company || ""}
-                      onChange={(e) => setEditingProject({...editingProject, company: e.target.value})}
+                      onChange={(e) => setEditingProject({ ...editingProject, company: e.target.value })}
                       placeholder="e.g. TechFlow Systems"
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Project Title</label>
-                    <input 
+                    <input
                       value={editingProject?.project || ""}
-                      onChange={(e) => setEditingProject({...editingProject, project: e.target.value})}
+                      onChange={(e) => setEditingProject({ ...editingProject, project: e.target.value })}
                       placeholder="e.g. Neural Hardware Packaging"
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Description</label>
-                    <textarea 
+                    <textarea
                       value={editingProject?.desc || ""}
-                      onChange={(e) => setEditingProject({...editingProject, desc: e.target.value})}
+                      onChange={(e) => setEditingProject({ ...editingProject, desc: e.target.value })}
                       placeholder="Project details..."
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all h-24"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Image URL</label>
-                    <input 
+                    <input
                       value={editingProject?.image || ""}
-                      onChange={(e) => setEditingProject({...editingProject, image: e.target.value})}
+                      onChange={(e) => setEditingProject({ ...editingProject, image: e.target.value })}
                       placeholder="https://..."
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
                   <div className="flex gap-4 pt-4">
-                    <button 
+                    <button
                       onClick={() => { setIsAddProjectOpen(false); setEditingProject(null); }}
                       className="flex-1 py-5 bg-white/5 text-white rounded-2xl font-black uppercase tracking-widest text-[11px] border border-white/5 hover:bg-white/10 transition-all"
                     >
                       Cancel
                     </button>
-                    <button 
+                    <button
                       onClick={handleSaveProject}
                       className="flex-1 py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-[0_20px_40px_rgba(250,191,55,0.2)] hover:scale-105 transition-all"
                     >
@@ -1301,7 +1449,7 @@ export default function CMSView({
   }
 
   if (selectedCategory === "Impact Dashboard") {
-    const handleSaveStats = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSaveStats = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newStats = {
@@ -1314,8 +1462,8 @@ export default function CMSView({
     };
 
     return (
-      <ViewContainer 
-        title="Impact Dashboard Editor" 
+      <ViewContainer
+        title="Impact Dashboard Editor"
         subtitle="Manage Global Sustainability & Production Stats"
         actions={<button onClick={() => setSelectedCategory(null)} className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10">Back</button>}
       >
@@ -1336,9 +1484,9 @@ export default function CMSView({
                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Total Paper Cups Produced (Base)</label>
                 <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                   <Box className="size-4 text-zinc-500" />
-                  <input 
+                  <input
                     name="totalCups"
-                    type="number" 
+                    type="number"
                     defaultValue={productionStats?.totalCups || 69550257}
                     className="w-full bg-transparent text-white text-sm outline-none"
                   />
@@ -1349,9 +1497,9 @@ export default function CMSView({
                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Wonderful Businesses Partnered</label>
                 <div className="flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
                   <Users className="size-4 text-zinc-500" />
-                  <input 
+                  <input
                     name="wonderfulBusinesses"
-                    type="number" 
+                    type="number"
                     defaultValue={productionStats?.wonderfulBusinesses || 5754}
                     className="w-full bg-transparent text-white text-sm outline-none"
                   />
@@ -1363,13 +1511,13 @@ export default function CMSView({
                 <div>
                   <p className="text-[10px] font-black text-white uppercase tracking-tight">AI-Assisted ERP Sync: ON</p>
                   <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mt-1 leading-relaxed">
-                    Values will increment automatically on the live site to reflect real-time production flow. <br/>
+                    Values will increment automatically on the live site to reflect real-time production flow. <br />
                     <span className="text-[#fabf37]">Last ERP Handshake: {productionStats?.lastSync ? new Date(productionStats.lastSync).toLocaleTimeString() : 'N/A'}</span>
                   </p>
                 </div>
               </div>
 
-              <button 
+              <button
                 type="submit"
                 className="w-full py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-[0_20px_40px_rgba(250,191,55,0.2)] hover:scale-[1.02] active:scale-95 transition-all"
               >
@@ -1392,7 +1540,7 @@ export default function CMSView({
                   </div>
                 ))}
               </div>
-              <button 
+              <button
                 onClick={() => toast.info("Sustainability metrics are locked to Carbon Calculator API.")}
                 className="w-full py-4 mt-8 bg-white/5 text-white text-[10px] font-black uppercase tracking-widest rounded-xl border border-white/5"
               >
@@ -1406,7 +1554,7 @@ export default function CMSView({
   }
 
   if (selectedCategory === "Career Postings") {
-    const handleAddJob = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddJob = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newJob = {
@@ -1429,12 +1577,12 @@ export default function CMSView({
     };
 
     return (
-      <ViewContainer 
-        title="Career Opportunities" 
+      <ViewContainer
+        title="Career Opportunities"
         subtitle="Manage Job Openings & Hiring"
         actions={
           <div className="flex gap-4">
-            <button 
+            <button
               onClick={() => setIsAddProductOpen(true)}
               className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 transition-all"
             >
@@ -1465,7 +1613,7 @@ export default function CMSView({
                 <span className="px-4 py-1.5 rounded-full bg-white/5 text-[9px] font-black text-white uppercase tracking-widest">{c.type}</span>
                 <div className="flex gap-2">
                   <button className="size-10 rounded-xl bg-white/5 text-zinc-400 hover:text-white flex items-center justify-center"><Edit className="size-4" /></button>
-                  <button 
+                  <button
                     onClick={() => handleDeleteJob(c.id)}
                     className="size-10 rounded-xl bg-white/5 text-zinc-400 hover:text-red-500 flex items-center justify-center transition-colors"
                   >
@@ -1481,7 +1629,7 @@ export default function CMSView({
         <AnimatePresence>
           {isAddProductOpen && (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 onClick={() => setIsAddProductOpen(false)}
                 className="absolute inset-0 bg-black/80 backdrop-blur-sm"
@@ -1530,15 +1678,15 @@ export default function CMSView({
 
   if (selectedCategory === "Legal/Privacy") {
     return (
-      <ViewContainer 
-        title="Legal & Compliance" 
+      <ViewContainer
+        title="Legal & Compliance"
         subtitle="Manage Privacy Policy & Terms"
         actions={<button onClick={() => setSelectedCategory(null)} className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10">Back</button>}
       >
         <div className="bg-zinc-900/50 border border-white/5 rounded-[40px] p-12 space-y-8">
           <div className="space-y-4">
             <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-4">Privacy Policy Content</label>
-            <textarea 
+            <textarea
               className="w-full h-64 bg-black border border-white/10 rounded-3xl p-8 text-white text-sm outline-none focus:border-[#fabf37] transition-all resize-none custom-scrollbar"
               defaultValue="Paperware Manufacturing is committed to protecting your industrial data and privacy. Our protocols ensure that all B2B transactions remain encrypted and secure. We do not share client specifications with third parties without explicit authorization."
             />
@@ -1549,83 +1697,439 @@ export default function CMSView({
     );
   }
 
-  if (selectedCategory === "Global Partners") {
-    const handleSavePartner = () => {
-      if (!onUpdatePartners) return;
-      
-      if (editingPartner?.id) {
-        // Update existing
-        const updated = partners.map((p: any) => p.id === editingPartner.id ? editingPartner : p);
-        onUpdatePartners(updated);
-        toast.success("Partner Updated");
-      } else {
-        // Add new
-        const newPartner = { ...editingPartner, id: Date.now().toString() };
-        onUpdatePartners([...partners, newPartner]);
-        toast.success("Partner Added");
+  if (selectedCategory === "Who We Are") {
+    const handleSaveMember = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setIsUploading(true);
+      try {
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get('name') as string;
+        const role = formData.get('role') as string;
+        const photoFile = (e.currentTarget.elements.namedItem('photoFile') as HTMLInputElement).files?.[0];
+        let imageUrl = formData.get('image') as string || (editingTeamMember?.image || "");
+
+        if (photoFile) {
+          const fileName = `team-${Date.now()}-${photoFile.name}`;
+          const { data, error } = await supabase.storage
+            .from('team')
+            .upload(fileName, photoFile);
+
+          if (error) throw error;
+          const { data: { publicUrl } } = supabase.storage
+            .from('team')
+            .getPublicUrl(fileName);
+          imageUrl = publicUrl;
+        }
+
+        if (editingTeamMember) {
+          const updatedMembers = teamMembers.map((m: any) =>
+            m.id === editingTeamMember.id ? { ...m, name, role, image: imageUrl } : m
+          );
+          if (onUpdateTeamMembers) onUpdateTeamMembers(updatedMembers);
+          toast.success("Unit Photo Updated Successfully");
+        } else {
+          const newMember = {
+            id: Date.now().toString(),
+            name,
+            role,
+            image: imageUrl
+          };
+          if (onUpdateTeamMembers) onUpdateTeamMembers([...teamMembers, newMember]);
+          toast.success("Unit Photo Added Successfully");
+        }
+
+        setIsAddProductOpen(false);
+        setEditingTeamMember(null);
+      } catch (error: any) {
+        toast.error(`Upload failed: ${error.message}`);
+      } finally {
+        setIsUploading(false);
       }
-      setEditingPartner(null);
-      setIsAddPartnerOpen(false);
     };
 
-    const handleDeletePartner = (id: string) => {
-      if (!onUpdatePartners) return;
-      if (confirm("Remove this partner?")) {
-        onUpdatePartners(partners.filter((p: any) => p.id !== id));
-        toast.success("Partner Removed");
+    const handleDeleteMember = (id: string) => {
+      if (confirm("Remove this unit photo?")) {
+        if (onUpdateTeamMembers) onUpdateTeamMembers(teamMembers.filter((m: any) => m.id !== id));
+        toast.error("Photo Removed");
       }
     };
 
     return (
-      <ViewContainer 
-        title="Global Partner Network" 
-        subtitle="Manage Trusted Brands & Collaborators"
+      <ViewContainer
+        title="Who We Are - Unit Showcase"
+        subtitle="Manage factory units and facility operations photos"
         actions={
           <div className="flex gap-4">
-             <button 
+            <button
               onClick={() => setSelectedCategory(null)}
               className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
             >
               <ChevronRight className="size-4 rotate-180" /> Back to CMS
             </button>
-            <button 
+            <button
               onClick={() => {
-                setEditingPartner({});
+                setEditingTeamMember(null);
+                setIsAddProductOpen(true);
+              }}
+              className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#fabf37]/20"
+            >
+              <Plus className="size-4" /> Add Photo
+            </button>
+          </div>
+        }
+      >
+        <div className="bg-zinc-900/50 border border-white/5 rounded-[40px] p-10 mb-12">
+          <h3 className="text-xl font-black text-white uppercase tracking-tight mb-6 flex items-center gap-3">
+            <Edit className="size-5 text-[#fabf37]" /> Section Typography
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Title Top</label>
+                <input
+                  defaultValue={teamSectionContent?.titleTop}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, titleTop: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                  placeholder="WHO"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Title Bottom</label>
+                <input
+                  defaultValue={teamSectionContent?.titleBottom}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, titleBottom: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                  placeholder="WE ARE"
+                />
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Description Paragraph 1</label>
+                <textarea
+                  defaultValue={teamSectionContent?.desc1}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, desc1: e.target.value })}
+                  className="w-full h-24 bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all resize-none custom-scrollbar"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Description Paragraph 2</label>
+                <textarea
+                  defaultValue={teamSectionContent?.desc2}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, desc2: e.target.value })}
+                  className="w-full h-24 bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all resize-none custom-scrollbar"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-zinc-900/50 border border-white/5 rounded-[40px] p-10 mb-12">
+          <h3 className="text-xl font-black text-white uppercase tracking-tight mb-6 flex items-center gap-3">
+            <Award className="size-5 text-[#fabf37]" /> Section Stats
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Stat 1 */}
+            <div className="space-y-4 p-6 bg-black/40 rounded-[32px] border border-white/5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 1 Label</label>
+                <input
+                  defaultValue={teamSectionContent?.stat1Label}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat1Label: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 1 Value</label>
+                <input
+                  defaultValue={teamSectionContent?.stat1Value}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat1Value: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Stat 2 */}
+            <div className="space-y-4 p-6 bg-black/40 rounded-[32px] border border-white/5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 2 Label</label>
+                <input
+                  defaultValue={teamSectionContent?.stat2Label}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat2Label: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 2 Value</label>
+                <input
+                  defaultValue={teamSectionContent?.stat2Value}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat2Value: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Stat 3 */}
+            <div className="space-y-4 p-6 bg-black/40 rounded-[32px] border border-white/5">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 3 Label</label>
+                <input
+                  defaultValue={teamSectionContent?.stat3Label}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat3Label: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Stat 3 Value</label>
+                <input
+                  defaultValue={teamSectionContent?.stat3Value}
+                  onBlur={(e) => onUpdateTeamSectionContent?.({ ...teamSectionContent, stat3Value: e.target.value })}
+                  className="w-full bg-black border border-white/10 rounded-2xl px-6 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {teamMembers.map((member: any) => (
+            <div key={member.id} className="bg-zinc-900/50 border border-white/5 rounded-[32px] overflow-hidden group hover:border-[#fabf37]/50 transition-all relative aspect-[3/4]">
+              <img src={member.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" alt={member.name} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 flex flex-col justify-end">
+                <h4 className="text-xl font-black text-white uppercase tracking-tight leading-none mb-1">{member.name}</h4>
+                <p className="text-[10px] font-black text-[#fabf37] uppercase tracking-widest">{member.role}</p>
+              </div>
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    setEditingTeamMember(member);
+                    setIsAddProductOpen(true);
+                  }}
+                  className="size-10 rounded-xl bg-black/60 backdrop-blur-md text-white hover:text-[#fabf37] border border-white/10 flex items-center justify-center transition-all"
+                >
+                  <Edit className="size-4" />
+                </button>
+                <button
+                  onClick={() => handleDeleteMember(member.id)}
+                  className="size-10 rounded-xl bg-black/60 backdrop-blur-md text-white hover:text-red-500 border border-white/10 flex items-center justify-center transition-all"
+                >
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+          {teamMembers.length === 0 && (
+            <div className="col-span-full py-20 bg-zinc-900/30 border border-dashed border-white/10 rounded-[40px] flex flex-col items-center justify-center gap-4">
+              <div className="size-16 rounded-full bg-white/5 flex items-center justify-center text-zinc-500">
+                <Camera className="size-8" />
+              </div>
+              <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">No unit photos uploaded yet</p>
+            </div>
+          )}
+        </div>
+
+        <AnimatePresence>
+          {isAddProductOpen && (
+            <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsAddProductOpen(false)}
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-lg bg-zinc-900 rounded-[40px] p-10 border border-white/10 shadow-2xl"
+              >
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-8">
+                  {editingTeamMember ? "Edit Unit Photo" : "Add Unit Photo"}
+                </h3>
+                <form onSubmit={handleSaveMember} className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Unit Name / Title</label>
+                    <input name="name" required defaultValue={editingTeamMember?.name || ""} className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Description / Details</label>
+                    <input name="role" required defaultValue={editingTeamMember?.role || ""} className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Photo Upload</label>
+                    <div className="relative group">
+                      <input
+                        type="file"
+                        name="photoFile"
+                        accept="image/*"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:bg-[#fabf37] file:text-black hover:file:bg-[#fabf37]/80"
+                      />
+                    </div>
+                  </div>
+                  <div className="relative flex items-center gap-4 py-2">
+                    <div className="flex-1 h-px bg-white/5" />
+                    <span className="text-[8px] font-black text-zinc-600 uppercase">OR</span>
+                    <div className="flex-1 h-px bg-white/5" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Photo URL</label>
+                    <div className="relative group">
+                      <input name="image" defaultValue={editingTeamMember?.image || ""} placeholder="https://..." className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all" />
+                      <Camera className="absolute right-5 top-1/2 -translate-y-1/2 size-4 text-zinc-500 group-focus-within:text-[#fabf37]" />
+                    </div>
+                  </div>
+                  <div className="flex gap-4 pt-4">
+                    <button type="button" onClick={() => setIsAddProductOpen(false)} className="flex-1 py-5 bg-white/5 text-zinc-400 rounded-2xl font-black uppercase tracking-widest text-[11px] border border-white/5 hover:bg-white/10 transition-all">Cancel</button>
+                    <button type="submit" disabled={isUploading} className="flex-1 py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-[#fabf37]/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                      {isUploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <Loader2 className="size-4 animate-spin" /> Uploading...
+                        </span>
+                      ) : "Push to Live"}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+      </ViewContainer>
+    );
+  }
+
+  if (selectedCategory === "Clients") {
+    const handleSaveClient = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!onUpdateClients) return;
+      setIsUploading(true);
+
+      try {
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get('name') as string;
+        const category = formData.get('category') as string;
+        const description = formData.get('description') as string;
+
+        const photoFile = (e.currentTarget.elements.namedItem('photoFile') as HTMLInputElement).files?.[0];
+        let imageUrl = formData.get('logo') as string || (editingPartner?.logo || "");
+
+        if (photoFile) {
+          const fileName = `client-${Date.now()}-${photoFile.name}`;
+          const { data, error } = await supabase.storage
+            .from('clients')
+            .upload(fileName, photoFile);
+
+          if (error) {
+            // Fallback to partners bucket if clients doesn't exist or error
+            console.warn("Client upload failed, trying partners bucket", error);
+            const { data: data2, error: error2 } = await supabase.storage
+              .from('partners')
+              .upload(fileName, photoFile);
+            if (error2) throw error2;
+            const { data: { publicUrl } } = supabase.storage
+              .from('partners')
+              .getPublicUrl(fileName);
+            imageUrl = publicUrl;
+          } else {
+            const { data: { publicUrl } } = supabase.storage
+              .from('clients')
+              .getPublicUrl(fileName);
+            imageUrl = publicUrl;
+          }
+        }
+
+        const newClientData = {
+          name: name || "Valued Client",
+          category: category || "Client",
+          logo: imageUrl,
+          description: description || "Strategic Partner"
+        };
+
+        if (editingPartner?.id) {
+          const updated = clients.map((c: any) =>
+            c.id === editingPartner.id ? { ...c, ...newClientData } : c
+          );
+          onUpdateClients(updated);
+          toast.success("Client Updated");
+        } else {
+          const newClient = {
+            id: Date.now().toString(),
+            ...newClientData
+          };
+          onUpdateClients([...clients, newClient]);
+          toast.success("Client Added");
+        }
+        setEditingPartner(null);
+        setIsAddPartnerOpen(false);
+      } catch (error: any) {
+        toast.error(`Upload failed: ${error.message}`);
+      } finally {
+        setIsUploading(false);
+      }
+    };
+
+    const handleDeleteClient = (id: string) => {
+      if (!onUpdateClients) return;
+      if (confirm("Remove this client?")) {
+        onUpdateClients(clients.filter((c: any) => c.id !== id));
+        toast.success("Client Removed");
+      }
+    };
+
+    return (
+      <ViewContainer
+        title="Client Management"
+        subtitle="Manage client logos and profiles."
+        actions={
+          <div className="flex gap-4">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
+            >
+              <ChevronRight className="size-4 rotate-180" /> Back to CMS
+            </button>
+            <button
+              onClick={() => {
+                setEditingPartner(null);
                 setIsAddPartnerOpen(true);
               }}
               className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#fabf37]/20"
             >
-              <Plus className="size-4" /> Add Partner
+              <Plus className="size-4" /> Add Client
             </button>
           </div>
         }
       >
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-          {partners.map((partner: any) => (
-            <div key={partner.id} className="bg-zinc-900/50 border border-white/5 rounded-[24px] p-6 group hover:border-[#fabf37]/50 transition-all flex flex-col items-center text-center relative">
-               <div className="size-20 bg-white p-4 rounded-2xl mb-4 flex items-center justify-center">
-                 <img src={partner.logo} className="max-w-full max-h-full object-contain" alt={partner.name} />
-               </div>
-               <h4 className="text-xs font-black text-white uppercase tracking-tight mb-1 line-clamp-1">{partner.name}</h4>
-               <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest line-clamp-1">{partner.category}</p>
-               
-               <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                  <button 
-                    onClick={() => {
-                      setEditingPartner(partner);
-                      setIsAddPartnerOpen(true);
-                    }}
-                    className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-[#fabf37]"
-                  >
-                    <Edit className="size-3" />
-                  </button>
-                  <button 
-                    onClick={() => handleDeletePartner(partner.id)}
-                    className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-red-500"
-                  >
-                    <Trash2 className="size-3" />
-                  </button>
-               </div>
+          {clients.map((client: any) => (
+            <div key={client.id} className="bg-zinc-900/50 border border-white/5 rounded-[24px] p-6 group hover:border-[#fabf37]/50 transition-all flex flex-col items-center text-center relative">
+              <div className="size-20 bg-white p-4 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
+                {client.logo ? (
+                  <img src={client.logo} className="w-full h-full object-contain" alt={client.name} />
+                ) : (
+                  <span className="text-2xl font-black text-black">{client.name.charAt(0)}</span>
+                )}
+              </div>
+              <h4 className="text-xs font-black text-white uppercase tracking-tight mb-1 line-clamp-1">{client.name}</h4>
+              <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest line-clamp-1">{client.category}</p>
+
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                <button
+                  onClick={() => {
+                    setEditingPartner(client);
+                    setIsAddPartnerOpen(true);
+                  }}
+                  className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-[#fabf37]"
+                >
+                  <Edit className="size-3" />
+                </button>
+                <button
+                  onClick={() => handleDeleteClient(client.id)}
+                  className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-red-500"
+                >
+                  <Trash2 className="size-3" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -1633,7 +2137,7 @@ export default function CMSView({
         <AnimatePresence>
           {isAddPartnerOpen && (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -1647,52 +2151,74 @@ export default function CMSView({
                 className="relative w-full max-w-lg bg-zinc-900 rounded-[40px] p-10 border border-white/10 shadow-2xl"
               >
                 <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-8">
-                  {editingPartner?.id ? "Update Partner" : "New Partner"}
+                  {editingPartner?.id ? "Update Client" : "Add New Client"}
                 </h3>
-                <div className="space-y-6">
+                <form onSubmit={handleSaveClient} className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Partner Name</label>
-                    <input 
-                      value={editingPartner?.name || ""}
-                      onChange={(e) => setEditingPartner({...editingPartner, name: e.target.value})}
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Client Name*</label>
+                    <input
+                      name="name"
+                      required
+                      defaultValue={editingPartner?.name || ""}
                       placeholder="e.g. Acme Corp"
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Category</label>
-                    <input 
-                      value={editingPartner?.category || ""}
-                      onChange={(e) => setEditingPartner({...editingPartner, category: e.target.value})}
-                      placeholder="e.g. Raw Material Supplier"
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Category / Industry</label>
+                    <input
+                      name="category"
+                      defaultValue={editingPartner?.category || "Client"}
+                      placeholder="e.g. FMCG, Technology"
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Logo URL</label>
-                    <input 
-                      value={editingPartner?.logo || ""}
-                      onChange={(e) => setEditingPartner({...editingPartner, logo: e.target.value})}
-                      placeholder="https://..."
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Relationship Note</label>
+                    <input
+                      name="description"
+                      defaultValue={editingPartner?.description || ""}
+                      placeholder="e.g. Strategic Partner since 2020"
                       className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
                     />
                   </div>
-                  
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Logo Upload</label>
+                    <div className="relative group">
+                      <input
+                        type="file"
+                        name="photoFile"
+                        accept="image/*"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:bg-[#fabf37] file:text-black hover:file:bg-[#fabf37]/80"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative flex items-center gap-4 py-2">
+                    <div className="flex-1 h-px bg-white/5" />
+                    <span className="text-[8px] font-black text-zinc-600 uppercase">OR URL</span>
+                    <div className="flex-1 h-px bg-white/5" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="relative group">
+                      <input name="logo" defaultValue={editingPartner?.logo || ""} placeholder="https://..." className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all" />
+                      <Link className="absolute right-5 top-1/2 -translate-y-1/2 size-4 text-zinc-500 group-focus-within:text-[#fabf37]" />
+                    </div>
+                  </div>
+
                   <div className="flex gap-4 pt-4">
-                    <button 
-                      onClick={() => setIsAddPartnerOpen(false)}
-                      className="flex-1 py-4 bg-white/5 text-zinc-400 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:bg-white/10 transition-all"
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      onClick={handleSavePartner}
-                      className="flex-1 py-4 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-[#fabf37]/20"
-                    >
-                      Save Partner
+                    <button type="button" onClick={() => { setIsAddPartnerOpen(false); setEditingPartner(null); }} className="flex-1 py-5 bg-white/5 text-zinc-400 rounded-2xl font-black uppercase tracking-widest text-[11px] border border-white/5 hover:bg-white/10 transition-all">Cancel</button>
+                    <button type="submit" disabled={isUploading} className="flex-1 py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-[#fabf37]/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                      {isUploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <Loader2 className="size-4 animate-spin" /> Saving...
+                        </span>
+                      ) : "Save Client"}
                     </button>
                   </div>
-                </div>
+                </form>
               </motion.div>
             </div>
           )}
@@ -1701,13 +2227,331 @@ export default function CMSView({
     );
   }
 
+  if (selectedCategory === "Supplier & Partner Management") {
+    const handleSavePartner = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!onUpdatePartners) return;
+      setIsUploading(true);
+
+      try {
+        const formData = new FormData(e.currentTarget);
+        const name = formData.get('name') as string;
+        const category = formData.get('category') as string;
+        const description = formData.get('description') as string;
+        const location = formData.get('location') as string;
+        const since = formData.get('since') as string;
+        const website = formData.get('website') as string;
+        const certificationsStr = formData.get('certifications') as string;
+        const certifications = certificationsStr ? certificationsStr.split(',').map(c => c.trim()).filter(c => c) : [];
+        const isFeatured = formData.get('isFeatured') === 'on';
+
+        const photoFile = (e.currentTarget.elements.namedItem('photoFile') as HTMLInputElement).files?.[0];
+        let imageUrl = formData.get('logo') as string || (editingPartner?.logo || "");
+
+        if (photoFile) {
+          const fileName = `partner-${Date.now()}-${photoFile.name}`;
+          const { data, error } = await supabase.storage
+            .from('partners') // Make sure this bucket exists
+            .upload(fileName, photoFile);
+
+          if (error) throw error;
+          const { data: { publicUrl } } = supabase.storage
+            .from('partners')
+            .getPublicUrl(fileName);
+          imageUrl = publicUrl;
+        }
+
+        const newPartnerData = {
+          name: name || "Untitled Partner",
+          category: category || "Business Partner",
+          logo: imageUrl,
+          description: description || "",
+          location: location || "",
+          since: since || "",
+          certifications: certifications,
+          website: website || "",
+          isFeatured: isFeatured
+        };
+
+        if (editingPartner?.id) {
+          // Update existing
+          const updated = partners.map((p: any) =>
+            p.id === editingPartner.id ? { ...p, ...newPartnerData } : p
+          );
+          onUpdatePartners(updated);
+          toast.success("Partner Updated Successfully");
+        } else {
+          // Add new
+          const newPartner = {
+            id: Date.now().toString(),
+            ...newPartnerData
+          };
+          onUpdatePartners([...partners, newPartner]);
+          toast.success("Partner Added Successfully");
+        }
+        setEditingPartner(null);
+        setIsAddPartnerOpen(false);
+      } catch (error: any) {
+        toast.error(`Upload failed: ${error.message}`);
+      } finally {
+        setIsUploading(false);
+      }
+    };
+
+    const handleDeletePartner = (id: string) => {
+      if (!onUpdatePartners) return;
+      if (confirm("Remove this partner?")) {
+        onUpdatePartners(partners.filter((p: any) => p.id !== id));
+        toast.success("Partner Removed");
+      }
+    };
+
+    return (
+      <ViewContainer
+        title="Supplier & Partner Management"
+        subtitle="Manage global partners, raw material suppliers, and strategic alliances."
+        actions={
+          <div className="flex gap-4">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
+            >
+              <ChevronRight className="size-4 rotate-180" /> Back to CMS
+            </button>
+            <button
+              onClick={() => {
+                setEditingPartner(null);
+                setIsAddPartnerOpen(true);
+              }}
+              className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#fabf37]/20"
+            >
+              <Plus className="size-4" /> Add Supplier
+            </button>
+          </div>
+        }
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          {partners.map((partner: any) => (
+            <div key={partner.id} className="bg-zinc-900/50 border border-white/5 rounded-[24px] p-6 group hover:border-[#fabf37]/50 transition-all flex flex-col items-center text-center relative">
+              <div className="size-20 bg-white p-4 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
+                {partner.logo ? (
+                  <img src={partner.logo} className="w-full h-full object-contain" alt={partner.name} />
+                ) : (
+                  <span className="text-2xl font-black text-black">{partner.name.charAt(0)}</span>
+                )}
+              </div>
+              <h4 className="text-xs font-black text-white uppercase tracking-tight mb-1 line-clamp-1">{partner.name}</h4>
+              <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest line-clamp-1">{partner.category}</p>
+
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                <button
+                  onClick={() => {
+                    setEditingPartner(partner);
+                    setIsAddPartnerOpen(true);
+                  }}
+                  className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-[#fabf37]"
+                >
+                  <Edit className="size-3" />
+                </button>
+                <button
+                  onClick={() => handleDeletePartner(partner.id)}
+                  className="size-6 rounded-lg bg-black/80 text-white flex items-center justify-center hover:text-red-500"
+                >
+                  <Trash2 className="size-3" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <AnimatePresence>
+          {isAddPartnerOpen && (
+            <div className="fixed inset-0 z-[1000] flex items-start justify-center p-4 pt-32 overflow-y-auto">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => { setIsAddPartnerOpen(false); setEditingPartner(null); }}
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-2xl bg-zinc-900 rounded-[40px] p-10 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]"
+              >
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-8">
+                  {editingPartner?.id ? "Update Supplier Details" : "Add New Supplier"}
+                </h3>
+                <form onSubmit={handleSavePartner} className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Brand Name*</label>
+                      <input
+                        name="name"
+                        required
+                        defaultValue={editingPartner?.name || ""}
+                        placeholder="e.g. Acme Corp"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Category*</label>
+                      <select
+                        name="category"
+                        defaultValue={editingPartner?.category || "raw-material"}
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all appearance-none"
+                      >
+                        <option value="raw-material">Raw Material</option>
+                        <option value="machinery">Machinery</option>
+                        <option value="digital">Digital Core</option>
+                        <option value="logistics">Global Logistics</option>
+                        <option value="erp">ERP Systems</option>
+                        <option value="technology">Cloud Tech</option>
+                        <option value="design">Creative</option>
+                        <option value="connectivity">Network</option>
+                        <option value="packaging">Packaging</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Description</label>
+                    <textarea
+                      name="description"
+                      rows={3}
+                      defaultValue={editingPartner?.description || ""}
+                      placeholder="Brief overview of the partnership..."
+                      className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all resize-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Location (Region/Country)</label>
+                      <input
+                        name="location"
+                        defaultValue={editingPartner?.location || ""}
+                        placeholder="e.g. Dhaka, Bangladesh"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Establishment Year</label>
+                      <input
+                        name="since"
+                        defaultValue={editingPartner?.since || ""}
+                        placeholder="e.g. 2010"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Certifications (Comma Separated)</label>
+                    <input
+                      name="certifications"
+                      defaultValue={editingPartner?.certifications ? editingPartner.certifications.join(', ') : ""}
+                      placeholder="e.g. ISO 9001, FSC, Fair Trade"
+                      className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Website URL</label>
+                    <input
+                      name="website"
+                      defaultValue={editingPartner?.website || ""}
+                      placeholder="https://example.com"
+                      className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Logo Upload</label>
+                    <div className="relative group">
+                      <input
+                        type="file"
+                        name="photoFile"
+                        accept="image/*"
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:bg-[#fabf37] file:text-black hover:file:bg-[#fabf37]/80"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative flex items-center gap-4 py-2">
+                    <div className="flex-1 h-px bg-white/5" />
+                    <span className="text-[8px] font-black text-zinc-600 uppercase">OR</span>
+                    <div className="flex-1 h-px bg-white/5" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase text-zinc-500 tracking-widest ml-2">Logo URL (Alternative)</label>
+                    <div className="relative group">
+                      <input
+                        name="logo"
+                        defaultValue={editingPartner?.logo || ""}
+                        placeholder="https://..."
+                        className="w-full bg-black border border-white/10 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#fabf37] transition-all"
+                      />
+                      <Camera className="absolute right-5 top-1/2 -translate-y-1/2 size-4 text-zinc-500 group-focus-within:text-[#fabf37]" />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 px-2 flex items-center gap-3">
+                    <label className="relative flex items-center cursor-pointer group">
+                      <input
+                        type="checkbox"
+                        name="isFeatured"
+                        defaultChecked={editingPartner?.isFeatured}
+                        className="peer sr-only"
+                      />
+                      <div className="size-6 rounded-lg border-2 border-white/10 bg-black peer-checked:bg-[#fabf37] peer-checked:border-[#fabf37] transition-all flex items-center justify-center">
+                        <CircleCheck className="size-4 text-black opacity-0 peer-checked:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="ml-3 text-[11px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-white transition-colors">
+                        Featured in Auto-Scroll Marquee
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddPartnerOpen(false)}
+                      className="flex-1 py-5 bg-white/5 text-zinc-400 rounded-2xl font-black uppercase tracking-widest text-[11px] border border-white/5 hover:bg-white/10 transition-all"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isUploading}
+                      className="flex-1 py-5 bg-[#fabf37] text-black rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-lg shadow-[#fabf37]/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                    >
+                      {isUploading ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <Loader2 className="size-4 animate-spin" /> Saving...
+                        </span>
+                      ) : "Save Supplier Details"}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div >
+          )
+          }
+        </AnimatePresence >
+      </ViewContainer >
+    );
+  }
+
   if (selectedCategory) {
     return (
-      <ViewContainer 
-        title={`Editing: ${selectedCategory}`} 
+      <ViewContainer
+        title={`Editing: ${selectedCategory}`}
         subtitle="Live Content Synchronization Active"
         actions={
-          <button 
+          <button
             onClick={() => setSelectedCategory(null)}
             className="bg-white/5 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest border border-white/10 flex items-center gap-2"
           >
@@ -1716,20 +2560,20 @@ export default function CMSView({
         }
       >
         <div className="bg-zinc-900/30 border border-white/5 rounded-[40px] p-12 flex flex-col items-center justify-center text-center space-y-6 min-h-[400px]">
-           <div className="size-20 rounded-full bg-[#fabf37]/10 flex items-center justify-center text-[#fabf37]">
-              <Edit className="size-8" />
-           </div>
-           <div>
-              <h3 className="text-xl font-black text-white uppercase tracking-tight">Visual Editor Loading</h3>
-              <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs mt-2">Fetching module schema from production branch...</p>
-           </div>
-           <div className="w-full max-w-md h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-              <motion.div 
-                animate={{ x: ["-100%", "100%"] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="w-full h-full bg-[#fabf37] opacity-50" 
-              />
-           </div>
+          <div className="size-20 rounded-full bg-[#fabf37]/10 flex items-center justify-center text-[#fabf37]">
+            <Edit className="size-8" />
+          </div>
+          <div>
+            <h3 className="text-xl font-black text-white uppercase tracking-tight">Visual Editor Loading</h3>
+            <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs mt-2">Fetching module schema from production branch...</p>
+          </div>
+          <div className="w-full max-w-md h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+            <motion.div
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="w-full h-full bg-[#fabf37] opacity-50"
+            />
+          </div>
         </div>
       </ViewContainer>
     );
@@ -1737,7 +2581,7 @@ export default function CMSView({
 
   return (
     <ViewContainer title="Website Editor" subtitle="Content Management & Site Config" actions={
-      <button 
+      <button
         onClick={() => toast.success("All changes published to production node.")}
         className="bg-emerald-500 text-white px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
       >
@@ -1752,16 +2596,17 @@ export default function CMSView({
           { label: "Client Projects", items: clientProjects.length, last: "Now" },
           { label: "Impact Dashboard", items: 6, last: "5m ago" },
           { label: "Career Postings", items: 3, last: "1w ago" },
-          { label: "Legal/Privacy", items: 2, last: "2m ago" },
-          { label: "Global Partners", items: partners.length, last: "Now" },
+          { label: "Clients", items: clients.length, last: "Now" },
+          { label: "Supplier & Partner Management", items: partners.length, last: "Now" },
+          { label: "Who We Are", labelDisplay: "Unit Showcase", items: teamMembers.length, last: "Now" },
         ].map((item, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             onClick={() => setSelectedCategory(item.label)}
             className="bg-zinc-900/50 border border-white/5 rounded-3xl p-8 hover:border-[#fabf37] transition-all cursor-pointer group relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-               <Edit className="size-4 text-[#fabf37]" />
+              <Edit className="size-4 text-[#fabf37]" />
             </div>
             <div className="flex justify-between items-start mb-6">
               <div className="size-12 rounded-2xl bg-black flex items-center justify-center text-[#fabf37]">
@@ -1769,7 +2614,7 @@ export default function CMSView({
               </div>
               <span className="text-[9px] font-black text-zinc-500 uppercase">{item.last}</span>
             </div>
-            <h4 className="text-xl font-black text-white uppercase tracking-tight mb-2">{item.label}</h4>
+            <h4 className="text-xl font-black text-white uppercase tracking-tight mb-2">{item.labelDisplay || item.label}</h4>
             <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{item.items} Dynamic Modules</p>
             <button className="mt-8 flex items-center gap-2 text-[10px] font-black uppercase text-[#fabf37] group-hover:gap-4 transition-all pointer-events-none">
               Manage Content <ChevronRight className="size-4" />

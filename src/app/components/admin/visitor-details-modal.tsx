@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Users, MapPin, ShoppingBag, Share2, ExternalLink, Eye, Clock, History, Laptop } from "lucide-react";
 import { toast } from "sonner";
 

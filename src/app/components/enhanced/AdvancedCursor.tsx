@@ -1,9 +1,9 @@
-import React from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function AdvancedCursor() {
   // Check if mobile FIRST - but don't return early yet
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -20,15 +20,15 @@ export function AdvancedCursor() {
   const textXSpring = useSpring(cursorX, { damping: 20, stiffness: 250 });
   const textYSpring = useSpring(cursorY, { damping: 20, stiffness: 250 });
 
-  const [isHovering, setIsHovering] = React.useState(false);
-  const [cursorText, setCursorText] = React.useState("");
+  const [isHovering, setIsHovering] = useState(false);
+  const [cursorText, setCursorText] = useState("");
 
   // Detect mobile
-  React.useEffect(() => {
+  useEffect(() => {
     setIsMobile(window.matchMedia("(max-width: 768px)").matches);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);

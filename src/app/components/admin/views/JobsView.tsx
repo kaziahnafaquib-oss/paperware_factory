@@ -1,4 +1,4 @@
-import React from "react";
+import { FormEvent, useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { 
   Briefcase, 
@@ -17,7 +17,7 @@ import {
   Sparkles,
   Bot
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { JobDetailsModal } from "../job-details-modal";
 
@@ -74,14 +74,14 @@ const initialJobs = [
 ];
 
 export function JobsView() {
-  const [jobs, setJobs] = React.useState(initialJobs);
-  const [showCreateModal, setShowCreateModal] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedJob, setSelectedJob] = React.useState<any>(null);
+  const [jobs, setJobs] = useState(initialJobs);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedJob, setSelectedJob] = useState<any>(null);
   
   // AI Generation State
-  const [isGenerating, setIsGenerating] = React.useState(false);
-  const [generatedDesc, setGeneratedDesc] = React.useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedDesc, setGeneratedDesc] = useState("");
 
   const filteredJobs = jobs.filter(job => 
     job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -95,7 +95,7 @@ export function JobsView() {
     { label: "Interviews", value: "24", trend: "Today", color: "text-purple-500", bg: "bg-purple-500/10", icon: <CheckCircle2 className="size-4" /> },
   ];
 
-  const handleCreateJob = (e: React.FormEvent) => {
+  const handleCreateJob = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);

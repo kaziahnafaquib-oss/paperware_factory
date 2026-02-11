@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import { ChangeEvent, FormEvent, MouseEvent as ReactMouseEvent, useEffect, useRef, useState } from 'react';
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Bot, Sparkles, ShieldCheck, ChevronDown, Trash2, Paperclip, Smile, ThumbsUp, ThumbsDown, Maximize2, Minimize2, Mic, Image as ImageIcon, FileText, Loader2, Download } from "lucide-react";
 import { useChat } from "../context/ChatContext";
 
@@ -25,7 +25,7 @@ export function ChatWidget() {
     }
   }, [chatMessages, isChatOpen, isExpanded]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -68,7 +68,7 @@ export function ChatWidget() {
     ]);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       // Simulate file upload
@@ -108,7 +108,7 @@ export function ChatWidget() {
     }
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = (e: FormEvent) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
 

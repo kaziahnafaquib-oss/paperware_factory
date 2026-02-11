@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { ReactNode } from 'react';
+import { motion } from "framer-motion";
 import * as Switch from "@radix-ui/react-switch";
 import * as Slider from "@radix-ui/react-slider";
 import { 
@@ -19,7 +19,7 @@ import { Tone } from "../../lib/translations";
 export function AIGlobalConfig() {
   const { tone, setTone, language, setLanguage, t } = useLanguage();
 
-  const tones: { id: Tone; label: string; icon: React.ReactNode; desc: string }[] = [
+  const tones: { id: Tone; label: string; icon: ReactNode; desc: string }[] = [
     { id: "corporate", label: t("corporate") || "Corporate", icon: <ShieldCheck className="size-4" />, desc: "Formal, precise, and professional communication." },
     { id: "futuristic", label: t("futuristic") || "Futuristic", icon: <Cpu className="size-4" />, desc: "High-tech, HUD-style, and technical terminology." },
     { id: "playful", label: t("playful") || "Playful", icon: <Sparkles className="size-4" />, desc: "Friendly, engaging, and conversational tone." },

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export const BackToTop = () => {
@@ -33,7 +33,7 @@ export const BackToTop = () => {
     });
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;

@@ -1,5 +1,5 @@
 // 🖼️ Optimized Image Component for 98/100 Performance Score
-import React from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { 
   optimizeUnsplashImage, 
   generateBlurPlaceholder,
@@ -42,9 +42,9 @@ export function OptimizedImage({
   onLoad,
   onError
 }: OptimizedImageProps) {
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
-  const imgRef = React.useRef<HTMLImageElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   // Calculate dimensions
   const imgHeight = height || Math.round(width / aspectRatio);
@@ -85,7 +85,7 @@ export function OptimizedImage({
   };
 
   // Set priority on mount
-  React.useEffect(() => {
+  useEffect(() => {
     if (imgRef.current) {
       setImagePriority(imgRef.current, priority);
     }
@@ -167,7 +167,7 @@ export function OptimizedImage({
 interface OptimizedBackgroundProps {
   src: string;
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   overlay?: boolean;
   overlayOpacity?: number;
   priority?: 'high' | 'low' | 'auto';
@@ -229,10 +229,10 @@ export function ProgressiveImage({
   width = 1200,
   height
 }: OptimizedImageProps) {
-  const [currentSrc, setCurrentSrc] = React.useState(generateBlurPlaceholder(src));
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [currentSrc, setCurrentSrc] = useState(generateBlurPlaceholder(src));
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const img = new Image();
     img.src = optimizeUnsplashImage(src, { width, height, quality: 80 });
     

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import imgPaperBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.png";
 import { useLanguage } from "../../context/LanguageContext";

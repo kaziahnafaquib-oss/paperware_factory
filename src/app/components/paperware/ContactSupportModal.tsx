@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Mail, Phone, MessageCircle, Video, Upload, AlertTriangle, Info, Headphones, Clock, Paperclip, FileText, Send } from "lucide-react";
 import { toast } from "sonner";
 
@@ -10,19 +10,19 @@ interface ContactSupportModalProps {
 }
 
 export function ContactSupportModal({ isOpen, onClose, onViewFaq }: ContactSupportModalProps) {
-  const [supportSubject, setSupportSubject] = React.useState("");
-  const [supportCategory, setSupportCategory] = React.useState("General Inquiry");
-  const [supportPriority, setSupportPriority] = React.useState("Medium");
-  const [supportMessage, setSupportMessage] = React.useState("");
-  const [supportAttachment, setSupportAttachment] = React.useState<File | null>(null);
-  const [showQuickTemplates, setShowQuickTemplates] = React.useState(false);
+  const [supportSubject, setSupportSubject] = useState("");
+  const [supportCategory, setSupportCategory] = useState("General Inquiry");
+  const [supportPriority, setSupportPriority] = useState("Medium");
+  const [supportMessage, setSupportMessage] = useState("");
+  const [supportAttachment, setSupportAttachment] = useState<File | null>(null);
+  const [showQuickTemplates, setShowQuickTemplates] = useState(false);
 
   // User Details
-  const [userName, setUserName] = React.useState("");
-  const [userEmail, setUserEmail] = React.useState("");
-  const [userCompany, setUserCompany] = React.useState("");
-  const [userPhone, setUserPhone] = React.useState("");
-  const [hasWhatsApp, setHasWhatsApp] = React.useState(false);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userCompany, setUserCompany] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [hasWhatsApp, setHasWhatsApp] = useState(false);
 
   const handleContactSupport = () => {
     if (!supportSubject || !supportMessage) {

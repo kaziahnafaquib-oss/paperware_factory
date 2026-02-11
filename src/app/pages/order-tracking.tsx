@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
+import { FormEvent, useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { 
   Search, Truck, Package, MapPin, 
   CircleCheck, Clock, ArrowRight, ShieldCheck, 
@@ -16,9 +16,9 @@ interface OrderTrackingPageProps {
 }
 
 export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrackingPageProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [orderId, setOrderId] = React.useState("");
-  const [status, setStatus] = React.useState<"idle" | "searching" | "found">("idle");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [orderId, setOrderId] = useState("");
+  const [status, setStatus] = useState<"idle" | "searching" | "found">("idle");
   
   const { scrollYProgress, scrollY } = useScroll({
     target: containerRef,
@@ -66,7 +66,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
     }
   ];
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     setStatus("searching");
     setTimeout(() => setStatus("found"), 1500);

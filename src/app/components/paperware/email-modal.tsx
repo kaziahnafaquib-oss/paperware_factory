@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { FormEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, User, Mail, MessageSquare, ShieldCheck, Factory, Building2, Phone, Hash, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 
@@ -9,9 +9,9 @@ interface EmailModalProps {
 }
 
 export function EmailModal({ isOpen, onClose }: EmailModalProps) {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     

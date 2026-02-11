@@ -3,7 +3,7 @@ import image_44417efdbf939eba86a583d08d358bb76989e3cd from 'figma:asset/44417efd
 import image_ee1e96d0bd347161979763a2b2031584e134c4d4 from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.png';
 import image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae from 'figma:asset/9a9c9fa960f9122b0d888aba39bcd4994971b7ae.png';
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   Utensils, Box, ShoppingBag, CircleCheck as CheckCircle2, 
   ArrowRight, ShieldCheck, Zap, Thermometer, Droplets,

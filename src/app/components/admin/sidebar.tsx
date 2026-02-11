@@ -1,21 +1,24 @@
-import React from "react";
-import { 
-  LayoutDashboard, 
-  Box, 
-  Users, 
-  Settings, 
-  ChartBar, 
-  Truck, 
+import { useState } from 'react';
+import {
+  LayoutDashboard,
+  Box,
+  Users,
+  Settings,
+  ChartBar,
+  Truck,
   LogOut,
   X,
   ExternalLink,
   ChevronDown,
   Share2,
   MessageSquare,
-  FileText
+  FileText,
+  Megaphone,
+  Newspaper,
+  Mail
 } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { LanguageCode } from "../../lib/translations";
 
 interface SidebarProps {
@@ -26,42 +29,53 @@ interface SidebarProps {
 
 export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps) {
   const { language, setLanguage, tone, setTone, t } = useLanguage();
-  const [isLangOpen, setIsLangOpen] = React.useState(false);
-  
+  const [isLangOpen, setIsLangOpen] = useState(false);
+
   const groups = [
     {
       title: t('core_operations'),
       items: [
         { id: "overview", label: t('control_center'), icon: <LayoutDashboard className="size-5" /> },
-        { id: "visitors", label: "Visitor Traffic", icon: <Users className="size-5" /> },
-        { id: "shares", label: "Share Stats", icon: <Share2 className="size-5" /> },
-        { id: "engagement", label: "User Engagement", icon: <ChartBar className="size-5" /> },
+        { id: "visitors", label: t('visitor_traffic'), icon: <Users className="size-5" /> },
+        { id: "shares", label: t('share_stats'), icon: <Share2 className="size-5" /> },
+        { id: "engagement", label: t('user_engagement'), icon: <ChartBar className="size-5" /> },
       ]
     },
     {
-      title: "Content & Media",
+      title: t('website_management'),
       items: [
-         { id: "cms", label: t('website_cms'), icon: <Settings className="size-5" /> },
-         { id: "partners-cms", label: "Global Partners", icon: <Users className="size-5" /> },
-         { id: "media", label: "Media Manager", icon: <Box className="size-5" /> },
-         { id: "about-media", label: "About Us Media", icon: <Box className="size-5" /> },
-         { id: "brochure-upload", label: "Upload Brochure", icon: <FileText className="size-5" /> },
-         { id: "brochure-stats", label: "E-Catalog Logs", icon: <ChartBar className="size-5" /> },
+        { id: "seo-command", label: t('seo_command'), icon: <ChartBar className="size-5" /> },
+        { id: "performance", label: t('performance'), icon: <ChartBar className="size-5" /> },
+        { id: "form-leads", label: t('form_leads'), icon: <FileText className="size-5" /> },
+        { id: "blog-manager", label: t('blog_news'), icon: <Newspaper className="size-5" /> },
+        { id: "announcements", label: t('announcements'), icon: <Megaphone className="size-5" /> },
+        { id: "newsletter", label: t('newsletter_menu'), icon: <Mail className="size-5" /> },
       ]
     },
     {
-      title: "System Integrations",
+      title: t('content_media'),
       items: [
-        { id: "erpnext", label: "ERPNext Node", icon: <Box className="size-5" /> },
-        { id: "comm-log", label: "Neural Comm Log", icon: <MessageSquare className="size-5" /> },
-        { id: "neural-sync", label: "AI Neural Sync", icon: <Box className="size-5" /> },
-        { id: "hosting", label: "Hostinger Panel", icon: <Box className="size-5" /> },
+        { id: "cms", label: t('website_cms'), icon: <Settings className="size-5" /> },
+        { id: "partners-cms", label: t('global_partners'), icon: <Users className="size-5" /> },
+        { id: "media", label: t('media_manager'), icon: <Box className="size-5" /> },
+        { id: "about-media", label: t('about_media'), icon: <Box className="size-5" /> },
+        { id: "brochure-upload", label: t('upload_brochure'), icon: <FileText className="size-5" /> },
+        { id: "brochure-stats", label: t('ecatalog_logs'), icon: <ChartBar className="size-5" /> },
+      ]
+    },
+    {
+      title: t('system_integrations'),
+      items: [
+        { id: "erpnext", label: t('erpnext_node'), icon: <Box className="size-5" /> },
+        { id: "comm-log", label: t('neural_comm_log'), icon: <MessageSquare className="size-5" /> },
+        { id: "neural-sync", label: t('ai_neural_sync'), icon: <Box className="size-5" /> },
+        { id: "hosting", label: t('hostinger_panel'), icon: <Box className="size-5" /> },
       ]
     },
     {
       title: t('client_management'),
       items: [
-        { id: "clients", label: "Lead Management", icon: <Users className="size-5" /> },
+        { id: "clients", label: t('lead_management'), icon: <Users className="size-5" /> },
         { id: "portal", label: t('client_portal'), icon: <Box className="size-5" /> },
         { id: "feedback", label: t('user_feedback'), icon: <Box className="size-5" /> },
       ]
@@ -71,9 +85,9 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
       items: [
         { id: "products", label: t('product_catalog'), icon: <Box className="size-5" /> },
         { id: "studio", label: t('brand_studio'), icon: <Box className="size-5" /> },
-        { id: "attributes", label: "Attributes", icon: <Box className="size-5" /> },
-        { id: "social-media", label: "Social Media", icon: <Share2 className="size-5" /> },
-        { id: "languages", label: "Language Ecosystem", icon: <Box className="size-5" /> },
+        { id: "attributes", label: t('attributes'), icon: <Box className="size-5" /> },
+        { id: "social-media", label: t('social_media'), icon: <Share2 className="size-5" /> },
+        { id: "languages", label: t('language_ecosystem'), icon: <Box className="size-5" /> },
       ]
     },
     {
@@ -116,15 +130,14 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
                       whileHover={{ x: 5 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => setActiveTab(item.id)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden ${
-                        activeTab === item.id 
-                          ? "text-black" 
-                          : "text-zinc-500 hover:text-white"
-                      }`}
+                      className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300 group relative overflow-hidden ${activeTab === item.id
+                        ? "text-black"
+                        : "text-zinc-500 hover:text-white"
+                        }`}
                     >
                       {/* Selection Indicator Background */}
                       {activeTab === item.id && (
-                        <motion.div 
+                        <motion.div
                           layoutId={`active-bg-${group.title}`}
                           className="absolute inset-0 bg-[#fabf37] shadow-[0_10px_20px_rgba(250,191,55,0.15)]"
                           transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -132,10 +145,10 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
                       )}
 
                       {/* Hover Scanner Effect */}
-                      <motion.div 
+                      <motion.div
                         className="absolute inset-0 bg-gradient-to-r -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none"
-                        style={{ 
-                          backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent)' 
+                        style={{
+                          backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent)'
                         }}
                       />
 
@@ -166,7 +179,7 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
       <div className="mt-auto p-8 border-t border-white/5 bg-zinc-900/20 space-y-4">
         {/* Language Switcher in Sidebar */}
         <div className="relative">
-          <button 
+          <button
             onClick={() => setIsLangOpen(!isLangOpen)}
             className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:text-white hover:border-[#fabf37] transition-all"
           >
@@ -216,11 +229,10 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
                         setLanguage(lang.code as LanguageCode);
                         setIsLangOpen(false);
                       }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-3 ${
-                        language === lang.code 
-                          ? "bg-[#fabf37] text-black" 
-                          : "text-white/60 hover:bg-white/5 hover:text-white"
-                      }`}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-3 ${language === lang.code
+                        ? "bg-[#fabf37] text-black"
+                        : "text-white/60 hover:bg-white/5 hover:text-white"
+                        }`}
                     >
                       <span className="text-sm leading-none">{lang.flag}</span>
                       {lang.name}
@@ -232,7 +244,7 @@ export function AdminSidebar({ activeTab, setActiveTab, onLogout }: SidebarProps
           </AnimatePresence>
         </div>
 
-        <button 
+        <button
           onClick={onLogout}
           className="w-full flex items-center gap-4 px-4 py-3 text-zinc-500 hover:text-red-500 transition-colors group border border-transparent hover:border-red-500/20 rounded-xl"
         >

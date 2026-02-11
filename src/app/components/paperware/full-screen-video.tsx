@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 
 interface VideoData {
   url: string;
@@ -13,13 +13,13 @@ interface FullScreenVideoSectionProps {
 }
 
 export function FullScreenVideoSection({ videoData }: FullScreenVideoSectionProps) {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const data = React.useMemo(() => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const data = useMemo(() => {
     if (Array.isArray(videoData) && videoData.length > 0) return videoData;
     return [];
   }, [videoData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data.length <= 1) return;
     
     const interval = setInterval(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Upload, FileText, Check, AlertCircle, Loader2, Link as LinkIcon, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { projectId, publicAnonKey } from "../../../../../utils/supabase/info";
@@ -36,7 +36,7 @@ export function BrochureUploadView() {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       if (selectedFile.type !== "application/pdf") {

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import imgBackground from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.png";
 import imgBackground1 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.png";
 import imgBackground2 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.png";

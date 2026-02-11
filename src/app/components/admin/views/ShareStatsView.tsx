@@ -1,7 +1,7 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { Share2, Copy, Mail, Download, Sparkles, Check, BarChart3, ArrowRight, TrendingUp, Globe, Users } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, Cell } from "recharts";
 
@@ -23,12 +23,12 @@ const platformData = [
 ];
 
 export function ShareStatsView() {
-  const [copied, setCopied] = React.useState(false);
-  const [isGenerating, setIsGenerating] = React.useState(false);
-  const [aiSummary, setAiSummary] = React.useState("");
+  const [copied, setCopied] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [aiSummary, setAiSummary] = useState("");
 
   // Simulate AI generation on mount
-  React.useEffect(() => {
+  useEffect(() => {
     setIsGenerating(true);
     setAiSummary("");
     

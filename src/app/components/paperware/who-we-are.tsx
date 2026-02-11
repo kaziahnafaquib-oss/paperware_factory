@@ -1,11 +1,25 @@
-import React from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "motion/react";
+import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowRight, Factory, Leaf, Award, Recycle, Users, Linkedin, Mail } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface WhoWeAreProps {
   onReadMore: () => void;
+  teamMembers?: TeamMember[];
+  content?: {
+    titleTop: string;
+    titleBottom: string;
+    desc1: string;
+    desc2: string;
+    stat1Label: string;
+    stat1Value: string;
+    stat2Label: string;
+    stat2Value: string;
+    stat3Label: string;
+    stat3Value: string;
+  };
 }
 
 // Fallback Team Members (shown if no photos uploaded in admin portal)
@@ -50,14 +64,15 @@ interface TeamMember {
   url?: string;
 }
 
-export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
-  const [teamMembers, setTeamMembers] = React.useState<TeamMember[]>(FALLBACK_TEAM_MEMBERS);
-  const [loading, setLoading] = React.useState(true);
+export function WhoWeAreSection({ onReadMore, teamMembers: propTeamMembers, content }: WhoWeAreProps) {
+  const { t } = useLanguage();
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(propTeamMembers && propTeamMembers.length > 0 ? propTeamMembers : FALLBACK_TEAM_MEMBERS);
+  const [loading, setLoading] = useState(true);
 
   const API_URL = `https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5`;
 
   // Fetch team photos from admin portal
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchTeamPhotos = async () => {
       try {
         console.log("Who We Are: Fetching team photos from admin portal...");
@@ -91,10 +106,15 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
       }
     };
 
-    fetchTeamPhotos();
-  }, []);
+    if (!propTeamMembers || propTeamMembers.length === 0) {
+      fetchTeamPhotos();
+    } else {
+      setTeamMembers(propTeamMembers);
+      setLoading(false);
+    }
+  }, [propTeamMembers, API_URL]);
 
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -116,7 +136,7 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
   const rotateX = useTransform(mouseY, [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+  function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent) {
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
     const xPct = (clientX - left) / width - 0.5;
     const yPct = (clientY - top) / height - 0.5;
@@ -135,11 +155,11 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ perspective: 1200 }}
-      className="py-8 bg-white relative overflow-hidden"
+      className="py-20 bg-white relative overflow-hidden min-h-[1000px]"
     >
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E')] mix-blend-soft-light opacity-40" />
         <motion.div
           animate={{
             background: [
@@ -205,7 +225,7 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
                     style={{ opacity, z: 80 }}
                     className="text-4xl sm:text-7xl md:text-9xl font-black tracking-tighter text-black leading-[0.85] mb-2"
                   >
-                    WHO
+                    {t(content?.titleTop || 'team_title_top')}
                   </motion.h2>
                 </div>
 
@@ -215,7 +235,7 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
                     className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-zinc-300 to-zinc-100 leading-[0.85]"
                   >
                     <span style={{ textShadow: '-1px -1px 0 #e4e4e7, 1px -1px 0 #e4e4e7, -1px 1px 0 #e4e4e7, 1px 1px 0 #e4e4e7' }}>
-                      WE ARE
+                      {t(content?.titleBottom || 'team_title_bottom')}
                     </span>
                   </motion.h2>
                 </div>
@@ -228,23 +248,23 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
                 style={{ opacity, y: y2 }}
                 className="space-y-4 text-base text-zinc-600 leading-relaxed"
               >
-                <p className="font-medium text-black text-sm md:text-[15px]">
-                  Paperware Factory is Bangladesh's premier manufacturer of eco-friendly, paper-based products, driving the revolution against plastic pollution.
+                <p>
+                  {t(content?.desc1 || 'team_desc_1')}
                 </p>
-                <p className="text-xs md:text-sm text-zinc-500">
-                  From <span className="text-black font-bold">double-wall coffee cups</span> to <span className="text-black font-bold">pharmaceutical grade packaging</span>, we engineer sustainable solutions that define industry standards for quality and environmental responsibility.
+                <p>
+                  {t(content?.desc2 || 'team_desc_2')}
                 </p>
               </motion.div>
 
-              {/* Quick Stats Row */}
+              {/* Stats Grid */}
               <motion.div
                 style={{ opacity }}
-                className="grid grid-cols-3 gap-6 py-2 border-l-2 border-[#fabf37] pl-6"
+                className="grid grid-cols-3 gap-8 pt-8 border-t border-zinc-100"
               >
                 {[
-                  { label: "Years Exp.", value: "5+", icon: Award },
-                  { label: "Eco Score", value: "100%", icon: Recycle },
-                  { label: "Team Size", value: "100+", icon: Users },
+                  { label: t(content?.stat1Label || 'team_stat_1_label'), value: content?.stat1Value || "5+", icon: Award },
+                  { label: t(content?.stat2Label || 'team_stat_2_label'), value: content?.stat2Value || "100%", icon: Leaf },
+                  { label: t(content?.stat3Label || 'team_stat_3_label'), value: content?.stat3Value || "100+", icon: Users },
                 ].map((stat, i) => (
                   <div key={i} className="flex flex-col gap-1">
                     <stat.icon className="size-4 text-[#fabf37] mb-1" />
@@ -266,8 +286,8 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
                     <ArrowRight className="size-5 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
                   </div>
                   <div className="flex flex-col items-start">
-                    <span className="text-xs font-black uppercase tracking-widest text-black">Read Our Story</span>
-                    <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider group-hover:text-[#fabf37] transition-colors">Explore the factory</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-black">{t('read_our_story') || "Read Our Story"}</span>
+                    <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider group-hover:text-[#fabf37] transition-colors">{t('explore_factory') || "Explore the factory"}</span>
                   </div>
                 </button>
               </motion.div>
@@ -275,37 +295,41 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
           </div>
 
           {/* Bottom Section: Team Carousel - Full Width */}
-          <motion.div
-            style={{ scale }}
-            className="relative w-full py-12"
+          <div
+            className="relative w-full py-10 mt-8 overflow-hidden"
           >
             <div className="w-full relative overflow-hidden -mx-4 md:-mx-12 px-4 md:px-12">
               {/* Horizontal Marquee Gradients */}
-              <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/5 to-transparent z-20 pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white via-white/5 to-transparent z-20 pointer-events-none" />
+              <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none" />
 
               <motion.div
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="flex gap-8 w-max pl-4"
+                animate={{ x: [0, -(220 + 24) * teamMembers.length] }}
+                transition={{
+                  duration: teamMembers.length * 6,
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatType: "loop"
+                }}
+                className="flex gap-6 w-max"
               >
-                {/* Tripled list for smoother loop on wide screens */}
-                {[...teamMembers, ...teamMembers, ...teamMembers, ...teamMembers].map((member, i) => (
-                  <div key={`${member.id}-${i}`} className="relative group rounded-3xl overflow-hidden shrink-0 w-[260px] h-[340px] shadow-sm hover:shadow-2xl transition-all duration-500 border-[6px] border-zinc-50 bg-zinc-100">
+                {/* Double list for smooth loop */}
+                {[...teamMembers, ...teamMembers, ...teamMembers].map((member, i) => (
+                  <div key={`${member.id}-${i}`} className="relative group rounded-3xl overflow-hidden shrink-0 w-[220px] h-[300px] shadow-sm hover:shadow-2xl transition-all duration-700 border-[6px] border-zinc-50 bg-zinc-100">
                     <ImageWithFallback
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-110"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                      <h4 className="text-white font-bold text-lg translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">{member.name}</h4>
-                      <p className="text-zinc-300 text-xs uppercase tracking-wider translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-100">{member.role}</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                      <h4 className="text-white font-black text-base translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{member.name}</h4>
+                      <p className="text-[#fabf37] text-[9px] font-black uppercase tracking-widest translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-50">{member.role}</p>
                     </div>
                   </div>
                 ))}
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

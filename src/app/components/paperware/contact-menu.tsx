@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Bot, X, Headphones } from "lucide-react";
 import { useChat } from "../../context/ChatContext";
 
@@ -11,7 +11,7 @@ export const ContactMenu = () => {
   const phoneNumber = "+8801901459110";
   const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\+/g, '')}`;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLButtonElement>) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;

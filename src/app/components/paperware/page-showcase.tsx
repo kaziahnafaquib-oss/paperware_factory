@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   Users, ShoppingBag, Coffee, FileText, Utensils, Megaphone, Pill, 
   ShoppingBasket, Shirt, Leaf, Lightbulb, Phone, FileQuestion, Briefcase, 

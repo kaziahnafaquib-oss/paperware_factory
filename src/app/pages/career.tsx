@@ -1,8 +1,8 @@
-import React from "react";
-import { motion, useScroll, useSpring, useTransform, useMotionValue, animate } from "motion/react";
-import { 
-  Briefcase, MapPin, ArrowRight, Zap, Star, Users, Award, 
-  Search, Filter, CircleCheck, MessageSquare, Rocket, Globe, 
+import { useState, useEffect, useRef, memo, type ReactNode, type MouseEvent as ReactMouseEvent } from "react";
+import { motion, useScroll, useSpring, useTransform, useMotionValue, animate } from "framer-motion";
+import {
+  Briefcase, MapPin, ArrowRight, Zap, Star, Users, Award,
+  Search, Filter, CircleCheck, MessageSquare, Rocket, Globe,
   Cpu, Lightbulb, ShieldCheck, UserCheck,
   Target, Heart, Leaf, Shield, Quote, ChevronDown, Plus, Minus,
   Factory, Cog, Recycle, Truck, Settings, GraduationCap, Clock,
@@ -20,27 +20,27 @@ const jobs = [
 ];
 
 const values = [
-  { 
-    title: "Innovation", 
-    desc: "We push the boundaries of paper manufacturing with AI & IoT.", 
+  {
+    title: "Innovation",
+    desc: "We push the boundaries of paper manufacturing with AI & IoT.",
     icon: Lightbulb,
     color: "bg-blue-500/10 text-blue-500"
   },
-  { 
-    title: "Sustainability", 
-    desc: "100% biodegradable solutions for a greener tomorrow.", 
+  {
+    title: "Sustainability",
+    desc: "100% biodegradable solutions for a greener tomorrow.",
     icon: Leaf,
     color: "bg-green-500/10 text-green-500"
   },
-  { 
-    title: "Integrity", 
-    desc: "Transparency and ethical production in every layer.", 
+  {
+    title: "Integrity",
+    desc: "Transparency and ethical production in every layer.",
     icon: Shield,
     color: "bg-purple-500/10 text-purple-500"
   },
-  { 
-    title: "Excellence", 
-    desc: "Premium quality that sets industrial benchmarks.", 
+  {
+    title: "Excellence",
+    desc: "Premium quality that sets industrial benchmarks.",
     icon: Target,
     color: "bg-[#fabf37]/10 text-[#fabf37]"
   },
@@ -99,8 +99,8 @@ const faqs = [
 const departments = ["All", "Engineering", "Production", "Design", "Logistics", "Management"];
 
 const technologies = [
-  "Industry 4.0", "AI Integration", "Smart Logistics", 
-  "Robotic Automation", "Eco-Engineering", "Data Analytics", 
+  "Industry 4.0", "AI Integration", "Smart Logistics",
+  "Robotic Automation", "Eco-Engineering", "Data Analytics",
   "Sustainable Materials", "Cloud ERP", "IoT Sensors"
 ];
 
@@ -118,11 +118,11 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-function Thick3DCard({ children, className = "", depth = 40 }: { children: React.ReactNode, className?: string, depth?: number }) {
+function Thick3DCard({ children, className = "", depth = 40 }: { children: ReactNode, className?: string, depth?: number }) {
   return (
     <motion.div
-      whileHover={{ 
-        rotateX: -15, 
+      whileHover={{
+        rotateX: -15,
         rotateY: 15,
         translateZ: depth,
         scale: 1.02
@@ -144,7 +144,7 @@ function Thick3DCard({ children, className = "", depth = 40 }: { children: React
   );
 }
 
-function PerspectiveJobCard({ children }: { children: React.ReactNode }) {
+function PerspectiveJobCard({ children }: { children: ReactNode }) {
   const { scrollYProgress } = useScroll();
   const rotateX = useTransform(scrollYProgress, [0, 1], [5, -5]);
   const translateZ = useTransform(scrollYProgress, [0, 1], [-20, 20]);
@@ -171,12 +171,12 @@ function FloatingGallery({ images }: { images: string[] }) {
           key={i}
           initial={{ opacity: 0, rotateY: 45, x: i * 100 }}
           whileInView={{ opacity: 1, rotateY: -25, x: (i - 1) * 250 }}
-          whileHover={{ 
-            rotateY: 0, 
-            z: 200, 
+          whileHover={{
+            rotateY: 0,
+            z: 200,
             scale: 1.1,
             zIndex: 50,
-            boxShadow: "0 50px 100px rgba(0,0,0,0.3)" 
+            boxShadow: "0 50px 100px rgba(0,0,0,0.3)"
           }}
           transition={{ type: "spring", stiffness: 100 }}
           className="absolute w-[300px] h-[450px] rounded-[40px] overflow-hidden border-8 border-white shadow-2xl cursor-pointer"
@@ -184,7 +184,7 @@ function FloatingGallery({ images }: { images: string[] }) {
         >
           <ImageWithFallback src={img} alt="Gallery" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end p-8">
-            <span className="text-white font-black uppercase text-xs tracking-widest">Workspace View 0{i+1}</span>
+            <span className="text-white font-black uppercase text-xs tracking-widest">Workspace View 0{i + 1}</span>
           </div>
         </motion.div>
       ))}
@@ -226,7 +226,7 @@ function Counter({ value, duration = 2 }: { value: string, duration?: number }) 
 
   const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const animation = animate(count, numericValue, { duration, ease: "easeOut" });
     return animation.stop;
   }, [numericValue]);
@@ -234,27 +234,27 @@ function Counter({ value, duration = 2 }: { value: string, duration?: number }) 
   return <motion.span>{displayValue}</motion.span>;
 }
 
-const ParticleBackground = React.memo(() => {
+const ParticleBackground = memo(() => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
-          initial={{ 
-            x: Math.random() * 100 + "%", 
+          initial={{
+            x: Math.random() * 100 + "%",
             y: Math.random() * 100 + "%",
             opacity: 0,
             scale: 0
           }}
-          animate={{ 
+          animate={{
             y: [null, "-120%"],
             opacity: [0, 0.3, 0],
             scale: [0, 1, 0.5],
             rotate: [0, 360]
           }}
-          transition={{ 
-            duration: Math.random() * 10 + 10, 
-            repeat: Infinity, 
+          transition={{
+            duration: Math.random() * 10 + 10,
+            repeat: Infinity,
             ease: "linear",
             delay: Math.random() * 5
           }}
@@ -273,7 +273,7 @@ const ParticleBackground = React.memo(() => {
   );
 });
 
-const LiveProductionGraph = React.memo(() => {
+const LiveProductionGraph = memo(() => {
   return (
     <div className="bg-black/90 p-6 rounded-3xl border border-[#fabf37]/20 space-y-4 shadow-2xl">
       <div className="flex items-center justify-between">
@@ -305,7 +305,7 @@ function CustomCursor() {
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -337,10 +337,10 @@ function LiveFactoryFeed() {
     "Energy: Solar Grid contributing 35% load",
     "Eco-Filter: Carbon captured - 12.4kg"
   ];
-  
+
   return (
     <div className="fixed bottom-8 left-8 z-[100] hidden lg:block">
-      <motion.div 
+      <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         className="bg-black/90 backdrop-blur-xl border border-[#fabf37]/20 p-4 rounded-2xl w-72 shadow-2xl"
@@ -389,7 +389,7 @@ function Marquee({ items }: { items: string[] }) {
   );
 }
 
-function SmoothTiltCard({ children, className = "" }: { children: React.ReactNode, className?: string }) {
+function SmoothTiltCard({ children, className = "" }: { children: ReactNode, className?: string }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -399,7 +399,7 @@ function SmoothTiltCard({ children, className = "" }: { children: React.ReactNod
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseMove(e: ReactMouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -431,19 +431,19 @@ function SmoothTiltCard({ children, className = "" }: { children: React.ReactNod
         {children}
       </div>
       {/* 3D Depth Layer */}
-      <div 
-        className="absolute inset-0 bg-black/5 rounded-[inherit] -z-10" 
-        style={{ transform: "translateZ(-20px)" }} 
+      <div
+        className="absolute inset-0 bg-black/5 rounded-[inherit] -z-10"
+        style={{ transform: "translateZ(-20px)" }}
       />
     </motion.div>
   );
 }
 
-function ThreeDCard({ children, className = "", depth = 60 }: { children: React.ReactNode, className?: string, depth?: number }) {
+function ThreeDCard({ children, className = "", depth = 60 }: { children: ReactNode, className?: string, depth?: number }) {
   return (
     <motion.div
-      whileHover={{ 
-        rotateX: -15, 
+      whileHover={{
+        rotateX: -15,
         rotateY: 15,
         z: depth,
         scale: 1.05,
@@ -462,11 +462,11 @@ function ThreeDCard({ children, className = "", depth = 60 }: { children: React.
   );
 }
 
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [position, setPosition] = React.useState({ x: 0, y: 0 });
+function Magnetic({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: ReactMouseEvent) => {
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current?.getBoundingClientRect() || { left: 0, top: 0, width: 0, height: 0 };
     const centerX = left + width / 2;
@@ -503,10 +503,10 @@ function TextReveal({ text, className = "" }: { text: string, className?: string
           <motion.span
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
-            transition={{ 
-              duration: 0.8, 
-              delay: i * 0.1, 
-              ease: [0.16, 1, 0.3, 1] 
+            transition={{
+              duration: 0.8,
+              delay: i * 0.1,
+              ease: [0.16, 1, 0.3, 1]
             }}
             className="inline-block"
           >
@@ -521,8 +521,8 @@ function TextReveal({ text, className = "" }: { text: string, className?: string
 function FloatingIndustrial3D() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none perspective-2000">
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           y: [0, -60, 0],
           rotateZ: [0, 360],
           rotateX: [20, -20, 20],
@@ -535,9 +535,9 @@ function FloatingIndustrial3D() {
       >
         <Cog className="size-64 text-black drop-shadow-[20px_20px_20px_rgba(0,0,0,0.2)]" />
       </motion.div>
-      
-      <motion.div 
-        animate={{ 
+
+      <motion.div
+        animate={{
           y: [0, 80, 0],
           rotateY: [0, 360, 0],
           rotateX: [0, 60, 0],
@@ -550,8 +550,8 @@ function FloatingIndustrial3D() {
         <Factory className="size-80 text-[#fabf37] drop-shadow-[20px_20px_20px_rgba(0,0,0,0.2)]" />
       </motion.div>
 
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           scale: [0.7, 1.3, 0.7],
           rotateX: [-30, 30, -30],
           rotateY: [-20, 20, -20],
@@ -564,8 +564,8 @@ function FloatingIndustrial3D() {
         <Recycle className="size-72 text-black drop-shadow-[20px_20px_20px_rgba(0,0,0,0.2)]" />
       </motion.div>
 
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           rotateX: [0, 360],
           z: [-100, 100, -100]
         }}
@@ -579,7 +579,7 @@ function FloatingIndustrial3D() {
 }
 
 function DepartmentExplorer() {
-  const [hovered, setHovered] = React.useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
   const depts = [
     { name: "Automation", icon: Settings, count: 4, desc: "Building the brains of our factory." },
     { name: "Eco-Design", icon: Leaf, count: 2, desc: "Designing 100% waste-free products." },
@@ -596,8 +596,8 @@ function DepartmentExplorer() {
           onMouseLeave={() => setHovered(null)}
           className="relative h-[300px] rounded-[40px] overflow-hidden bg-black group cursor-pointer"
         >
-          <motion.div 
-            animate={{ 
+          <motion.div
+            animate={{
               scale: hovered === i ? 1.1 : 1,
               opacity: hovered === i ? 0.3 : 0.1
             }}
@@ -608,7 +608,7 @@ function DepartmentExplorer() {
           <div className="absolute inset-0 p-8 flex flex-col justify-end gap-2">
             <span className="text-[#fabf37] font-black text-xs uppercase tracking-[0.3em]">{d.count} Openings</span>
             <h3 className="text-white text-2xl font-black uppercase tracking-tight">{d.name}</h3>
-            <motion.p 
+            <motion.p
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: hovered === i ? 'auto' : 0, opacity: hovered === i ? 1 : 0 }}
               className="text-zinc-400 text-xs font-medium leading-relaxed"
@@ -624,7 +624,7 @@ function DepartmentExplorer() {
 
 function ReferralSection() {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       className="bg-zinc-900 rounded-[60px] p-12 md:p-20 mb-32 border border-white/5 relative overflow-hidden group"
@@ -657,10 +657,10 @@ function ReferralSection() {
 }
 
 export function CareerPage() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-  const [activeDept, setActiveDept] = React.useState("All");
-  const [openFaq, setOpenFaq] = React.useState<number | null>(null);
+  const [activeDept, setActiveDept] = useState("All");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -683,36 +683,36 @@ export function CareerPage() {
           <LiveProductionGraph />
         </motion.div>
       </div>
-      
+
       <ParticleBackground />
-      
+
       {/* Scroll Progress Bar */}
-      <motion.div 
+      <motion.div
         style={{ scaleX: scrollYProgress }}
         className="fixed top-0 left-0 right-0 h-1.5 bg-[#fabf37] origin-left z-[100] shadow-[0_0_15px_rgba(250,191,55,0.5)]"
       />
 
       <FloatingIndustrial3D />
-      
+
       {/* Dynamic Background Grid & Noise */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-        style={{ 
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{
           backgroundImage: `
             linear-gradient(to right, #000 1px, transparent 1px),
             linear-gradient(to bottom, #000 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px" 
-        }} 
+          backgroundSize: "60px 60px"
+        }}
       />
-      
+
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Hero Section */}
         <div className="mb-24 space-y-12">
           <div className="overflow-hidden py-6 border-y border-zinc-200 bg-white/30 backdrop-blur-sm">
-            <motion.div 
+            <motion.div
               initial={{ x: "100%" }}
               animate={{ x: "-100%" }}
-              transition={{ 
+              transition={{
                 x: { duration: 30, repeat: Infinity, ease: "linear" }
               }}
               className="flex whitespace-nowrap gap-8 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-black/20"
@@ -742,10 +742,10 @@ export function CareerPage() {
                 Live Production Status: Active
               </motion.div>
             </Magnetic>
-            
+
             <h1 className="text-[36px] sm:text-[48px] md:text-[86px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black perspective-2000 break-words">
               <TextReveal text="Build Your" /> <br />
-              <motion.span 
+              <motion.span
                 initial={{ x: -100, opacity: 0, rotateY: -90, translateZ: 100 }}
                 animate={{ x: 0, opacity: 1, rotateY: 0, translateZ: 0 }}
                 transition={{ delay: 0.8, duration: 1, type: "spring" }}
@@ -756,13 +756,13 @@ export function CareerPage() {
               <TextReveal text="In Manufacturing" />
             </h1>
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
               className="max-w-2xl mx-auto text-zinc-600 font-bold text-sm sm:text-base md:text-xl leading-relaxed"
             >
-              Paperware is redefining the industrial landscape of Bangladesh. 
+              Paperware is redefining the industrial landscape of Bangladesh.
               Be part of a zero-waste future powered by premium automation.
             </motion.p>
 
@@ -807,15 +807,15 @@ export function CareerPage() {
         {/* Department Explorer */}
         <div className="mb-12 relative">
           {/* Updated Department Image with Offset and Centered Subject */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50, y: 20 }}
             whileInView={{ opacity: 1, x: 0, y: 0 }}
             viewport={{ once: true }}
             className="w-[calc(100%+2rem)] md:w-[calc(100%+8rem)] -ml-4 md:-ml-16 -mt-16 md:-mt-32 h-[300px] md:h-[550px] rounded-[40px] md:rounded-[60px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative group z-20 mb-12 md:mb-20"
           >
-            <ImageWithFallback 
-              src={pkgShowcase} 
-              alt="Industrial Showcase" 
+            <ImageWithFallback
+              src={pkgShowcase}
+              alt="Industrial Showcase"
               className="w-full h-full object-cover object-top md:object-[center_35%] group-hover:scale-110 transition-transform duration-[2s] ease-out"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -833,7 +833,7 @@ export function CareerPage() {
         </div>
 
         {/* Values Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -857,7 +857,7 @@ export function CareerPage() {
         </motion.div>
 
         {/* Life at Paperware Gallery */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -869,7 +869,7 @@ export function CareerPage() {
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Life at Paperware</h2>
             </div>
           </div>
-          
+
           <FloatingGallery images={lifeImages} />
         </motion.div>
 
@@ -877,7 +877,7 @@ export function CareerPage() {
         <ReferralSection />
 
         {/* Benefits Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -892,7 +892,7 @@ export function CareerPage() {
               Premium Work Life
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {benefits.map((b, i) => (
               <ThreeDCard
@@ -913,15 +913,15 @@ export function CareerPage() {
         </motion.div>
 
         {/* Testimonials */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           className="mb-32"
         >
           <div className="bg-black rounded-[60px] p-8 md:p-20 relative overflow-hidden">
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 scale: [1, 1.2, 1],
                 rotate: [0, 5, 0],
                 opacity: [0.05, 0.1, 0.05]
@@ -931,10 +931,10 @@ export function CareerPage() {
             >
               <Factory className="size-[500px] text-white" />
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
               <div className="space-y-6">
-                <motion.h2 
+                <motion.h2
                   initial={{ x: -50, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white"
@@ -945,12 +945,12 @@ export function CareerPage() {
               </div>
               <div className="space-y-6">
                 {testimonials.map((t, i) => (
-                  <motion.div 
+                  <motion.div
                     key={i}
                     initial={{ x: 50, opacity: 0, backgroundColor: "rgba(24, 24, 27, 0.5)" }} // zinc-900/50 as RGBA
                     whileInView={{ x: 0, opacity: 1 }}
                     transition={{ delay: i * 0.2 }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.05,
                       rotateZ: i % 2 === 0 ? 1 : -1,
                       backgroundColor: "#1a1a1a"
@@ -973,7 +973,7 @@ export function CareerPage() {
         </motion.div>
 
         {/* Hiring Process */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -981,7 +981,7 @@ export function CareerPage() {
         >
           {/* Background Tech Elements */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
-            <motion.div 
+            <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
               className="absolute top-0 left-0"
@@ -993,11 +993,11 @@ export function CareerPage() {
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">Our Hiring Process</h2>
             <p className="text-zinc-400 font-black uppercase tracking-[0.3em] text-xs">A precise journey to excellence</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
             {/* Animated Connecting Line */}
             <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-100 hidden md:block -translate-y-12 overflow-hidden">
-              <motion.div 
+              <motion.div
                 initial={{ x: "-100%" }}
                 whileInView={{ x: "0%" }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
@@ -1006,15 +1006,15 @@ export function CareerPage() {
             </div>
 
             {steps.map((step, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.2 }}
                 className="relative z-10 space-y-8 text-center group"
               >
                 <div className="relative">
-                  <motion.div 
+                  <motion.div
                     whileHover={{ rotate: 360, scale: 1.1 }}
                     transition={{ duration: 0.8 }}
                     className="size-24 rounded-[30px] bg-white border-2 border-zinc-100 flex items-center justify-center mx-auto shadow-xl group-hover:border-[#fabf37] group-hover:shadow-[0_0_40px_rgba(250,191,55,0.2)] transition-all cursor-pointer"
@@ -1038,7 +1038,7 @@ export function CareerPage() {
         <Marquee items={technologies} />
 
         {/* FAQ Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -1050,7 +1050,7 @@ export function CareerPage() {
           <div className="space-y-4">
             {faqs.map((faq, i) => (
               <div key={i} className="bg-white border border-black/5 rounded-3xl overflow-hidden">
-                <button 
+                <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-zinc-50 transition-colors"
                 >
@@ -1074,29 +1074,29 @@ export function CareerPage() {
         </motion.div>
 
         {/* Job Listings */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           className="space-y-12"
         >
           {/* New Department Image Section with Balanced Placement */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             className="w-full h-[250px] md:h-[450px] rounded-[40px] overflow-hidden shadow-2xl relative group"
           >
             <motion.div style={{ scale: imageScale }} className="w-full h-full">
-              <ImageWithFallback 
-                src={pkgShowcase} 
-                alt="Select Departments" 
+              <ImageWithFallback
+                src={pkgShowcase}
+                alt="Select Departments"
                 className="w-full h-full object-cover object-top md:object-[center_30%]"
               />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             whileHover={{ rotateX: 8, z: 30 }}
             style={{ transformStyle: "preserve-3d", perspective: "1500px" }}
             className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 sm:px-10 py-8 sm:py-12 bg-white rounded-[40px] border border-zinc-100 shadow-2xl"
@@ -1108,23 +1108,22 @@ export function CareerPage() {
                   <button
                     key={dept}
                     onClick={() => setActiveDept(dept)}
-                    className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest transition-all ${
-                      activeDept === dept 
-                        ? 'bg-[#fabf37] text-black shadow-[0_10px_20px_rgba(250,191,55,0.3)] scale-110' 
-                        : 'bg-zinc-100 text-zinc-400 hover:bg-zinc-200'
-                    }`}
+                    className={`px-6 py-2 rounded-full text-[11px] font-black uppercase tracking-widest transition-all ${activeDept === dept
+                      ? 'bg-[#fabf37] text-black shadow-[0_10px_20px_rgba(250,191,55,0.3)] scale-110'
+                      : 'bg-zinc-100 text-zinc-400 hover:bg-zinc-200'
+                      }`}
                   >
                     {dept}
                   </button>
                 ))}
               </div>
             </div>
-            
+
             <div className="flex gap-4 w-full md:w-auto" style={{ transform: "translateZ(40px)" }}>
               <div className="relative flex-1 md:w-80">
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
-                <input 
-                  placeholder="Search jobs..." 
+                <input
+                  placeholder="Search jobs..."
                   className="w-full bg-zinc-100 border-none rounded-[24px] py-5 pl-16 pr-6 text-sm font-bold outline-none focus:ring-2 focus:ring-[#fabf37] transition-all"
                 />
               </div>
@@ -1134,7 +1133,7 @@ export function CareerPage() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -1146,8 +1145,8 @@ export function CareerPage() {
                 <motion.div
                   variants={itemVariants}
                   initial={{ borderColor: "rgba(244, 244, 245, 1)" }} // zinc-100 as RGBA
-                  whileHover={{ 
-                    rotateX: -5, 
+                  whileHover={{
+                    rotateX: -5,
                     rotateY: 3,
                     z: 50,
                     scale: 1.01,
@@ -1174,7 +1173,7 @@ export function CareerPage() {
                   </div>
                   <div className="w-full md:w-auto flex justify-center" style={{ transform: "translateZ(30px)" }}>
                     <Magnetic>
-                      <motion.div 
+                      <motion.div
                         whileHover={{ scale: 1.1, rotateZ: 45 }}
                         className="size-10 sm:size-12 rounded-full bg-zinc-900 border border-black/5 flex items-center justify-center text-[#fabf37] group-hover:bg-[#fabf37] group-hover:text-black transition-all shadow-lg"
                       >

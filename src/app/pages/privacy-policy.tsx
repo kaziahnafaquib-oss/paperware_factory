@@ -1,5 +1,5 @@
 import React from "react";
-import { motion as Motion } from "motion/react";
+import { motion as Motion } from "framer-motion";
 import { Shield, Lock, Eye, Database, UserCheck, FileText, AlertCircle, CheckCircle2, ArrowRight, Mail, Phone, MapPin, MessageSquare, Building2, ShieldCheck, Clock, History, ChevronDown } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 

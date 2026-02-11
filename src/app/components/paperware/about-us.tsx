@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import imgCups from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
 import { useLanguage } from "../../context/LanguageContext";
 

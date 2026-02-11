@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { MessageSquare, User, Clock, CheckCheck, AlertCircle, Sparkles, Send } from "lucide-react";
 
 interface ChatSession {

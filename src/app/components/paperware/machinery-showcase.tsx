@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { memo, useMemo } from 'react';
+import { motion } from "framer-motion";
 import { useLanguage } from "../../context/LanguageContext";
 import { Settings, Cpu, Zap, Activity, Gauge, Database, Factory, Box, Printer } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
@@ -76,10 +76,10 @@ const getMachineries = (t: (key: string) => string) => [
   }
 ];
 
-export const MachineryShowcase = React.memo(function MachineryShowcase() {
+export const MachineryShowcase = memo(function MachineryShowcase() {
   const { t } = useLanguage();
 
-  const machineries = React.useMemo(() => getMachineries(t), [t]);
+  const machineries = useMemo(() => getMachineries(t), [t]);
 
   return (
     <section className="py-24 bg-white overflow-hidden">

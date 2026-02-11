@@ -1,9 +1,9 @@
 // 🎴 Enhanced Card Component with 3D Effects
-import React from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'motion/react';
+import { MouseEvent as ReactMouseEvent, ReactNode, useRef } from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 interface EnhancedCardProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   hoverEffect?: '3d' | 'lift' | 'glow' | 'none';
   glassEffect?: boolean;
@@ -17,7 +17,7 @@ export function EnhancedCard({
   glassEffect = false,
   onClick
 }: EnhancedCardProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -28,7 +28,7 @@ export function EnhancedCard({
   const rotateXSpring = useSpring(rotateX, springConfig);
   const rotateYSpring = useSpring(rotateY, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (hoverEffect !== '3d' || !ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
@@ -90,7 +90,7 @@ export function EnhancedCard({
   );
 }
 
-export function EnhancedCardHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function EnhancedCardHeader({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`p-6 border-b border-zinc-100 ${className}`}>
       {children}
@@ -98,7 +98,7 @@ export function EnhancedCardHeader({ children, className = '' }: { children: Rea
   );
 }
 
-export function EnhancedCardBody({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function EnhancedCardBody({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`p-6 ${className}`}>
       {children}
@@ -106,7 +106,7 @@ export function EnhancedCardBody({ children, className = '' }: { children: React
   );
 }
 
-export function EnhancedCardFooter({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+export function EnhancedCardFooter({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
     <div className={`p-6 border-t border-zinc-100 ${className}`}>
       {children}

@@ -1,6 +1,6 @@
 import image_370cc946765f24fecd2241c5798febf3f636cf5e from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png';
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   HeartPulse, ShieldAlert, Microscope, CircleCheck as CheckCircle2, 
   ArrowRight, ShieldCheck, Zap, Layers, Cpu, FileBadge,

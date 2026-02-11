@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { FormEvent, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Globe, Ship, Plane, Box, ArrowRight, ShieldCheck, CircleCheck, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Plus, Trash2, Upload } from "lucide-react";
 
 interface ExportRequestFormProps {
@@ -70,7 +70,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
     setEmails(newEmails);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
   };

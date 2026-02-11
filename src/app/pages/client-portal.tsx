@@ -1,13 +1,13 @@
-import React from "react";
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { ClientLogin } from "../components/paperware/ClientLogin";
 
-const ClientDashboard = React.lazy(() => import('../components/paperware/ClientDashboard').then(module => ({ default: module.ClientDashboard })));
+const ClientDashboard = lazy(() => import('../components/paperware/ClientDashboard').then(module => ({ default: module.ClientDashboard })));
 
 export function ClientPortalPage() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Preload the ClientDashboard component
-  React.useEffect(() => {
+  useEffect(() => {
     const preloadTimer = setTimeout(() => {
       import('../components/paperware/ClientDashboard');
     }, 100);
@@ -19,7 +19,7 @@ export function ClientPortalPage() {
   }
 
   return (
-    <React.Suspense fallback={
+    <Suspense fallback={
         <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
              <div className="flex flex-col items-center gap-4">
                  <div className="size-12 border-4 border-[#fabf37]/30 border-t-[#fabf37] rounded-full animate-spin" />
@@ -28,6 +28,6 @@ export function ClientPortalPage() {
         </div>
     }>
         <ClientDashboard onLogout={() => setIsLoggedIn(false)} />
-    </React.Suspense>
+    </Suspense>
   );
 }

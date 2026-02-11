@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { ReactElement, cloneElement } from 'react';
+import { motion } from "framer-motion";
 import { 
   Factory, LayoutTemplate as Layout, Box, ClipboardList, 
   ShieldCheck, Truck, ChartBar, ArrowRight,
@@ -100,7 +100,7 @@ export function ERPPage() {
             <div key={i} className="group relative">
                <div className="flex flex-col items-center text-center space-y-6">
                   <div className="size-20 rounded-[30px] bg-zinc-50 border border-black/5 flex items-center justify-center text-black group-hover:bg-[#fabf37] group-hover:rotate-12 transition-all duration-500 shadow-sm">
-                    {React.cloneElement(step.icon as React.ReactElement, { className: "size-8" })}
+                    {cloneElement(step.icon as ReactElement, { className: "size-8" })}
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-sm font-black uppercase tracking-widest">{step.title}</h4>

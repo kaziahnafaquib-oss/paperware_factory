@@ -3,7 +3,7 @@
  * Ready-to-use hooks and helpers for common performance patterns
  */
 
-import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import { ComponentType, DependencyList, FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Hook to detect if element is in viewport
@@ -12,7 +12,7 @@ import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
  */
 export function useIntersectionObserver<T extends HTMLElement>(
   options: IntersectionObserverInit = {}
-): [React.RefObject<T>, boolean] {
+): [RefObject<T>, boolean] {
   const ref = useRef<T>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
@@ -40,7 +40,7 @@ export function useIntersectionObserver<T extends HTMLElement>(
  */
 export function useLazyLoad<T extends HTMLElement>(
   threshold = 0.1
-): [React.RefObject<T>, boolean] {
+): [RefObject<T>, boolean] {
   const [ref, isIntersecting] = useIntersectionObserver<T>({
     threshold,
     rootMargin: '200px', // Start loading 200px before entering viewport
@@ -161,7 +161,7 @@ export function usePrefersReducedMotion(): boolean {
  */
 export function useIdleCallback(
   callback: () => void,
-  deps: React.DependencyList = []
+  deps: DependencyList = []
 ): void {
   useEffect(() => {
     if ('requestIdleCallback' in window) {
@@ -317,7 +317,7 @@ export function usePrefetch(importFn: () => Promise<any>): void {
  */
 export function useAnimationFrame(
   callback: (deltaTime: number) => void,
-  deps: React.DependencyList = []
+  deps: DependencyList = []
 ): void {
   const requestRef = useRef<number>();
   const previousTimeRef = useRef<number>();
@@ -349,7 +349,7 @@ export function useAnimationFrame(
  */
 export function useExpensiveMemo<T>(
   factory: () => T,
-  deps: React.DependencyList
+  deps: DependencyList
 ): T {
   const startTime = performance.now();
   const value = useMemo(factory, deps);
@@ -414,9 +414,9 @@ export class PerformanceMetrics {
  * Component wrapper for performance monitoring
  */
 export function withPerformanceMonitoring<P extends object>(
-  Component: React.ComponentType<P>,
+  Component: ComponentType<P>,
   componentName: string
-): React.FC<P> {
+): FC<P> {
   return (props: P) => {
     useRenderTime(componentName);
     return <Component {...props} />;

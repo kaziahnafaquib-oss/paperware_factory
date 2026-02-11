@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Factory, Zap, ShieldCheck, Activity, Cpu, Wind, Droplets, Gauge, ArrowUpRight, CircleCheck, Cog, Server } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { ERPSyncTerminal } from "../components/paperware/erp-sync-terminal";

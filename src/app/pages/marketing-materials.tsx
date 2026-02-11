@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   Palette, Share2, Megaphone, CircleCheck as CheckCircle2, 
   ArrowRight, ShieldCheck, Zap, Globe, Sparkles,

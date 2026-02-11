@@ -1,12 +1,12 @@
 // 🚀 Smooth Scroll Enhancement Component
-import React from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface SmoothScrollProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function SmoothScroll({ children }: SmoothScrollProps) {
-  React.useEffect(() => {
+  useEffect(() => {
     // Add smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
     

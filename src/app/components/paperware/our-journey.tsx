@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useMemo, useRef } from 'react';
+import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   Sparkles, Building2, Users, Package, 
   Award, Globe, ArrowRight
@@ -28,7 +28,7 @@ interface MilestoneItemProps {
 }
 
 function MilestoneItem({ milestone, index }: MilestoneItemProps) {
-  const milestoneRef = React.useRef(null);
+  const milestoneRef = useRef(null);
   
   // Individual scroll progress for each milestone
   const { scrollYProgress: milestoneProgress } = useScroll({
@@ -303,7 +303,7 @@ function MilestoneItem({ milestone, index }: MilestoneItemProps) {
 }
 
 export function OurJourney() {
-  const containerRef = React.useRef(null);
+  const containerRef = useRef(null);
   
   // Scroll progress for entire section
   const { scrollYProgress } = useScroll({
@@ -317,7 +317,7 @@ export function OurJourney() {
   const scaleHeader = useTransform(scrollYProgress, [0, 0.3], [0.8, 1]);
   
   // Load milestones from localStorage or use defaults
-  const milestones = React.useMemo(() => {
+  const milestones = useMemo(() => {
     const saved = localStorage.getItem('journeyMilestones');
     return saved ? JSON.parse(saved) : [
       {

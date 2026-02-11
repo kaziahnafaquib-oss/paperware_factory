@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { Fragment } from 'react';
+import { motion } from "framer-motion";
 import { ChevronRight, Home } from "lucide-react";
 
 interface BreadcrumbItem {
@@ -31,7 +31,7 @@ export function Breadcrumbs({ items, onNavigate }: BreadcrumbsProps) {
 
         {/* Items */}
         {items.map((item, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <ChevronRight className="w-4 h-4 text-zinc-400" />
             <li>
               {index === items.length - 1 ? (
@@ -47,7 +47,7 @@ export function Breadcrumbs({ items, onNavigate }: BreadcrumbsProps) {
                 </motion.button>
               )}
             </li>
-          </React.Fragment>
+          </Fragment>
         ))}
       </ol>
     </nav>

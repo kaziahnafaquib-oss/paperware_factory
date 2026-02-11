@@ -1,13 +1,13 @@
 import image_8788d2f066ca9921baf05e502ac560c2c717da5a from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.png';
-import React from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
+import { memo, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Globe, ArrowRight, Music2, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
 import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.png";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 // Optimized sub-component to reduce re-renders
-const SocialCard = React.memo(({ post, i }: { post: any, i: number }) => {
+const SocialCard = memo(({ post, i }: { post: any, i: number }) => {
   const { t } = useLanguage();
   return (
     <motion.div 
@@ -44,9 +44,9 @@ const SocialCard = React.memo(({ post, i }: { post: any, i: number }) => {
 SocialCard.displayName = "SocialCard";
 
 export function SocialsPage() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-  const [activeTone, setActiveTone] = React.useState<'professional' | 'industrial' | 'creative'>('professional');
+  const [activeTone, setActiveTone] = useState<'professional' | 'industrial' | 'creative'>('professional');
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 // ⚡ Advanced Performance Optimizer
 // Target: 98/100 PageSpeed Score
 
@@ -156,7 +157,7 @@ export class MemoryMonitor {
       const used = Math.round(memory.usedJSHeapSize / 1048576);
       const total = Math.round(memory.totalJSHeapSize / 1048576);
       const limit = Math.round(memory.jsHeapSizeLimit / 1048576);
-      
+
       console.log(`💾 Memory Usage: ${used}MB / ${total}MB (Limit: ${limit}MB)`);
     }
   }
@@ -245,7 +246,7 @@ export function removeUnusedCSS() {
       Array.from(sheet.cssRules || []).forEach(rule => {
         if (rule instanceof CSSStyleRule) {
           allSelectors.add(rule.selectorText);
-          
+
           // Check if selector is used
           if (document.querySelector(rule.selectorText)) {
             usedSelectors.add(rule.selectorText);
@@ -261,7 +262,7 @@ export function removeUnusedCSS() {
   const coverage = Math.round((usedSelectors.size / allSelectors.size) * 100);
 
   console.log(`🎨 CSS Coverage: ${coverage}% (${unusedCount} unused selectors)`);
-  
+
   return {
     total: allSelectors.size,
     used: usedSelectors.size,
@@ -275,7 +276,7 @@ export function removeUnusedCSS() {
  */
 export function deferNonCriticalScripts() {
   const scripts = document.querySelectorAll('script[data-defer]');
-  
+
   scripts.forEach(script => {
     const newScript = document.createElement('script');
     newScript.src = script.getAttribute('src') || '';
@@ -304,7 +305,7 @@ export async function implementCacheStrategy() {
   if ('serviceWorker' in navigator && 'caches' in window) {
     try {
       const cache = await caches.open('paperware-v1');
-      
+
       // Cache critical resources
       const criticalResources = [
         '/',
@@ -355,12 +356,12 @@ export function getNetworkQuality(): 'slow' | 'medium' | 'fast' {
   if ('connection' in navigator) {
     const connection = (navigator as any).connection;
     const effectiveType = connection?.effectiveType;
-    
+
     if (effectiveType === '4g') return 'fast';
     if (effectiveType === '3g') return 'medium';
     return 'slow';
   }
-  
+
   return 'medium';
 }
 
@@ -370,7 +371,7 @@ export function getNetworkQuality(): 'slow' | 'medium' | 'fast' {
 export function shouldLoadHeavyResources(): boolean {
   const networkQuality = getNetworkQuality();
   const saveData = (navigator as any).connection?.saveData;
-  
+
   return networkQuality === 'fast' && !saveData;
 }
 
@@ -432,10 +433,10 @@ export class PerformanceBudget {
 
   logBudgetReport() {
     // Only show warnings in production
-    const isDev = typeof import.meta !== 'undefined' && import.meta.env?.DEV;
-    
+    const isDev = typeof import.meta !== 'undefined' && (import.meta as any).env?.DEV;
+
     const result = this.checkBudget();
-    
+
     if (result.passed) {
       console.log('✅ Performance budget: PASSED');
     } else {
@@ -460,8 +461,15 @@ export function initPerformanceOptimizations() {
     const hints = new ResourceHintsManager();
     hints.preconnect('https://images.unsplash.com');
     hints.preconnect('https://cdnjs.cloudflare.com');
+    hints.preconnect('https://grainy-gradients.vercel.app');
+    hints.preconnect('https://flagcdn.com');
+    hints.preconnect('https://www.youtube.com');
+    hints.preconnect('https://www.youtube-nocookie.com');
+    hints.preconnect('https://fonts.googleapis.com');
+    hints.preconnect('https://fonts.gstatic.com', true);
     hints.dnsPrefetch('https://www.googletagmanager.com');
     hints.dnsPrefetch('https://www.google-analytics.com');
+    hints.dnsPrefetch('https://yt3.ggpht.com');
   } catch (error) {
     console.warn('Resource hints error:', error);
   }

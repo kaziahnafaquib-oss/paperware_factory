@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { 
   Notebook, Mail, FolderOpen, FileText, Contact, 
   ArrowRight, ShieldCheck, Zap, Layers, Cpu, Box, 

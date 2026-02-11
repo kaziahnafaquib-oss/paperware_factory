@@ -1,8 +1,8 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ReactNode } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PageTransitionProps {
-  children: React.ReactNode;
+  children: ReactNode;
   pageKey: string;
 }
 

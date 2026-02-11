@@ -1,10 +1,10 @@
 // ✨ Enhanced Button Component with Advanced Effects
-import React from 'react';
-import { motion } from 'motion/react';
+import { MouseEvent as ReactMouseEvent, ReactNode, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { LucideIcon } from 'lucide-react';
 
 interface EnhancedButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'neon';
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -30,10 +30,10 @@ export function EnhancedButton({
   magnetic = false,
   glow = false
 }: EnhancedButtonProps) {
-  const ref = React.useRef<HTMLButtonElement>(null);
-  const [ripples, setRipples] = React.useState<{ x: number; y: number; id: number }[]>([]);
+  const ref = useRef<HTMLButtonElement>(null);
+  const [ripples, setRipples] = useState<{ x: number; y: number; id: number }[]>([]);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
     
     // Create ripple effect
@@ -51,7 +51,7 @@ export function EnhancedButton({
     onClick?.();
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: ReactMouseEvent) => {
     if (!magnetic || !ref.current) return;
     
     const rect = ref.current.getBoundingClientRect();

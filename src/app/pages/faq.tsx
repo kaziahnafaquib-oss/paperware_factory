@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence, useSpring, useScroll, useTransform } from "motion/react";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence, useSpring, useScroll, useTransform } from "framer-motion";
 import { 
   Plus, Minus, Search, CircleHelp, 
   Settings, ShieldCheck, Truck, 
@@ -56,13 +56,13 @@ const faqs = [
 ];
 
 export function FAQPage() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   // State for interactivity
-  const [activeCat, setActiveCat] = React.useState("all");
-  const [search, setSearch] = React.useState("");
-  const [activeIdx, setActiveIdx] = React.useState<number | null>(null);
-  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [activeCat, setActiveCat] = useState("all");
+  const [search, setSearch] = useState("");
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Spring animations for cursor
   const springMouseX = useSpring(0, { stiffness: 500, damping: 30 });
@@ -79,7 +79,7 @@ export function FAQPage() {
   const heroOpacity = useTransform(scrollY, [0, 400], [1, 0.6]);
 
   // Optimize: Memoize mouse movement logic
-  const handleMouseMove = React.useCallback((e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     // Lower intensity for better performance
@@ -90,14 +90,14 @@ export function FAQPage() {
     springMouseY.set(clientY);
   }, [springMouseX, springMouseY]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [handleMouseMove]);
 
 
   // Optimize: Memoize filtered results to prevent re-calc on every render
-  const filteredFaqs = React.useMemo(() => {
+  const filteredFaqs = useMemo(() => {
     return faqs.filter(f => {
       const matchesCat = activeCat === 'all' || f.cat === activeCat;
       const matchesSearch = f.q.toLowerCase().includes(search.toLowerCase()) || f.a.toLowerCase().includes(search.toLowerCase());

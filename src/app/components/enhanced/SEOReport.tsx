@@ -1,13 +1,13 @@
 // 📊 SEO & Performance Report Component
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { generateLanguageReport, getTranslationSummary } from '@/app/lib/language-checker';
 import { seoChecklist, performanceOptimizations } from '@/app/lib/seo-enhanced';
 
 export function SEOReport() {
-  const [report, setReport] = React.useState<string>('');
-  const [summary, setSummary] = React.useState<any>(null);
+  const [report, setReport] = useState<string>('');
+  const [summary, setSummary] = useState<any>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const langReport = generateLanguageReport();
     const langSummary = getTranslationSummary();
     

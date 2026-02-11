@@ -1,8 +1,8 @@
-import React from "react";
+import { useEffect, useMemo, useState } from 'react';
 import { ViewContainer } from "../ViewContainer";
 import { Image as ImageIcon, Video, Upload, Trash2, Search, Filter, MoreHorizontal, Copy, Check, X, Eye, Share2, Download, Globe, Lock, Calendar, Mail, BarChart3, Settings, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -88,7 +88,7 @@ import { UploadMediaModal } from "../upload-media-modal";
 
 export function MediaManagerView({ products = [] }: MediaManagerViewProps) {
   // Merge products into initial media if they exist
-  const productMedia = React.useMemo(() => {
+  const productMedia = useMemo(() => {
     return products.map((p, idx) => ({
       id: `prod-${p.id || idx}`,
       type: "image",
@@ -103,13 +103,13 @@ export function MediaManagerView({ products = [] }: MediaManagerViewProps) {
     }));
   }, [products]);
 
-  const [media, setMedia] = React.useState([...initialMedia, ...productMedia]);
-  const [selectedMedia, setSelectedMedia] = React.useState<any>(null);
-  const [filter, setFilter] = React.useState("All");
-  const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);
+  const [media, setMedia] = useState([...initialMedia, ...productMedia]);
+  const [selectedMedia, setSelectedMedia] = useState<any>(null);
+  const [filter, setFilter] = useState("All");
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // Update media when productMedia changes (initial load or updates)
-  React.useEffect(() => {
+  useEffect(() => {
      setMedia(prev => {
         // Keep user uploads (ids are numbers) and replace old product media (ids start with 'prod-')
         const userUploads = prev.filter(m => typeof m.id === 'number');

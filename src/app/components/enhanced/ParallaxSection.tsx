@@ -1,9 +1,9 @@
 // 🌊 Parallax Section Component
-import React from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { ReactNode, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface ParallaxSectionProps {
-  children: React.ReactNode;
+  children: ReactNode;
   speed?: number;
   direction?: 'up' | 'down' | 'left' | 'right';
   className?: string;
@@ -15,7 +15,7 @@ export function ParallaxSection({
   direction = 'up',
   className = ''
 }: ParallaxSectionProps) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -57,7 +57,7 @@ export function ParallaxImage({
   speed?: number;
   className?: string;
 }) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]

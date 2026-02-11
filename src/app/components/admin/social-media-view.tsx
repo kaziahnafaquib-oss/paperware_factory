@@ -1,24 +1,24 @@
-import React from "react";
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
 import { ViewContainer } from "./views";
 import { useSocialMedia, SocialPost } from "../../context/SocialMediaContext";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Instagram, Linkedin, Facebook, Youtube, Plus, Trash2, Save, X, ExternalLink, Eye, EyeOff, CheckSquare, Square, Filter, Layers, ListFilter, BarChart3, TrendingUp, Users, MessageCircle, Heart, Calendar, Share2, MapPin, Smile, MessageSquare, Globe, Users2 } from "lucide-react";
 import { toast } from "sonner";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 
 export function SocialMediaView() {
   const { socialLinks, updateSocialLink, posts, addPost, deletePost, updatePost } = useSocialMedia();
-  const [isAddingPost, setIsAddingPost] = React.useState(false);
-  const [newPost, setNewPost] = React.useState<Partial<SocialPost>>({
+  const [isAddingPost, setIsAddingPost] = useState(false);
+  const [newPost, setNewPost] = useState<Partial<SocialPost>>({
     platform: 'Instagram',
     caption: '',
     img: '',
     date: 'Just now'
   });
 
-  const [filter, setFilter] = React.useState<'all' | 'live' | 'hidden'>('all');
-  const [platformFilter, setPlatformFilter] = React.useState<string>('all');
-  const [selectedPosts, setSelectedPosts] = React.useState<string[]>([]);
+  const [filter, setFilter] = useState<'all' | 'live' | 'hidden'>('all');
+  const [platformFilter, setPlatformFilter] = useState<string>('all');
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
 
   const handleSaveLink = (platform: string, url: string) => {
     updateSocialLink(platform, url);
@@ -43,7 +43,7 @@ export function SocialMediaView() {
     return true;
   });
 
-  const toggleSelect = (id: string, e?: React.MouseEvent) => {
+  const toggleSelect = (id: string, e?: ReactMouseEvent) => {
     if (e) e.stopPropagation();
     setSelectedPosts(prev => 
       prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]

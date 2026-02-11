@@ -1,7 +1,7 @@
 import React from "react";
 import { ViewContainer } from "../ViewContainer";
 import { Package, FileText, Truck, Clock, AlertCircle, Download, ExternalLink, CreditCard } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 const activeOrders = [
   { id: "ORD-7829", item: "Biodegradable Cups (12oz)", qty: "50,000", status: "In Production", eta: "2 Days", progress: 65 },

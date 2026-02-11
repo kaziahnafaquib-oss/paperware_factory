@@ -1,4 +1,4 @@
-import React from "react";
+import { FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "../ui/sheet";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
@@ -42,7 +42,7 @@ import {
   Play,
   Star
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 
 interface InventoryItem {
@@ -75,7 +75,7 @@ const liveMachines: LiveMachine[] = [
   { id: "M-B1", name: "Offset Printer", speed: "8000 sht/hr", temp: "22°C", status: "Operational" },
 ];
 
-export function ViewContainer({ title, subtitle, children, actions }: { title: string, subtitle: string, children: React.ReactNode, actions?: React.ReactNode }) {
+export function ViewContainer({ title, subtitle, children, actions }: { title: string, subtitle: string, children: ReactNode, actions?: ReactNode }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -187,19 +187,19 @@ export function ViewContainer({ title, subtitle, children, actions }: { title: s
 }
 
 export function HostingView() {
-  const [stats, setStats] = React.useState({
+  const [stats, setStats] = useState({
     cpu: 24,
     ram: 38,
     uptime: 99.99
   });
 
-  const [deploys, setDeploys] = React.useState([
+  const [deploys, setDeploys] = useState([
     { version: "v2.5.1", date: "2023-12-22", user: "JS Admin", status: "Success" },
     { version: "v2.5.0", date: "2023-12-20", user: "JS Admin", status: "Success" },
     { version: "v2.4.9", date: "2023-12-18", user: "Auto-Deploy", status: "Success" },
   ]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setStats(prev => ({
         cpu: Math.min(100, Math.max(10, prev.cpu + (Math.random() * 4 - 2))),
@@ -357,15 +357,15 @@ export function HostingView() {
 }
 
 export function ERPNextView() {
-  const [isSyncing, setIsSyncing] = React.useState(false);
-  const [logs, setLogs] = React.useState([
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [logs, setLogs] = useState([
     { type: "Inventory Update", msg: "Synced 42 SKUs from ERPNext", time: "12m ago", status: "success" },
     { type: "Customer Data", msg: "Imported 12 new B2B profiles", time: "1h ago", status: "success" },
     { type: "Order Export", msg: "Pushed RFQ-10294 to ERPNext", time: "3h ago", status: "success" },
     { type: "Price Matrix", msg: "Global price list updated", time: "5h ago", status: "error" },
   ]);
 
-  const [mappings, setMappings] = React.useState([
+  const [mappings, setMappings] = useState([
     { name: "Sales & Distribution", mapped: true },
     { name: "Inventory Management", mapped: true },
     { name: "Customer CRM", mapped: true },
@@ -599,25 +599,25 @@ export function CMSView({
   clientProjects = [],
   onUpdateClientProjects
 }: CMSViewProps) {
-  const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
-  const [screenSize, setScreenSize] = React.useState({ w: 1920, h: 1080 });
-  const [editingProduct, setEditingProduct] = React.useState<any>(null);
-  const [isAddProductOpen, setIsAddProductOpen] = React.useState(false);
-  const [editingProject, setEditingProject] = React.useState<any>(null);
-  const [isAddProjectOpen, setIsAddProjectOpen] = React.useState(false);
-  const [isVideoLive, setIsVideoLive] = React.useState(true);
-  const [videoInput, setVideoInput] = React.useState(heroVideoUrl || "");
-  const [videoMobileInput, setVideoMobileInput] = React.useState(heroVideoMobileUrl || "");
-  const [heroTitle, setHeroTitle] = React.useState(heroContent?.title || "");
-  const [heroSub1, setHeroSub1] = React.useState(heroContent?.subtitle1 || "");
-  const [heroSub2, setHeroSub2] = React.useState(heroContent?.subtitle2 || "");
-  const [loadError, setLoadError] = React.useState(false);
-  const isInternalChange = React.useRef(false);
-  const [pageVideoInput, setPageVideoInput] = React.useState(clientsVideoUrl || "");
-  const prevVideoRef = React.useRef(clientsVideoUrl || "");
-  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [screenSize, setScreenSize] = useState({ w: 1920, h: 1080 });
+  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<any>(null);
+  const [isAddProjectOpen, setIsAddProjectOpen] = useState(false);
+  const [isVideoLive, setIsVideoLive] = useState(true);
+  const [videoInput, setVideoInput] = useState(heroVideoUrl || "");
+  const [videoMobileInput, setVideoMobileInput] = useState(heroVideoMobileUrl || "");
+  const [heroTitle, setHeroTitle] = useState(heroContent?.title || "");
+  const [heroSub1, setHeroSub1] = useState(heroContent?.subtitle1 || "");
+  const [heroSub2, setHeroSub2] = useState(heroContent?.subtitle2 || "");
+  const [loadError, setLoadError] = useState(false);
+  const isInternalChange = useRef(false);
+  const [pageVideoInput, setPageVideoInput] = useState(clientsVideoUrl || "");
+  const prevVideoRef = useRef(clientsVideoUrl || "");
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       setScreenSize({ w: window.innerWidth, h: window.innerHeight });
       const handleResize = () => setScreenSize({ w: window.innerWidth, h: window.innerHeight });
@@ -627,7 +627,7 @@ export function CMSView({
   }, []);
 
   // Safe play effect
-  React.useEffect(() => {
+  useEffect(() => {
     let isMounted = true;
     const playVideo = async () => {
       // Only attempt play if it's a video element and not a youtube link
@@ -657,7 +657,7 @@ export function CMSView({
   }, [pageVideoInput, isVideoLive]);
 
   // Auto-verify fallback logic
-  React.useEffect(() => {
+  useEffect(() => {
     if (pageVideoInput && pageVideoInput !== prevVideoRef.current) {
       setIsVideoLive(false); 
       prevVideoRef.current = pageVideoInput;
@@ -669,7 +669,7 @@ export function CMSView({
   }, [pageVideoInput]);
 
   // Sync with props when category changes or initial load
-  React.useEffect(() => {
+  useEffect(() => {
     if (heroVideoUrl) setVideoInput(heroVideoUrl);
     if (heroVideoMobileUrl) setVideoMobileInput(heroVideoMobileUrl);
     if (clientsVideoUrl) setPageVideoInput(clientsVideoUrl);
@@ -1045,7 +1045,7 @@ export function CMSView({
   }
 
   if (selectedCategory === "Product Gallery") {
-    const handleAddProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddProduct = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newProduct = {
@@ -1060,7 +1060,7 @@ export function CMSView({
       toast.success("Product Added Successfully");
     };
 
-    const handleUpdateProduct = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateProduct = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const updatedProducts = products.map(p => p.id === editingProduct.id ? {
@@ -1214,7 +1214,7 @@ export function CMSView({
       }
     };
 
-    const handleAddTestimonial = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddTestimonial = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const isFeatured = formData.get('isFeatured') === 'on';
@@ -1752,7 +1752,7 @@ export function CMSView({
   }
 
   if (selectedCategory === "Career Postings") {
-    const handleAddJob = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleAddJob = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newJob = {
@@ -1875,7 +1875,7 @@ export function CMSView({
   }
 
   if (selectedCategory === "Impact Dashboard") {
-    const handleSaveStats = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSaveStats = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
       const newStats = {
@@ -2126,9 +2126,9 @@ const SocialHubBackground = () => (
 );
 
 export function AINeuralSyncView() {
-  const [syncStatus, setSyncStatus] = React.useState('idle');
-  const [progress, setProgress] = React.useState(0);
-  const [neuralLinks, setNeuralLinks] = React.useState(12842);
+  const [syncStatus, setSyncStatus] = useState('idle');
+  const [progress, setProgress] = useState(0);
+  const [neuralLinks, setNeuralLinks] = useState(12842);
   
   const triggerSync = () => {
     setSyncStatus('syncing');
@@ -2297,7 +2297,7 @@ export function AINeuralSyncView() {
 }
 
 export function ProductionInventoryView() {
-  const [activeSubTab, setActiveSubTab] = React.useState('inventory');
+  const [activeSubTab, setActiveSubTab] = useState('inventory');
 
   return (
     <ViewContainer 
@@ -2404,7 +2404,7 @@ export function ProductionInventoryView() {
 }
 
 export function RFQPipelineView() {
-  const [rfqs, setRfqs] = React.useState([
+  const [rfqs, setRfqs] = useState([
     { id: "RFQ-10293", client: "Arabica Coffee Co.", product: "8oz Double Wall", quantity: "50,000 pcs", status: "pending", time: "2h ago", value: "$4,500" },
     { id: "RFQ-10294", client: "Green Leaf Cafe", product: "Eco-Friendly Tray", quantity: "10,000 pcs", status: "reviewing", time: "4h ago", value: "$1,200" },
     { id: "RFQ-10295", client: "Global Catering", product: "Single Wall (Custom)", quantity: "250,000 pcs", status: "quoted", time: "6h ago", value: "$18,500" },
@@ -2611,7 +2611,7 @@ export function SecurityComplianceView() {
 
 // Helper Component for Translation Management
 function TranslationManager({ language, onClose }: { language: any, onClose: () => void }) {
-  const [isTranslatingAll, setIsTranslatingAll] = React.useState(false);
+  const [isTranslatingAll, setIsTranslatingAll] = useState(false);
   
   // Mock pages data generator based on language coverage
   const generatePages = () => {
@@ -2637,7 +2637,7 @@ function TranslationManager({ language, onClose }: { language: any, onClose: () 
     });
   };
 
-  const [pages, setPages] = React.useState(generatePages());
+  const [pages, setPages] = useState(generatePages());
 
   const handleTranslatePage = (index: number) => {
     const newPages = [...pages];
@@ -2761,11 +2761,11 @@ function TranslationManager({ language, onClose }: { language: any, onClose: () 
 }
 
 export function LanguageView() {
-  const [isSyncing, setIsSyncing] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [statusFilter, setStatusFilter] = React.useState('all');
-  const [sortConfig, setSortConfig] = React.useState({ key: 'coverage', direction: 'desc' });
-  const [selectedLanguage, setSelectedLanguage] = React.useState<any>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortConfig, setSortConfig] = useState({ key: 'coverage', direction: 'desc' });
+  const [selectedLanguage, setSelectedLanguage] = useState<any>(null);
   
   const handleSync = () => {
     setIsSyncing(true);
@@ -3041,12 +3041,12 @@ export function LanguageView() {
 }
 
 export function AttributesView() {
-  const [attributes, setAttributes] = React.useState([
+  const [attributes, setAttributes] = useState([
     { id: 1, name: "Size", type: "Select", values: ["Small", "Medium", "Large"], linked: 14 },
     { id: 2, name: "Color", type: "Color Swatch", values: ["White", "Kraft", "Black"], linked: 22 },
     { id: 3, name: "Material", type: "Text", values: ["Bamboo", "Recycled Paper"], linked: 8 },
   ]);
-  const [rowCount, setRowCount] = React.useState(5);
+  const [rowCount, setRowCount] = useState(5);
 
   const handleFileUpload = () => {
     toast.promise(new Promise(res => setTimeout(res, 2000)), {

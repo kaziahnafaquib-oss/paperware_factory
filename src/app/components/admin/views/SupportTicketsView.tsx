@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Ticket, Search, Filter, Clock, CheckCircle2, AlertTriangle, 
   User, Mail, Phone, MessageSquare, Tag, Calendar, Download,

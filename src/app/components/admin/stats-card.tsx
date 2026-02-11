@@ -1,13 +1,13 @@
-import React from "react";
+import { ReactNode } from 'react';
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 interface StatsCardProps {
   label: string;
   value: string;
   change: string;
   isPositive: boolean;
-  icon: React.ReactNode;
+  icon: ReactNode;
 }
 
 export function StatsCard({ label, value, change, isPositive, icon }: StatsCardProps) {

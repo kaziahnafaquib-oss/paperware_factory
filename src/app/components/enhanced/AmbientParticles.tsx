@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
 
 interface Particle {
   id: number;
@@ -11,9 +11,9 @@ interface Particle {
 }
 
 export function AmbientParticles({ count = 30 }: { count?: number }) {
-  const [particles, setParticles] = React.useState<Particle[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newParticles = Array.from({ length: count }, (_, i) => ({
       id: i,
       x: Math.random() * 100,

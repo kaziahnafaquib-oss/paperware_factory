@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, ImageIcon, Camera, Building2, Mail, Phone, MapPin, Globe, ChevronDown, Flag, ShoppingBag, Calendar, Users } from "lucide-react";
 
 interface AddLeadModalProps {

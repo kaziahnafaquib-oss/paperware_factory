@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChangeEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Upload, Type, Palette, Layout, Download, Share2, 
   CircleCheck, RotateCcw, ChevronRight, Settings2,
@@ -22,27 +22,27 @@ const PRODUCTS_LIST = [
 
 export function StudioPage() {
   const { t } = useLanguage();
-  const [logo, setLogo] = React.useState<string | null>(null);
-  const [color, setColor] = React.useState("#ffffff");
-  const [itemType, setItemType] = React.useState("cup");
-  const [selectedProductId, setSelectedProductId] = React.useState("cup");
-  const [size, setSize] = React.useState("Medium");
-  const [text, setText] = React.useState("BRAND CORE");
-  const [texture, setTexture] = React.useState("matte");
-  const [rotation, setRotation] = React.useState(15);
-  const [fontFamily, setFontFamily] = React.useState("Inter");
-  const [finish, setFinish] = React.useState("none");
-  const [material, setMaterial] = React.useState("Kraft");
-  const [activeTab, setActiveTab] = React.useState("product");
-  const [lighting, setLighting] = React.useState("studio");
-  const [isAnalyzing, setIsAnalyzing] = React.useState(false);
-  const [consoleLogs, setConsoleLogs] = React.useState<string[]>(["Initializing Render Engine...", "Loading Assets...", "Ready."]);
+  const [logo, setLogo] = useState<string | null>(null);
+  const [color, setColor] = useState("#ffffff");
+  const [itemType, setItemType] = useState("cup");
+  const [selectedProductId, setSelectedProductId] = useState("cup");
+  const [size, setSize] = useState("Medium");
+  const [text, setText] = useState("BRAND CORE");
+  const [texture, setTexture] = useState("matte");
+  const [rotation, setRotation] = useState(15);
+  const [fontFamily, setFontFamily] = useState("Inter");
+  const [finish, setFinish] = useState("none");
+  const [material, setMaterial] = useState("Kraft");
+  const [activeTab, setActiveTab] = useState("product");
+  const [lighting, setLighting] = useState("studio");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [consoleLogs, setConsoleLogs] = useState<string[]>(["Initializing Render Engine...", "Loading Assets...", "Ready."]);
 
   const addLog = (log: string) => {
     setConsoleLogs(prev => [...prev.slice(-4), `[${new Date().toLocaleTimeString()}] ${log}`]);
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setIsAnalyzing(true);

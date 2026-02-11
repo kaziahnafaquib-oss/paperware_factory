@@ -1,11 +1,11 @@
-import React from "react";
-import { motion } from "motion/react";
+import { PropsWithChildren, useEffect, useRef } from 'react';
+import { motion } from "framer-motion";
 
 type WrapperProps = {
   additionalClassNames?: string;
 };
 
-function Wrapper({ children, additionalClassNames = "" }: React.PropsWithChildren<WrapperProps>) {
+function Wrapper({ children, additionalClassNames = "" }: PropsWithChildren<WrapperProps>) {
   return (
     <div className={`relative shrink-0 max-w-full ${additionalClassNames}`}>
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-start relative w-full">{children}</div>
@@ -14,9 +14,9 @@ function Wrapper({ children, additionalClassNames = "" }: React.PropsWithChildre
 }
 
 function GreenWebm() {
-  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   
-  React.useEffect(() => {
+  useEffect(() => {
     const videoElement = videoRef.current;
     if (videoElement) {
       videoElement.muted = true;

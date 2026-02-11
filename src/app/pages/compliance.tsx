@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
+import { MouseEvent as ReactMouseEvent, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
 import { 
   ShieldCheck, Award, FileCheck, Globe, TrendingUp, Zap, Box, 
   Droplets, Leaf, Truck, Calendar, ArrowRight, Download, Users,
@@ -105,7 +105,7 @@ function TiltCard({ cert, i }: { cert: any, i: number }) {
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -194,7 +194,7 @@ function TiltCard({ cert, i }: { cert: any, i: number }) {
 }
 
 export function CompliancePage() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
@@ -214,7 +214,7 @@ export function CompliancePage() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const handleGlobalMouseMove = (e: React.MouseEvent) => {
+  const handleGlobalMouseMove = (e: ReactMouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
     mouseX.set((clientX / innerWidth) - 0.5);

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Upload, FileText, Check, AlertCircle, Loader2, Link as LinkIcon, Trash2, Leaf, Clock, Video, Play, X } from "lucide-react";
 import { toast } from 'sonner';
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ViewContainer } from "../ViewContainer";
 import { projectId, publicAnonKey } from "../../../../../utils/supabase/info";
 import { supabase } from "../../../lib/supabaseClient";
@@ -66,7 +66,7 @@ export default function SustainabilityView() {
     }
   };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 

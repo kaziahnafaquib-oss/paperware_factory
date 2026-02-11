@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useAnimationFrame, useMotionValue } from "motion/react";
+import { memo, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence, useAnimationFrame, useMotionValue } from "framer-motion";
 import { Gauge, Activity, Cpu, Zap, Box, ArrowRight, RotateCcw } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
-export const RealtimeOps = React.memo(() => {
+export const RealtimeOps = memo(() => {
   const { t, isRTL } = useLanguage();
   const rotation = useMotionValue(0);
   const [rotationDisplay, setRotationDisplay] = useState(0);

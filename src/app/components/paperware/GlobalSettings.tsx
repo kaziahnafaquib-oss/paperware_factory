@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Settings, Globe, Bell, Lock, Eye, Mail, Phone, Shield, Palette, Moon, Sun, Volume2, VolumeX, Smartphone, Monitor, Languages, MapPin, Clock, DollarSign, Calendar, CheckCircle2, ChevronRight, Check, Download, Trash2, Key, LogOut, Accessibility, Type, Zap, Database, Link2, Code, History, UserCheck, Webhook, ToggleLeft, Plug, Github, Slack, Trello, RefreshCw, HardDrive, Wifi, WifiOff, CloudOff, Laptop, AlertCircle, Info, Search } from "lucide-react";
 import { toast } from "sonner";
 

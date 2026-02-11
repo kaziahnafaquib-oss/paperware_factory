@@ -1,8 +1,10 @@
-import React from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, Award, TrendingUp, Users } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
+import { useLanguage } from '../../context/LanguageContext';
+import { getDevicePerformanceTier } from "../../lib/performance";
 
 interface ClientLogo {
   id: string;
@@ -13,64 +15,64 @@ interface ClientLogo {
 // Fallback logos (shown if no logos uploaded in admin portal)
 const FALLBACK_LOGOS: ClientLogo[] = [
   {
-    id: "1",
-    name: "Tech Corp",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    id: "f1",
+    name: "Aventis",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Volkswagen_logo_2019.svg/1024px-Volkswagen_logo_2019.svg.png"
   },
   {
-    id: "2",
-    name: "Global Industries",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    id: "f2",
+    name: "Nestle",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Nestl%C3%A9_logo.svg/1200px-Nestl%C3%A9_logo.svg.png"
   },
   {
-    id: "3",
-    name: "Innovation Labs",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    id: "f3",
+    name: "Unilever",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Unilever.svg/2000px-Unilever.svg.png"
   },
   {
-    id: "4",
-    name: "Future Systems",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    id: "f4",
+    name: "Bengal",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Bengal_Group_logo.svg/1200px-Bengal_Group_logo.svg.png"
   },
   {
-    id: "5",
-    name: "Prime Solutions",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    id: "f5",
+    name: "Square",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Square_Pharma_Logo.svg/1200px-Square_Pharma_Logo.svg.png"
   },
   {
-    id: "6",
-    name: "Elite Partners",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    id: "f6",
+    name: "Akij",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Akij_Group_logo.png/220px-Akij_Group_logo.png"
   },
   {
-    id: "7",
-    name: "NextGen Co",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    id: "f7",
+    name: "PRAN",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/Pran_Group_logo.svg/1200px-Pran_Group_logo.svg.png"
   },
   {
-    id: "8",
-    name: "Quantum Inc",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    id: "f8",
+    name: "ACI",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/ACI_Limited_Logo.svg/1200px-ACI_Limited_Logo.svg.png"
   },
   {
-    id: "9",
-    name: "Stellar Group",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    id: "f9",
+    name: "Beximco",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/Beximco_Group_logo.svg/1200px-Beximco_Group_logo.svg.png"
   },
   {
-    id: "10",
-    name: "Velocity Ltd",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    id: "f10",
+    name: "Bashundhara",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5e/Bashundhara_Group_logo.svg/1200px-Bashundhara_Group_logo.svg.png"
   },
   {
-    id: "11",
-    name: "Apex Corp",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    id: "f11",
+    name: "SMC",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/SMC_Logo.png/250px-SMC_Logo.png"
   },
   {
-    id: "12",
-    name: "Summit Partners",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    id: "f12",
+    name: "Golden Harvest",
+    image: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Golden_Harvest_logo.png/250px-Golden_Harvest_logo.png"
   }
 ];
 
@@ -80,13 +82,15 @@ interface PremiumClientsProps {
 }
 
 export function PremiumClients({ clients: propClients, onPageChange }: PremiumClientsProps) {
-  const [clients, setClients] = React.useState<ClientLogo[]>(propClients || FALLBACK_LOGOS);
-  const [loading, setLoading] = React.useState(true);
+  const { t } = useLanguage();
+  const [clients, setClients] = useState<ClientLogo[]>(propClients || FALLBACK_LOGOS);
+  const [loading, setLoading] = useState(true);
+  const isLowEnd = getDevicePerformanceTier() === 'low';
 
   const API_URL = `https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5`;
 
   // Scroll refs for parallax
-  const containerRef = React.useRef(null);
+  const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -94,13 +98,13 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
 
   // Parallax transforms
   const yHeader = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const yLogos = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const yLogos = useTransform(scrollYProgress, [0, 1], [20, -80]);
   const scaleNumber = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.2, 0.8]);
   const rotateNumber = useTransform(scrollYProgress, [0, 0.5, 1], [-20, 0, 20]);
   const opacityBackground = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.3]);
 
   // Fetch client logos from admin portal
-  React.useEffect(() => {
+  useEffect(() => {
     // If logos passed as props, use those
     if (propClients && propClients.length > 0) {
       setClients(propClients);
@@ -148,31 +152,31 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
     {
       icon: Users,
       value: "150+",
-      label: "Trusted Clients",
+      label: t('proj_stats_trusted'),
       color: "text-blue-500"
     },
     {
       icon: Award,
       value: "5+",
-      label: "Years Experience",
+      label: t('proj_stats_xp'),
       color: "text-purple-500"
     },
     {
       icon: TrendingUp,
       value: "98%",
-      label: "Satisfaction Rate",
+      label: t('proj_stats_satisfaction'),
       color: "text-green-500"
     },
     {
       icon: Star,
       value: "4.9/5",
-      label: "Average Rating",
+      label: t('proj_stats_rating'),
       color: "text-[#fabf37]"
     }
   ];
 
   return (
-    <section ref={containerRef} className="relative py-24 md:py-32 overflow-hidden">
+    <section ref={containerRef} className="relative py-24 md:py-32 overflow-hidden hardware-accelerated">
       {/* Background with scroll opacity */}
       <motion.div
         className="absolute inset-0 opacity-5"
@@ -190,7 +194,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16 relative"
+          className="mb-10 relative"
           style={{
             perspective: "2000px",
             y: yHeader
@@ -201,21 +205,21 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
             {/* Left side - Big number with 3D + Scroll */}
             <div className="relative" style={{ perspective: "1500px" }}>
               <motion.div
-                initial={{ scale: 0.8, opacity: 0, rotateY: -30 }}
-                whileInView={{ scale: 1, opacity: 1, rotateY: 0 }}
+                initial={isLowEnd ? { opacity: 0 } : { scale: 0.8, opacity: 0, rotateY: -30 }}
+                whileInView={isLowEnd ? { opacity: 1 } : { scale: 1, opacity: 1, rotateY: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="relative"
-                style={{ transformStyle: "preserve-3d" }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="relative hardware-accelerated"
+                style={{ transformStyle: isLowEnd ? "flat" : "preserve-3d" }}
               >
                 {/* Giant background number with depth + scroll effects */}
                 <motion.div
-                  className="text-[200px] md:text-[280px] font-black leading-none text-[#fabf37]/10 select-none"
+                  className="text-[200px] md:text-[280px] font-black leading-none text-[#fabf37]/10 select-none hardware-accelerated"
                   style={{
-                    transform: "translateZ(-50px)",
+                    transform: isLowEnd ? "none" : "translateZ(-50px)",
                     textShadow: "8px 8px 0px rgba(250, 191, 55, 0.05)",
-                    scale: scaleNumber,
-                    rotate: rotateNumber
+                    scale: isLowEnd ? 1 : scaleNumber,
+                    rotate: isLowEnd ? 0 : rotateNumber
                   }}
                 >
                   150+
@@ -223,7 +227,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
 
                 {/* Overlay badge with 3D float */}
                 <motion.div
-                  animate={{
+                  animate={isLowEnd ? {} : {
                     y: [0, -15, 0],
                     rotateX: [0, 5, 0],
                     rotateY: [0, -5, 0]
@@ -233,10 +237,10 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-[#fabf37] px-8 py-6 rounded-[32px] shadow-2xl"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-[#fabf37] px-8 py-6 rounded-[32px] shadow-2xl hardware-accelerated"
                   style={{
-                    transform: "translateZ(80px)",
-                    transformStyle: "preserve-3d",
+                    transform: isLowEnd ? "translate(-50%, -50%)" : "translateZ(80px)",
+                    transformStyle: isLowEnd ? "flat" : "preserve-3d",
                     boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(250, 191, 55, 0.2)"
                   }}
                 >
@@ -249,8 +253,8 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                       <Award className="size-8" strokeWidth={2.5} />
                     </motion.div>
                     <div style={{ transform: "translateZ(15px)" }}>
-                      <p className="text-xs font-black uppercase tracking-widest opacity-70">Since 2019</p>
-                      <p className="text-2xl font-black uppercase tracking-tight">Trusted Partner</p>
+                      <p className="text-xs font-black uppercase tracking-widest opacity-70">{t('proj_since_2019')}</p>
+                      <p className="text-2xl font-black uppercase tracking-tight">{t('proj_trusted_partner')}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -273,7 +277,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
               >
                 <div className="size-2 rounded-full bg-black animate-pulse" />
                 <span className="text-xs font-black uppercase tracking-widest">
-                  Premium Quality
+                  {t('proj_quality_tag')}
                 </span>
               </motion.div>
 
@@ -285,7 +289,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                 transition={{ delay: 0.2 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.9] mb-4">
+                <h2 className="text-4xl md:text-6xl font-black uppercase leading-[0.9] mb-4">
                   <motion.span
                     className="block text-zinc-900"
                     whileHover={{ x: -10, scale: 1.05 }}
@@ -294,7 +298,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                       textShadow: "6px 6px 0px rgba(0, 0, 0, 0.05)"
                     }}
                   >
-                    Trusted
+                    {t('proj_trusted')}
                   </motion.span>
                   <motion.span
                     className="block text-zinc-900"
@@ -304,7 +308,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                       textShadow: "4px 4px 0px rgba(0, 0, 0, 0.05)"
                     }}
                   >
-                    By The
+                    {t('proj_by_the')}
                   </motion.span>
                   <motion.span
                     className="block text-[#fabf37]"
@@ -314,7 +318,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                       textShadow: "4px 4px 20px rgba(250, 191, 55, 0.3)"
                     }}
                   >
-                    Best
+                    {t('proj_best')}
                   </motion.span>
                 </h2>
               </motion.div>
@@ -325,10 +329,10 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                 whileInView={{ x: 0, opacity: 1, rotateX: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="text-xl text-zinc-600 font-bold leading-relaxed max-w-xl"
+                className="text-sm text-zinc-600 font-bold leading-relaxed max-w-xl"
                 style={{ transform: "translateZ(20px)" }}
               >
-                Join 150+ leading brands who choose us for exceptional packaging solutions and unwavering quality.
+                {t('proj_join_us')}
               </motion.p>
 
               {/* Mini stats inline with 3D cards */}
@@ -352,8 +356,8 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                     <TrendingUp className="size-6 text-emerald-600" strokeWidth={2.5} />
                   </div>
                   <div>
-                    <p className="text-2xl font-black text-zinc-900">98%</p>
-                    <p className="text-xs font-bold text-zinc-500 uppercase">Satisfaction</p>
+                    <p className="text-xl font-black text-zinc-900">98%</p>
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Satisfaction</p>
                   </div>
                 </motion.div>
 
@@ -369,8 +373,8 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                     <Star className="size-6 text-[#fabf37]" strokeWidth={2.5} />
                   </div>
                   <div>
-                    <p className="text-2xl font-black text-zinc-900">4.9/5</p>
-                    <p className="text-xs font-bold text-zinc-500 uppercase">Rating</p>
+                    <p className="text-xl font-black text-zinc-900">4.9/5</p>
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Rating</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -380,133 +384,82 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
 
         {/* Logo Showcase - Auto Scroll with Parallax */}
         <motion.div
-          className="space-y-12 mb-12"
+          className="space-y-12 mb-6"
           style={{
-            perspective: "2000px",
-            y: yLogos
+            perspective: isLowEnd ? "none" : "2000px",
+            y: isLowEnd ? 0 : yLogos
           }}
         >
-          {/* Row 1 - Scroll Left with 3D */}
-          <div className="relative overflow-hidden">
+          {/* Row 1 - Scroll Left */}
+          <div className="relative overflow-hidden py-4">
             <motion.div
-              animate={{ x: [0, -1920] }}
+              animate={{ x: ["0%", "-50%"] }}
               transition={{
-                duration: 40,
+                duration: 30,
                 repeat: Infinity,
                 ease: "linear"
               }}
-              className="flex gap-12"
-              style={{ transformStyle: "preserve-3d" }}
+              className="flex gap-16 whitespace-nowrap w-fit"
             >
-              {/* Duplicate for seamless loop */}
-              {[...clients.slice(0, 6), ...clients.slice(0, 6), ...clients.slice(0, 6)].map((client, idx) => (
-                <motion.div
+              {[...clients, ...clients].map((client, idx) => (
+                <div
                   key={`row1-${client.id}-${idx}`}
-                  className="flex-shrink-0 w-[180px] h-[100px] flex items-center justify-center group"
-                  whileHover={{
-                    scale: 1.15,
-                    rotateY: 10,
-                    rotateX: -5,
-                    z: 80
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: "translateZ(0px)"
-                  }}
+                  className="flex-shrink-0 w-[140px] h-[80px] flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100"
                 >
-                  <motion.div
-                    className="relative w-full h-full"
-                    style={{
-                      transformStyle: "preserve-3d",
-                      boxShadow: "0 10px 30px rgba(0, 0, 0, 0)"
-                    }}
-                    whileHover={{
-                      boxShadow: "0 20px 60px rgba(250, 191, 55, 0.3)"
-                    }}
-                  >
-                    <ImageWithFallback
-                      src={client.image}
-                      alt={client.name}
-                      className="w-full h-full object-contain transition-all opacity-80 group-hover:opacity-100 rounded-lg"
-                      style={{ transform: "translateZ(30px)" }}
-                    />
-                  </motion.div>
-                </motion.div>
+                  <ImageWithFallback
+                    src={client.image}
+                    alt={client.name}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
               ))}
             </motion.div>
           </div>
 
-          {/* Row 2 - Scroll Right with 3D */}
-          <div className="relative overflow-hidden">
+          {/* Row 2 - Scroll Right */}
+          <div className="relative overflow-hidden py-4">
             <motion.div
-              animate={{ x: [-1920, 0] }}
+              animate={{ x: ["-50%", "0%"] }}
               transition={{
-                duration: 40,
+                duration: 35,
                 repeat: Infinity,
                 ease: "linear"
               }}
-              className="flex gap-12"
-              style={{ transformStyle: "preserve-3d" }}
+              className="flex gap-16 whitespace-nowrap w-fit"
             >
-              {/* Duplicate for seamless loop */}
-              {[...clients.slice(6), ...clients.slice(6), ...clients.slice(6)].map((client, idx) => (
-                <motion.div
+              {[...clients, ...clients].map((client, idx) => (
+                <div
                   key={`row2-${client.id}-${idx}`}
-                  className="flex-shrink-0 w-[180px] h-[100px] flex items-center justify-center group"
-                  whileHover={{
-                    scale: 1.15,
-                    rotateY: -10,
-                    rotateX: 5,
-                    z: 80
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: "translateZ(0px)"
-                  }}
+                  className="flex-shrink-0 w-[140px] h-[80px] flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100"
                 >
-                  <motion.div
-                    className="relative w-full h-full"
-                    style={{
-                      transformStyle: "preserve-3d",
-                      boxShadow: "0 10px 30px rgba(0, 0, 0, 0)"
-                    }}
-                    whileHover={{
-                      boxShadow: "0 20px 60px rgba(250, 191, 55, 0.3)"
-                    }}
-                  >
-                    <ImageWithFallback
-                      src={client.image}
-                      alt={client.name}
-                      className="w-full h-full object-contain transition-all opacity-80 group-hover:opacity-100 rounded-lg"
-                      style={{ transform: "translateZ(30px)" }}
-                    />
-                  </motion.div>
-                </motion.div>
+                  <ImageWithFallback
+                    src={client.image}
+                    alt={client.name}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
               ))}
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-16"
+          className="text-center mt-6"
         >
-          <p className="text-zinc-600 font-medium mb-6">
-            Want to join our list of happy clients?
+          <p className="text-zinc-600 font-medium mb-3">
+            {t('proj_join_cta')}
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onPageChange?.('admin-portal')}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white rounded-full font-black text-sm uppercase tracking-wider hover:bg-[#fabf37] transition-all shadow-xl"
+            onClick={() => onPageChange?.('clients')}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white rounded-full font-black text-xs uppercase tracking-wider hover:bg-[#fabf37] transition-all shadow-xl"
           >
             <Star className="size-5" />
-            Get Started Today
+            {t('proj_explore_btn')}
           </motion.button>
         </motion.div>
       </div>

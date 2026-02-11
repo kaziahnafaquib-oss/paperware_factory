@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useScroll, useTransform, useMotionValue, animate } from "motion/react";
+import { motion, useScroll, useTransform, useMotionValue, animate } from "framer-motion";
 import { 
   ChartBar, ShieldCheck, Globe, Zap, Cpu, Layers, 
   Target, Rocket, Network, FileText, Database, 

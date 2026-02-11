@@ -1,13 +1,13 @@
-import React from "react";
+import { useState } from 'react';
 import { Zap, Sparkles, Activity, Globe, ShieldCheck } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { ViewContainer } from "../ViewContainer";
 
 export default function AINeuralSyncView() {
-  const [syncStatus, setSyncStatus] = React.useState('idle');
-  const [progress, setProgress] = React.useState(0);
-  const [neuralLinks, setNeuralLinks] = React.useState(12842);
+  const [syncStatus, setSyncStatus] = useState('idle');
+  const [progress, setProgress] = useState(0);
+  const [neuralLinks, setNeuralLinks] = useState(12842);
   
   const triggerSync = () => {
     setSyncStatus('syncing');

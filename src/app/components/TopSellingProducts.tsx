@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.png";

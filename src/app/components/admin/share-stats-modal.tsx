@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Share2, Copy, Mail, Download, Sparkles, Check, FileText, BarChart3, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
@@ -15,12 +15,12 @@ interface ShareStatsModalProps {
 }
 
 export function ShareStatsModal({ isOpen, onClose, stats }: ShareStatsModalProps) {
-  const [copied, setCopied] = React.useState(false);
-  const [isGenerating, setIsGenerating] = React.useState(false);
-  const [aiSummary, setAiSummary] = React.useState("");
+  const [copied, setCopied] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [aiSummary, setAiSummary] = useState("");
 
   // Simulate AI generation when modal opens
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       setIsGenerating(true);
       setAiSummary("");

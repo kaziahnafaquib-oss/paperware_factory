@@ -40,6 +40,8 @@
     <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperware.com/office-stationary" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://paperware.com/office-stationary?lang=bn" />
   </url>
   
   <!-- Restaurant Supplies -->
@@ -48,6 +50,8 @@
     <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperware.com/restaurant-supplies" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://paperware.com/restaurant-supplies?lang=bn" />
   </url>
   
   <!-- Marketing Materials -->
@@ -56,6 +60,8 @@
     <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperware.com/marketing-materials" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://paperware.com/marketing-materials?lang=bn" />
   </url>
   
   <!-- Pharma Supplies -->
@@ -64,6 +70,8 @@
     <lastmod>2026-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://paperware.com/pharma-supplies" />
+    <xhtml:link rel="alternate" hreflang="bn" href="https://paperware.com/pharma-supplies?lang=bn" />
   </url>
   
   <!-- FMCG Garments -->

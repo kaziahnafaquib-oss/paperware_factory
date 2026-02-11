@@ -1,0 +1,35 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+
+// Simple test to see if React is working
+function TestApp() {
+    return (
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            fontFamily: 'Arial, sans-serif',
+            fontSize: '24px',
+            fontWeight: 'bold'
+        }}>
+            <div style={{ textAlign: 'center' }}>
+                <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>✅ React is Working!</h1>
+                <p>If you see this, React is loading correctly.</p>
+                <p style={{ fontSize: '16px', marginTop: '20px', opacity: 0.8 }}>
+                    Time: {new Date().toLocaleTimeString()}
+                </p>
+            </div>
+        </div>
+    );
+}
+
+const root = document.getElementById('root');
+if (root) {
+    ReactDOM.createRoot(root).render(<TestApp />);
+    console.log('✅ React app mounted successfully!');
+} else {
+    console.error('❌ Root element not found!');
+}

@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { FormEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail, Phone, MapPin, ChevronDown,
   Facebook, Instagram, Linkedin, Youtube,
@@ -80,7 +80,7 @@ interface ContactPageProps {
 }
 
 export function ContactPage({ onFeedbackClick }: ContactPageProps) {
-  const [submitted, setSubmitted] = React.useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const { t, isRTL } = useLanguage();
   const { openChat } = useChat();
   const { socialLinks, posts: contextPosts } = useSocialMedia();
@@ -111,7 +111,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
     color: getColor(p.platform)
   }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
@@ -165,11 +165,11 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-[9px] lg:text-[10px]"
                 >
-                  Global Enterprise Hub
+                  {t('hero_global_hub')}
                 </motion.span>
               </motion.div>
               <h1 className="mt-40 lg:mt-64 text-[32px] md:text-[48px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.9] lg:leading-[0.85] text-white flex flex-wrap gap-x-4">
-                {t('contact_title').split(' ').map((word, i) => (
+                {t('contact_title') && t('contact_title').split(' ').map((word, i) => (
                   <motion.span
                     key={i}
                     custom={i}
@@ -191,7 +191,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   className="px-5 lg:px-6 py-2.5 lg:py-3 bg-zinc-900 border border-zinc-800 rounded-full flex items-center gap-3 cursor-default"
                 >
                   <div className="size-2 rounded-full bg-emerald-500" />
-                  <span className="text-zinc-400 text-[8px] lg:text-[9px] font-black uppercase tracking-widest">Dhaka Core Site</span>
+                  <span className="text-zinc-400 text-[8px] lg:text-[9px] font-black uppercase tracking-widest">{t('hero_dhaka_site')}</span>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -201,7 +201,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   className="px-5 lg:px-6 py-2.5 lg:py-3 bg-zinc-900 border border-zinc-800 rounded-full flex items-center gap-3 cursor-default"
                 >
                   <div className="size-2 rounded-full bg-[#fabf37]" />
-                  <span className="text-zinc-400 text-[8px] lg:text-[9px] font-black uppercase tracking-widest">Global Export Ready</span>
+                  <span className="text-zinc-400 text-[8px] lg:text-[9px] font-black uppercase tracking-widest">{t('hero_export_ready')}</span>
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -224,7 +224,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 />
                 <div className="text-center">
                   <p className="text-[#fabf37] text-4xl font-black italic tracking-tighter">99.9%</p>
-                  <p className="text-zinc-500 text-[8px] font-black uppercase tracking-[0.2em]">Efficiency Rating</p>
+                  <p className="text-zinc-500 text-[8px] font-black uppercase tracking-[0.2em]">{t('hero_efficiency')}</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -258,15 +258,13 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     <div>
                       <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">{t('head_office')}</h4>
                       <p className="font-bold text-[9px] lg:text-[10px] leading-tight text-black">
-                        7813, Main Road, <br />
-                        Trimohoni, Nandipara, Dhaka
+                        {t('contact_address_office_street')}
                       </p>
                     </div>
                     <div>
                       <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">{t('factory_address')}</h4>
                       <p className="font-bold text-[9px] lg:text-[10px] leading-tight text-black">
-                        7814, Main Road, <br />
-                        Trimohoni, Nandipara, Dhaka
+                        {t('contact_address_factory_street')}
                       </p>
                     </div>
                     <a
@@ -289,7 +287,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     <p className="font-black text-[12px] lg:text-[13px] tracking-tight text-black">+09638-011101</p>
                     <div className="flex items-center gap-2 mt-1 lg:mt-2">
                       <span className="size-1 rounded-full bg-emerald-500" />
-                      <span className="text-[5px] lg:text-[6px] font-black uppercase text-emerald-600 tracking-widest">Available Now</span>
+                      <span className="text-[5px] lg:text-[6px] font-black uppercase text-emerald-600 tracking-widest">{t('contact_available_now')}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -332,7 +330,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </div>
                 <div className="flex items-center gap-4">
                   <Clock className="size-5 text-[#fabf37]" />
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">24/7 Support</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">{t('contact_247_support')}</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -356,8 +354,8 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
               >
                 <MessageSquare className="size-8 lg:size-10 text-black" />
                 <div>
-                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">WhatsApp <br />Direct</p>
-                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">Instant Connect</p>
+                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">{t('contact_whatsapp_title')}</p>
+                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">{t('contact_whatsapp_desc')}</p>
                 </div>
               </motion.a>
 
@@ -375,8 +373,8 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </div>
                 <Facebook className="size-8 lg:size-10 text-[#0084ff]" />
                 <div className="relative z-10">
-                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">Messenger <br />Chat</p>
-                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-zinc-500">Social Connect</p>
+                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">{t('contact_messenger_title')}</p>
+                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-zinc-500">{t('contact_messenger_desc')}</p>
                 </div>
               </motion.a>
 
@@ -403,13 +401,13 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     <div className="size-2 rounded-full bg-black animate-ping" />
                   </div>
                   <div className="px-3 py-1.5 bg-black/10 rounded-full border border-black/5">
-                    <p className="text-[7px] font-black uppercase tracking-widest text-black">Online</p>
+                    <p className="text-[7px] font-black uppercase tracking-widest text-black">{t('contact_online')}</p>
                   </div>
                 </div>
 
                 <div className="relative z-10">
-                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">Live Chat <br />Support</p>
-                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">Talk to Human</p>
+                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">{t('contact_live_chat_support')}</p>
+                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">{t('contact_talk_to_human')}</p>
                 </div>
               </motion.button>
 
@@ -419,9 +417,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
               >
                 <div className="flex items-center gap-1.5">
                   <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400">Response Time:</p>
+                  <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400">{t('contact_response_time')}</p>
                 </div>
-                <p className="text-[8px] font-black uppercase tracking-widest text-black border-b border-[#fabf37]">~ 2 Minutes</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-black border-b border-[#fabf37]">{t('contact_response_time_val')}</p>
               </motion.div>
             </motion.div>
           </div>
@@ -451,10 +449,12 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <motion.div variants={fadeInUp} className="space-y-4 lg:space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-zinc-50 rounded-full border border-zinc-100">
                     <span className="size-2 rounded-full bg-[#fabf37]" />
-                    <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest text-zinc-500">Secure Protocol</span>
+                    <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest text-zinc-500">{t('contact_secure_protocol')}</span>
                   </div>
-                  <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tighter leading-none">
-                    {t('contact_subtitle').split(' ')[0]} <br /> <span className="text-[#fabf37]">{t('contact_subtitle').split(' ')[1]}</span>
+                  <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tighter leading-none inline-flex flex-wrap gap-x-2">
+                    {t('contact_subtitle') && t('contact_subtitle').split(' ').map((word, i) => (
+                      <span key={i} className={i === 1 ? "text-[#fabf37]" : "text-black"}>{word}</span>
+                    ))}
                   </h2>
                   <p className="text-zinc-500 font-bold text-sm lg:text-base max-w-md">Our engineering desk is ready to translate your requirements into high-volume reality.</p>
                 </motion.div>
@@ -462,50 +462,50 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <form onSubmit={handleSubmit} className="space-y-6 lg:space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Full name</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="e.g. John Doe" />
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_full_name')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_name')} />
                     </motion.div>
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Designation</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Designation" />
-                    </motion.div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Company Name</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Company Name" />
-                    </motion.div>
-                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Whats app or Mobile number</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="+880 1XXX XXXXXX" />
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_designation')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_designation')} />
                     </motion.div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Email</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required type="email" className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="name@enterprise.com" />
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_company_name')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_company')} />
                     </motion.div>
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-[rgb(144,144,144)] ml-2">City</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="City" />
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_mobile')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_mobile')} />
+                    </motion.div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_email')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required type="email" className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_email')} />
+                    </motion.div>
+                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
+                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-[rgb(144,144,144)] ml-2">{t('contact_city')}</label>
+                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_city')} />
                     </motion.div>
                   </div>
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                    <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Country</label>
-                    <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Country" />
+                    <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('contact_country')}</label>
+                    <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder={t('contact_placeholder_country')} />
                   </motion.div>
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
                     <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('strategic_req')}</label>
                     <div className="relative group">
                       <motion.select whileFocus={{ scale: 1.02 }} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all appearance-none cursor-pointer">
-                        <option>Large Scale Custom Manufacturing</option>
-                        <option>Sustainability & ESG Partnership</option>
-                        <option>Global Distribution Inquiry</option>
-                        <option>Technical Product Design</option>
+                        <option>{t('contact_option_manufacturing')}</option>
+                        <option>{t('contact_option_sustainability')}</option>
+                        <option>{t('contact_option_distribution')}</option>
+                        <option>{t('contact_option_design')}</option>
                       </motion.select>
                       <ChevronDown className="absolute right-8 top-1/2 -translate-y-1/2 size-5 text-zinc-400 pointer-events-none group-hover:text-black transition-colors" />
                     </div>
@@ -513,7 +513,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
                     <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('project_blueprint')}</label>
-                    <motion.textarea whileFocus={{ scale: 1.02 }} required rows={5} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[32px] py-6 px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all resize-none placeholder:text-zinc-300" placeholder="Describe your volume targets, material preferences, and desired timeline..." />
+                    <motion.textarea whileFocus={{ scale: 1.02 }} required rows={5} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[32px] py-6 px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all resize-none placeholder:text-zinc-300" placeholder={t('contact_placeholder_message')} />
                   </motion.div>
 
                   <motion.div variants={fadeInUp} className="pt-4">
@@ -558,7 +558,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
 
                   <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 opacity-40">
                     <div className="h-[1px] flex-1 bg-zinc-300" />
-                    <span className="text-[6px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">End Transmission</span>
+                    <span className="text-[6px] font-black uppercase tracking-widest text-zinc-500 whitespace-nowrap">{t('contact_end_transmission')}</span>
                     <div className="h-[1px] flex-1 bg-zinc-300" />
                   </motion.div>
                 </form>
@@ -582,18 +582,18 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
               className="flex items-center gap-16 whitespace-nowrap w-max hover:[animation-play-state:paused]"
             >
               {[
-                "Knock Us Now", "Get In Touch", "Start Project", "Let's Talk",
-                "Global Reach", "24/7 Support", "Instant Reply", "Sustainable Tech",
-                "Eco Friendly", "Paperware Factory", "Fast Delivery", "Premium Quality",
-                "Bulk Orders", "Custom Design", "Export Ready", "Knock Us Now",
-                "Get In Touch", "Start Project", "Let's Talk", "Global Reach",
-                "24/7 Support", "Instant Reply", "Sustainable Tech", "Eco Friendly",
-                "Paperware Factory", "Fast Delivery", "Premium Quality", "Bulk Orders",
-                "Custom Design", "Export Ready"
-              ].map((text, i) => (
+                "ticker_knock", "ticker_get_touch", "ticker_start_project", "ticker_lets_talk",
+                "ticker_global_reach", "contact_247_support", "ticker_instant_reply", "ticker_sustainable_tech",
+                "ticker_eco_friendly", "ticker_paperware_factory", "ticker_fast_delivery", "ticker_premium_quality",
+                "ticker_bulk_orders", "ticker_custom_design", "ticker_export_ready", "ticker_knock",
+                "ticker_get_touch", "ticker_start_project", "ticker_lets_talk", "ticker_global_reach",
+                "contact_247_support", "ticker_instant_reply", "ticker_sustainable_tech", "ticker_eco_friendly",
+                "ticker_paperware_factory", "ticker_fast_delivery", "ticker_premium_quality", "ticker_bulk_orders",
+                "ticker_custom_design", "ticker_export_ready"
+              ].map((key, i) => (
                 <div key={i} className="flex items-center gap-8 group/ticker cursor-default">
                   <span className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-[rgb(162,162,164)] group-hover/ticker:text-[#fabf37] transition-colors duration-500">
-                    {text}
+                    {t(key)}
                   </span>
                   <motion.div
                     animate={{ opacity: [1, 0.4, 1], scale: [1, 1.3, 1] }}
@@ -642,12 +642,11 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   transition={{ duration: 1, repeat: Infinity, repeatDelay: 2, ease: "linear" }}
                   className="size-3 rounded-full border-2 border-[#fabf37] border-dashed"
                 />
-                <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500">Global Connectivity Feed</p>
+                <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500">{t('social_connectivity_feed')}</p>
               </div>
-              <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">Social <br /> Digital Footprint</h2>
+              <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none">{t('social_digital_footprint')}</h2>
               <p className="text-[9px] font-bold text-zinc-400 max-w-md uppercase tracking-widest leading-relaxed">
-                Direct stream from our enterprise social nodes. Experience the intersection
-                of industrial precision and digital transparency across all platforms.
+                {t('social_stream_desc')}
               </p>
             </div>
             <div className="flex gap-4">
@@ -693,7 +692,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }}
                   className="text-[9px] font-black uppercase tracking-widest text-black"
                 >
-                  Active Stream
+                  {t('social_active_stream')}
                 </motion.span>
               </div>
             </div>
@@ -727,12 +726,12 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                       </div>
                       <div className="space-y-4 px-2" style={{ transform: 'translateZ(10px)' }}>
                         <p className="text-[10px] font-bold text-zinc-600 leading-relaxed whitespace-normal line-clamp-2">
-                          {post.caption}
+                          {post.captionKey ? t(post.captionKey) : post.caption}
                         </p>
                         <div className="flex items-center justify-between pt-2 border-t border-zinc-100">
-                          <span className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">{post.date}</span>
+                          <span className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">{post.dateKey ? t(post.dateKey) : post.date}</span>
                           <div className="flex items-center gap-2 text-zinc-400 group-hover/post:text-black transition-colors">
-                            <span className="text-[8px] font-black uppercase tracking-widest">View Post</span>
+                            <span className="text-[8px] font-black uppercase tracking-widest">{t('social_view_post')}</span>
                             <ArrowRight className="size-4 group-hover/post:translate-x-1 transition-transform" />
                           </div>
                         </div>
@@ -748,13 +747,13 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
           <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 relative z-10">
             <div className="flex items-center gap-3">
               <Terminal className="size-3.5" />
-              <p className="text-[7px] font-black uppercase tracking-[0.4em]">Protocol: Glass-Sync-Alpha</p>
+              <p className="text-[7px] font-black uppercase tracking-[0.4em]">{t('footer_protocol')}</p>
             </div>
             <div className="flex items-center gap-6">
-              <p className="text-[7px] font-black uppercase tracking-[0.4em]">Paperware Media Hub</p>
+              <p className="text-[7px] font-black uppercase tracking-[0.4em]">{t('footer_media_hub')}</p>
               <div className="flex items-center gap-2">
                 <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <p className="text-[7px] font-black uppercase tracking-[0.4em]">Network Optimized</p>
+                <p className="text-[7px] font-black uppercase tracking-[0.4em]">{t('footer_net_opt')}</p>
               </div>
             </div>
           </div>
@@ -769,13 +768,13 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
           >
             {[...Array(10)].map((_, i) => (
               <div key={i} className="flex items-center gap-12">
-                <span className="text-[9px] font-black uppercase tracking-[0.5em]">Paperware Factory</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.5em]">{t('ticker_paperware_factory')}</span>
                 <div className="w-12 h-[1px] bg-black" />
-                <span className="text-[9px] font-black uppercase tracking-[0.5em]">Sustainable Manufacturing</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.5em]">{t('ticker_sustainable_mfg')}</span>
                 <div className="w-12 h-[1px] bg-black" />
-                <span className="text-[9px] font-black uppercase tracking-[0.5em]">Global Export Quality</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.5em]">{t('ticker_global_quality')}</span>
                 <div className="w-12 h-[1px] bg-black" />
-                <span className="text-[9px] font-black uppercase tracking-[0.5em]">Dhaka, Bangladesh</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.5em]">{t('ticker_dhaka_loc')}</span>
                 <div className="w-12 h-[1px] bg-black" />
               </div>
             ))}

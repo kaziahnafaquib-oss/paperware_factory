@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, useScroll, useTransform, useSpring, useInView } from "motion/react";
+import { MouseEvent as ReactMouseEvent, ReactElement, cloneElement, useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { 
   Cpu, Database, Zap, Activity, ShieldCheck, 
   Layers, Code, Network, Server, Gauge, 
@@ -13,10 +13,10 @@ import { useLanguage } from "../context/LanguageContext";
 function CountingStat({ value, suffix = "", delay = 0 }: { value: string, suffix?: string, delay?: number }) {
   const numValue = parseFloat(value.replace(/[^0-9.]/g, ''));
   const count = useSpring(0, { stiffness: 50, damping: 20 });
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isInView) {
       count.set(numValue);
     }
@@ -55,9 +55,9 @@ function StaggeredText({ text, className }: { text: string, className?: string }
 }
 
 export function TechnicalManifestoPage() {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -91,7 +91,7 @@ export function TechnicalManifestoPage() {
     }
   ];
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
       setMousePos({
         x: (e.clientX / window.innerWidth - 0.5) * 20,
@@ -620,11 +620,11 @@ export function TechnicalManifestoPage() {
 }
 
 function ManifestoCard({ title, icon, desc, stats, index }: any) {
-  const cardRef = React.useRef(null);
+  const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-100px" });
-  const [cardMousePos, setCardMousePos] = React.useState({ x: 0, y: 0 });
+  const [cardMousePos, setCardMousePos] = useState({ x: 0, y: 0 });
 
-  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCardMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -664,7 +664,7 @@ function ManifestoCard({ title, icon, desc, stats, index }: any) {
         className="size-16 rounded-[24px] bg-white/5 border border-white/10 flex items-center justify-center text-[#fabf37] group-hover:bg-[#fabf37] group-hover:text-black transition-all duration-500"
         style={{ transform: "translateZ(40px)" }}
       >
-        {React.cloneElement(icon as React.ReactElement, { className: "size-8" })}
+        {cloneElement(icon as ReactElement, { className: "size-8" })}
       </div>
       
       <div className="space-y-4" style={{ transform: "translateZ(60px)" }}>

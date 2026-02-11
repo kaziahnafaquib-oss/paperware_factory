@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChangeEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Trash2, Plus, Minus, FileText, Send, 
   ChevronRight, Box, Truck, ShieldCheck, 
@@ -15,8 +15,8 @@ interface BulkOrderPageProps {
 }
 
 export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
-  const [formData, setFormData] = React.useState({
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
     companyName: "",
     businessType: "Corporate",
     contactPerson: "",
@@ -28,7 +28,7 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
     specialInstructions: ""
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };

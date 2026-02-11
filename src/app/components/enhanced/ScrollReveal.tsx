@@ -1,8 +1,8 @@
-import React from "react";
-import { motion, useInView } from "motion/react";
+import { Children, ReactNode, useRef } from 'react';
+import { motion, useInView } from "framer-motion";
 
 interface ScrollRevealProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: "fade" | "slideUp" | "slideLeft" | "slideRight" | "scale" | "rotate";
   delay?: number;
   duration?: number;
@@ -43,7 +43,7 @@ export function ScrollReveal({
   duration = 0.6,
   className = "",
 }: ScrollRevealProps) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
@@ -62,13 +62,13 @@ export function ScrollReveal({
 
 // Stagger Children Animation
 interface ScrollStaggerProps {
-  children: React.ReactNode;
+  children: ReactNode;
   staggerDelay?: number;
   className?: string;
 }
 
 export function ScrollStagger({ children, staggerDelay = 0.1, className = "" }: ScrollStaggerProps) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const containerVariants = {
@@ -94,7 +94,7 @@ export function ScrollStagger({ children, staggerDelay = 0.1, className = "" }: 
       variants={containerVariants}
       className={className}
     >
-      {React.Children.map(children, (child) => (
+      {Children.map(children, (child) => (
         <motion.div variants={itemVariants}>{child}</motion.div>
       ))}
     </motion.div>

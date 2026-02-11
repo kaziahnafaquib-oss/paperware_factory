@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Printer, Scissors, Layers, Settings, ShieldCheck, ArrowRight, Activity, Gauge, Cpu } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 

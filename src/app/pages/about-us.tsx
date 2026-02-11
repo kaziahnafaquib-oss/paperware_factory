@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "motion/react";
+import { memo } from 'react';
+import { motion } from "framer-motion";
 import { Play, ShieldCheck, Zap, Leaf, Globe, Factory, Cpu, Target, Award, ArrowRight, ChevronRight, Activity, Box } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -68,7 +68,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             <MediaPlayer
               type={aboutUsVideos?.heroBackgroundType || "image"}
               src={aboutUsVideos?.heroBackground || imgProcess}
-              alt="Factory Background"
+              alt={t('factory_background')}
               className="w-full h-full grayscale"
               autoPlay={true}
               muted={true}
@@ -86,21 +86,21 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           >
             <motion.div variants={itemVariants} className="flex items-center gap-2 mb-4 md:mb-8">
               <div className="size-1.5 md:size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Established 2021 • Dhaka</span>
+              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">{t('about_est_dhaka')}</span>
             </motion.div>
 
             <motion.h1
               variants={itemVariants}
               className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12"
             >
-              The <span className="text-[#fabf37]">Engine</span> <br />
-              Behind the <br />
-              <span className="text-zinc-200">Package.</span>
+              {t('about_hero_the')} <span className="text-[#fabf37]">{t('about_hero_engine')}</span> <br />
+              {t('about_hero_behind')} <br />
+              <span className="text-zinc-200">{t('about_hero_package')}</span>
             </motion.h1>
 
             <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
               <p className="text-base md:text-2xl font-bold text-zinc-600 leading-tight max-w-2xl uppercase italic">
-                {t('about_text_1')} We are not just manufacturers; we are supply chain architects.
+                {t('about_text_1_full')}
               </p>
               <button className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
                 <Play className="size-6 md:size-8 fill-current group-hover:translate-x-1 transition-transform" />
@@ -114,7 +114,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="p-10 bg-black text-white rounded-[48px] border border-white/10 shadow-2xl space-y-4 max-w-xs">
             <Activity className="size-8 text-[#fabf37]" />
             <p className="text-xs font-black uppercase tracking-widest leading-relaxed">
-              Real-time monitoring of over 200 production metrics.
+              {t('about_monitoring_desc')}
             </p>
           </div>
         </div>
@@ -128,19 +128,19 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
             <div className="lg:col-span-4 space-y-4 md:space-y-8">
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#fabf37] leading-none">
-                Our <br className="hidden md:block" /> Core <br className="hidden md:block" /> Mandate.
+                {t('about_core_our')} <br className="hidden md:block" /> {t('about_core_main')} <br className="hidden md:block" /> {t('about_core_mandate')}
               </h2>
               <p className="text-zinc-500 font-bold uppercase tracking-widest leading-relaxed text-xs md:text-sm">
-                Sustainability is not an option; it is the default setting of our factory.
+                {t('about_sustainability_motto')}
               </p>
             </div>
 
             <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               {[
-                { icon: ShieldCheck, title: "Uncompromising Hygiene", desc: "Every cup is produced in a sanitized, medical-grade environment." },
-                { icon: Zap, title: "AI-Driven Precision", desc: "Automated quality checks with less than 0.1% defect rate." },
-                { icon: Leaf, title: "100% Biodegradable", desc: "Utilizing FSC-certified paper and eco-friendly soy-based inks." },
-                { icon: Globe, title: "Global Logistics", desc: "From Dhaka to the world, tracked with real-time telemetry." }
+                { icon: ShieldCheck, title: t('about_value_1_title'), desc: t('about_value_1_desc') },
+                { icon: Zap, title: t('about_value_2_title'), desc: t('about_value_2_desc') },
+                { icon: Leaf, title: t('about_value_3_title'), desc: t('about_value_3_desc') },
+                { icon: Globe, title: t('about_value_4_title'), desc: t('about_value_4_desc') }
               ].map((value, i) => (
                 <motion.div
                   key={i}
@@ -171,7 +171,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center text-center mb-10 md:mb-24 space-y-2 md:space-y-4">
             <h2 className="text-3xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
-              Scaling <br /> <span className="text-zinc-300 italic">Excellence.</span>
+              {t('about_metrics_title_1')} <br /> <span className="text-zinc-300 italic">{t('about_metrics_title_2')}</span>
             </h2>
           </div>
 
@@ -179,47 +179,47 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             {[
               {
                 val: "140K",
-                unit: "PCS/DAY",
-                label: "PRINTING UNIT",
+                unit: t('about_unit_pcs_day'),
+                label: t('about_unit_1_label'),
                 icon: Factory,
                 img: imgHeidelberg,
-                machineName: "HEIDELBERG MO-V-P",
-                detail: "HIGH-PRECISION 4-COLOR OFFSET PRINTING FOR PREMIUM BRANDING.",
+                machineName: t('about_machine_1'),
+                detail: t('about_unit_1_detail'),
                 specs: [
-                  "HEIDELBERG MO-V-P (19x25.5\")",
-                  "ORIGINAL HEIDELBERG (25.25x36\")",
-                  "DOUBLE DEMY PLATE TECHNOLOGY"
+                  t('about_spec_1_1'),
+                  t('about_spec_1_2'),
+                  t('about_spec_1_3')
                 ]
               },
               {
                 val: "350K",
-                unit: "PCS/DAY",
-                label: "FORMING UNIT",
+                unit: t('about_unit_pcs_day'),
+                label: t('about_unit_2_label'),
                 icon: Box,
                 img: imgFactory1,
-                machineName: "ULTRASONIC FORMER",
-                detail: "AUTOMATED ULTRASONIC FORMING ENSURING LEAK-PROOF PRECISION.",
-                specs: ["MEDICAL GRADE HYGIENE", "AUTOMATED QUALITY CONTROL", "HIGH-SPEED PRODUCTION"]
+                machineName: t('about_machine_2'),
+                detail: t('about_unit_2_detail'),
+                specs: [t('about_spec_2_1'), t('about_spec_2_2'), t('about_spec_2_3')]
               },
               {
                 val: "12K",
-                unit: "PCS/DAY",
-                label: "CUTTING UNIT",
+                unit: t('about_unit_pcs_day'),
+                label: t('about_unit_3_label'),
                 icon: Cpu,
                 img: imgCutting,
-                machineName: "DIE-CUT PRECISION",
-                detail: "PRECISION DIE-CUTTING WITH MINIMAL WASTE & LASER ACCURACY.",
-                specs: ["LASER GUIDED CALIBRATION", "ZERO-WASTE TRIMMING", "CUSTOM SHAPE SUPPORT"]
+                machineName: t('about_machine_3'),
+                detail: t('about_unit_3_detail'),
+                specs: [t('about_spec_3_1'), t('about_spec_3_2'), t('about_spec_3_3')]
               },
               {
                 val: "25K",
-                unit: "PCS/DAY",
-                label: "LAMINATION UNIT",
+                unit: t('about_unit_pcs_day'),
+                label: t('about_unit_4_label'),
                 icon: Zap,
                 img: imgProcess,
-                machineName: "THERMAL LAMINATOR",
-                detail: "PE/PLA LAMINATION FOR SUPERIOR LIQUID & HEAT RESISTANCE.",
-                specs: ["ECO-FRIENDLY PLA SUPPORT", "HEAT-SEAL OPTIMIZATION", "GLOSS & MATTE FINISH"]
+                machineName: t('about_machine_4'),
+                detail: t('about_unit_4_detail'),
+                specs: [t('about_spec_4_1'), t('about_spec_4_2'), t('about_spec_4_3')]
               }
             ].map((stat, i) => (
               <motion.div
@@ -288,22 +288,22 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       <section className="py-16 md:py-32 bg-zinc-50 overflow-hidden">
         <div className="container mx-auto px-4 md:px-6 mb-8 md:mb-16 flex items-end justify-between">
           <div className="space-y-1 md:space-y-4">
-            <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter">Factory Floor</h2>
-            <p className="text-[8px] md:text-sm font-bold text-zinc-500 uppercase tracking-widest">A glimpse into our manufacturing hub.</p>
+            <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter">{t('about_gallery_title')}</h2>
+            <p className="text-[8px] md:text-sm font-bold text-zinc-500 uppercase tracking-widest">{t('about_gallery_subtitle')}</p>
           </div>
           <button className="flex items-center gap-2 text-[8px] md:text-xs font-black uppercase tracking-widest hover:text-[#fabf37] transition-colors">
-            Full Gallery <ArrowRight className="size-3 md:size-4" />
+            {t('about_gallery_btn')} <ArrowRight className="size-3 md:size-4" />
           </button>
         </div>
 
         <div className="flex gap-4 md:gap-8 px-4 md:px-6 overflow-x-auto pb-8 md:pb-12 scrollbar-hide snap-x">
           {[
-            { type: 'image' as const, src: imgFactory1, alt: 'Production Line' },
-            { type: 'image' as const, src: imgFactory2, alt: 'Quality Control' },
-            { type: 'image' as const, src: imgFactory3, alt: 'Assembly Section' },
-            { type: 'image' as const, src: imgQuality, alt: 'Testing Facility' },
-            { type: 'image' as const, src: imgCutting, alt: 'Cutting Process' },
-            { type: 'image' as const, src: imgHeidelberg, alt: 'Heidelberg Machine' }
+            { type: 'image' as const, src: imgFactory1, altKey: 'production_line' },
+            { type: 'image' as const, src: imgFactory2, altKey: 'quality_control' },
+            { type: 'image' as const, src: imgFactory3, altKey: 'assembly_section' },
+            { type: 'image' as const, src: imgQuality, altKey: 'testing_facility' },
+            { type: 'image' as const, src: imgCutting, altKey: 'cutting_process' },
+            { type: 'image' as const, src: imgHeidelberg, altKey: 'heidelberg_machine' }
           ].map((media, i) => (
             <div
               key={i}
@@ -312,12 +312,12 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               <MediaPlayer
                 type={media.type}
                 src={media.src}
-                alt={media.alt}
+                alt={t(media.altKey)}
                 className="w-full h-full"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-8 md:p-12 flex flex-col justify-end pointer-events-none">
-                <p className="text-[#fabf37] text-xs font-black uppercase tracking-widest mb-2">Facility View</p>
-                <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{media.alt}</p>
+                <p className="text-[#fabf37] text-xs font-black uppercase tracking-widest mb-2">{t('about_gallery_overlay')}</p>
+                <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{t(media.altKey)}</p>
               </div>
             </div>
           ))}
@@ -330,24 +330,24 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
             <div className="space-y-6 md:space-y-12">
               <div className="space-y-2 md:space-y-4">
-                <div className="px-3 py-1 bg-[#fabf37] text-black text-[8px] md:text-[9px] font-black rounded-full uppercase inline-block">Methodology</div>
+                <div className="px-3 py-1 bg-[#fabf37] text-black text-[8px] md:text-[9px] font-black rounded-full uppercase inline-block">{t('about_method_badge')}</div>
                 <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-                  Smart <br /> Manufacturing.
+                  {t('about_method_title_1')} <br /> {t('about_method_title_2')}
                 </h2>
               </div>
 
               <div className="space-y-6 md:space-y-8">
                 <p className="text-xs md:text-lg font-bold text-zinc-400 leading-relaxed uppercase">
-                  {t('about_text_2')} At Paperware, we believe growth thrives on responsibility. Delivering safe, hygienic, and eco-friendly packaging you can trust.
+                  {t('about_text_2_full')}
                 </p>
                 <div className="grid grid-cols-2 gap-4 md:gap-8">
                   <div className="space-y-1 md:space-y-2">
                     <p className="text-2xl md:text-3xl font-black italic text-[#fabf37]">24/7</p>
-                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">Monitoring</p>
+                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">{t('about_monitoring_label')}</p>
                   </div>
                   <div className="space-y-1 md:space-y-2">
                     <p className="text-2xl md:text-3xl font-black italic text-[#fabf37]">&lt; 2%</p>
-                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">Downtime</p>
+                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">{t('about_downtime_label')}</p>
                   </div>
                 </div>
               </div>
@@ -365,7 +365,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 <div className="absolute bottom-6 md:bottom-10 left-6 md:left-10 p-6 md:p-8 bg-black/80 backdrop-blur-xl rounded-[24px] md:rounded-[32px] border border-white/5 max-w-[200px] md:max-w-xs">
                   <Cpu className="size-6 md:size-8 text-[#fabf37] mb-2 md:mb-4" />
                   <p className="text-[9px] md:text-xs font-black uppercase tracking-widest leading-relaxed">
-                    15% annual efficiency gains.
+                    {t('about_efficiency_stat')}
                   </p>
                 </div>
               </div>
@@ -380,4 +380,4 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
   );
 }
 
-export default React.memo(AboutPage);
+export default memo(AboutPage);

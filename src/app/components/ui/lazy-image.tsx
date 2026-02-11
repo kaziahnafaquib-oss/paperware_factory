@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
+import { ImgHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
-interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface LazyImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
   placeholderSrc?: string;

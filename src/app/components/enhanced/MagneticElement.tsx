@@ -1,9 +1,9 @@
 // 🧲 Magnetic Element Component
-import React from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { MouseEvent as ReactMouseEvent, ReactNode, useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface MagneticElementProps {
-  children: React.ReactNode;
+  children: ReactNode;
   strength?: number;
   className?: string;
   onClick?: () => void;
@@ -15,7 +15,7 @@ export function MagneticElement({
   className = '',
   onClick
 }: MagneticElementProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -23,7 +23,7 @@ export function MagneticElement({
   const xSpring = useSpring(x, springConfig);
   const ySpring = useSpring(y, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: ReactMouseEvent) => {
     if (!ref.current) return;
 
     const { left, top, width, height } = ref.current.getBoundingClientRect();

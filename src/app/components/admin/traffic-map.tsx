@@ -1,4 +1,4 @@
-import React from "react";
+import { memo, useState } from 'react';
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
 import { scaleLinear } from "d3-scale";
 import { Tooltip as ReactTooltip } from "react-tooltip";
@@ -13,8 +13,8 @@ interface TrafficMapProps {
   visitorsData: any[];
 }
 
-export const TrafficMap = React.memo(({ visitorsData }: TrafficMapProps) => {
-  const [content, setContent] = React.useState("");
+export const TrafficMap = memo(({ visitorsData }: TrafficMapProps) => {
+  const [content, setContent] = useState("");
 
   return (
     <div className="flex-1 w-full h-full rounded-3xl overflow-hidden bg-zinc-900/30 border border-white/5 relative">

@@ -1,8 +1,8 @@
-import React from "react";
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { ResponsiveContainer } from "recharts";
 
 interface ChartContainerProps {
-  children: React.ReactNode;
+  children: ReactNode;
   width?: string | number;
   height?: string | number;
   minHeight?: number;
@@ -23,10 +23,10 @@ export function ChartContainer({
   minHeight = 200,
   className = ""
 }: ChartContainerProps) {
-  const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 });
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!containerRef.current) return;
 
     const updateDimensions = () => {

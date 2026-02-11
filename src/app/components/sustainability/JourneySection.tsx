@@ -1,4 +1,4 @@
-import React from "react";
+import { PropsWithChildren } from 'react';
 import clsx from "clsx";
 import earthGlobe from 'figma:asset/d9bc56d5ac1b8289e38bb2eca6596e00d255eb7a.png';
 import mossEarth from 'figma:asset/030a98abab19ca707b7d61f033927447b4531a95.png';
@@ -7,7 +7,7 @@ type WrapperProps = {
   additionalClassNames?: string;
 };
 
-function Wrapper({ children, additionalClassNames = "" }: React.PropsWithChildren<WrapperProps>) {
+function Wrapper({ children, additionalClassNames = "" }: PropsWithChildren<WrapperProps>) {
   return (
     <div className={clsx("relative shrink-0 max-w-full", additionalClassNames)}>
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-end relative w-full">{children}</div>

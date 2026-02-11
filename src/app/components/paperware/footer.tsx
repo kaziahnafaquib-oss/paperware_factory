@@ -1,11 +1,12 @@
 import logoBlack from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.png';
-import React from "react";
+import logoBn from '../../../assets/paperware_logo_bn.png';
+import { memo } from 'react';
 import { ArrowRight, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube, Send, ExternalLink, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
-import { motion as Motion } from "motion/react";
+import { motion as Motion } from "framer-motion";
 
 export function Footer({ onPageChange }: { onPageChange: (page: string) => void }) {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, language } = useLanguage();
 
   const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/paperwarefactory" },
@@ -28,7 +29,6 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             <path
               d="M0,0 C300,100 900,100 1200,0 L1200,120 L0,120 Z"
               fill="white"
-              className="drop-shadow-lg"
             />
           </svg>
         </div>
@@ -39,9 +39,6 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
         <div className="container mx-auto px-6 lg:px-12 max-w-[1400px] relative z-10">
           {/* Newsletter Section */}
           <div className="relative z-10 bg-black text-[#fabf37] rounded-[40px] p-8 md:p-14 mb-24 overflow-hidden group border border-white/10 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_30px_80px_-10px_rgba(0,0,0,0.4)] transition-shadow duration-500">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#fabf37]/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#fabf37]/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-
             <div className="flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-16 relative z-10">
               <div className="text-center lg:text-left space-y-5 max-w-3xl">
                 <div className="flex items-center justify-center lg:justify-start gap-3 mb-2">
@@ -49,20 +46,20 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fabf37] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-[#fabf37]"></span>
                   </span>
-                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">Industrial Intelligence</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">{t('industry_intelligence')}</span>
                 </div>
                 <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white leading-[0.9]">
-                  Subscribe to our <br className="hidden md:block" />
+                  {t('footer_subscribe_title')} <br className="hidden md:block" />
                   <Motion.span
                     animate={{ opacity: [1, 0.3, 1] }}
                     transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
                     className="text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] via-[#fff5d6] to-[#fabf37]"
                   >
-                    Global Update Stream
+                    {t('footer_subscribe_gradient')}
                   </Motion.span>
                 </h3>
                 <p className="text-zinc-400 text-base font-medium max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                  Get direct access to manufacturing insights, sustainability reports, and product innovation alerts.
+                  {t('footer_subscribe_desc')}
                 </p>
               </div>
 
@@ -73,12 +70,12 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                     <Mail className="size-5" />
                   </div>
                   <textarea
-                    placeholder="Enter your corporate email..."
+                    placeholder={t('footer_placeholder')}
                     rows={2}
                     className="flex-1 bg-transparent border-none text-white placeholder:text-zinc-400 focus:ring-0 px-3 py-4 font-bold text-sm outline-none min-w-0 resize-none flex items-center text-[11px]"
                   />
                   <button className="bg-[#fabf37] hover:bg-white hover:scale-105 active:scale-95 text-black px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 group/btn shadow-[0_0_20px_rgba(250,191,55,0.3)] shrink-0">
-                    Join <ArrowRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
+                    {t('footer_join')} <ArrowRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -90,12 +87,12 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
               <Motion.img
                 whileHover={{ scale: 1.05 }}
-                src={logoBlack}
+                src={language === 'BN' ? logoBn : logoBlack}
                 alt="Paperware"
                 className="h-40 w-auto mb-2 drop-shadow-sm select-none"
               />
               <p className="text-[14px] font-bold leading-relaxed opacity-80 max-w-[260px]">
-                Premium B2B manufacturing platform for sustainable paper packaging solutions.
+                {t('footer_desc')}
               </p>
             </div>
 
@@ -104,18 +101,26 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
               {/* Quick Links */}
               <div className="space-y-8 text-center md:text-left">
                 <div className="relative inline-block md:block">
-                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Quick Links</h4>
+                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t('footer_quick_links')}</h4>
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
                 </div>
                 <ul className="space-y-4 pt-2">
-                  {['Home', 'About Us', 'Papercups', 'Sustainability', 'Our ERP', 'Contact', 'Privacy Policy'].map((item, i) => (
-                    <li key={item}>
+                  {[
+                    { label: t('nav_home'), page: 'home' },
+                    { label: t('nav_about'), page: 'about' },
+                    { label: t('nav_papercups'), page: 'papercups' },
+                    { label: t('nav_sustainability'), page: 'sustainability' },
+                    { label: t('nav_erp'), page: 'erp' },
+                    { label: t('nav_contact'), page: 'contact' },
+                    { label: t('nav_privacy'), page: 'privacy-policy' }
+                  ].map((item, i) => (
+                    <li key={i}>
                       <button
-                        onClick={() => onPageChange(item === 'Our ERP' ? 'erp' : item.toLowerCase().replace(/ /g, '-'))}
+                        onClick={() => onPageChange(item.page)}
                         className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />
-                        <span>{item}</span>
+                        <span>{item.label}</span>
                       </button>
                     </li>
                   ))}
@@ -125,17 +130,17 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
               {/* Our Products */}
               <div className="space-y-8 text-center md:text-left">
                 <div className="relative inline-block md:block">
-                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Our Products</h4>
+                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t('footer_our_products')}</h4>
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
                 </div>
                 <ul className="space-y-4 pt-2">
                   {[
-                    { name: 'Paper Cup', page: 'papercups' },
-                    { name: 'Carry Bag', page: 'products' },
-                    { name: 'Box', page: 'products' },
-                    { name: 'Hangtag', page: 'products' },
-                    { name: 'Brochure', page: 'products' },
-                    { name: 'Envelope', page: 'products' }
+                    { name: t('nav_paper_cup'), page: 'papercups' },
+                    { name: t('nav_carry_bag'), page: 'products' },
+                    { name: t('nav_box'), page: 'products' },
+                    { name: t('nav_hangtag'), page: 'products' },
+                    { name: t('nav_brochure'), page: 'products' },
+                    { name: t('nav_envelope'), page: 'products' }
                   ].map(item => (
                     <li key={item.name}>
                       <button
@@ -158,34 +163,34 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             {/* Get In Touch */}
             <div className="space-y-8 text-center md:text-left">
               <div className="relative inline-block md:block">
-                <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Get In Touch</h4>
+                <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t('footer_get_in_touch')}</h4>
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
               </div>
               <ul className="space-y-6 pt-2">
                 {[
                   {
                     icon: MapPin,
-                    title: "Head Office",
-                    text: "7813 Trimohoni Nandipara Main Road, Dhaka",
+                    title: t('head_office'),
+                    text: t('contact_address_office_street') || "7813 Trimohoni Nandipara Main Road, Dhaka",
                     href: "https://www.google.com/maps/search/?api=1&query=7813+Trimohoni+Nandipara+Main+Road,+Dhaka"
                   },
                   {
                     icon: MapPin,
-                    title: "Factory Office",
-                    text: "7814 Trimohoni Nandipara Main Road, Dhaka",
+                    title: t('factory_office'),
+                    text: t('contact_address_factory_street') || "7814 Trimohoni Nandipara Main Road, Dhaka",
                     href: "https://www.google.com/maps/search/?api=1&query=7814+Trimohoni+Nandipara+Main+Road,+Dhaka"
                   },
                   {
                     icon: MapPin,
-                    title: "Display Centre",
-                    text: "65 Begum bazar, Agrani Bank Lane, Dhaka",
+                    title: t('display_centre'),
+                    text: t('contact_address_display_street') || "65 Begum bazar, Agrani Bank Lane, Dhaka",
                     href: "https://www.google.com/maps/search/?api=1&query=65+Begum+bazar,+Agrani+Bank+Lane,+Dhaka"
                   },
                   {
                     icon: Clock,
-                    title: "Service",
-                    text: "Factory working hour: 24/7",
-                    action: () => onPageChange('manufacturing')
+                    title: t('service'),
+                    text: t('factory_working_hour'),
+                    action: () => onPageChange?.('manufacturing')
                   }
                 ].map((item, idx) => (
                   <li key={idx} className="flex flex-col md:flex-row items-center md:items-start gap-4 group">
@@ -220,7 +225,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-black/10 pt-20 pb-4">
             <p className="text-xs font-bold uppercase tracking-widest opacity-60">
-              © {new Date().getFullYear()} Paperware Factory. All rights reserved.
+              © {new Date().getFullYear()} Paperware Factory. {t('rights')}.
             </p>
 
             <div className="flex gap-4">
@@ -238,7 +243,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             </div>
 
             <p className="text-xs font-black uppercase tracking-widest flex items-center gap-2 opacity-80 mr-8">
-              Made in Bangladesh
+              {t('made_in_bangladesh')}
               <Motion.span
                 animate={{
                   scaleY: [1, 1.05, 0.95, 1],
@@ -266,4 +271,4 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
 }
 
 // Memoize Footer to prevent unnecessary re-renders
-export const MemoizedFooter = React.memo(Footer);
+export const MemoizedFooter = memo(Footer);

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { ReactNode, createContext, useState, useContext } from 'react';
 
 interface ChatContextType {
   isChatOpen: boolean;
@@ -14,7 +14,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 
   const openChat = () => setIsChatOpen(true);
   const closeChat = () => setIsChatOpen(false);
-  const toggleChat = () => setIsChatOpen(prev => !prev);
+  const toggleChat = () => setIsChatOpen((prev: boolean) => !prev);
 
   return (
     <ChatContext.Provider value={{ isChatOpen, openChat, closeChat, toggleChat }}>

@@ -1,8 +1,8 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Factory, Zap, Users, Thermometer, Box, TrendingUp, AlertCircle, Play, Pause, Camera, Radio, Globe } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+// ImageWithFallback removed as it is no longer used for the live stream iframe.
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 
 const data = [
@@ -17,18 +17,18 @@ const data = [
 
 export function FactoryLivePage() {
   const { t, isRTL } = useLanguage();
-  const [activeCam, setActiveCam] = React.useState(0);
-  const [isLive, setIsLive] = React.useState(true);
+  const [activeCam, setActiveCam] = useState(0);
+  const [isLive, setIsLive] = useState(true);
 
   const cams = [
-    { id: "CAM-01", name: "Main Assembly Line", location: "Sector A", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" },
-    { id: "CAM-02", name: "Quality Control", location: "Sector B", img: "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" },
-    { id: "CAM-03", name: "Warehouse Logistics", location: "Loading Dock", img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" }
+    { id: "CAM-01", name: "Main Assembly Line", location: "Sector A", videoId: "5_X9hUClb-4" },
+    { id: "CAM-02", name: "Quality Control", location: "Sector B", videoId: "fD_uO7K_M_Y" },
+    { id: "CAM-03", name: "Warehouse Logistics", location: "Loading Dock", videoId: "m-v3UfC-OUM" }
   ];
 
   return (
     <div className={`min-h-screen bg-[#0a0a0a] text-white pt-32 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
-      
+
       {/* Industrial Top Header */}
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-16">
@@ -58,7 +58,7 @@ export function FactoryLivePage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
+
           {/* Live Feed Section */}
           <div className="lg:col-span-8 space-y-6">
             <div className="relative aspect-video bg-black rounded-[48px] overflow-hidden border border-white/10 shadow-2xl group">
@@ -74,7 +74,7 @@ export function FactoryLivePage() {
               </div>
 
               <div className="absolute top-8 right-8 z-20">
-                <button 
+                <button
                   onClick={() => setIsLive(!isLive)}
                   className="size-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-colors"
                 >
@@ -83,20 +83,29 @@ export function FactoryLivePage() {
               </div>
 
               {/* Static Grain Overlay */}
-              <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay z-10 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')]" />
+              <div className="absolute inset-0 pointer-events-none opacity-10 mix-blend-overlay z-10 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')]" />
 
-              <ImageWithFallback 
-                src={cams[activeCam].img} 
-                alt="Factory Feed" 
-                className={`size-full object-cover transition-transform duration-[10s] ease-linear ${isLive ? 'scale-110' : 'scale-100'}`} 
-              />
+              {isLive ? (
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${cams[activeCam].videoId}?autoplay=1&mute=1&controls=0&rel=0`}
+                  title="Live Factory Feed"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-zinc-900 flex-col gap-4">
+                  <Play className="size-12 text-[#fabf37] animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Feed_Paused</span>
+                </div>
+              )}
 
               {/* Camera Switcher Bar */}
               <div className="absolute bottom-8 left-8 right-8 z-20 flex items-center gap-4">
                 <div className="flex-1 h-px bg-white/10" />
                 <div className="flex gap-2">
                   {cams.map((_, i) => (
-                    <button 
+                    <button
                       key={i}
                       onClick={() => setActiveCam(i)}
                       className={`size-3 rounded-full transition-all ${activeCam === i ? 'bg-[#fabf37] w-12' : 'bg-white/20'}`}
@@ -124,20 +133,20 @@ export function FactoryLivePage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="h-[250px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={data}>
                     <defs>
                       <linearGradient id="colorOutput" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#fabf37" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#fabf37" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#fabf37" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#fabf37" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
                     <XAxis dataKey="time" stroke="#ffffff20" fontSize={10} axisLine={false} tickLine={false} />
                     <YAxis stroke="#ffffff20" fontSize={10} axisLine={false} tickLine={false} />
-                    <Tooltip 
+                    <Tooltip
                       contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
                       itemStyle={{ color: '#fabf37', fontSize: '10px', fontWeight: 'bold' }}
                     />
@@ -203,7 +212,7 @@ export function FactoryLivePage() {
                 <span className="text-[10px] font-black text-emerald-500">OPTIMAL</span>
               </div>
               <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "65%" }}
                   className="h-full bg-emerald-500"

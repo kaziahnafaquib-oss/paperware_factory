@@ -264,7 +264,7 @@ export const rotateAnimation = {
 // Magnetic button effect utility
 export const createMagneticEffect = (strength: number = 0.3) => {
   return {
-    onMouseMove: (e: React.MouseEvent, ref: React.RefObject<HTMLElement>) => {
+    onMouseMove: (e: ReactMouseEvent, ref: RefObject<HTMLElement>) => {
       if (!ref.current) return;
       const { left, top, width, height } = ref.current.getBoundingClientRect();
       const centerX = left + width / 2;

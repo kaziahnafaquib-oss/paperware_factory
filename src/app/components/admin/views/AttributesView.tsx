@@ -1,15 +1,15 @@
-import React from "react";
+import { useState } from 'react';
 import { Download, Layers, Plus, MoreVertical, Pencil as Edit, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { ViewContainer } from "../ViewContainer";
 
 export default function AttributesView() {
-  const [attributes, setAttributes] = React.useState([
+  const [attributes, setAttributes] = useState([
     { id: 1, name: "Size", type: "Select", values: ["Small", "Medium", "Large"], linked: 14 },
     { id: 2, name: "Color", type: "Color Swatch", values: ["White", "Kraft", "Black"], linked: 22 },
     { id: 3, name: "Material", type: "Text", values: ["Bamboo", "Recycled Paper"], linked: 8 },
   ]);
-  const [rowCount, setRowCount] = React.useState(5);
+  const [rowCount, setRowCount] = useState(5);
 
   const handleFileUpload = () => {
     toast.promise(new Promise(res => setTimeout(res, 2000)), {

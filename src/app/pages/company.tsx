@@ -1,6 +1,7 @@
-import React from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "motion/react";
+import { MouseEvent as ReactMouseEvent, ReactNode, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion";
 import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles, Instagram, Linkedin, Twitter, Facebook } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
 import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.png";
@@ -30,15 +31,15 @@ const staggerContainer = {
 };
 
 // 3D Tilt Card Component
-function TiltCard({ children, className }: { children: React.ReactNode, className?: string }) {
-  const ref = React.useRef<HTMLDivElement>(null);
+function TiltCard({ children, className }: { children: ReactNode, className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
   const rotateX = useTransform(y, [-0.5, 0.5], [10, -10]);
   const rotateY = useTransform(x, [-0.5, 0.5], [-10, 10]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: ReactMouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const width = rect.width;
@@ -86,7 +87,7 @@ function TiltCard({ children, className }: { children: React.ReactNode, classNam
 
 // Parallax Image Component
 function ParallaxImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -109,12 +110,12 @@ function ParallaxImage({ src, alt, className }: { src: string, alt: string, clas
 }
 
 // Magnetic Button
-function MagneticButton({ children, onClick, className }: { children: React.ReactNode, onClick?: () => void, className?: string }) {
-  const ref = React.useRef<HTMLButtonElement>(null);
+function MagneticButton({ children, onClick, className }: { children: ReactNode, onClick?: () => void, className?: string }) {
+  const ref = useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: ReactMouseEvent) => {
     const { clientX, clientY } = e;
     const { left, top, width, height } = ref.current?.getBoundingClientRect() || { left: 0, top: 0, width: 0, height: 0 };
     const centerX = left + width / 2;
@@ -144,11 +145,12 @@ function MagneticButton({ children, onClick, className }: { children: React.Reac
 }
 
 export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => void }) {
-  const containerRef = React.useRef(null);
+  const { t } = useLanguage();
+  const containerRef = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  function handleHeroMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+  function handleHeroMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
@@ -157,55 +159,55 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
   const sections = [
     {
       id: "about",
-      title: "About Us",
-      subtitle: "The Origin",
-      desc: "Architects of the modern supply chain. We don't just manufacture; we engineer the future of packaging.",
+      title: t('company_about_us'),
+      subtitle: t('company_origin'),
+      desc: t('company_about_desc'),
       image: "https://images.unsplash.com/photo-1554227231-54aa5db01c51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjBwYWNrYWdpbmclMjBtYWNoaW5lcnklMjBpbmR1c3RyaWFsJTIwbWluaW1hbGlzdCUyMHdoaXRlfGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "Est. 2021",
+      stats: t('company_est_2021'),
       icon: Factory,
       colSpan: "md:col-span-2"
     },
     {
       id: "clients",
-      title: "Our Clients",
-      subtitle: "Global Trust",
-      desc: "Powering the brands you love. We are the silent engine behind their success.",
+      title: t('company_our_clients'),
+      subtitle: t('company_global_trust'),
+      desc: t('company_clients_desc'),
       image: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      stats: "500+ Partners",
+      stats: t('company_partners_count'),
       icon: Users,
       colSpan: "md:col-span-1"
     },
     {
       id: "sustainability",
-      title: "Sustainability",
-      subtitle: "Eco Core",
-      desc: "Defaulting to green. Environmental responsibility meets industrial scale.",
+      title: t('company_sustainability_title'),
+      subtitle: t('company_eco_core'),
+      desc: t('company_sustainability_desc'),
       image: "https://images.unsplash.com/photo-1584022438855-930ac64c51be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMHBhcGVyJTIwdGV4dHVyZSUyMGVjbyUyMGZyaWVuZGx5JTIwYnJvd24lMjBjcmFmdCUyMG1pbmltYWxpc3R8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "100% Eco",
+      stats: t('company_100_eco'),
       icon: Leaf,
       colSpan: "md:col-span-1"
     },
     {
       id: "compliance",
-      title: "Compliance",
-      subtitle: "Certified",
-      desc: "Excellence without compromise. Adhering to the strictest international standards.",
+      title: t('company_compliance_title'),
+      subtitle: t('company_certified'),
+      desc: t('company_compliance_desc'),
       image: "https://images.unsplash.com/photo-1735448213858-6bdfdf78967a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaGFybWFjZXV0aWNhbCUyMGxhYiUyMGNsZWFuJTIwcm9vbSUyMHdoaXRlJTIwbWluaW1hbGlzdHxlbnwxfHx8fDE3NjcxMTQwNDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "ISO 9001",
+      stats: t('company_iso_9001'),
       icon: ShieldCheck,
       colSpan: "md:col-span-1"
     },
     {
       id: "future-plan",
-      title: "Future Plan",
-      subtitle: "Vision 2030",
-      desc: "Innovating for tomorrow. Investing in next-gen automated machinery.",
+      title: t('company_future_plan_title'),
+      subtitle: t('company_vision_2030'),
+      desc: t('company_future_desc'),
       image: "https://images.unsplash.com/photo-1590038667005-7d82ac6f864b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjByb2JvdGljcyUyMGxvZ2lzdGljcyUyMGZ1dHVyaXN0aWN8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "R&D Focused",
+      stats: t('company_rd_focused'),
       icon: Zap,
       colSpan: "md:col-span-1"
     }
@@ -294,13 +296,13 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               <span className="px-6 py-2 rounded-full bg-white/80 backdrop-blur-md border border-zinc-200 text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow cursor-default">
                 <span className="size-2 rounded-full bg-[#fabf37] animate-ping" />
                 <span className="size-2 rounded-full bg-[#fabf37] absolute" />
-                Corporate Profile
+                {t('company_corporate_profile')}
               </span>
             </motion.div>
 
             {/* MASSIVE HERO TITLE - FIXED OVERLAP & MOBILE VIEW */}
             <motion.h1 variants={fadeInUp} className="font-black uppercase tracking-tighter text-black leading-none relative z-10 flex flex-col items-center select-none gap-0 md:gap-4 mt-8 md:mt-0">
-              <span className="text-6xl md:text-[9rem] lg:text-[11rem] text-zinc-100/80 md:text-zinc-200 blur-[0.5px] hover:blur-0 transition-all duration-700 -mb-4 md:mb-0 z-0">THE</span>
+              <span className="text-6xl md:text-[9rem] lg:text-[11rem] text-zinc-100/80 md:text-zinc-200 blur-[0.5px] hover:blur-0 transition-all duration-700 -mb-4 md:mb-0 z-0">{t('company_hero_the')}</span>
               <span className="relative inline-block px-8 py-2 md:px-12 md:py-4 transform -rotate-2 hover:rotate-0 hover:scale-105 transition-all duration-500 cursor-default group z-10">
                 <motion.span
                   initial={{ scaleX: 0, rotate: -2 }}
@@ -308,7 +310,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                   transition={{ delay: 0.5, duration: 0.8, type: "spring", stiffness: 100 }}
                   className="absolute inset-0 bg-[#fabf37] origin-center -skew-x-6 md:-skew-x-12 rounded-lg md:rounded-2xl shadow-2xl transition-colors"
                 />
-                <span className="relative z-10 text-5xl md:text-[9rem] lg:text-[11rem] text-black drop-shadow-sm group-hover:text-black/90 block pt-1 md:pt-4">COMPANY</span>
+                <span className="relative z-10 text-5xl md:text-[9rem] lg:text-[11rem] text-black drop-shadow-sm group-hover:text-black/90 block pt-1 md:pt-4">{t('company_hero_company')}</span>
 
                 {/* Shine Effect on Box */}
                 <motion.div
@@ -322,7 +324,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
             <motion.div variants={fadeInUp} className="flex flex-col items-center gap-8 md:gap-12 mt-8 max-w-3xl mx-auto px-4">
               <div className="text-lg md:text-3xl font-medium text-zinc-500 leading-relaxed max-w-2xl text-center flex flex-wrap justify-center gap-x-1.5 md:gap-x-3">
-                {["We", "manufacture"].map((word, i) => (
+                {[t('company_we'), t('company_manufacture')].map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
@@ -340,9 +342,9 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                   className="text-black font-bold px-2 rounded decoration-clone cursor-default bg-[#fabf37]/20 hover:bg-[#fabf37]/40"
                   style={{ backgroundColor: "#fabf3733" }}
                 >
-                  premium
+                  {t('company_premium')}
                 </motion.span>
-                {["packaging", "solutions", "that", "define", "brands."].map((word, i) => (
+                {[t('company_packaging'), t('company_solutions_word'), t('company_that'), t('company_define'), t('company_brands')].map((word, i) => (
                   <motion.span
                     key={i + 2}
                     initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
@@ -470,9 +472,9 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
           >
             {[...Array(6)].map((_, i) => (
               <div key={i} className="flex items-center gap-12 px-6">
-                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-[rgb(147,147,147)]">Start Project</span>
+                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-[rgb(147,147,147)]">{t('company_start_project')}</span>
                 <Sparkles className="size-8 text-[#fabf37]" />
-                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-zinc-900">Get in Touch</span>
+                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-zinc-900">{t('company_get_in_touch')}</span>
                 <ArrowRight className="size-8 text-zinc-300" />
               </div>
             ))}
@@ -499,7 +501,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               className="absolute inset-0 bg-[#fabf37] -z-10 transform -skew-x-2"
             />
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none px-4 py-2 text-black">
-              Ready to Collaborate?
+              {t('company_ready_to_collaborate')}
             </h2>
           </div>
 
@@ -510,7 +512,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-zinc-500 text-sm md:text-lg font-medium max-w-lg mx-auto text-center mb-10 leading-relaxed"
           >
-            Let's create packaging that speaks volumes about your brand's commitment to quality.
+            {t('company_collab_desc')}
           </motion.p>
 
           {/* Buttons */}
@@ -524,13 +526,13 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               onClick={() => onPageChange('contact')}
               className="px-8 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 hover:bg-zinc-800 transition-all shadow-xl shadow-black/20"
             >
-              Get Started
+              {t('company_get_started')}
             </button>
             <button
               onClick={() => onPageChange('about')}
               className="px-8 py-4 bg-white border border-zinc-200 text-black rounded-full text-xs font-bold uppercase tracking-widest hover:border-black transition-colors"
             >
-              Learn More
+              {t('company_learn_more')}
             </button>
           </motion.div>
         </div>
@@ -539,8 +541,8 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       {/* 4. SOCIAL LIVE FEED - INFINITE MARQUEE */}
       <section className="py-20 bg-zinc-50 border-t border-zinc-100 overflow-hidden">
         <div className="text-center mb-12 space-y-2">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">Social Hub</h3>
-          <h2 className="text-3xl font-black uppercase tracking-tighter text-zinc-900">#PaperwareLife</h2>
+          <h3 className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">{t('company_social_hub')}</h3>
+          <h2 className="text-3xl font-black uppercase tracking-tighter text-zinc-900">{t('company_social_tag')}</h2>
         </div>
 
         <div className="flex relative w-full overflow-hidden">
@@ -554,10 +556,10 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               <div key={setIndex} className="flex gap-6">
                 {[
                   { img: "https://images.unsplash.com/photo-1610187224249-1c5aa1841c2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwc2hvd2Nhc2UlMjBwYWNrYWdpbmclMjBkZXNpZ24lMjBzdHVkaW98ZW58MXx8fHwxNzY3MTE0NzI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_co" },
-                  { img: "https://images.unsplash.com/photo-1634881091477-5ebe7ac70074?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5rZWRpbiUyMGNvcnBvcmF0ZSUyMHBvc3QlMjBtZWV0aW5nJTIwb2ZmaWNlfGVufDF8fHx8MTc2NzExNDcyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Linkedin, tag: "Paperware Industries" },
+                  { img: "https://images.unsplash.com/photo-1634881091477-5ebe7ac70074?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5rZWRpbiUyMGNvcnBvcmF0ZSUyMHBvc3QlMjBtZWV0aW5nJTIwb2ZmaWNlfGVufDF8fHx8MTc2NzExNDcyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Linkedin, tag: t('company_industries_name') },
                   { img: "https://images.unsplash.com/photo-1587470049607-de08c66f308c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0d2l0dGVyJTIwcG9zdCUyMHVwZGF0ZSUyMHRlY2glMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NzExNDcyOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Twitter, tag: "@paperware_tech" },
                   { img: "https://images.unsplash.com/photo-1730971991690-f8825d74c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnN0YWdyYW0lMjBwb3N0JTIwbWluaW1hbGlzdCUyMGxpZmVzdHlsZSUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcxMTQ3Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_life" },
-                  { img: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Facebook, tag: "Paperware Logistics" }
+                  { img: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Facebook, tag: t('company_logistics_name') }
                 ].map((item, i) => (
                   <div key={i} className="relative w-[300px] h-[400px] shrink-0 group rounded-2xl overflow-hidden cursor-pointer">
                     <ImageWithFallback src={item.img} alt="Social" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />

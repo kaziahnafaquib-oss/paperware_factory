@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { projectId, publicAnonKey } from "../../../utils/supabase/info";
@@ -34,12 +34,12 @@ const materialData = [
 
 export function SustainabilityPage() {
   const { t } = useLanguage();
-  const heroRef = React.useRef(null);
+  const heroRef = useRef(null);
   const { scrollY } = useScroll();
-  const [videoUrl, setVideoUrl] = React.useState("");
-  const [videoError, setVideoError] = React.useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoError, setVideoError] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('🎬 Fetching video URL from backend...');
     fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5/sustainability/hero-video`, {
       headers: { Authorization: `Bearer ${publicAnonKey}` }
@@ -71,61 +71,22 @@ export function SustainabilityPage() {
     <div className="relative bg-[#fdfaf3] min-h-screen">
       {/* Full Screen Hero Banner */}
       <div ref={heroRef} className="relative min-h-screen w-full overflow-hidden bg-zinc-900 flex flex-col justify-end pb-8">
-        {/* Forest Background */}
+        {/* Forest Background with YouTube Video */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-black">
           <div className="absolute inset-0 w-full h-full overflow-hidden">
-            {videoUrl ? (
-              (() => {
-                const getYouTubeId = (url: string) => {
-                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                  const match = url.match(regExp);
-                  return (match && match[2].length === 11) ? match[2] : null;
-                };
-                const videoId = getYouTubeId(videoUrl);
-
-                if (videoId) {
-                  return (
-                    <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-black">
-                      <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] animate-pulse" />
-                        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse delay-700" />
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <video
-                    key={videoUrl}
-                    src={videoUrl}
-                    className="w-full h-full object-cover opacity-80"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    suppressHydrationWarning
-                    onLoadedData={(e) => {
-                      const video = e.currentTarget;
-                      video.play().catch(() => { });
-                    }}
-                    onError={(e) => {
-                      setVideoError(true);
-                      e.currentTarget.style.display = 'none';
-                    }}
-                    onPlay={() => { }}
-                    onPause={() => console.log('⏸️ Video paused')}
-                  />
-                );
-              })()
-            ) : (
-              <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-black">
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] animate-pulse" />
-                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse delay-700" />
-                </div>
-              </div>
-            )}
+            {/* YouTube Video Background - Autoplay */}
+            <div className="absolute inset-0 w-full h-full">
+              <iframe
+                src="https://www.youtube.com/embed/BuoCiGsdEdU?autoplay=1&mute=1&loop=1&playlist=BuoCiGsdEdU&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+                title="Sustainability Background Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                className="absolute top-1/2 left-1/2 w-[177.77777778vh] h-[56.25vw] min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-60"
+              />
+            </div>
+            {/* Dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
           </div>
         </div>
 

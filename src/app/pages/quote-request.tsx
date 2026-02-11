@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ChangeEvent, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Send, FileText, Package, Truck, Sparkles, Upload, Globe, 
   CheckCircle2, Building2, User, Calendar, MapPin, DollarSign,
@@ -55,7 +55,7 @@ export function QuoteRequestPage() {
   const [showCostBreakdown, setShowCostBreakdown] = useState(false);
   const [savedDraft, setSavedDraft] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 

@@ -1,23 +1,23 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import { RefreshCw, Globe, CircleCheck, Box, ShieldCheck } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { ViewContainer } from "../ViewContainer";
 
 export default function HostingView() {
-  const [stats, setStats] = React.useState({
+  const [stats, setStats] = useState({
     cpu: 24,
     ram: 38,
     uptime: 99.99
   });
 
-  const [deploys, setDeploys] = React.useState([
+  const [deploys, setDeploys] = useState([
     { version: "v2.5.1", date: "2023-12-22", user: "JS Admin", status: "Success" },
     { version: "v2.5.0", date: "2023-12-20", user: "JS Admin", status: "Success" },
     { version: "v2.4.9", date: "2023-12-18", user: "Auto-Deploy", status: "Success" },
   ]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setStats(prev => ({
         cpu: Math.min(100, Math.max(10, prev.cpu + (Math.random() * 4 - 2))),
