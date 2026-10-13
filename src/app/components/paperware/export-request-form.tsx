@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
+import { useDialogFocus } from "../../hooks/useDialogFocus";
 import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Globe, Ship, Plane, Box, ArrowRight, ShieldCheck, CircleCheck, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Plus, Trash2, Upload } from "lucide-react";
@@ -9,6 +11,9 @@ interface ExportRequestFormProps {
 }
 
 export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
+  useEscapeKey(isOpen, onClose);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  useDialogFocus(dialogRef, isOpen);
   const [contactNumbers, setContactNumbers] = useState([{ number: '', apps: [] as string[] }]);
   const [emails, setEmails] = useState(['']);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -89,6 +94,10 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
+        ref={dialogRef}
+          role="dialog"
+        aria-modal="true"
+        aria-label="Export inquiry"
         className="fixed inset-0 z-[9999] flex justify-center items-start md:items-center bg-black/80 backdrop-blur-xl overflow-y-auto py-4 md:py-8"
         style={{ paddingTop: "max(env(safe-area-inset-top), 1rem)" }}
       >
@@ -512,12 +521,13 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                               setAttachment(e.target.files[0]);
                             }
                           }}
+                          aria-label="Attach a reference image"
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
                         {attachment ? (
                           <div className="flex flex-col items-center">
                             <div className="size-10 bg-white rounded-xl shadow-sm flex items-center justify-center mb-2 overflow-hidden">
-                              <img src={URL.createObjectURL(attachment)} alt="Preview" className="w-full h-full object-cover" />
+                              <img loading="lazy" decoding="async" src={URL.createObjectURL(attachment)} alt="Preview" className="w-full h-full object-cover" />
                             </div>
                             <p className="text-[10px] font-black text-black">{attachment.name}</p>
                             <p className="text-[8px] font-bold text-zinc-400">{(attachment.size / 1024 / 1024).toFixed(2)} MB</p>

@@ -16,7 +16,7 @@ const initialMedia = [
     id: 1, 
     type: "image", 
     name: "hero-banner-v2.jpg", 
-    url: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f", 
+    url: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&q=75&w=1600", 
     size: "1.2 MB", 
     date: "2h ago",
     dimensions: "1920x1080",
@@ -38,7 +38,7 @@ const initialMedia = [
     id: 3, 
     type: "image", 
     name: "product-cup-eco.png", 
-    url: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e", 
+    url: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&q=75&w=1600", 
     size: "2.8 MB", 
     date: "3d ago",
     dimensions: "1000x1000",
@@ -49,7 +49,7 @@ const initialMedia = [
     id: 4, 
     type: "image", 
     name: "team-meeting.jpg", 
-    url: "https://images.unsplash.com/photo-1542838132-92c53300491e", 
+    url: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&q=75&w=1600", 
     size: "3.1 MB", 
     date: "5d ago",
     dimensions: "2400x1600",
@@ -71,7 +71,7 @@ const initialMedia = [
     id: 6, 
     type: "image", 
     name: "warehouse-interior.jpg", 
-    url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d", 
+    url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=75&w=1600", 
     size: "4.5 MB", 
     date: "1w ago",
     dimensions: "3000x2000",
@@ -237,7 +237,7 @@ export function MediaManagerView({ products = [] }: MediaManagerViewProps) {
                                     suppressHydrationWarning
                                   />
                                ) : (
-                                  <img src={item.url} alt={item.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                                  <img loading="lazy" decoding="async" src={item.url} alt={item.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
                                )}
                             </div>
                             
@@ -291,7 +291,7 @@ export function MediaManagerView({ products = [] }: MediaManagerViewProps) {
                              suppressHydrationWarning
                            />
                         ) : (
-                           <img src={selectedMedia.url} alt={selectedMedia.name} className="w-full h-full object-contain" />
+                           <img loading="lazy" decoding="async" src={selectedMedia.url} alt={selectedMedia.name} className="w-full h-full object-contain" />
                         )}
                      </div>
 

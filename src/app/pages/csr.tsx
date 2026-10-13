@@ -96,7 +96,7 @@ export function CSRPage() {
                animate={{ y: [0, -5, 0] }}
                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
              >
-                <span className="relative z-10 text-[#fabf37] font-black uppercase tracking-[0.3em] text-sm px-6 py-3 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20 backdrop-blur-sm">
+                <span className="relative z-10 text-[#a16207] font-black uppercase tracking-[0.3em] text-sm px-6 py-3 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20 backdrop-blur-sm">
                   Our Commitment
                 </span>
              </motion.div>
@@ -108,8 +108,9 @@ export function CSRPage() {
             animate="show"
             className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-black flex flex-wrap justify-center gap-x-4 gap-y-2 leading-[0.9]"
           >
+            <span className="sr-only">Corporate Social Responsibility</span>
             {"Corporate Social Responsibility".split(" ").map((word, i) => (
-              <span key={i} className="inline-flex overflow-hidden relative">
+              <span key={i} aria-hidden="true" className="inline-flex overflow-hidden relative">
                 {word.split("").map((char, j) => (
                   <motion.span key={j} variants={letterAnimation} className="relative z-10">
                     {char}
@@ -180,7 +181,7 @@ export function CSRPage() {
                 >
                   <Users className="size-10" />
                 </motion.div>
-                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">Empowering Abilities</h2>
+                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-black">Empowering Abilities</h2>
               </div>
               
               <p className="text-zinc-600 leading-relaxed font-medium text-lg">

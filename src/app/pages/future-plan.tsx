@@ -81,7 +81,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
           <div className="space-y-4">
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Strategic Timeline</h2>
-            <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Evolutionary <br />Roadmap</h3>
+            <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Evolutionary <br />Roadmap</h3>
           </div>
           <p className="text-zinc-500 font-bold max-w-md text-right">Our production milestones are driven by real-time market data and scalability projections.</p>
         </div>
@@ -132,7 +132,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 space-y-12">
             <div className="space-y-6">
-              <h2 className="text-5xl font-black uppercase tracking-tighter leading-none">AI Demand <br /><span className="text-[#fabf37]">Forecasting</span></h2>
+              <h2 className="text-5xl font-black uppercase tracking-tighter leading-none text-black">AI Demand <br /><span className="text-[#fabf37]">Forecasting</span></h2>
               <p className="text-zinc-500 font-bold text-lg">Our proprietary AI model analyzes global consumption patterns to optimize our production capacity.</p>
             </div>
             
@@ -144,8 +144,8 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
               ].map((p, i) => (
                 <div key={i} className="space-y-2">
                   <div className="flex justify-between items-end">
-                    <span className="text-[10px] font-black uppercase tracking-widest">{p.label}</span>
-                    <span className="font-black italic">{p.value}%</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-black">{p.label}</span>
+                    <span className="font-black italic text-black">{p.value}%</span>
                   </div>
                   <div className="h-2 bg-zinc-100 rounded-full overflow-hidden">
                     <motion.div 
@@ -196,6 +196,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
                       onPageChange('contact');
                     }
                   }}
+                  aria-label="Contact us about our plans"
                   className="size-16 rounded-full bg-black text-[#fabf37] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
                 >
                   <ArrowRight className="size-8" />

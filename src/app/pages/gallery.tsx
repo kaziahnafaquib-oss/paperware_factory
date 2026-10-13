@@ -1,14 +1,15 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Maximize2 } from "lucide-react";
+import yCupStack from "figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.webp";
 
 const galleryImages = [
-  { url: "https://images.unsplash.com/photo-1517254456976-ee8682099819?q=80&w=800", title: "Custom Coffee Cups", client: "Dhana Brew" },
-  { url: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800", title: "Eco Shopping Bags", client: "Green Style" },
-  { url: "https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?q=80&w=800", title: "Food Packaging", client: "Tasty Eats" },
-  { url: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80&w=800", title: "Branded Carry Bags", client: "Fashion Hub" },
-  { url: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=800", title: "Medical Boxes", client: "Pharma Care" },
-  { url: "https://images.unsplash.com/photo-1544391681-671e3d36005d?q=80&w=800", title: "Ripple Cups", client: "Hot Sip" },
+  { url: "https://images.unsplash.com/photo-1517254456976-ee8682099819?auto=format&q=80&w=800", title: "Custom Coffee Cups", client: "Dhana Brew" },
+  { url: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=80&w=800", title: "Eco Shopping Bags", client: "Green Style" },
+  { url: "https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?auto=format&q=80&w=800", title: "Food Packaging", client: "Tasty Eats" },
+  { url: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&q=80&w=800", title: "Branded Carry Bags", client: "Fashion Hub" },
+  { url: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=800", title: "Medical Boxes", client: "Pharma Care" },
+  { url: yCupStack, title: "Ripple Cups", client: "Hot Sip" },
 ];
 
 export function GalleryPage() {
@@ -35,7 +36,7 @@ export function GalleryPage() {
               transition={{ delay: i * 0.1 }}
               className="group relative h-[450px] rounded-[40px] overflow-hidden bg-zinc-100 shadow-xl"
             >
-              <img 
+              <img loading="lazy" decoding="async" 
                 src={item.url} 
                 alt={item.title}
                 className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -45,9 +46,9 @@ export function GalleryPage() {
               <div className="absolute inset-0 p-10 flex flex-col justify-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                 <p className="text-[#fabf37] font-black uppercase tracking-[0.2em] text-[10px]">{item.client}</p>
                 <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-6">{item.title}</h3>
-                <button className="size-14 rounded-2xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-colors">
+                <span aria-hidden="true" className="size-14 rounded-2xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-colors">
                   <Maximize2 className="size-6" />
-                </button>
+                </span>
               </div>
             </motion.div>
           ))}

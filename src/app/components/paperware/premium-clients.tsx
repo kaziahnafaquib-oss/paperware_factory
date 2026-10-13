@@ -15,62 +15,62 @@ const FALLBACK_LOGOS: ClientLogo[] = [
   {
     id: "1",
     name: "Tech Corp",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "2",
     name: "Global Industries",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "3",
     name: "Innovation Labs",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "4",
     name: "Future Systems",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "5",
     name: "Prime Solutions",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "6",
     name: "Elite Partners",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "7",
     name: "NextGen Co",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "8",
     name: "Quantum Inc",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "9",
     name: "Stellar Group",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "10",
     name: "Velocity Ltd",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "11",
     name: "Apex Corp",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
   },
   {
     id: "12",
     name: "Summit Partners",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?w=400&h=200&fit=crop"
+    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
   }
 ];
 

@@ -9,17 +9,19 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
+import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
+import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 
 const products = [
-  { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: "https://images.unsplash.com/photo-1707589165239-10294fab6b13", icon: Contact },
-  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1586717791821-3f44a563dc4c", icon: Mail },
-  { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23", icon: FileText },
-  { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: "https://images.unsplash.com/photo-1522204538344-922f76cee07a", icon: FileText },
-  { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5", icon: FileText },
-  { name: "Delivery Note", desc: "Industrial strength logbooks for logistics.", category: "Logistics", image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55", icon: Truck },
-  { name: "Note Book", desc: "Custom branded corporate notebooks.", category: "Office", image: "https://images.unsplash.com/photo-1517842645767-c639042777db", icon: Notebook },
-  { name: "Diary", desc: "Annual premium planners and organizers.", category: "Office", image: "https://images.unsplash.com/photo-1511108690759-009324a90311", icon: Notebook },
-  { name: "File Folder", desc: "Heavy-duty laminated organizational folders.", category: "Organization", image: "https://images.unsplash.com/photo-1595844730298-b960ff98fee0", icon: FolderOpen },
+  { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: yStationery, icon: Contact },
+  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&fit=crop&q=80&w=800", icon: Mail },
+  { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&q=75&w=1600", icon: FileText },
+  { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: yBrochures, icon: FileText },
+  { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&q=75&w=1600", icon: FileText },
+  { name: "Delivery Note", desc: "Industrial strength logbooks for logistics.", category: "Logistics", image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&q=75&w=1600", icon: Truck },
+  { name: "Note Book", desc: "Custom branded corporate notebooks.", category: "Office", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&q=75&w=1600", icon: Notebook },
+  { name: "Diary", desc: "Annual premium planners and organizers.", category: "Office", image: "https://images.unsplash.com/photo-1511108690759-009324a90311?auto=format&q=75&w=1600", icon: Notebook },
+  { name: "File Folder", desc: "Heavy-duty laminated organizational folders.", category: "Organization", image: "https://images.unsplash.com/photo-1595844730298-b960ff98fee0?auto=format&q=75&w=1600", icon: FolderOpen },
 ];
 
 export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: any) => void }) {
@@ -39,7 +41,7 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Premium Corporate Assets</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Office <br /> <span className="text-zinc-300">Stationary</span>
+            Office <br /> <span className="text-zinc-500">Stationary</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Elevate your corporate identity with our high-precision printed stationary. From business cards to industrial logbooks, we ensure every detail reflects your brand's excellence.
@@ -179,7 +181,7 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
       {/* CTA */}
       <section className="container mx-auto px-4 py-32 text-center">
         <div className="max-w-2xl mx-auto space-y-12">
-          <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter">Ready to <span className="text-[#fabf37]">Modernize</span>?</h2>
+          <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter text-black">Ready to <span className="text-[#fabf37]">Modernize</span>?</h2>
           <button className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
             Download Catalog
           </button>

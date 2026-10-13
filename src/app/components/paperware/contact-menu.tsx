@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle, Bot, X, Headphones } from "lucide-react";
 import { useChat } from "../../context/ChatContext";
 
 export const ContactMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  useEscapeKey(isOpen, () => setIsOpen(false));
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const { toggleChat } = useChat();

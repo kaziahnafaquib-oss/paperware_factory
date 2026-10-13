@@ -79,7 +79,7 @@ export function ProductionTimeline() {
               }`}
             >
               <div className="flex justify-between items-start mb-8">
-                <span className={`text-4xl font-black italic tracking-tighter transition-colors ${
+                <span aria-hidden="true" className={`text-4xl font-black italic tracking-tighter transition-colors ${
                   step.status === 'active' || step.status === 'completed' ? 'text-[#fabf37]' : 'text-zinc-800 group-hover:text-zinc-600'
                 }`}>
                   {step.id}

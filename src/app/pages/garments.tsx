@@ -12,9 +12,9 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
-  { name: "Hangtag", desc: "Premium textured clothing tags for apparel.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "2.50", icon: Tag },
-  { name: "Label", desc: "Woven and printed care labels for garments.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "1.20", icon: Ticket },
-  { name: "Garment Sticker", desc: "Size and branding stickers for retail.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "0.80", icon: Sticker },
+  { name: "Hangtag", desc: "Premium textured clothing tags for apparel.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "2.50", icon: Tag },
+  { name: "Label", desc: "Woven and printed care labels for garments.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "1.20", icon: Ticket },
+  { name: "Garment Sticker", desc: "Size and branding stickers for retail.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "0.80", icon: Sticker },
 ];
 
 export function GarmentSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {
@@ -34,7 +34,7 @@ export function GarmentSuppliesPage({ onProductClick }: { onProductClick: (p: an
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Fashion & Retail Supply</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Garment <br /> <span className="text-zinc-300">Accessories</span>
+            Garment <br /> <span className="text-zinc-500">Accessories</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             High-quality accessories for the textile industry. From premium hangtags to bulk industrial labels, we provide the finishing touches for your garments.

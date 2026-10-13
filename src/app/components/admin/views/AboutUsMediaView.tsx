@@ -141,7 +141,7 @@ export function AboutUsMediaView({ aboutUsVideos = {}, onUpdateAboutUsVideos }: 
                   suppressHydrationWarning
                 />
               ) : (
-                <img src={heroBackgroundUrl} alt="Hero Background" className="w-full h-full object-cover" />
+                <img loading="lazy" decoding="async" src={heroBackgroundUrl} alt="Hero Background" className="w-full h-full object-cover" />
               )}
             </div>
           )}
@@ -194,7 +194,7 @@ export function AboutUsMediaView({ aboutUsVideos = {}, onUpdateAboutUsVideos }: 
               ) : smartManufacturingType === 'video' ? (
                 <video src={smartManufacturingUrl} controls className="w-full h-full object-cover" />
               ) : (
-                <img src={smartManufacturingUrl} alt="Smart Manufacturing" className="w-full h-full object-cover" />
+                <img loading="lazy" decoding="async" src={smartManufacturingUrl} alt="Smart Manufacturing" className="w-full h-full object-cover" />
               )}
             </div>
           )}
@@ -273,7 +273,7 @@ export function AboutUsMediaView({ aboutUsVideos = {}, onUpdateAboutUsVideos }: 
                         <Video className="size-6 text-blue-500" />
                       </div>
                     ) : (
-                      <img src={item.url} alt={item.alt} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={item.url} alt={item.alt} className="w-full h-full object-cover" />
                     )}
                   </div>
 

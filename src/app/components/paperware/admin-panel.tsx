@@ -95,7 +95,7 @@ export function AdminPanel({
         id: Date.now().toString(),
         name: newPartnerName.trim(),
         category: newPartnerCategory.trim(),
-        logo: newPartnerLogo.trim() || "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=300&h=300&fit=crop",
+        logo: newPartnerLogo.trim() || "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&w=300&h=300&fit=crop&q=75",
         description: newPartnerDesc.trim() || "Valued Partner"
       }]);
       setNewPartnerName("");
@@ -317,7 +317,7 @@ export function AdminPanel({
                         <div key={partner.id} className="flex items-center justify-between p-4 bg-black/30 rounded-2xl border border-white/5">
                           <div className="flex items-center gap-3">
                             <div className="size-10 rounded-lg bg-zinc-800 overflow-hidden flex items-center justify-center">
-                              {partner.logo ? <img src={partner.logo} className="w-full h-full object-cover" alt="" /> : <span className="text-xs font-bold text-white">{partner.name[0]}</span>}
+                              {partner.logo ? <img loading="lazy" decoding="async" src={partner.logo} className="w-full h-full object-cover" alt="" /> : <span className="text-xs font-bold text-white">{partner.name[0]}</span>}
                             </div>
                             <div className="flex flex-col gap-0.5 overflow-hidden">
                               <span className="text-[10px] font-black text-white uppercase tracking-tighter">{partner.name}</span>

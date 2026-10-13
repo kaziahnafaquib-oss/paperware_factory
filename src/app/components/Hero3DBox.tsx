@@ -2,8 +2,8 @@ import React from "react";
 import { motion } from "motion/react";
 
 // Import provided Figma assets
-import iconSheetImg from "figma:asset/135e5c818885312b22073a240021cd1b9d50f297.png";
-import medBoxImg from "figma:asset/2204e5795799b0c2f5c29c7fb96cafac3e9ab57c.png";
+import iconSheetImg from "figma:asset/135e5c818885312b22073a240021cd1b9d50f297.webp";
+import medBoxImg from "figma:asset/2204e5795799b0c2f5c29c7fb96cafac3e9ab57c.webp";
 
 const iconPositions = [
   "origin-[10%_15%]", // Top Left
@@ -76,7 +76,7 @@ export function Hero3DBox() {
          >
            {/* Front Face (Index 0) */}
            <div className={`${faceClassName} shadow-[0_0_30px_rgba(250,191,55,0.2)] [transform:translateZ(3rem)] md:[transform:translateZ(4rem)]`}>
-             <img 
+             <img loading="lazy" decoding="async" 
                src={iconSheetImg} 
                alt="Packaging Icon" 
                className={`${imgClassName} ${getIconClass(0)}`} 
@@ -85,7 +85,7 @@ export function Hero3DBox() {
            
            {/* Right Face (Index 1) */}
            <div className={`${faceClassName} translate-x-12 md:translate-x-16 rotate-y-90`}>
-             <img 
+             <img loading="lazy" decoding="async" 
                src={iconSheetImg} 
                alt="Packaging Icon" 
                className={`${imgClassName} ${getIconClass(1)}`} 
@@ -94,7 +94,7 @@ export function Hero3DBox() {
 
            {/* Back Face (Index 2) - Brand Color Background */}
            <div className={`${faceClassName} !bg-[#fabf37] [transform:translateZ(-3rem)_rotateY(180deg)] md:[transform:translateZ(-4rem)_rotateY(180deg)]`}>
-             <img 
+             <img loading="lazy" decoding="async" 
                src={iconSheetImg} 
                alt="Packaging Icon" 
                className={`${imgClassName} mix-blend-multiply ${getIconClass(2)}`} 
@@ -103,7 +103,7 @@ export function Hero3DBox() {
            
            {/* Left Face (Index 3) */}
            <div className={`${faceClassName} -translate-x-12 md:-translate-x-16 -rotate-y-90`}>
-             <img 
+             <img loading="lazy" decoding="async" 
                src={iconSheetImg} 
                alt="Packaging Icon" 
                className={`${imgClassName} ${getIconClass(3)}`} 

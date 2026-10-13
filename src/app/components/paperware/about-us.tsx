@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import imgCups from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
+import imgCups from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function AboutUs() {
@@ -67,7 +67,7 @@ export function AboutUs() {
               <div className="absolute -inset-4 border-2 border-white/10 rounded-[30px] -rotate-3 -z-10" />
               
               <div className="rounded-[24px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.8)] bg-zinc-900 p-4 border border-white/5">
-                <img 
+                <img loading="lazy" decoding="async" 
                   src={imgCups} 
                   alt="Paper Cups Collection" 
                   className="w-full h-auto object-cover rounded-[16px] grayscale hover:grayscale-0 transition-all duration-700"

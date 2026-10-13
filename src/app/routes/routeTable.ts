@@ -14,6 +14,12 @@ export type RouteEntry = {
   title: string;
   /** Excluded from sitemap / indexing (portal, admin, utility pages). */
   noindex?: boolean;
+  /**
+   * Base surface the page is designed on. Text that sets no colour of its own inherits
+   * from it, so a light page on the dark default rendered white-on-white (audit A11Y-02).
+   * Defaults to "light"; set "dark" only for pages whose own background is mostly dark.
+   */
+  surface?: "light" | "dark";
 };
 
 const SITE = "Paperware Factory";
@@ -31,9 +37,9 @@ export const ROUTES: readonly RouteEntry[] = [
   { id: "fmcg-supplies", path: "/products/fmcg-packaging", title: `FMCG Packaging | ${SITE}` },
   { id: "garments", path: "/products/garment-accessories", title: `Garment Accessories | ${SITE}` },
   { id: "product-details", path: "/products/details", title: `Product Details | ${SITE}`, noindex: true },
-  { id: "catalog-3d", path: "/products/3d-catalog", title: `3D Catalogue | ${SITE}` },
+  { id: "catalog-3d", path: "/products/3d-catalog", title: `3D Catalogue | ${SITE}`, surface: "dark" },
   { id: "gallery", path: "/gallery", title: `Gallery | ${SITE}` },
-  { id: "solutions", path: "/solutions", title: `Solutions | ${SITE}` },
+  { id: "solutions", path: "/solutions", title: `Solutions | ${SITE}`, surface: "dark" },
   { id: "studio", path: "/studio", title: `Design Studio | ${SITE}` },
 
   // Company
@@ -41,9 +47,9 @@ export const ROUTES: readonly RouteEntry[] = [
   { id: "company", path: "/company", title: `Company | ${SITE}` },
   { id: "clients", path: "/clients", title: `Clients | ${SITE}` },
   { id: "partners", path: "/partners", title: `Partners | ${SITE}` },
-  { id: "sustainability", path: "/sustainability", title: `Sustainability | ${SITE}` },
+  { id: "sustainability", path: "/sustainability", title: `Sustainability | ${SITE}`, surface: "dark" },
   { id: "compliance", path: "/compliance", title: `Compliance | ${SITE}` },
-  { id: "future-plan", path: "/future-plan", title: `Future Plan | ${SITE}` },
+  { id: "future-plan", path: "/future-plan", title: `Future Plan | ${SITE}`, surface: "dark" },
   { id: "csr", path: "/csr", title: `CSR | ${SITE}` },
   { id: "career", path: "/careers", title: `Careers | ${SITE}` },
 
@@ -53,14 +59,14 @@ export const ROUTES: readonly RouteEntry[] = [
   { id: "investor", path: "/investors", title: `Investor Relations | ${SITE}` },
   { id: "franchise", path: "/franchise", title: `Franchise | ${SITE}` },
   { id: "manufacturing", path: "/manufacturing", title: `Manufacturing | ${SITE}` },
-  { id: "factory-live", path: "/manufacturing/factory", title: `Factory | ${SITE}` },
-  { id: "erp", path: "/erp", title: `ERP & Order Process | ${SITE}` },
-  { id: "export", path: "/export", title: `Export | ${SITE}` },
-  { id: "technical-manifesto", path: "/technical-manifesto", title: `Technical Manifesto | ${SITE}` },
+  { id: "factory-live", path: "/manufacturing/factory", title: `Factory | ${SITE}`, surface: "dark" },
+  { id: "erp", path: "/erp", title: `ERP & Order Process | ${SITE}`, surface: "dark" },
+  { id: "export", path: "/export", title: `Export | ${SITE}`, surface: "dark" },
+  { id: "technical-manifesto", path: "/technical-manifesto", title: `Technical Manifesto | ${SITE}`, surface: "dark" },
 
   // Conversion & support
   { id: "contact", path: "/contact", title: `Contact | ${SITE}` },
-  { id: "quote", path: "/quote", title: `Request a Quote | ${SITE}` },
+  { id: "quote", path: "/quote", title: `Request a Quote | ${SITE}`, surface: "dark" },
   { id: "quotation-basket", path: "/quote/basket", title: `Quotation Basket | ${SITE}`, noindex: true },
   { id: "bulk-quotes", path: "/quote/bulk", title: `Bulk Order | ${SITE}`, noindex: true },
   { id: "tracking", path: "/track", title: `Order Status | ${SITE}` },
@@ -127,6 +133,11 @@ export function idForPath(pathname: string): string {
 
 export function redirectFor(pathname: string): string | undefined {
   return PATH_REDIRECTS[normalizePath(pathname)];
+}
+
+/** Surface the page is designed on (see RouteEntry.surface). */
+export function surfaceFor(id: string): "light" | "dark" {
+  return routeFor(id)?.surface ?? "light";
 }
 
 export function routeFor(id: string): RouteEntry | undefined {

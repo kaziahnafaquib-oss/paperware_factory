@@ -137,9 +137,10 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               className="bg-[#fabf37] px-6 py-2 md:px-10 md:py-4 mb-2 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="text-5xl sm:text-7xl md:text-[120px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(30px)" }}>
+              <h1 className="sr-only">The ecosystem</h1>
+              <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[120px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(30px)" }}>
                 THE
-              </h1>
+              </p>
             </motion.div>
 
             {/* "ECOSYSTEM" block */}
@@ -150,9 +151,9 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               className="bg-[#fabf37] px-6 py-4 md:px-12 md:py-8 relative shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="text-5xl sm:text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(50px)" }}>
+              <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(50px)" }}>
                 ECOSYSTEM.
-              </h1>
+              </p>
               
               {/* Scroll to Explore overlay - Adjusted position to prevent overlap */}
               <div className="absolute -bottom-14 md:-bottom-16 left-0 w-full flex justify-center">
@@ -354,7 +355,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
                 Digital Footprint
               </div>
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black">
-                Live <span className="text-zinc-300 italic">Transmission</span>
+                Live <span className="text-zinc-500 italic">Transmission</span>
               </h2>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -377,10 +378,10 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               {[...socialFeed, ...socialFeed, ...socialFeed].map((post, i) => (
                 <div key={i} className="w-[300px] shrink-0 bg-zinc-50 rounded-[32px] overflow-hidden border border-black/5 group">
                   <div className="h-48 overflow-hidden">
-                    <img src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <img loading="lazy" decoding="async" src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   <div className="p-6 space-y-3">
-                    <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">{post.date}</p>
+                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{post.date}</p>
                     <p className="text-xs font-bold text-zinc-500 whitespace-normal line-clamp-2 leading-relaxed">
                       {post.cap}
                     </p>

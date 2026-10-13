@@ -1,18 +1,30 @@
-import logoBlack from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.png';
+import logoBlack from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.webp';
 import React from "react";
-import { ArrowRight, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube, Send, ExternalLink, Clock } from "lucide-react";
+import { ArrowRight, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube, Music2, Send, ExternalLink, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { motion as Motion } from "motion/react";
 import { openWhatsAppInquiry } from "../../lib/inquiry";
+import { pathFor } from "../../routes/routeTable";
 
 export function Footer({ onPageChange }: { onPageChange: (page: string) => void }) {
   const { t, isRTL } = useLanguage();
 
+  // Real links (crawlable, middle-click / open-in-new-tab work); plain clicks stay in-app.
+  const pageLink = (id: string) => ({
+    href: pathFor(id),
+    onClick: (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      onPageChange(id);
+    },
+  });
+
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/paperwarefactory" },
-    { icon: Instagram, href: "https://www.instagram.com/paperware_factory/" },
-    { icon: Linkedin, href: "https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true" },
-    { icon: Youtube, href: "http://tiktok.com/paperwarefactory" }
+    { icon: Facebook, label: "Paperware Factory on Facebook", href: "https://www.facebook.com/paperwarefactory" },
+    { icon: Instagram, label: "Paperware Factory on Instagram", href: "https://www.instagram.com/paperware_factory/" },
+    { icon: Linkedin, label: "Paperware Factory on LinkedIn", href: "https://www.linkedin.com/company/paperwarefactory/" },
+    // TikTok previously used the YouTube icon and an http URL; handle still needs confirming by the business.
+    { icon: Music2, label: "Paperware Factory on TikTok", href: "https://www.tiktok.com/@paperwarefactory" }
   ];
 
   return (
@@ -123,13 +135,13 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                 <ul className="space-y-4 pt-2">
                   {['Home', 'About Us', 'Papercups', 'Sustainability', 'Our ERP', 'Contact', 'Privacy Policy'].map((item, i) => (
                     <li key={item}>
-                      <button
-                        onClick={() => onPageChange(item === 'Our ERP' ? 'erp' : item === 'About Us' ? 'about' : item.toLowerCase().replace(/ /g, '-'))}
-                        className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0"
+                      <a
+                        {...pageLink(item === 'Our ERP' ? 'erp' : item === 'About Us' ? 'about' : item.toLowerCase().replace(/ /g, '-'))}
+                        className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0 w-fit"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />
                         <span>{item}</span>
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -151,17 +163,13 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                     { name: 'Envelope', page: 'products' }
                   ].map(item => (
                     <li key={item.name}>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          onPageChange(item.page);
-                        }}
+                      <a
+                        {...pageLink(item.page)}
                         className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0 cursor-pointer"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />
                         <span className="transform group-hover:translate-x-1 transition-transform duration-300">{item.name}</span>
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -243,9 +251,10 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${social.label} (opens in a new tab)`}
                   className="size-10 rounded-full bg-black/5 hover:bg-black flex items-center justify-center text-black hover:text-[#fabf37] transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <social.icon className="size-4" />
+                  <social.icon className="size-4" aria-hidden="true" />
                 </a>
               ))}
             </div>

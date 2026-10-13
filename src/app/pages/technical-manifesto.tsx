@@ -274,9 +274,10 @@ export function TechnicalManifestoPage() {
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
               />
-            <h1 className="text-6xl md:text-[180px] font-black uppercase tracking-tighter leading-none text-black relative z-10">
+            <h1 className="sr-only">Technical manifesto</h1>
+            <p aria-hidden="true" className="text-6xl md:text-[180px] font-black uppercase tracking-tighter leading-none text-black relative z-10">
               TECHNICAL
-            </h1>
+            </p>
             {/* 3D Side Faces */}
             <div className="absolute top-0 right-full h-full w-4 bg-[#c4962b] origin-right skew-y-[10deg] rotate-y-[-90deg]" />
             <div className="absolute top-full left-0 w-full h-4 bg-[#8a6a1f] origin-top skew-x-[10deg] rotate-x-[-90deg]" />
@@ -301,9 +302,9 @@ export function TechnicalManifestoPage() {
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent skew-x-12"
               />
-            <h1 className="text-6xl md:text-[200px] font-black uppercase tracking-tighter leading-none text-black italic relative z-10">
+            <p aria-hidden="true" className="text-6xl md:text-[200px] font-black uppercase tracking-tighter leading-none text-black italic relative z-10">
               MANIFESTO.
-            </h1>
+            </p>
             
             {/* 3D Side Faces for White Block */}
             <div className="absolute top-0 right-full h-full w-4 bg-zinc-300 origin-right skew-y-[10deg] rotate-y-[-90deg]" />
@@ -473,7 +474,7 @@ export function TechnicalManifestoPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-6xl md:text-9xl font-black uppercase tracking-tighter"
           >
-            CORE <span className="text-zinc-800">PILLARS.</span>
+            CORE <span className="text-zinc-500">PILLARS.</span>
           </motion.h2>
           <p className="text-[#fabf37] font-black uppercase tracking-[0.5em] text-[10px]">The DNA of Our Innovation</p>
         </div>
@@ -517,7 +518,7 @@ export function TechnicalManifestoPage() {
                        transition={{ delay: i * 0.1 }}
                        className="flex items-start gap-8 group cursor-pointer"
                      >
-                        <div className="text-3xl font-black text-zinc-800 group-hover:text-[#fabf37] transition-colors">0{i+1}</div>
+                        <div aria-hidden="true" className="text-3xl font-black text-zinc-800 group-hover:text-[#fabf37] transition-colors">0{i+1}</div>
                         <div className="space-y-2">
                            <h4 className="text-xl font-black uppercase tracking-tight group-hover:translate-x-2 transition-transform">{item.title}</h4>
                            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest leading-relaxed max-w-sm">{item.desc}</p>

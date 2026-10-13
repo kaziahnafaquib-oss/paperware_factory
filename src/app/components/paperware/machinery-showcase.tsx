@@ -3,11 +3,11 @@ import { motion } from "motion/react";
 import { useLanguage } from "../../context/LanguageContext";
 import { Settings, Cpu, Zap, Activity, Gauge, Database, Factory, Box, Printer } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
-import imgHeidelberg from "figma:asset/e72bb120492f063c2a2bd8669456a539365af830.png";
-import imgOriginalHeidelberg from "figma:asset/6acd2f3438274d3aa253228bd057142cd1415192.png";
-import imgForming from "figma:asset/d1d09ee2807bc96c0db6200d9081bc2d7c8effa7.png";
-import imgCutting from "figma:asset/e4d419676dc773e53692192900cc87f073cae093.png";
-import imgProcess from "figma:asset/065035dc996c4de10bf1df3ba3adb27b15abbdc2.png";
+import imgHeidelberg from "figma:asset/e72bb120492f063c2a2bd8669456a539365af830.webp";
+import imgOriginalHeidelberg from "figma:asset/6acd2f3438274d3aa253228bd057142cd1415192.webp";
+import imgForming from "figma:asset/d1d09ee2807bc96c0db6200d9081bc2d7c8effa7.webp";
+import imgCutting from "figma:asset/e4d419676dc773e53692192900cc87f073cae093.webp";
+import imgProcess from "figma:asset/065035dc996c4de10bf1df3ba3adb27b15abbdc2.webp";
 
 const getMachineries = (t: (key: string) => string) => [
   {
