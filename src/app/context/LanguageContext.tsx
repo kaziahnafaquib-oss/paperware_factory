@@ -88,6 +88,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       DEFAULT: "'Poppins', sans-serif"
     };
 
+    loadScriptFont(language);
     const selectedFont = fontMap[language] || fontMap.DEFAULT;
     setFontFamily(selectedFont);
     document.body.style.fontFamily = selectedFont;
@@ -108,6 +109,33 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       {children}
     </LanguageContext.Provider>
   );
+}
+
+/** Google Fonts family query per language that needs a non-Latin script font. */
+const SCRIPT_FONTS: Record<string, string> = {
+  BN: "Noto+Serif+Bengali:wght@400;500;600;700",
+  AR: "Cairo:wght@400;500;600;700",
+  FA: "Cairo:wght@400;500;600;700",
+  UR: "Noto+Nastaliq+Urdu:wght@400;700",
+  HI: "Noto+Sans+Devanagari:wght@400;500;600;700",
+  ZH: "Noto+Sans+SC:wght@400;500;700",
+  JA: "Noto+Sans+JP:wght@400;500;700",
+  KO: "Noto+Sans+KR:wght@400;500;700",
+  TH: "Noto+Sans+Thai:wght@400;500;700",
+  RU: "Noto+Sans:wght@400;500;700",
+};
+
+/** Phase A: load a script font only when its language is selected (it used to load for every visitor). */
+function loadScriptFont(language: string) {
+  const family = SCRIPT_FONTS[language];
+  if (!family || typeof document === "undefined") return;
+  const id = `pw-font-${language.toLowerCase()}`;
+  if (document.getElementById(id)) return;
+  const link = document.createElement("link");
+  link.id = id;
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
+  document.head.appendChild(link);
 }
 
 export function useLanguage() {
