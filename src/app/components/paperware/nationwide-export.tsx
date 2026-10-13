@@ -1,8 +1,11 @@
 import React from "react";
 import { motion } from "motion/react";
 import { MapPin, Truck, Box } from "lucide-react";
+import { useReducedMotionPreference } from "../../lib/reducedMotion";
 
 export function NationwideExportSection() {
+  // Phase A: don't autoplay the looping map video for visitors who prefer reduced motion; offer controls instead.
+  const reducedMotion = useReducedMotionPreference();
   return (
     <section className="py-40 bg-white relative overflow-hidden">
       {/* Animated Background */}
@@ -88,10 +91,12 @@ export function NationwideExportSection() {
                     style={{ filter: 'contrast(1.3) brightness(1.1)' }}
                     width="720" 
                     height="720" 
-                    autoPlay 
+                    autoPlay={!reducedMotion}
+                    controls={reducedMotion}
                     loop 
                     muted 
                     playsInline
+                    preload={reducedMotion ? "none" : "auto"}
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}

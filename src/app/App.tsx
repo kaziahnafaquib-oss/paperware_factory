@@ -1,4 +1,5 @@
 import React from "react";
+import { MotionConfig } from "motion/react";
 import { LanguageProvider } from "./context/LanguageContext";
 import { ChatProvider } from "./context/ChatContext";
 import { SocialMediaProvider } from "./context/SocialMediaContext";
@@ -77,6 +78,8 @@ export default function App() {
   }, []);
 
   return (
+    // reducedMotion="user": transform/layout animations respect the OS setting (see lib/reducedMotion.ts for the rest).
+    <MotionConfig reducedMotion="user">
     <LanguageProvider>
       <ChatProvider>
         <SocialMediaProvider>
@@ -108,5 +111,6 @@ export default function App() {
         </SocialMediaProvider>
       </ChatProvider>
     </LanguageProvider>
+    </MotionConfig>
   );
 }

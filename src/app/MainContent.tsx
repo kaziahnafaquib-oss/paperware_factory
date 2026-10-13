@@ -105,7 +105,7 @@ const HUDOverlay = React.memo(() => {
   return (
     <>
       <SharedHUDOverlay />
-      <div className="fixed inset-0 pointer-events-none z-[2] overflow-hidden opacity-20 select-none">
+      <div aria-hidden="true" className="fixed inset-0 pointer-events-none z-[2] overflow-hidden opacity-20 select-none">
         {/* Additional Immersive Layers */}
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(214,200,169,0.05)_100%)]" />
 
@@ -600,10 +600,8 @@ export function MainContent() {
               />
             </div>
 
-            {/* 2. LIVE TRACKER (Ticker) */}
-            <div className="bg-white border-b border-zinc-100 py-3 overflow-hidden relative z-20">
-              <Ticker />
-            </div>
+            {/* Phase A: removed a second, home-only Ticker. It is position:fixed, so it stacked on the global
+                ticker and left an empty 24px band here. */}
 
             {/* 3. ABOUT US */}
             <React.Suspense fallback={<div className="h-96 bg-white" />}>
@@ -811,7 +809,7 @@ export function MainContent() {
         )}
         {__PORTALS_ENABLED__ && AuthModal && isAuthModalOpen && <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} type={authType} onLoginSuccess={() => handlePageChange(authType === 'admin' ? 'admin' : 'client-portal')} />}
       </React.Suspense>
-      <HUDOverlay />
+      {/* Phase A: removed duplicate <HUDOverlay /> (it was rendered twice). */}
       <BackToTop />
       <ContactMenu />
     </div>

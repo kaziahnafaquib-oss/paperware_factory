@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 
 export const HUDOverlay = React.memo(() => {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30 select-none">
+    <div aria-hidden="true" className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30 select-none">
       {/* Scanning Line */}
       <motion.div 
         animate={{ top: ["-5%", "105%"] }}

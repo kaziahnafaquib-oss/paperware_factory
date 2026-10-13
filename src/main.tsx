@@ -2,6 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './app/App.tsx'
 import { BrowserRouter } from 'react-router'
+import { applyReducedMotionPreference } from './app/lib/reducedMotion'
+
+// Must run before the first render (see reducedMotion.ts).
+applyReducedMotionPreference()
 import './styles/index.css'
 import { PerformanceMonitor } from './app/components/PerformanceMonitor.tsx'
 import { ErrorBoundary } from './ErrorBoundary'

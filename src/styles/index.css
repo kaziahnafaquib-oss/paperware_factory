@@ -253,3 +253,22 @@ table {
 .preload-hint {
   font-display: swap;
 }
+/* Top ticker marquee (Phase A): CSS animation so it can pause on hover/focus/button
+   and stop for reduced motion. One of five identical groups = 20% of the track. */
+@keyframes pw-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-20%); }
+}
+.pw-marquee-track {
+  animation: pw-marquee 40s linear infinite;
+  will-change: transform;
+}
+.pw-marquee:hover .pw-marquee-track,
+.pw-marquee:focus-within .pw-marquee-track,
+.pw-marquee[data-paused="true"] .pw-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pw-marquee-track { animation: none; }
+  .pw-marquee-control { display: none; }
+}
