@@ -1,6 +1,6 @@
 // 🎨 Enhanced Components - Export Hub
 export { SmoothScroll } from './SmoothScroll';
-export { PageTransition, FadeTransition, SlideTransition } from './PageTransition';
+export { PageTransition } from './PageTransition';
 export { EnhancedButton } from './EnhancedButton';
 export { EnhancedCard, EnhancedCardHeader, EnhancedCardBody, EnhancedCardFooter } from './EnhancedCard';
 export { ScrollProgress, CircularScrollProgress } from './ScrollProgress';

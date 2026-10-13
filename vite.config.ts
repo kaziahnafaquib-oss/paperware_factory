@@ -60,7 +60,6 @@ export default defineConfig({
       'motion',
       'lucide-react',
     ],
-    exclude: ['@react-three/fiber', '@react-three/drei', 'three'],
   },
   // Server configuration
   server: {

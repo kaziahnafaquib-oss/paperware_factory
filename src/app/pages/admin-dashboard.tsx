@@ -1252,7 +1252,7 @@ export default function AdminDashboard({
                           {(['formal', 'corporate', 'friendly'] as const).map((t) => (
                             <button
                               key={t}
-                              onClick={() => setTone(t)}
+                              onClick={() => setTone(t as Parameters<typeof setTone>[0])}
                               className={`flex-1 text-[7px] font-black py-1 rounded-md transition-all ${
                                 tone === t 
                                   ? "bg-[#fabf37] text-black" 

@@ -70,7 +70,7 @@ export function ChartContainer({
     >
       {hasValidDimensions ? (
         <ResponsiveContainer width={width} height={height}>
-          {children}
+          {children as React.ReactElement}
         </ResponsiveContainer>
       ) : (
         <div className="w-full h-full flex items-center justify-center">

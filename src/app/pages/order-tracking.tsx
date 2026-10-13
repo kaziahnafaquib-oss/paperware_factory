@@ -6,7 +6,8 @@ import {
   CircleCheck, Clock, ArrowRight, ShieldCheck, 
   Activity, Info, ChevronRight, X, Layers,
   Phone, Globe, RefreshCw, Box,
-  Instagram, Linkedin, Facebook, Database, ScanQrCode, Cpu, Thermometer, Droplets, Wind, Terminal
+  Instagram, Linkedin, Facebook, Database, ScanQrCode, Cpu, Thermometer, Droplets, Wind, Terminal,
+  CheckCircle2, Radio, AlertTriangle, MessageCircle,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";

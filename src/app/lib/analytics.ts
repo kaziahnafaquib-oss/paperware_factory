@@ -192,7 +192,7 @@ export function trackWebVitals() {
     // Largest Contentful Paint (LCP)
     const lcpObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
+      const lastEntry = entries[entries.length - 1] as PerformanceEntry & { renderTime?: number; loadTime?: number };
       const lcp = lastEntry.renderTime || lastEntry.loadTime;
       
       trackEvent('web_vitals', {

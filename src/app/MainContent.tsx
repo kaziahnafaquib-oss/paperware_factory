@@ -410,7 +410,7 @@ export function MainContent() {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [isEmailOpen, setIsEmailOpen] = React.useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
-  const [authType, setAuthType] = React.useState<'login' | 'signup' | 'admin'>('login');
+  const [authType, setAuthType] = React.useState<'admin' | 'client'>('client');
   const [quoteBasket, setQuoteBasket] = React.useState<any[]>([]);
   const [isBasketOpen, setIsBasketOpen] = React.useState(false);
   const [performanceTier, setPerformanceTier] = React.useState<'low' | 'medium' | 'high'>('high');
@@ -576,7 +576,7 @@ export function MainContent() {
     }
   }, [language]);
 
-  const handleAuthOpen = React.useCallback((type: 'login' | 'signup' | 'admin') => {
+  const handleAuthOpen = React.useCallback((type: 'admin' | 'client') => {
     setAuthType(type);
     setIsAuthModalOpen(true);
   }, []);
@@ -618,6 +618,7 @@ export function MainContent() {
               <FeaturedProductsSlider
                 products={productsData.map(p => ({
                   ...p,
+                  id: String(p.id),
                   description: "Premium eco-friendly packaging solution designed for modern businesses",
                   badge: p.status === "Active" ? "New Arrival" : undefined
                   // Phase A0: removed placeholder price ("From $29.99") and synthetic 5-star rating.

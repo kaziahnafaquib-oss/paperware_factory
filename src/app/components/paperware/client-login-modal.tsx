@@ -284,7 +284,7 @@ export function ClientLoginModal({ isOpen, onClose, onLoginSuccess, onViewFaq }:
                       className="bg-green-500/10 border border-green-500/20 rounded-[18px] p-3 flex items-center gap-2"
                     >
                       <CheckCircle2 className="size-4 text-green-500 shrink-0" />
-                      <p className="text-[10px] font-bold text-green-600">OTP sent successfully! Check your {loginMethod === "email" ? "email" : "phone"}.</p>
+                      <p className="text-[10px] font-bold text-green-600">OTP sent successfully! Check your phone.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

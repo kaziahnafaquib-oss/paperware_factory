@@ -197,7 +197,7 @@ export function AdminPortal() {
 
       if (data.success) {
         setMessage({ type: "success", text: "Image deleted successfully!" });
-        fetchImages(image.type);
+        fetchImages(image.type as "logo" | "team");
       } else {
         throw new Error(data.error);
       }
@@ -228,7 +228,7 @@ export function AdminPortal() {
       if (data.success) {
         setMessage({ type: "success", text: "Image updated successfully!" });
         setEditingImage(null);
-        fetchImages(editingImage.type);
+        fetchImages(editingImage.type as "logo" | "team");
       } else {
         throw new Error(data.error);
       }
