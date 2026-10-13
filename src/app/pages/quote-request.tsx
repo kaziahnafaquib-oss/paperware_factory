@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Send, FileText, Package, Truck, Sparkles, Upload, Globe, 
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 
 export function QuoteRequestPage() {
+  const [handedOff, setHandedOff] = useState(false);
   const [certifications, setCertifications] = useState({
     fsc: false,
     fda: false,
@@ -582,99 +584,6 @@ export function QuoteRequestPage() {
             </div>
           </div>
 
-          {/* Cost Estimator */}
-          <div className="pt-12 border-t border-white/5 space-y-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 text-[#fabf37]">
-                <Calculator className="size-6" />
-                <h4 className="text-lg font-black uppercase tracking-widest">Cost Estimator</h4>
-              </div>
-              <button 
-                onClick={toggleCostBreakdown}
-                className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#fabf37] hover:text-white transition-colors"
-              >
-                <Eye className="size-4" />
-                {showCostBreakdown ? 'Hide' : 'Show'} Breakdown
-              </button>
-            </div>
-            <div className="bg-gradient-to-br from-[#fabf37]/10 to-[#fabf37]/5 rounded-[40px] p-8 border border-[#fabf37]/20">
-              <div className="grid md:grid-cols-4 gap-6 mb-6">
-                <div className="bg-black/60 rounded-[24px] p-6 text-center">
-                  <DollarSign className="size-6 text-[#fabf37] mx-auto mb-2" />
-                  <p className="text-[9px] font-black uppercase tracking-wider text-zinc-500 mb-1">Subtotal</p>
-                  <p className="text-2xl font-black text-white">${estimatedCost.subtotal.toLocaleString()}</p>
-                </div>
-                <div className="bg-black/60 rounded-[24px] p-6 text-center">
-                  <Truck className="size-6 text-[#fabf37] mx-auto mb-2" />
-                  <p className="text-[9px] font-black uppercase tracking-wider text-zinc-500 mb-1">Shipping</p>
-                  <p className="text-2xl font-black text-white">${estimatedCost.shipping.toLocaleString()}</p>
-                </div>
-                <div className="bg-black/60 rounded-[24px] p-6 text-center">
-                  <FileCheck className="size-6 text-[#fabf37] mx-auto mb-2" />
-                  <p className="text-[9px] font-black uppercase tracking-wider text-zinc-500 mb-1">Customs</p>
-                  <p className="text-2xl font-black text-white">${estimatedCost.customs.toLocaleString()}</p>
-                </div>
-                <div className="bg-[#fabf37] rounded-[24px] p-6 text-center">
-                  <Coins className="size-6 text-black mx-auto mb-2" />
-                  <p className="text-[9px] font-black uppercase tracking-wider text-black/60 mb-1">Est. Total</p>
-                  <p className="text-2xl font-black text-black">${estimatedCost.total.toLocaleString()}</p>
-                </div>
-              </div>
-              <AnimatePresence>
-                {showCostBreakdown && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="bg-black/40 rounded-[24px] p-6 space-y-3"
-                  >
-                    <div className="flex items-center gap-2 text-xs text-zinc-400">
-                      <AlertCircle className="size-4 text-[#fabf37]" />
-                      <span className="font-bold">This is a preliminary estimate. Final pricing will be confirmed after review.</span>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4 text-xs">
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Base Unit Price:</span>
-                          <span className="text-white font-black">$0.15/unit</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Customization Fee:</span>
-                          <span className="text-white font-black">$200</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Certification Docs:</span>
-                          <span className="text-white font-black">$50</span>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Sea Freight (20ft):</span>
-                          <span className="text-white font-black">$450</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Insurance:</span>
-                          <span className="text-white font-black">$50</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-zinc-500 font-bold">Customs Clearance:</span>
-                          <span className="text-white font-black">$100</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <button 
-                onClick={calculateEstimatedCost}
-                className="w-full mt-6 bg-black border border-[#fabf37]/30 text-[#fabf37] py-4 rounded-[24px] font-black uppercase tracking-wider text-xs hover:bg-[#fabf37] hover:text-black transition-all flex items-center justify-center gap-2"
-              >
-                <Calculator className="size-4" />
-                Calculate Estimate
-              </button>
-            </div>
-          </div>
-
           {/* File Upload */}
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
@@ -689,23 +598,10 @@ export function QuoteRequestPage() {
                 </div>
                 <div className="space-y-2">
                   <p className="text-base font-black text-white">Click to upload or drag and drop</p>
-                  <p className="text-xs font-semibold text-zinc-500">SVG, PNG, JPG, PDF (Max 10MB per file, Multiple files allowed)</p>
+                  <p className="text-xs font-semibold text-zinc-500">SVG, PNG, JPG, PDF. Please also send your files in the WhatsApp chat after you submit.</p>
                 </div>
               </label>
             </div>
-          </div>
-
-          {/* Save Draft */}
-          <div className="pt-8">
-            <motion.button 
-              onClick={saveDraft}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-zinc-800 border border-white/10 text-white py-6 rounded-[40px] font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 hover:bg-zinc-700 transition-all"
-            >
-              <Save className="size-5" />
-              {savedDraft ? 'Draft Saved ✓' : 'Save as Draft'}
-            </motion.button>
           </div>
 
           {/* Info Banner */}
@@ -723,7 +619,13 @@ export function QuoteRequestPage() {
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            type="submit"
+            type="button"
+            onClick={(e) => {
+              // Phase A0: this button previously did nothing (no <form>). Hand the request to WhatsApp.
+              const root = e.currentTarget.closest("main") ?? document.body;
+              openWhatsAppInquiry("Export quotation request", collectFormFields(root as HTMLElement));
+              setHandedOff(true);
+            }}
             className="w-full bg-[#fabf37] text-black py-8 rounded-[40px] font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 hover:bg-white transition-all shadow-2xl group"
           >
             Send Export Intent
@@ -734,6 +636,12 @@ export function QuoteRequestPage() {
               <Send className="size-6" />
             </motion.div>
           </motion.button>
+          {handedOff && (
+            <div role="status" aria-live="polite" className="rounded-[32px] border-2 border-[#fabf37] bg-[#fabf37]/10 p-6 space-y-2 text-white">
+              <p className="text-sm font-black">{INQUIRY_HANDOFF_TITLE}</p>
+              <p className="text-sm font-medium text-zinc-300 leading-relaxed">{INQUIRY_HANDOFF_BODY}</p>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

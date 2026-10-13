@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { Box, Layers, ShieldCheck, Zap, ArrowRight, Expand, RefreshCw, Smartphone, Package, Info, CircleCheck, Factory } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { openWhatsAppInquiry } from "../lib/inquiry";
+// Phase A0: replaced an unsafe stock photo (a gun silhouette) with a real packaging render from the project assets.
+import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png";
 
 export function Catalog3DPage() {
   const { t, isRTL } = useLanguage();
@@ -14,8 +17,8 @@ export function Catalog3DPage() {
       id: "PW-001",
       name: "Premium Matte Box",
       description: "Recycled kraft paper with premium matte finish for luxury retail.",
-      specs: ["100% Biodegradable", "Custom Embossing", "Reinforced Base"],
-      image: "https://images.unsplash.com/photo-1605806616949-1e87b487fc2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      specs: ["Custom Printing", "Custom Embossing", "Reinforced Base"],
+      image: imgPrintedBoxes,
       colors: ["#2D2D2D", "#F5F5F5", "#D4A373"],
       rating: 4.9
     },
@@ -56,7 +59,7 @@ export function Catalog3DPage() {
           </div>
           <div className="max-w-xs text-right hidden md:block">
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest leading-relaxed">
-              Experience industrial precision through our high-fidelity digital twins.
+              Browse sample packaging formats and ask us for physical samples.
             </p>
           </div>
         </div>
@@ -84,18 +87,6 @@ export function Catalog3DPage() {
               </button>
             ))}
             
-            <div className="mt-12 p-8 bg-zinc-900/50 rounded-[40px] border border-white/5 space-y-6">
-              <div className="flex items-center gap-3">
-                <Smartphone className="size-5 text-[#fabf37]" />
-                <p className="text-[10px] font-black uppercase tracking-widest">AR Compatible</p>
-              </div>
-              <p className="text-[11px] text-zinc-500 font-bold leading-relaxed">
-                Scan the product to view it in your physical space using our AR engine.
-              </p>
-              <button className="w-full py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-colors">
-                Launch AR Mode
-              </button>
-            </div>
           </div>
 
           {/* 360 Viewer Area */}
@@ -133,12 +124,6 @@ export function Catalog3DPage() {
               </button>
             </div>
 
-            <div className="absolute top-10 right-10 flex flex-col gap-3">
-              <div className="p-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl flex items-center gap-3">
-                <Box className="size-4 text-[#fabf37]" />
-                <span className="text-[9px] font-black uppercase">V-Ray Rendered</span>
-              </div>
-            </div>
           </div>
 
           {/* Details Sidebar */}
@@ -168,15 +153,14 @@ export function Catalog3DPage() {
             <div className="p-8 bg-zinc-900 rounded-[40px] border border-white/5 space-y-6">
               <div className="flex justify-between items-end">
                 <div className="space-y-1">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Starting at</p>
-                  <p className="text-3xl font-black italic">$0.45<span className="text-sm not-italic text-zinc-500"> / unit</span></p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Pricing</p>
+                  <p className="text-xl font-black">On request</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-emerald-500">In Stock</p>
-                  <p className="text-[10px] font-bold text-zinc-400">Dhaka Plant</p>
+                  <p className="text-[10px] font-bold text-zinc-400">Made in Dhaka</p>
                 </div>
               </div>
-              <button className="w-full py-6 bg-[#fabf37] text-black rounded-3xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-[0_20px_40px_-10px_rgba(250,191,55,0.4)]">
+              <button type="button" onClick={() => openWhatsAppInquiry("Sample request", { Product: products[selectedProduct].name })} className="w-full py-6 bg-[#fabf37] text-black rounded-3xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-[0_20px_40px_-10px_rgba(250,191,55,0.4)]">
                 Request Samples <ArrowRight className="size-4" />
               </button>
             </div>

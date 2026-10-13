@@ -502,7 +502,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => onPageChange?.('admin-portal')}
+            onClick={() => onPageChange?.('contact')}
             className="inline-flex items-center gap-3 px-8 py-4 bg-zinc-900 text-white rounded-full font-black text-sm uppercase tracking-wider hover:bg-[#fabf37] transition-all shadow-xl"
           >
             <Star className="size-5" />

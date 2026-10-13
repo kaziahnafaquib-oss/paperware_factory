@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Send, User, Mail, MessageSquare, ShieldCheck, Factory, Building2, Phone, Hash, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
+import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 
 interface EmailModalProps {
   isOpen: boolean;
@@ -11,18 +12,12 @@ interface EmailModalProps {
 export function EmailModal({ isOpen, onClose }: EmailModalProps) {
   const [loading, setLoading] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Phase A0: no backend yet; hand the RFQ to WhatsApp instead of faking "transmitted".
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("Inquiry Transmitted Successfully", {
-        description: "Your RFQ has been logged. Our export team will contact you.",
-      });
-      onClose();
-    }, 1500);
+    openWhatsAppInquiry("Request for quotation", collectFormFields(e.currentTarget));
+    toast.info(INQUIRY_HANDOFF_TITLE, { description: INQUIRY_HANDOFF_BODY, duration: 12000 });
+    onClose();
   };
 
   const productCategories = [

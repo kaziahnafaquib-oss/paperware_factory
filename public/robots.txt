@@ -1,31 +1,5 @@
-# Paperware - Premium Paper Solutions
-# Robots.txt for SEO Optimization
-
+# Paperware Factory
 User-agent: *
 Allow: /
 
-# Disallow admin and internal pages
-Disallow: /admin
-Disallow: /admin-dashboard
-Disallow: /api/
-
-# Allow search engines to crawl images
-User-agent: Googlebot-Image
-Allow: /
-
-# Sitemap location
-Sitemap: https://paperware.com/sitemap.xml
-
-# Crawl-delay for specific bots (optional)
-User-agent: Bingbot
-Crawl-delay: 1
-
-# Allow social media crawlers
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: LinkedInBot
-Allow: /
+Sitemap: https://paperwarefactory.com/sitemap.xml

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Globe, Ship, Plane, Box, ArrowRight, ShieldCheck, CircleCheck, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Plus, Trash2, Upload } from "lucide-react";
 
@@ -70,8 +71,12 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
     setEmails(newEmails);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Phase A0: no backend yet; hand the request to WhatsApp instead of faking "received".
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const fields = collectFormFields(e.currentTarget);
+    if (attachment) fields["Attachment"] = `${attachment.name} (I will send this file in the chat)`;
+    openWhatsAppInquiry("Export inquiry", fields);
     setIsSubmitted(true);
   };
 
@@ -112,9 +117,9 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
               >
                 <CircleCheck className="size-12 text-black" />
               </motion.div>
-              <h2 className="text-2xl font-black uppercase tracking-tighter">Request Received</h2>
-              <p className="text-zinc-500 font-bold max-w-md text-xs">
-                Thank you for your export intent. Our logistics team will review your requirements and contact you within 24 hours.
+              <h2 className="text-2xl font-black uppercase tracking-tighter">{INQUIRY_HANDOFF_TITLE}</h2>
+              <p role="status" aria-live="polite" className="text-zinc-600 font-bold max-w-md text-sm">
+                {INQUIRY_HANDOFF_BODY}
               </p>
               <button 
                 onClick={onClose}

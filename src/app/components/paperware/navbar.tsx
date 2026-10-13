@@ -73,7 +73,7 @@ const getLinks = (t: (key: string) => string) => [
       },
       {
         title: "GARMENTS ACCESSORIES SUPPLIES",
-        id: "garments-supplies",
+        id: "garments",
         items: ["Hangtag", "Label", "Sticker"]
       }
     ]
@@ -118,7 +118,6 @@ const getLinks = (t: (key: string) => string) => [
     hasDropdown: true,
     items: [
       { name: t('erp_smart_factory'), id: "erp" },
-      { name: t('impact_dashboard'), id: "impact-dashboard" },
       { name: t('studio_interactive'), id: "studio" },
       { name: t('track_order'), id: "tracking" },
       { name: t('product_gallery'), id: "gallery" },
@@ -485,7 +484,7 @@ export const Navbar = React.memo(({
               <div className="flex items-center h-[36px] md:h-[44px] bg-[#f8f7f2] rounded-full pl-2 pr-3 border border-black/5 shadow-inner relative overflow-hidden">
                 <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" animate={{ x: ['-200%', '200%'] }} transition={{ duration: 5, repeat: Infinity, repeatDelay: 3 }} />
 
-                <div className="relative z-10">
+                {__PORTALS_ENABLED__ && (<div className="relative z-10">
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                       <button
@@ -558,7 +557,7 @@ export const Navbar = React.memo(({
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
-                </div>
+                </div>)}
 
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>

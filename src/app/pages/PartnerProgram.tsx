@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { openWhatsAppInquiry, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from '../lib/inquiry';
 import { 
   CheckCircle, 
   Target, 
@@ -146,9 +147,17 @@ export function PartnerProgramPage() {
         attachment
     };
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    toast.success("Application submitted successfully! We'll be in touch soon.");
+    // Phase A0: no backend yet; hand the application to WhatsApp instead of faking "submitted".
+    const fields: Record<string, string> = {};
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value === undefined || value === null || value === "" || value === false) return;
+      if (key === "attachment") { if (value) fields["Attachment"] = `${(value as File).name} (I will send this file in the chat)`; return; }
+      if (key === "contactNumbers") { fields["Contact numbers"] = (value as { number: string; apps: string[] }[]).filter(c => c.number).map(c => c.apps.length ? `${c.number} (${c.apps.join("/")})` : c.number).join(", "); return; }
+      if (key === "emails") { fields["Emails"] = (value as string[]).filter(Boolean).join(", "); return; }
+      fields[key] = Array.isArray(value) ? value.join(", ") : typeof value === "object" ? JSON.stringify(value) : String(value);
+    });
+    openWhatsAppInquiry("Partner program application", fields);
+    toast.info(INQUIRY_HANDOFF_TITLE, { description: INQUIRY_HANDOFF_BODY, duration: 12000 });
     reset();
     setContactNumbers([{ number: '', apps: [] }]);
     setEmails(['']);

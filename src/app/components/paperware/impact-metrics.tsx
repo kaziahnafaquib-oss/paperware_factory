@@ -11,17 +11,10 @@ import { useLanguage } from "../../context/LanguageContext";
 
 export function ImpactMetrics() {
   const { t } = useLanguage();
-  const [liveProductionCount, setLiveProductionCount] = React.useState(69550257);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [mode, setMode] = React.useState<'live' | 'calculator'>('calculator');
 
-  // Simulation of ERP Data Stream
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveProductionCount(prev => prev + Math.floor(Math.random() * 5));
-    }, 800);
-    return () => clearInterval(interval);
-  }, []);
+  // Phase A0: removed simulated "live" production counter (random increments every 800 ms; not real data).
 
   const QUANTITY_OPTIONS = [
     { label: "1 Million", value: 1_000_000 },

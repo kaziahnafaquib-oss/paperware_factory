@@ -1,80 +1,13 @@
 import React from "react";
 import { motion } from "motion/react";
-import { Send, Mail, Phone, MapPin, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 interface PremiumContactProps {
-  onSubmit?: (data: ContactFormData) => void;
+  /** Navigate to the Contact page (state-based routing; a plain href="/contact" reloads the homepage). */
+  onContact?: () => void;
 }
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  message: string;
-}
-
-export function PremiumContact({ onSubmit }: PremiumContactProps) {
-  const [formData, setFormData] = React.useState<ContactFormData>({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    message: ""
-  });
-
-  const [focusedField, setFocusedField] = React.useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitted, setSubmitted] = React.useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    if (onSubmit) {
-      onSubmit(formData);
-    }
-    
-    setIsSubmitting(false);
-    setSubmitted(true);
-    
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        company: "",
-        message: ""
-      });
-    }, 3000);
-  };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "info@paperwarefactory.com",
-      href: "mailto:info@paperwarefactory.com"
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+880 1711-234567",
-      href: "tel:+8801711234567"
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Display Centre: 65 Begum Bazar, Agrani Bank Lane, Dhaka",
-      href: "https://maps.google.com"
-    }
-  ];
-
+export function PremiumContact({ onContact }: PremiumContactProps) {
   return (
     <section className="relative bg-white py-24 md:py-32 overflow-hidden">
       {/* Animated Background */}
@@ -162,8 +95,9 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
             </div>
 
             {/* Contact Button */}
-            <motion.a
-              href="/contact"
+            <motion.button
+              type="button"
+              onClick={onContact}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -174,7 +108,7 @@ export function PremiumContact({ onSubmit }: PremiumContactProps) {
             >
               <span>Contact Us</span>
               <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
-            </motion.a>
+            </motion.button>
           </motion.div>
         </div>
       </div>

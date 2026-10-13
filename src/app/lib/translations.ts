@@ -17,7 +17,7 @@ const EN = {
   hero_subtitle_2: "Sustainable. Scalable. Superior.",
   e_brochure: "E-Brochure",
   explore_products: "Explore Products",
-  ticker_1: "LIVE PRODUCTION",
+  ticker_1: "CUSTOM-PRINTED PAPER PACKAGING",
   ticker_2: "ERP SYSTEM INTEGRATED",
   ticker_3: "EXPORT READY FACILITY",
   ticker_4: "FACTORY AUTOMATION: ACTIVE",
@@ -422,7 +422,7 @@ const BN = {
     playful: "See Our Cool Stuff! 🛍️",
     minimal: "Products"
   },
-  ticker_1: "লাইভ প্রোডাকশন",
+  ticker_1: "কাস্টম প্রিন্টেড পেপার প্যাকেজিং",
   ticker_2: "ইআরপি সিস্টেম ইন্টিগ্রেটেড",
   ticker_3: "এক্সপোর্ট রেডি ফ্যাসিলিটি",
   ticker_4: "ফ্যাক্���রি অটোমেশন: সক্রিয়",

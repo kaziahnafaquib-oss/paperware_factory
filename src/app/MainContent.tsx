@@ -16,7 +16,6 @@ import { Hero } from "./components/paperware/hero"; // Used as default
 import { ImmersiveHero } from "./components/paperware/immersive-hero";
 import { Navbar } from "./components/paperware/navbar";
 import { Footer } from "./components/paperware/footer";
-import { AdminPanel } from "./components/paperware/admin-panel";
 import { BackToTop } from "./components/paperware/back-to-top";
 import { ContactMenu } from "./components/paperware/contact-menu";
 import { BottomNav } from "./components/paperware/bottom-nav";
@@ -162,15 +161,16 @@ const SocialsPage = React.lazy(() => import("./pages/socials").then(module => ({
 const MorePage = React.lazy(() => import("./pages/more").then(module => ({ default: module.MorePage })));
 const Catalog3DPage = React.lazy(() => import("./pages/catalog-3d").then(module => ({ default: module.Catalog3DPage })));
 const FactoryLivePage = React.lazy(() => import("./pages/factory-live").then(module => ({ default: module.FactoryLivePage })));
-const ImpactDashboardPage = React.lazy(() => import("./pages/impact-dashboard").then(module => ({ default: module.ImpactDashboardPage })));
+// Phase A0: the Impact Dashboard page (unverified EcoVadis / carbon-neutral claims, placeholder certificate code)
+// is no longer shipped; its id now shows the Sustainability page (planned merge, see audit PAGE-030).
 const BulkOrderPage = React.lazy(() => import("./pages/bulk-order").then(module => ({ default: module.default })));
 const QuotationBasketPage = React.lazy(() => import("./pages/quotation-basket").then(module => ({ default: module.default })));
-const ClientPortalPage = React.lazy(() => import("./pages/client-portal").then(module => ({ default: module.ClientPortalPage })));
+const ClientPortalPage = __PORTALS_ENABLED__ ? React.lazy(() => import("./pages/client-portal").then(module => ({ default: module.ClientPortalPage }))) : null;
 const FuturePlanPage = React.lazy(() => import("./pages/future-plan").then(module => ({ default: module.FuturePlanPage })));
 const ProductFeedbackPage = React.lazy(() => import("./pages/product-feedback").then(module => ({ default: module.ProductFeedbackPage })));
 const OurERPPage = React.lazy(() => import("./pages/our-erp").then(module => ({ default: module.OurERPPage })));
 const ExportPage = React.lazy(() => import("./pages/export").then(module => ({ default: module.ExportPage })));
-const AdminDashboardPage = React.lazy(() => import("./pages/admin-dashboard"));
+const AdminDashboardPage = __PORTALS_ENABLED__ ? React.lazy(() => import("./pages/admin-dashboard")) : null;
 const SolutionsPage = React.lazy(() => import("./pages/solutions").then(module => ({ default: module.SolutionsPage })));
 const TechnicalManifestoPage = React.lazy(() => import("./pages/technical-manifesto").then(module => ({ default: module.TechnicalManifestoPage })));
 const FranchisePage = React.lazy(() => import("./pages/franchise").then(module => ({ default: module.FranchisePage })));
@@ -181,16 +181,16 @@ const BusinessPage = React.lazy(() => import("./pages/business").then(module => 
 const CompanyPage = React.lazy(() => import("./pages/company").then(module => ({ default: module.CompanyPage })));
 const CSRPage = React.lazy(() => import("./pages/csr").then(module => ({ default: module.CSRPage })));
 const PrivacyPolicyPage = React.lazy(() => import("./pages/privacy-policy").then(module => ({ default: module.PrivacyPolicy })));
-const AdminPortalPage = React.lazy(() => import("./pages/admin-portal").then(module => ({ default: module.AdminPortal })));
+const AdminPortalPage = __PORTALS_ENABLED__ ? React.lazy(() => import("./pages/admin-portal").then(module => ({ default: module.AdminPortal }))) : null;
 
 // Preload critical pages for faster navigation
 const preloadPage = (pageName: string) => {
   switch (pageName) {
     case 'client-portal':
-      import("./pages/client-portal");
+      if (__PORTALS_ENABLED__) import("./pages/client-portal");
       break;
     case 'admin-portal':
-      import("./pages/admin-portal");
+      if (__PORTALS_ENABLED__) import("./pages/admin-portal");
       break;
     case 'products':
       import("./pages/all-products");
@@ -206,7 +206,7 @@ const preloadPage = (pageName: string) => {
 // Lazy load heavy components
 const SearchOverlay = React.lazy(() => import("./components/paperware/search-overlay").then(module => ({ default: module.SearchOverlay })));
 const EmailModal = React.lazy(() => import("./components/paperware/email-modal").then(module => ({ default: module.EmailModal })));
-const AuthModal = React.lazy(() => import("./components/paperware/auth-modal").then(module => ({ default: module.AuthModal })));
+const AuthModal = __PORTALS_ENABLED__ ? React.lazy(() => import("./components/paperware/auth-modal").then(module => ({ default: module.AuthModal }))) : null;
 
 // Assets from Figma Import
 import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
@@ -503,46 +503,10 @@ export function MainContent() {
     localStorage.setItem('paperware_signing_image', signingImage);
   }, [signingImage]);
 
-  const handleBrochureDownload = React.useCallback(async () => {
-    // Simulate getting location
-    let location = "Unknown Location";
-    let ip = "Anonymous";
-
-    try {
-      // Simple fetch to get public IP info (using free ipapi.co)
-      // Note: In production, do this server-side to avoid CORS/limits
-      const res = await fetch('https://ipapi.co/json/');
-      const data = await res.json();
-      if (data.city && data.country_name) {
-        location = `${data.city}, ${data.country_name}`;
-        ip = data.ip;
-      }
-    } catch (e) {
-      console.warn("Failed to fetch location", e);
-    }
-
-    try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5/brochure/log`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${publicAnonKey}`
-        },
-        body: JSON.stringify({
-          location,
-          ip,
-          device: navigator.userAgent,
-          source: "Website Button"
-        })
-      });
-
-      if (!response.ok) {
-        console.error('Failed to log download:', await response.text());
-      }
-    } catch (e) {
-      console.error("Failed to send log to server", e);
-    }
-  }, []);
+  // Phase A0: removed visitor tracking on brochure download. It sent the visitor's IP to ipapi.co and then
+  // IP + city/country + user agent to a (now defunct) backend without consent. Re-add only with consent and a
+  // working, disclosed analytics setup.
+  const handleBrochureDownload = React.useCallback(() => {}, []);
 
   const handlePageChange = React.useCallback((page: string) => {
     React.startTransition(() => {
@@ -627,9 +591,8 @@ export function MainContent() {
                 products={productsData.map(p => ({
                   ...p,
                   description: "Premium eco-friendly packaging solution designed for modern businesses",
-                  badge: p.status === "Active" ? "New Arrival" : undefined,
-                  rating: 5,
-                  price: "From $29.99"
+                  badge: p.status === "Active" ? "New Arrival" : undefined
+                  // Phase A0: removed placeholder price ("From $29.99") and synthetic 5-star rating.
                 }))}
                 onViewProduct={(id) => {
                   const product = productsData.find(p => String(p.id) === id);
@@ -662,7 +625,7 @@ export function MainContent() {
 
             {/* 7. PREMIUM CONTACT SECTION */}
             <DeferredSection>
-              <PremiumContact onSubmit={(data) => console.log('Contact form:', data)} />
+              <PremiumContact onContact={() => handlePageChange("contact")} />
             </DeferredSection>
 
             {/* PAGE DISCOVERY - AUTO SCROLL */}
@@ -699,10 +662,11 @@ export function MainContent() {
       case "socials": return <SocialsPage />;
       case "catalog-3d": return <Catalog3DPage />;
       case "factory-live": return <FactoryLivePage />;
-      case "impact-dashboard": return <ImpactDashboardPage />;
+      case "impact-dashboard": return <SustainabilityPage />;
       case "bulk-quotes": return <BulkOrderPage basket={quoteBasket} />;
       case "quotation-basket": return <QuotationBasketPage basket={quoteBasket} onRemove={removeFromQuoteBasket} onProceedToOrder={() => handlePageChange("bulk-quotes")} />;
-      case "client-portal": return <ClientPortalPage />;
+      // Portal/admin pages are not part of the public build (Phase A0); fall back to Contact.
+      case "client-portal": return __PORTALS_ENABLED__ && ClientPortalPage ? <ClientPortalPage /> : <ContactPage onFeedbackClick={() => handlePageChange("product-feedback")} />;
       case "future-plan": return <FuturePlanPage onPageChange={handlePageChange} />;
       case "product-feedback": return <ProductFeedbackPage onScanSuccess={() => handlePageChange("product-journey")} />;
       case "erp": return <OurERPPage />;
@@ -720,8 +684,8 @@ export function MainContent() {
       case "company": return <CompanyPage onPageChange={handlePageChange} />;
       case "csr": return <CSRPage />;
       case "privacy-policy": return <PrivacyPolicyPage />;
-      case "admin-portal": return <AdminPortalPage />;
-      case "admin": return (
+      case "admin-portal": return __PORTALS_ENABLED__ && AdminPortalPage ? <AdminPortalPage /> : <ContactPage onFeedbackClick={() => handlePageChange("product-feedback")} />;
+      case "admin": return !(__PORTALS_ENABLED__ && AdminDashboardPage) ? <ContactPage onFeedbackClick={() => handlePageChange("product-feedback")} /> : (
         <AdminDashboardPage
           onLogout={() => handlePageChange("home")}
           heroVideoUrl={heroVideoUrl}
@@ -814,20 +778,8 @@ export function MainContent() {
             onPageChange={handlePageChange}
           />
         )}
-        {isAuthModalOpen && <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} type={authType} onLoginSuccess={() => handlePageChange(authType === 'admin' ? 'admin' : 'client-portal')} />}
+        {__PORTALS_ENABLED__ && AuthModal && isAuthModalOpen && <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} type={authType} onLoginSuccess={() => handlePageChange(authType === 'admin' ? 'admin' : 'client-portal')} />}
       </React.Suspense>
-      <AdminPanel
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        videoData={factoryVideos}
-        onUpdateVideos={setFactoryVideos}
-        heroVideoUrl={heroVideoUrl}
-        onUpdateHeroVideo={setHeroVideoUrl}
-        partnersData={partnersData}
-        onUpdatePartners={setPartnersData}
-        signingImage={signingImage}
-        onUpdateSigningImage={setSigningImage}
-      />
       <HUDOverlay />
       <BackToTop />
       <ContactMenu />

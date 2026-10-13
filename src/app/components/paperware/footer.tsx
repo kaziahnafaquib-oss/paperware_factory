@@ -3,6 +3,7 @@ import React from "react";
 import { ArrowRight, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube, Send, ExternalLink, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { motion as Motion } from "motion/react";
+import { openWhatsAppInquiry } from "../../lib/inquiry";
 
 export function Footer({ onPageChange }: { onPageChange: (page: string) => void }) {
   const { t, isRTL } = useLanguage();
@@ -68,19 +69,31 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
 
               <div className="w-full max-w-xl relative group/input">
                 <div className="absolute inset-0 bg-[#fabf37]/20 blur-xl rounded-full opacity-0 group-hover/input:opacity-100 transition-opacity duration-500" />
-                <div className="relative bg-white/5 p-1.5 rounded-full border border-white/10 flex items-center backdrop-blur-sm">
+                <form
+                  onSubmit={(e) => {
+                    // Phase A0: no mailing list exists yet; hand the request to WhatsApp instead of doing nothing.
+                    e.preventDefault();
+                    const email = new FormData(e.currentTarget).get("newsletter-email");
+                    openWhatsAppInquiry("Updates / newsletter request", { Email: String(email ?? "") });
+                  }}
+                  className="relative bg-white/5 p-1.5 rounded-full border border-white/10 flex items-center backdrop-blur-sm"
+                >
                   <div className="pl-5 text-zinc-500">
                     <Mail className="size-5" />
                   </div>
-                  <textarea
+                  <input
+                    type="email"
+                    name="newsletter-email"
+                    required
+                    autoComplete="email"
+                    aria-label="Your work email"
                     placeholder="Enter your corporate email..."
-                    rows={2}
-                    className="flex-1 bg-transparent border-none text-white placeholder:text-zinc-400 focus:ring-0 px-3 py-4 font-bold text-sm outline-none min-w-0 resize-none flex items-center text-[11px]"
+                    className="flex-1 bg-transparent border-none text-white placeholder:text-zinc-400 focus:ring-0 px-3 py-4 font-bold text-sm outline-none min-w-0"
                   />
-                  <button className="bg-[#fabf37] hover:bg-white hover:scale-105 active:scale-95 text-black px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 group/btn shadow-[0_0_20px_rgba(250,191,55,0.3)] shrink-0">
+                  <button type="submit" className="bg-[#fabf37] hover:bg-white hover:scale-105 active:scale-95 text-black px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 group/btn shadow-[0_0_20px_rgba(250,191,55,0.3)] shrink-0">
                     Join <ArrowRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -111,7 +124,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                   {['Home', 'About Us', 'Papercups', 'Sustainability', 'Our ERP', 'Contact', 'Privacy Policy'].map((item, i) => (
                     <li key={item}>
                       <button
-                        onClick={() => onPageChange(item === 'Our ERP' ? 'erp' : item.toLowerCase().replace(/ /g, '-'))}
+                        onClick={() => onPageChange(item === 'Our ERP' ? 'erp' : item === 'About Us' ? 'about' : item.toLowerCase().replace(/ /g, '-'))}
                         className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />

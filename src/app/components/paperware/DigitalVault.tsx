@@ -129,7 +129,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
 
   const handleCopyShareLink = (docName: string, docId: string) => {
     setShareMenuOpen(null);
-    const shareLink = `https://paperware.com/vault/share/${docId}`;
+    const shareLink = `https://paperwarefactory.com/vault/share/${docId}`;
     navigator.clipboard.writeText(shareLink);
     toast.success(`Link Copied!`, {
       description: `Secure share link for "${docName}" copied to clipboard`,

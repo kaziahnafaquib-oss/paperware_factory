@@ -476,9 +476,6 @@ export function PaperCupsPage({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                toast.success("Connecting Domestic Sales", {
-                  description: "Our local logistics and sales team in Bangladesh will contact you shortly.",
-                });
                 onPageChange("contact");
               }}
               className="w-full md:w-auto bg-[#fabf37] text-black px-12 py-8 rounded-full font-black uppercase tracking-widest flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(250,191,55,0.2)]"
@@ -490,9 +487,6 @@ export function PaperCupsPage({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                toast.success("Connecting Global Export Team", {
-                  description: "Your inquiry is being routed to our International Trade division.",
-                });
                 onPageChange("contact");
               }}
               style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
@@ -689,9 +683,6 @@ export function PaperCupsPage({
               <div className="mt-16 flex flex-col sm:flex-row gap-6">
                 <button 
                   onClick={() => {
-                    toast.success("Redirecting to Sales...", {
-                      description: "Our enterprise consultants are ready for your inquiry.",
-                    });
                     onPageChange("contact");
                   }}
                   className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_40px_rgba(250,191,55,0.3)] active:scale-95"

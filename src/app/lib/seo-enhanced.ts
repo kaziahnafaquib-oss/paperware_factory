@@ -33,7 +33,7 @@ export const pageSEOConfig: Record<string, PageSEO> = {
       name: 'Paperware Factory',
       description: 'Premium B2B Manufacturing Platform for Sustainable Paper Products',
       url: 'https://paperware.com',
-      logo: 'https://paperware.com/logo.png',
+      logo: 'https://paperwarefactory.com/logo.png',
       foundingDate: '2015',
       founders: [{
         '@type': 'Person',
@@ -171,7 +171,7 @@ export function generateMetaTags(page: string, lang: string = 'en'): string {
     <meta property="og:url" content="${config.url || 'https://paperware.com'}" />
     <meta property="og:title" content="${config.title}" />
     <meta property="og:description" content="${config.description}" />
-    <meta property="og:image" content="${config.image || 'https://paperware.com/og-image.jpg'}" />
+    <meta property="og:image" content="${config.image || 'https://paperwarefactory.com/og-image.jpg'}" />
     <meta property="og:locale" content="${lang === 'bn' ? 'bn_BD' : 'en_US'}" />
     
     <!-- Twitter -->
@@ -179,12 +179,12 @@ export function generateMetaTags(page: string, lang: string = 'en'): string {
     <meta name="twitter:url" content="${config.url || 'https://paperware.com'}" />
     <meta name="twitter:title" content="${config.title}" />
     <meta name="twitter:description" content="${config.description}" />
-    <meta name="twitter:image" content="${config.image || 'https://paperware.com/og-image.jpg'}" />
+    <meta name="twitter:image" content="${config.image || 'https://paperwarefactory.com/og-image.jpg'}" />
     
     <!-- Language alternates -->
-    <link rel="alternate" hreflang="en" href="https://paperware.com/${page}" />
-    <link rel="alternate" hreflang="bn" href="https://paperware.com/${page}?lang=bn" />
-    <link rel="alternate" hreflang="x-default" href="https://paperware.com/${page}" />
+    <link rel="alternate" hreflang="en" href="https://paperwarefactory.com/${page}" />
+    <link rel="alternate" hreflang="bn" href="https://paperwarefactory.com/${page}?lang=bn" />
+    <link rel="alternate" hreflang="x-default" href="https://paperwarefactory.com/${page}" />
   `;
 }
 
@@ -221,7 +221,7 @@ export function updatePageSEO(page: string, lang: string = 'en') {
   // Update canonical URL
   const canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
   if (canonical) {
-    canonical.href = `https://paperware.com/${page}`;
+    canonical.href = `https://paperwarefactory.com/${page}`;
   }
   
   // Update lang attribute
@@ -283,12 +283,12 @@ export function generateSitemap(): string {
   
   pages.forEach(page => {
     sitemap += `  <url>\n`;
-    sitemap += `    <loc>https://paperware.com/${page.path}</loc>\n`;
+    sitemap += `    <loc>https://paperwarefactory.com/${page.path}</loc>\n`;
     sitemap += `    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n`;
     sitemap += `    <changefreq>${page.changefreq}</changefreq>\n`;
     sitemap += `    <priority>${page.priority}</priority>\n`;
-    sitemap += `    <xhtml:link rel="alternate" hreflang="en" href="https://paperware.com/${page.path}" />\n`;
-    sitemap += `    <xhtml:link rel="alternate" hreflang="bn" href="https://paperware.com/${page.path}?lang=bn" />\n`;
+    sitemap += `    <xhtml:link rel="alternate" hreflang="en" href="https://paperwarefactory.com/${page.path}" />\n`;
+    sitemap += `    <xhtml:link rel="alternate" hreflang="bn" href="https://paperwarefactory.com/${page.path}?lang=bn" />\n`;
     sitemap += `  </url>\n`;
   });
   

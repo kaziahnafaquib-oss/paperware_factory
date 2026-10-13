@@ -1,4 +1,5 @@
 import React from "react";
+import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   MessageSquare, Star, Send, ChartBar, 
@@ -144,10 +145,15 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
     setUploadedImages(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Phase A0: no backend yet; hand the feedback to WhatsApp instead of faking "submitted".
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const fields = collectFormFields(e.currentTarget);
+    if (rating) fields["Rating"] = `${rating} / 5`;
+    if (comment) fields["Comment"] = comment;
+    if (uploadedImages.length) fields["Photos"] = `${uploadedImages.length} photo(s); I will send them in the chat`;
+    openWhatsAppInquiry("Product feedback", fields);
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const sentiment = comment.length > 20 ? (comment.toLowerCase().includes("good") || comment.toLowerCase().includes("great") ? "positive" : "neutral") : "awaiting";
@@ -1047,7 +1053,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 </div>
 
                 <motion.button 
-                  disabled={submitted}
+                  type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full py-6 md:py-8 rounded-[32px] font-black uppercase tracking-[0.3em] text-xs md:text-sm flex items-center justify-center gap-4 transition-all duration-500 shadow-2xl ${
@@ -1056,8 +1062,11 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       : 'bg-black text-[#fabf37] hover:bg-[#fabf37] hover:text-black shadow-black/20'
                   }`}
                 >
-                  {submitted ? <><CircleCheck className="size-6" /> Feedback Submitted</> : <><Send className="size-5 md:size-6" /> Submit Feedback</>}
+                  {submitted ? <><CircleCheck className="size-6" /> Opened in WhatsApp</> : <><Send className="size-5 md:size-6" /> Send Feedback via WhatsApp</>}
                 </motion.button>
+                {submitted && (
+                  <p role="status" aria-live="polite" className="text-sm font-medium text-zinc-700 leading-relaxed text-center">{INQUIRY_HANDOFF_BODY}</p>
+                )}
               </form>
             </motion.div>
           </div>

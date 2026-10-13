@@ -1,4 +1,6 @@
+import { toast } from "sonner";
 import React, { useRef, useEffect } from "react";
+import { openWhatsAppInquiry, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
 import { 
   Globe, Ship, Handshake, ArrowRight, Mail, ShieldCheck, TrendingUp,
@@ -523,7 +525,13 @@ export function ExportIntelligence() {
                             type="button"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => alert("Thank you for your interest! Our export team will contact you shortly.")}
+                            onClick={(e) => {
+                                // Phase A0: hand the email to WhatsApp instead of a fake "we'll contact you" alert.
+                                const form = e.currentTarget.closest("form");
+                                const email = (form?.querySelector('input[type="email"]') as HTMLInputElement | null)?.value ?? "";
+                                openWhatsAppInquiry("Export team contact request", { "Business email": email });
+                                toast.info(INQUIRY_HANDOFF_TITLE, { description: INQUIRY_HANDOFF_BODY, duration: 12000 });
+                            }}
                             className="px-10 py-5 bg-black text-[#fabf37] rounded-[32px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-colors flex items-center justify-center gap-3 shadow-lg relative overflow-hidden"
                         >
                             <motion.div

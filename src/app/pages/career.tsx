@@ -227,10 +227,13 @@ function Counter({ value, duration = 2 }: { value: string, duration?: number }) 
   const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
 
   React.useEffect(() => {
+    if (Number.isNaN(numericValue)) return;
     const animation = animate(count, numericValue, { duration, ease: "easeOut" });
     return animation.stop;
   }, [numericValue]);
 
+  // Non-numeric values (e.g. "Modern") were rendered as "NaN"; show them as plain text.
+  if (Number.isNaN(numericValue)) return <span>{value}</span>;
   return <motion.span>{displayValue}</motion.span>;
 }
 

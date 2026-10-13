@@ -1,4 +1,5 @@
 import React from "react";
+import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Trash2, Plus, Minus, FileText, Send, 
@@ -47,10 +48,10 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
           </div>
           <div className="space-y-6">
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-tight">
-              PROTOCO <br /> <span className="text-[#fabf37]">COMMITTED</span>
+              ALMOST <br /> <span className="text-[#fabf37]">THERE</span>
             </h2>
             <p className="text-zinc-400 font-bold text-lg max-w-sm mx-auto leading-relaxed">
-              Your bulk manufacturing request #RFQ-{Math.floor(Math.random() * 90000) + 10000} has been logged.
+              <span role="status" aria-live="polite">{INQUIRY_HANDOFF_BODY}</span>
             </p>
           </div>
           <button className="w-full bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm shadow-2xl hover:bg-[#fabf37] transition-all">
@@ -261,16 +262,20 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                         </div>
 
                         <button 
-                          onClick={() => setIsSubmitted(true)}
+                          type="button"
+                          onClick={(e) => {
+                            // Phase A0: no backend yet; hand the request to WhatsApp instead of faking "logged".
+                            const root = e.currentTarget.closest("main") ?? document.body;
+                            const fields = collectFormFields(root as HTMLElement);
+                            if (basket.length) fields["Items"] = basket.map((item: any) => item.name).filter(Boolean).join(", ");
+                            openWhatsAppInquiry("Bulk order request", fields);
+                            setIsSubmitted(true);
+                          }}
                           className="w-full bg-black text-[#fabf37] py-10 rounded-[40px] font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-4 group"
                         >
                            Transmit Inquiry <Send className="size-5 group-hover:translate-x-1 transition-transform" />
                         </button>
                         
-                        <div className="flex items-center justify-center gap-3">
-                           <div className="size-1.5 rounded-full bg-emerald-500" />
-                           <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Direct ERP Link Active</span>
-                        </div>
                      </div>
                   </div>
 

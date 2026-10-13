@@ -16,11 +16,7 @@ export const Ticker = React.memo(() => {
         {[1,2,3,4,5].map(i => (
           <div key={i} className="flex items-center gap-12 md:gap-24">
             <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-black">
-              <div className="relative flex size-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
-                <span className="relative inline-flex rounded-full size-2 bg-red-600"></span>
-              </div>
-              {t('ticker_1')}
+              <Layers className="size-4" /> {t('ticker_1')}
             </div>
             <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-black">
               <Database className="size-4" /> {t('ticker_2')}

@@ -128,19 +128,6 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                 <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              {/* Bypass Button for Admin Testing */}
-              {(type === 'admin' || type === 'client') && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onLoginSuccess();
-                    onClose();
-                  }}
-                  className={`w-full py-4 mt-4 bg-white/5 text-zinc-500 rounded-2xl font-black uppercase tracking-[0.2em] text-[9px] flex items-center justify-center gap-3 hover:bg-white/10 hover:text-white transition-all border border-white/5 ${type === 'client' ? 'hover:bg-[#fabf37]/20 hover:text-[#fabf37] hover:border-[#fabf37]/50' : ''}`}
-                >
-                  {type === 'admin' ? 'Bypass Admin Authentication' : 'Demo Client Login Bypass'}
-                </button>
-              )}
             </form>
 
             {type === 'client' && (

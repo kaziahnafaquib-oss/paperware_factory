@@ -4,6 +4,11 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  // Admin / client-portal / login UI is excluded from the public build unless
+  // VITE_ENABLE_PORTALS=true is set at build time (Phase A0: no unauthenticated admin in production).
+  define: {
+    __PORTALS_ENABLED__: JSON.stringify(process.env.VITE_ENABLE_PORTALS === 'true'),
+  },
   plugins: [
     react({
       babel: {

@@ -15,7 +15,7 @@ const defaultConfig: SEOConfig = {
   title: 'Paperware - Premium Paper Solutions',
   description: 'Premium B2B Manufacturing Platform for Sustainable Paper Products. Global Standard. Industrial Precision.',
   keywords: 'paper manufacturing, sustainable packaging, B2B paper products, eco-friendly paper, industrial paper solutions',
-  image: 'https://paperware.com/og-image.jpg',
+  image: 'https://paperwarefactory.com/og-image.jpg',
   url: 'https://paperware.com',
   type: 'website',
   author: 'Paperware',
@@ -139,7 +139,7 @@ export function initializeSEO() {
     name: 'Paperware',
     description: 'Premium B2B Manufacturing Platform for Sustainable Paper Products',
     url: 'https://paperware.com',
-    logo: 'https://paperware.com/logo.png',
+    logo: 'https://paperwarefactory.com/logo.png',
     sameAs: [
       'https://facebook.com/paperware',
       'https://twitter.com/paperware',

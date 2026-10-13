@@ -1,8 +1,11 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Home, Package, Scan, FileText, User } from "lucide-react";
+import { Home, Package, Scan, FileText, User, Phone } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
-import { ClientLoginModal } from "./client-login-modal";
+// Client login is excluded from the public build unless __PORTALS_ENABLED__ (Phase A0).
+const ClientLoginModal = __PORTALS_ENABLED__
+  ? React.lazy(() => import("./client-login-modal").then(m => ({ default: m.ClientLoginModal })))
+  : null;
 
 interface BottomNavProps {
   currentPage: string;
@@ -18,11 +21,13 @@ export const BottomNav = React.memo(({ currentPage, onPageChange }: BottomNavPro
     { id: "products", label: t('all_products'), icon: <Package className="size-5" /> },
     { id: "product-feedback", label: t('product_feedback'), icon: <Scan className="size-5" /> },
     { id: "quote", label: t('request_quote'), icon: <FileText className="size-5" /> },
-    { id: "client-portal", label: t('client_portal'), icon: <User className="size-5" /> },
+    __PORTALS_ENABLED__
+      ? { id: "client-portal", label: t('client_portal'), icon: <User className="size-5" /> }
+      : { id: "contact", label: t('contact'), icon: <Phone className="size-5" /> },
   ];
 
   const handleNavClick = (pageId: string) => {
-    if (pageId === "client-portal") {
+    if (__PORTALS_ENABLED__ && pageId === "client-portal") {
       setShowLoginModal(true);
     } else {
       onPageChange(pageId);
@@ -83,12 +88,16 @@ export const BottomNav = React.memo(({ currentPage, onPageChange }: BottomNavPro
         </div>
       </nav>
 
-      <ClientLoginModal 
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLoginSuccess={handleLoginSuccess}
-        onViewFaq={handleViewFaq}
-      />
+      {ClientLoginModal && showLoginModal && (
+        <React.Suspense fallback={null}>
+          <ClientLoginModal
+            isOpen={showLoginModal}
+            onClose={() => setShowLoginModal(false)}
+            onLoginSuccess={handleLoginSuccess}
+            onViewFaq={handleViewFaq}
+          />
+        </React.Suspense>
+      )}
     </>
   );
 });

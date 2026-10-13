@@ -1,4 +1,5 @@
 import React from "react";
+import { openWhatsAppInquiry, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY, SALES_EMAIL } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Mail, Phone, MapPin, ChevronDown,
@@ -111,10 +112,23 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
     color: getColor(p.platform)
   }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Phase A0: no form backend exists yet, so hand the message to WhatsApp instead of faking "sent".
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const get = (key: string) => String(data.get(key) ?? "");
+    openWhatsAppInquiry("Contact inquiry", {
+      Name: get("name"),
+      Designation: get("designation"),
+      Company: get("company"),
+      "Phone/WhatsApp": get("phone"),
+      Email: get("email"),
+      City: get("city"),
+      Country: get("country"),
+      Requirement: get("requirement"),
+      Message: get("message"),
+    });
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   return (
@@ -462,46 +476,46 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <form onSubmit={handleSubmit} className="space-y-6 lg:space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Full name</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="e.g. John Doe" />
+                      <label htmlFor="contact-name" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Full name</label>
+                      <motion.input id="contact-name" name="name" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="e.g. John Doe" />
                     </motion.div>
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Designation</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Designation" />
-                    </motion.div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Company Name</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Company Name" />
-                    </motion.div>
-                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Whats app or Mobile number</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="+880 1XXX XXXXXX" />
+                      <label htmlFor="contact-designation" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Designation</label>
+                      <motion.input id="contact-designation" name="designation" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Designation" />
                     </motion.div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Email</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required type="email" className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="name@enterprise.com" />
+                      <label htmlFor="contact-company" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Company Name</label>
+                      <motion.input id="contact-company" name="company" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Company Name" />
                     </motion.div>
                     <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                      <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-[rgb(144,144,144)] ml-2">City</label>
-                      <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="City" />
+                      <label htmlFor="contact-phone" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">WhatsApp or mobile number</label>
+                      <motion.input id="contact-phone" name="phone" type="tel" autoComplete="tel" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="+880 1XXX XXXXXX" />
+                    </motion.div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
+                      <label htmlFor="contact-email" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Email</label>
+                      <motion.input id="contact-email" name="email" whileFocus={{ scale: 1.02 }} required type="email" className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="name@enterprise.com" />
+                    </motion.div>
+                    <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
+                      <label htmlFor="contact-city" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-[rgb(144,144,144)] ml-2">City</label>
+                      <motion.input id="contact-city" name="city" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="City" />
                     </motion.div>
                   </div>
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                    <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Country</label>
-                    <motion.input whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Country" />
+                    <label htmlFor="contact-country" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">Country</label>
+                    <motion.input id="contact-country" name="country" whileFocus={{ scale: 1.02 }} required className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all placeholder:text-zinc-300" placeholder="Country" />
                   </motion.div>
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                    <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('strategic_req')}</label>
+                    <label htmlFor="contact-requirement" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('strategic_req')}</label>
                     <div className="relative group">
-                      <motion.select whileFocus={{ scale: 1.02 }} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all appearance-none cursor-pointer">
+                      <motion.select id="contact-requirement" name="requirement" whileFocus={{ scale: 1.02 }} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[20px] lg:rounded-[24px] py-3 lg:py-5 px-6 lg:px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all appearance-none cursor-pointer">
                         <option>Large Scale Custom Manufacturing</option>
                         <option>Sustainability & ESG Partnership</option>
                         <option>Global Distribution Inquiry</option>
@@ -512,15 +526,15 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   </motion.div>
 
                   <motion.div variants={fadeInUp} className="space-y-2 lg:space-y-3">
-                    <label className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('project_blueprint')}</label>
-                    <motion.textarea whileFocus={{ scale: 1.02 }} required rows={5} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[32px] py-6 px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all resize-none placeholder:text-zinc-300" placeholder="Describe your volume targets, material preferences, and desired timeline..." />
+                    <label htmlFor="contact-message" className="text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400 ml-2">{t('project_blueprint')}</label>
+                    <motion.textarea id="contact-message" name="message" whileFocus={{ scale: 1.02 }} required rows={5} className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[32px] py-6 px-8 font-bold text-xs focus:border-[#fabf37] focus:bg-white outline-none transition-all resize-none placeholder:text-zinc-300" placeholder="Describe your volume targets, material preferences, and desired timeline..." />
                   </motion.div>
 
                   <motion.div variants={fadeInUp} className="pt-4">
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      disabled={submitted}
+                      type="submit"
                       className={`group w-full py-7 rounded-[24px] font-black uppercase tracking-[0.3em] text-[10px] flex items-center justify-center gap-4 transition-all relative overflow-hidden ${submitted ? 'bg-emerald-500 text-white' : 'bg-black text-[#fabf37] hover:bg-[#fabf37] hover:text-black shadow-2xl'}`}
                     >
                       {/* Scanning Effect */}
@@ -540,7 +554,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                             animate={{ opacity: 1, y: 0 }}
                             className="flex items-center gap-4"
                           >
-                            <CircleCheck className="size-6" /> {t('inquiry_dispatched')}
+                            <CircleCheck className="size-6" /> Opened in WhatsApp
                           </motion.div>
                         ) : (
                           <motion.div
@@ -555,6 +569,14 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                       </AnimatePresence>
                     </motion.button>
                   </motion.div>
+
+                  {submitted && (
+                    <div role="status" aria-live="polite" className="rounded-[20px] border-2 border-[#fabf37] bg-[#fabf37]/10 p-6 space-y-2">
+                      <p className="text-sm font-black text-black">{INQUIRY_HANDOFF_TITLE}</p>
+                      <p className="text-sm font-medium text-zinc-700 leading-relaxed">{INQUIRY_HANDOFF_BODY}</p>
+                      <a href={`mailto:${SALES_EMAIL}`} className="inline-block text-sm font-bold text-black underline underline-offset-4">Email us instead</a>
+                    </div>
+                  )}
 
                   <motion.div variants={fadeInUp} className="flex items-center justify-center gap-4 opacity-40">
                     <div className="h-[1px] flex-1 bg-zinc-300" />

@@ -1,4 +1,5 @@
 import React from "react";
+import { openWhatsAppInquiry, SALES_WHATSAPP_DISPLAY, SALES_PHONE_DISPLAY } from "../lib/inquiry";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
 import { 
   Search, Truck, Package, MapPin, 
@@ -18,7 +19,9 @@ interface OrderTrackingPageProps {
 export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrackingPageProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [orderId, setOrderId] = React.useState("");
-  const [status, setStatus] = React.useState<"idle" | "searching" | "found">("idle");
+  // Phase A0: there is no order database behind this page. Never show a fabricated shipment;
+  // send an order-status request to the sales team instead ("requested"). The "found" view is unreachable until a real lookup exists.
+  const [status, setStatus] = React.useState<"idle" | "searching" | "found" | "requested">("idle");
   
   const { scrollYProgress, scrollY } = useScroll({
     target: containerRef,
@@ -68,8 +71,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("searching");
-    setTimeout(() => setStatus("found"), 1500);
+    openWhatsAppInquiry("Order status request", { "Order / reference": orderId });
+    setStatus("requested");
   };
 
   const steps = [
@@ -307,7 +310,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             {["Estimated ETA", "Bulk Logistics", "Port Status"].map(tag => (
               <button 
                 key={tag} 
-                onClick={() => { setOrderId(tag.toUpperCase()); setStatus("searching"); setTimeout(() => setStatus("found"), 1200); }}
+                onClick={() => { openWhatsAppInquiry("Order enquiry", { Topic: tag, "Order / reference": orderId }); setStatus("requested"); }}
                 className="text-[9px] font-bold text-zinc-400 hover:text-black transition-colors underline decoration-[#fabf37]/30"
               >
                 {tag}
@@ -471,6 +474,15 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 </motion.p>
                 <p className="text-[10px] font-bold text-zinc-400 max-w-xs uppercase tracking-widest">Verifying shipment signatures on the Paperware global network node-04...</p>
               </div>
+            </motion.div>
+          )}
+
+          {status === "requested" && (
+            <motion.div key="requested" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl mx-auto py-24 text-center space-y-4" role="status" aria-live="polite">
+              <p className="text-2xl md:text-3xl font-black uppercase tracking-tight">We'll check your order for you</p>
+              <p className="text-base font-medium text-zinc-600 leading-relaxed">
+                Online tracking isn't available yet. We opened WhatsApp with your order details so our team can reply with the current status. Press Send there. If WhatsApp didn't open, message us on {SALES_WHATSAPP_DISPLAY} or call {SALES_PHONE_DISPLAY}.
+              </p>
             </motion.div>
           )}
 

@@ -90,7 +90,8 @@ export default function App() {
             <MainContent />
             <ChatWidget />
             <Toaster position="top-right" richColors closeButton />
-            <PerformanceReport />
+            {/* Phase A0: developer FPS widget was visible to all visitors; dev builds only. */}
+            {import.meta.env.DEV && <PerformanceReport />}
             <React.Suspense fallback={null}>
               {/* <AdvancedLoader /> */}
               {/* {showCursor && <AdvancedCursor />} */}

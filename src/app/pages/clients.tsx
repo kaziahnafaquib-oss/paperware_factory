@@ -278,18 +278,6 @@ export function ClientsPage({
   const [liveCups, setLiveCups] = React.useState(initialProductionStats?.totalCups || 69550257);
   const [liveBusinesses, setLiveBusinesses] = React.useState(initialProductionStats?.wonderfulBusinesses || 5754);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      // ERP Simulation: Increment cups by a random amount (0-3) every 2 seconds
-      setLiveCups(prev => prev + Math.floor(Math.random() * 3));
-      
-      // Occasionally increment business count (very rare in real time but for demo...)
-      if (Math.random() > 0.995) {
-        setLiveBusinesses(prev => prev + 1);
-      }
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   const FEATURED_VIDEO_SOURCE = videoUrl || FEATURED_VIDEO_URL;
 
@@ -739,163 +727,7 @@ export function ClientsPage({
           </AnimatePresence>
         </div>
 
-        {/* Testimonials Section - Restored Proportions for Visibility */}
-        <div className="mb-8 md:mb-12 bg-white/40 backdrop-blur-3xl -mx-4 px-4 py-10 md:py-16 rounded-[40px] relative overflow-hidden shadow-sm border-y border-zinc-100">
-          <div className="text-center mb-10 space-y-2 relative z-10">
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[7px] font-black text-zinc-400 uppercase tracking-[0.2em]">ERP LIVE STREAM</span>
-            </div>
-            <h2 className="text-[22px] md:text-[32px] font-black uppercase tracking-tighter leading-none text-black max-w-2xl mx-auto">
-              <motion.span
-                key={liveCups}
-                initial={{ opacity: 0.8 }}
-                animate={{ opacity: 1 }}
-                className="text-[#fabf37]"
-              >
-                {liveCups.toLocaleString()}
-              </motion.span> units produced
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto relative z-10">
-            <motion.div 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1 }
-                }
-              }}
-              className="flex flex-col gap-2"
-            >
-              {[testimonialsData[0], testimonialsData[1], testimonialsData[2]].map((item, i) => (
-                <TestimonialCard key={i} item={item} index={i} highlighted={i === 2} />
-              ))}
-            </motion.div>
-
-            <motion.div 
-              className="h-full flex items-center justify-center py-12 md:py-0"
-              initial={{ opacity: 0, x: 150, rotateY: -25, scale: 0.8 }}
-              whileInView={{ opacity: 1, x: 0, rotateY: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 40, 
-                damping: 12,
-                duration: 1.5,
-                delay: 0.2
-              }}
-            >
-              <motion.div 
-                className="h-full flex items-center justify-center cursor-none" 
-                ref={containerRef}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{ rotateX: springTiltX, rotateY: springTiltY, perspective: 2000 }}
-              >
-                <div 
-                  className="relative w-[360px] sm:w-[400px] md:w-[200px] lg:w-[200px] aspect-[9/19] rounded-[48px] sm:rounded-[56px] md:rounded-[36px] overflow-hidden group border-[8px] md:border-[4px] border-zinc-950 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] bg-black transition-all duration-700"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* Sleek Dynamic Island */}
-                  <div className="absolute top-5 left-1/2 -translate-x-1/2 w-[35%] h-4.5 md:h-3 bg-zinc-900 rounded-full z-20 border border-white/5" />
-                  
-                  {/* Screen Reflection */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-white/5 z-10 pointer-events-none" />
-                  
-                  <video 
-                    ref={videoRef}
-                    key={FEATURED_VIDEO_SOURCE}
-                    autoPlay 
-                    muted 
-                    loop 
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ filter: 'brightness(0.9) contrast(1.1)' }}
-                    onError={(e) => {
-                      console.warn('Video failed to load, hiding element');
-                      e.currentTarget.style.display = 'none';
-                    }}
-                    suppressHydrationWarning
-                  >
-                    <source src={FEATURED_VIDEO_SOURCE} type="video/mp4" />
-                  </video>
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Scanning Line Motion */}
-                  <motion.div 
-                    animate={{ top: ["-10%", "110%"] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-[#fabf37]/20 to-transparent z-10 pointer-events-none"
-                  />
-
-                  {/* Top HUD Label */}
-                  <div className="absolute top-14 md:top-8 left-1/2 -translate-x-1/2 flex items-center gap-2.5 md:gap-1.5 px-5 md:px-2 py-2 md:py-0.5 bg-black/40 backdrop-blur-md rounded-full border border-white/10 z-10 whitespace-nowrap">
-                    <div className="size-2.5 md:size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-[10px] md:text-[5px] font-black uppercase tracking-[0.1em] text-white">FACTORY_LIVE</span>
-                  </div>
-
-                  {/* Bottom HUD Badge */}
-                  <div 
-                    className="absolute bottom-10 md:bottom-4 left-6 md:left-2.5 right-6 md:right-2.5 p-5 md:p-2 rounded-3xl md:rounded-xl bg-black/60 backdrop-blur-xl border border-white/10 text-center space-y-2 md:space-y-1 z-10 shadow-2xl"
-                    style={{ transform: "translateZ(20px)" }}
-                  >
-                    <div className="flex justify-center gap-1.5 md:gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="size-3.5 md:size-1.5 fill-[#fabf37] text-[#fabf37]" />
-                      ))}
-                    </div>
-                    <div className="space-y-1 md:space-y-0">
-                      <h4 className="text-[14px] md:text-[8px] font-black text-white uppercase tracking-tight leading-none">Verified Stream</h4>
-                      <p className="text-[8px] md:text-[5px] font-bold text-[#fabf37] uppercase tracking-widest mt-2 md:mt-0.5">Secure Node</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            <motion.div 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1, delayChildren: 0.3 }
-                }
-              }}
-              className="flex flex-col gap-2"
-            >
-              {[testimonialsData[4], testimonialsData[5]].map((item, i) => (
-                <TestimonialCard key={i} item={item} index={i} highlighted={i === 1} />
-              ))}
-            </motion.div>
-
-            <motion.div 
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1, delayChildren: 0.6 }
-                }
-              }}
-              className="flex flex-col gap-2"
-            >
-              {[testimonialsData[6], testimonialsData[7], testimonialsData[8]].map((item, i) => (
-                <TestimonialCard key={i} item={item} index={i} />
-              ))}
-            </motion.div>
-          </div>
-        </div>
+        {/* Phase A0: removed testimonials that appear copied from another company, and a simulated "ERP live" production counter. Add real, permission-checked testimonials later. */}
 
         {/* Feature: Compact Case Study */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-12 md:mb-20" style={{ transformStyle: "preserve-3d" }}>
@@ -1217,7 +1049,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
 
   const handleShare = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText(`https://paperware.com/feed/${feed.handle}`);
+    navigator.clipboard.writeText(`https://paperwarefactory.com/feed/${feed.handle}`);
     toast.success("Link copied", {
       description: "Post URL has been copied to your clipboard",
       icon: <Share2 className="size-4 text-[#fabf37]" />
