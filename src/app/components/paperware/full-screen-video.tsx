@@ -37,7 +37,7 @@ export function FullScreenVideoSection({ videoData }: FullScreenVideoSectionProp
         
         <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-4 text-center">
           <div className="flex flex-col items-center gap-6">
-            <div className="text-7xl opacity-20">🎬</div>
+            <div aria-hidden="true" className="text-7xl opacity-20">🎬</div>
             <h2 className="text-2xl font-black text-zinc-600 uppercase tracking-wider">
               No Videos Available
             </h2>

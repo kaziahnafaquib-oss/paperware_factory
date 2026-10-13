@@ -403,7 +403,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                         {section.title}
                       </h3>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-300">0{idx + 1}</span>
+                    <span className="text-[10px] font-mono text-zinc-500">0{idx + 1}</span>
                   </div>
 
                   {/* Description & Action */}

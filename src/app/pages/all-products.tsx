@@ -244,7 +244,7 @@ export function AllProductsPage({
                 <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] leading-tight text-black max-w-[130px] group-hover:text-[#fabf37] transition-colors">
                   {cat.title}
                 </span>
-                <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-300 group-hover:text-zinc-500">
+                <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-500 group-hover:text-zinc-700">
                   {cat.subtitle}
                 </span>
               </div>

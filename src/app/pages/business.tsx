@@ -354,7 +354,7 @@ export function BusinessPage() {
              </div>
              <h2 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
                 Localized Everywhere.<br />
-                <span className="text-zinc-300">46+ Languages.</span>
+                <span className="text-zinc-500">46+ Languages.</span>
               </h2>
               <p className="text-zinc-500 font-medium leading-relaxed max-w-2xl mx-auto">
                 Our business interface adapts instantly to your region's language and regulatory requirements. Managing global supply chains has never been this intuitive.

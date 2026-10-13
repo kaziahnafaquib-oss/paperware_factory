@@ -36,7 +36,7 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Retail Supply</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            FMCG <br /> <span className="text-zinc-300">Supplies</span>
+            FMCG <br /> <span className="text-zinc-500">Supplies</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             High-volume retail packaging for the world's leading consumer brands. We combine durability with high-end aesthetics to drive shelf impact.

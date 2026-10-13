@@ -389,7 +389,7 @@ export function StudioPage() {
                         <span className="text-4xl font-black">${estimatedCost.toFixed(2)}</span>
                         <span className="text-[10px] font-black text-zinc-400 uppercase pb-1">Per Unit</span>
                      </div>
-                     <p className="text-[9px] font-black text-zinc-300 uppercase tracking-widest leading-relaxed">Based on 10K MOQ baseline</p>
+                     <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-relaxed">Based on 10K MOQ baseline</p>
                   </div>
                </div>
 

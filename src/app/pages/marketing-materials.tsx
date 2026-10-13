@@ -45,7 +45,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">High-Impact Brand Collateral</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Marketing <br /> <span className="text-zinc-300">Materials</span>
+            Marketing <br /> <span className="text-zinc-500">Materials</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Turn your brand into a tangible experience. Our marketing collateral uses premium finishes, vibrant colors, and eco-friendly materials to leave a lasting impression.

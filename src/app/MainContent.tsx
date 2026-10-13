@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { useLocation, useNavigate, useNavigationType, Navigate } from "react-router";
-import { pathFor, idForPath, redirectFor, routeFor } from "./routes/routeTable";
+import { pathFor, idForPath, redirectFor, routeFor, surfaceFor } from "./routes/routeTable";
 import { NotFoundPage } from "./pages/not-found";
 import { useLanguage } from "./context/LanguageContext";
 import { debounce, prefersReducedMotion, runWhenIdle, getDevicePerformanceTier } from "./lib/performance";
@@ -769,7 +769,7 @@ export function MainContent() {
   }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideos, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
 
   return (
-    <div className={`relative min-h-screen ${['home', 'client-portal', 'contact', 'about', 'products', 'sustainability', 'company'].includes(currentPage) ? 'bg-zinc-50 text-zinc-900' : 'bg-zinc-950 text-white'} font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden transition-colors duration-500`}>
+    <div className={`relative min-h-screen ${surfaceFor(currentPage) === 'light' ? 'bg-zinc-50 text-zinc-900' : 'bg-zinc-950 text-white'} font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden transition-colors duration-500`}>
       <HUDOverlay />
       <AnimatePresence mode="wait">
         <ToneTransitionOverlay tone={currentTone} />

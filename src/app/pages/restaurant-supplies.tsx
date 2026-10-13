@@ -53,7 +53,7 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Food-Grade Packaging Solutions</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Restaurant <br /> <span className="text-zinc-300">Supplies</span>
+            Restaurant <br /> <span className="text-zinc-500">Supplies</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Our food packaging is engineered for the modern culinary industry. Leak-proof, heat-retaining, and 100% sustainable materials that keep your food as fresh as it was in the kitchen.

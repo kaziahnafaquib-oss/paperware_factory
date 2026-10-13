@@ -39,7 +39,7 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Premium Corporate Assets</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Office <br /> <span className="text-zinc-300">Stationary</span>
+            Office <br /> <span className="text-zinc-500">Stationary</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Elevate your corporate identity with our high-precision printed stationary. From business cards to industrial logbooks, we ensure every detail reflects your brand's excellence.

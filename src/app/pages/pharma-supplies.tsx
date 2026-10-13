@@ -38,7 +38,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
             <span className="text-emerald-600 font-black uppercase tracking-[0.4em] text-xs">Medical Grade Packaging</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Pharma <br /> <span className="text-zinc-300">Supplies</span>
+            Pharma <br /> <span className="text-zinc-500">Supplies</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Safety, precision, and compliance. Our pharmaceutical packaging and hospital stationary are manufactured in sterile environments, meeting strict global healthcare standards.

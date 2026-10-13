@@ -213,7 +213,7 @@ export const Industries = React.memo(function Industries({ onExplore }: { onExpl
                         {item.icon}
                       </motion.div>
                     </motion.div>
-                    <span className="text-5xl font-black text-zinc-100 group-hover:text-zinc-900/5 transition-colors duration-300 select-none" style={{ transform: 'translateZ(10px)' }}>
+                    <span aria-hidden="true" className="text-5xl font-black text-zinc-100 group-hover:text-zinc-900/5 transition-colors duration-300 select-none" style={{ transform: 'translateZ(10px)' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>

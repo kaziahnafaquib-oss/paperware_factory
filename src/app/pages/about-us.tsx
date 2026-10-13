@@ -95,7 +95,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             >
               The <span className="text-[#fabf37]">Engine</span> <br />
               Behind the <br />
-              <span className="text-zinc-200">Package.</span>
+              <span className="text-zinc-500">Package.</span>
             </motion.h1>
 
             <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
@@ -171,7 +171,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center text-center mb-10 md:mb-24 space-y-2 md:space-y-4">
             <h2 className="text-3xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
-              Scaling <br /> <span className="text-zinc-300 italic">Excellence.</span>
+              Scaling <br /> <span className="text-zinc-500 italic">Excellence.</span>
             </h2>
           </div>
 

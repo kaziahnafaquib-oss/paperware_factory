@@ -34,7 +34,7 @@ export function GarmentSuppliesPage({ onProductClick }: { onProductClick: (p: an
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Fashion & Retail Supply</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Garment <br /> <span className="text-zinc-300">Accessories</span>
+            Garment <br /> <span className="text-zinc-500">Accessories</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             High-quality accessories for the textile industry. From premium hangtags to bulk industrial labels, we provide the finishing touches for your garments.

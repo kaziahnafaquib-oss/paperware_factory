@@ -261,7 +261,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
               className="bg-white p-8 lg:p-12 rounded-[40px] lg:rounded-[50px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] border border-black/5 space-y-12 lg:space-y-16 relative overflow-hidden"
             >
               {/* Decorative Watermark */}
-              <div className="absolute top-[-5%] right-[-5%] text-[80px] lg:text-[150px] font-black text-zinc-50 pointer-events-none select-none italic">Paperware</div>
+              <div aria-hidden="true" className="absolute top-[-5%] right-[-5%] text-[80px] lg:text-[150px] font-black text-zinc-50 pointer-events-none select-none italic">Paperware</div>
 
               <div className="space-y-8 lg:space-y-10 relative z-10">
                 <motion.div variants={slideInLeft} whileHover={{ x: 10 }} className="flex items-start gap-6 lg:gap-8 group">

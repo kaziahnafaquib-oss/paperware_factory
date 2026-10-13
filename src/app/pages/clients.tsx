@@ -1076,7 +1076,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
             <span className="text-[8px] font-bold text-zinc-400 font-mono">{feed.handle}</span>
           </div>
         </div>
-        <span className="text-[8px] font-black text-zinc-300 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
+        <span className="text-[8px] font-black text-zinc-500 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
       </div>
       
       {feed.image && (
@@ -1090,16 +1090,18 @@ function SocialFeedCard({ feed }: { feed: any }) {
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleLike}
+                 aria-label="Like this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Heart className="size-4" />
+                 <Heart className="size-4" aria-hidden="true" />
                </motion.button>
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleShare}
+                 aria-label="Copy link to this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Send className="size-4" />
+                 <Send className="size-4" aria-hidden="true" />
                </motion.button>
             </div>
           </div>
@@ -1112,26 +1114,28 @@ function SocialFeedCard({ feed }: { feed: any }) {
 
       <div className="flex items-center justify-between pt-3 border-t border-zinc-50 px-1">
         <div className="flex gap-4">
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={(e) => { e.stopPropagation(); toast("Comments coming soon..."); }}
           >
-            <MessageSquare className="size-3" />
+            <MessageSquare className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Comment</span>
-          </div>
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          </button>
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={handleShare}
           >
-            <Share2 className="size-3" />
+            <Share2 className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Share</span>
-          </div>
+          </button>
         </div>
         <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1" onClick={handleLike}>
-               <Heart className="size-3 text-zinc-300 group-hover:text-red-500 transition-colors" />
-               <span className="text-[8px] font-black text-zinc-300 group-hover:text-zinc-500">2.4k</span>
-            </div>
+            <button type="button" className="flex items-center gap-1" onClick={handleLike} aria-label="Like this post">
+               <Heart className="size-3 text-zinc-500 group-hover:text-red-500 transition-colors" aria-hidden="true" />
+               <span className="text-[8px] font-black text-zinc-500 group-hover:text-zinc-700">2.4k</span>
+            </button>
             <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
         </div>
       </div>
