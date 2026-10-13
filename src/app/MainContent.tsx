@@ -1,4 +1,7 @@
 import React, { Suspense } from "react";
+import { useLocation, useNavigate, useNavigationType, Navigate } from "react-router";
+import { pathFor, idForPath, redirectFor, routeFor } from "./routes/routeTable";
+import { NotFoundPage } from "./pages/not-found";
 import { useLanguage } from "./context/LanguageContext";
 import { debounce, prefersReducedMotion, runWhenIdle, getDevicePerformanceTier } from "./lib/performance";
 import { projectId, publicAnonKey } from "../../utils/supabase/info";
@@ -397,7 +400,13 @@ const DEFAULT_PARTNERS = [
 export function MainContent() {
   const { tier, isLowEnd } = usePerformanceOptimization();
   const [isAdminOpen, setIsAdminOpen] = React.useState(false);
-  const [currentPage, setCurrentPage] = React.useState("home");
+  // Phase A (TR-01): the current page now comes from the URL instead of in-memory state, so every page
+  // has a real address, Back/Forward work, and links can be shared. Page ids are unchanged.
+  const location = useLocation();
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const currentPage = idForPath(location.pathname);
+  const legacyRedirect = redirectFor(location.pathname);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [isEmailOpen, setIsEmailOpen] = React.useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
@@ -408,10 +417,29 @@ export function MainContent() {
   const [isLanguageTransitioning, setIsLanguageTransitioning] = React.useState(false);
   const [currentTone, setCurrentTone] = React.useState("Corporate");
 
-  // Reinforce scroll to top on page change
+  // Scroll to top when navigating to a new page; leave Back/Forward (POP) to the browser.
   React.useLayoutEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' as any });
-  }, [currentPage]);
+    if (navigationType !== "POP") window.scrollTo({ top: 0, behavior: 'instant' as any });
+  }, [location.pathname, navigationType]);
+
+  // Per-page title, canonical URL and robots directive (previously identical on every page).
+  React.useEffect(() => {
+    const route = routeFor(currentPage);
+    if (route) document.title = route.title;
+    const canonicalHref = `https://paperwarefactory.com${currentPage === "not-found" ? "/" : location.pathname === "/" ? "/" : location.pathname.replace(/\/+$/, "")}`;
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = canonicalHref;
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", canonicalHref);
+    document.querySelector('meta[name="robots"]')?.setAttribute(
+      "content",
+      route?.noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    );
+  }, [currentPage, location.pathname]);
 
   const [heroVideoUrl, setHeroVideoUrl] = React.useState(DEFAULT_HERO_VIDEO);
   const [brochureUrl, setBrochureUrl] = React.useState("");
@@ -509,20 +537,20 @@ export function MainContent() {
   const handleBrochureDownload = React.useCallback(() => {}, []);
 
   const handlePageChange = React.useCallback((page: string) => {
+    if (import.meta.env.DEV && !routeFor(page)) console.warn(`[routes] unknown page id "${page}", sending to home`);
+    const path = pathFor(page);
     React.startTransition(() => {
-      setCurrentPage(page);
+      navigate(path);
     });
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+  }, [navigate]);
 
   const handleProductClick = React.useCallback((product: any) => {
     React.startTransition(() => {
       setQuoteBasket(prev => [...prev, product]);
       setIsBasketOpen(true);
-      setCurrentPage("product-details");
+      navigate(pathFor("product-details"));
     });
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  }, []);
+  }, [navigate]);
 
   const addToQuoteBasket = React.useCallback((product: any) => {
     setQuoteBasket(prev => {
@@ -554,7 +582,9 @@ export function MainContent() {
   }, []);
 
   const renderContent = React.useMemo(() => {
+    if (legacyRedirect) return <Navigate to={legacyRedirect} replace />;
     switch (currentPage) {
+      case "not-found": return <NotFoundPage onPageChange={handlePageChange} />;
       case "home":
         return (
           <div id="main-content" className="bg-white relative overflow-hidden font-['Poppins',sans-serif]">
@@ -639,7 +669,8 @@ export function MainContent() {
       case "clients": return <ClientsPage videoUrl={clientsVideoUrl} productionStats={productionStats} onPageChange={handlePageChange} partnersData={partnersData} />;
       case "papercups": return <PaperCupsPage videoUrls={factoryVideos} onProductClick={handleProductClick} onPageChange={handlePageChange} />;
       case "products": return <AllProductsPage onProductClick={handleProductClick} onAddToQuote={addToQuoteBasket} onPageChange={handlePageChange} products={productsData} clientProjects={clientProjects} />;
-      case "product-details": return <ProductDetailsPage product={quoteBasket[quoteBasket.length - 1]} onBack={() => setCurrentPage("products")} onAddToQuote={addToQuoteBasket} onContactClick={() => handlePageChange("contact")} />;
+      // Product details are chosen in-app; with no selection (e.g. a reload) go back to the catalogue.
+      case "product-details": return quoteBasket.length === 0 ? <Navigate to={pathFor("products")} replace /> : <ProductDetailsPage product={quoteBasket[quoteBasket.length - 1]} onBack={() => handlePageChange("products")} onAddToQuote={addToQuoteBasket} onContactClick={() => handlePageChange("contact")} />;
       case "office-stationary": return <OfficeStationaryPage onProductClick={handleProductClick} />;
       case "restaurant-supplies": return <RestaurantSuppliesPage onProductClick={handleProductClick} />;
       case "marketing-materials": return <MarketingMaterialsPage onProductClick={handleProductClick} />;
@@ -734,7 +765,7 @@ export function MainContent() {
       );
       default: return <Hero onExplore={() => handlePageChange("products")} videoUrl={heroVideoUrl} title={heroContent.title} subtitle1={heroContent.subtitle1} subtitle2={heroContent.subtitle2} />;
     }
-  }, [currentPage, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideos, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
+  }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideos, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
 
   return (
     <div className={`relative min-h-screen ${['home', 'client-portal', 'contact', 'about', 'products', 'sustainability', 'company'].includes(currentPage) ? 'bg-zinc-50 text-zinc-900' : 'bg-zinc-950 text-white'} font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden transition-colors duration-500`}>

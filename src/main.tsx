@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './app/App.tsx'
+import { BrowserRouter } from 'react-router'
 import './styles/index.css'
 import { PerformanceMonitor } from './app/components/PerformanceMonitor.tsx'
 import { ErrorBoundary } from './ErrorBoundary'
@@ -30,7 +31,9 @@ if (import.meta.env.DEV) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
       {import.meta.env.DEV && <PerformanceMonitor />}
     </ErrorBoundary>
   </React.StrictMode>,

@@ -21,6 +21,15 @@ interface NavbarProps {
   quoteBasketCount?: number;
 }
 
+/** True if a nav link, or any item nested inside it (dropdown items, mega-menu categories), targets `page`. */
+function linkContainsPage(node: unknown, page: string): boolean {
+  if (!node || typeof node !== "object") return false;
+  if ((node as { id?: string }).id === page) return true;
+  return Object.values(node as Record<string, unknown>).some(
+    (value) => Array.isArray(value) && value.some((child) => linkContainsPage(child, page))
+  );
+}
+
 const getLinks = (t: (key: string) => string) => [
   { name: t('home') || "Home", id: "home" },
   {
@@ -308,8 +317,10 @@ export const Navbar = React.memo(({
 
             <div className="hidden lg:flex items-center gap-0 flex-1 justify-start pl-2 md:pl-4 relative z-20">
               {links.map((link) => {
-                const isHome = link.id === "home";
-                const isActive = currentPage === link.id || activeDropdown === link.id;
+                // Phase A: the outlined pill marks the section containing the current page
+                // (it was hard-wired to "Home", so Home looked active on every page).
+                const isCurrent = linkContainsPage(link, currentPage);
+                const isActive = isCurrent || activeDropdown === link.id;
 
                 return (
                   <div
@@ -326,17 +337,18 @@ export const Navbar = React.memo(({
                         <button
                           data-dropdown-trigger="true"
                           onClick={() => handleInternalPageChange(link.id || "home")}
-                          className={`text-[10px] md:text-[10.5px] font-bold transition-all px-1.5 md:px-2 py-1 flex items-center gap-1 relative overflow-hidden ${isHome ? "bg-white border-[2px] border-black rounded-full text-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none mx-2 px-3"
+                          aria-current={isCurrent ? "page" : undefined}
+                          className={`text-[10px] md:text-[10.5px] font-bold transition-all px-1.5 md:px-2 py-1 flex items-center gap-1 relative overflow-hidden ${isCurrent ? "bg-white border-[2px] border-black rounded-full text-black shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none mx-2 px-3"
                             : isActive ? "text-black" : "text-[#8e8e8e] hover:text-black"
                             }`}
                         >
-                          {!isHome && (
+                          {!isCurrent && (
                             <motion.span className="absolute inset-0 rounded-full" style={{ backgroundColor: "rgba(250, 191, 55, 0.1)" }} initial={{ scale: 0, opacity: 0 }} whileHover={{ scale: 1.1, opacity: 1 }} transition={{ duration: 0.3 }} />
                           )}
-                          {isActive && !isHome && (
+                          {isActive && !isCurrent && (
                             <motion.div layoutId="navbar-underline" className="absolute bottom-0 left-0 w-full h-[3px] bg-[#fabf37]" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.3 }} />
                           )}
-                          <span className={`relative z-10 transition-transform duration-300 ${!isHome ? 'hover:scale-110' : ''}`}>
+                          <span className={`relative z-10 transition-transform duration-300 ${!isCurrent ? 'hover:scale-110' : ''}`}>
                             {link.name}
                           </span>
                           {(link.hasDropdown || link.isMega) && (
