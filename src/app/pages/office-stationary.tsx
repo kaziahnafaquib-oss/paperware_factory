@@ -13,8 +13,8 @@ import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.we
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 
 const products = [
-  { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: "https://images.unsplash.com/photo-1707589165239-10294fab6b13?auto=format&q=75&w=1600", icon: Contact },
-  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: yStationery, icon: Mail },
+  { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: yStationery, icon: Contact },
+  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&fit=crop&q=80&w=800", icon: Mail },
   { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&q=75&w=1600", icon: FileText },
   { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: yBrochures, icon: FileText },
   { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&q=75&w=1600", icon: FileText },
