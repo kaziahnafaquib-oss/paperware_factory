@@ -11,10 +11,10 @@ const imgProcess = "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb
 const imgHeidelberg = "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?q=80&w=1080&auto=format";
 const imgQuality = "https://images.unsplash.com/photo-1766325693346-6279a63b1fba?q=80&w=1080&auto=format";
 const imgCutting = "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=1080&auto=format";
-const imgFactory1 = "https://images.unsplash.com/photo-1565514020176-db931df334c4?q=80&w=1080&auto=format";
+const imgFactory1 = "https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1080&auto=format";
 const imgFactory2 = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1080&auto=format";
-const imgFactory3 = "https://images.unsplash.com/photo-1531297461136-82lw9z1l3b1a?q=80&w=1080&auto=format";
-const imgInnovation = "https://images.unsplash.com/photo-1581093458791-9f302e6d8359?q=80&w=1080&auto=format";
+const imgFactory3 = "https://images.unsplash.com/photo-1730705788367-dbd288c40ee7?q=80&w=1080&auto=format";
+const imgInnovation = "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?q=80&w=1080&auto=format";
 
 interface AboutPageProps {
   aboutUsVideos?: {

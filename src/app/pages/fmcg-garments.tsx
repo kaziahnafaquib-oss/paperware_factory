@@ -10,13 +10,18 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
+import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
+import pConfectioneryBoxes from "figma:asset/products/confectionery-boxes.webp";
+import pCookieBoxes from "figma:asset/products/cookie-boxes.webp";
+import pTissueBoxFloral from "figma:asset/products/tissue-box-floral.webp";
+import pTissueBoxes from "figma:asset/products/tissue-boxes.webp";
 
 const products = [
-  { name: "Food & Beverage Packaging", desc: "Moisture-locked boxes for snacks and drinks.", category: "FMCG", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=75&w=1600", price: "12.50", icon: Package },
-  { name: "Personal Care", desc: "Luxury aesthetic packaging for cosmetics.", category: "FMCG", image: "https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?auto=format&q=75&w=1600", price: "45.00", icon: Box },
-  { name: "Product Packaging", desc: "Generic to custom high-run product boxes.", category: "FMCG", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&q=75&w=1600", price: "18.00", icon: Box },
-  { name: "Home Care Packaging", desc: "Durable boxes for cleaning and home supplies.", category: "FMCG", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&q=75&w=1600", price: "22.00", icon: Package },
-  { name: "Confectionary Goods", desc: "Decorative and food-safe chocolate/sweet boxes.", category: "FMCG", image: "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&q=75&w=1600", price: "35.00", icon: Package },
+  { name: "Food & Beverage Packaging", desc: "Moisture-locked boxes for snacks and drinks.", category: "FMCG", image: pCookieBoxes, price: "12.50", icon: Package },
+  { name: "Personal Care", desc: "Luxury aesthetic packaging for cosmetics.", category: "FMCG", image: pTissueBoxes, price: "45.00", icon: Box },
+  { name: "Product Packaging", desc: "Generic to custom high-run product boxes.", category: "FMCG", image: yProductBoxes, price: "18.00", icon: Box },
+  { name: "Home Care Packaging", desc: "Durable boxes for cleaning and home supplies.", category: "FMCG", image: pTissueBoxFloral, price: "22.00", icon: Package },
+  { name: "Confectionary Goods", desc: "Decorative and food-safe chocolate/sweet boxes.", category: "FMCG", image: pConfectioneryBoxes, price: "35.00", icon: Package },
 ];
 
 export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {

@@ -121,7 +121,7 @@ const testimonialsData = [
     stars: 5,
     text: "We've been working with Paperware for a few years now. We're consistently satisfied. The quality of the cups is great, service is fast, prices are fair, and our customers are very happy.",
     author: "CERTIFIED COFFEE",
-    image: "https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=1000"
   },
   {
     stars: 5,
@@ -1033,7 +1033,7 @@ const socialFeeds = [
     content: 'We are hiring! Join the team building the future of industrial packaging.', 
     icon: Linkedin, 
     color: '#0A66C2',
-    image: 'https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=400'
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400'
   },
 ];
 

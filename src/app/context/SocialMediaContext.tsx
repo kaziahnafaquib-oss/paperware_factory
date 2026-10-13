@@ -99,7 +99,7 @@ export function SocialMediaProvider({ children }: { children: React.ReactNode })
     {
       id: '9',
       platform: "Youtube",
-      img: "https://images.unsplash.com/photo-1565514020176-db967528cb8e?auto=format&q=80&w=800",
+      img: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=80&w=800",
       caption: "Customer Success Story: How 'Cafe Brew' reduced their plastic footprint by 80%.",
       date: "2w ago",
       isHidden: false
@@ -107,7 +107,7 @@ export function SocialMediaProvider({ children }: { children: React.ReactNode })
     {
       id: '10',
       platform: "Instagram",
-      img: "https://images.unsplash.com/photo-1509785303662-999d5338d0e6?auto=format&q=80&w=800",
+      img: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=80&w=800",
       caption: "Minimalist aesthetics for the modern brand. #Paperware #Design",
       date: "3w ago",
       isHidden: false
@@ -131,7 +131,7 @@ export function SocialMediaProvider({ children }: { children: React.ReactNode })
     {
       id: '13',
       platform: "Instagram",
-      img: "https://images.unsplash.com/photo-1520607162513-77705e68572c?auto=format&q=80&w=800",
+      img: "https://images.unsplash.com/photo-1747006116196-fc20e136e4c0?auto=format&q=80&w=800",
       caption: "Textures of sustainability. Close up of our recycled paper mesh.",
       date: "1mo ago",
       isHidden: true

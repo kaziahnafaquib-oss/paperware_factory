@@ -233,6 +233,9 @@ import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.web
 import imgCardBg3 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.webp";
 import imgFactoryIllustration from "figma:asset/f509e99bb4cc15f45dbb0d895480da5f9027b46c.webp";
 import imgHeroMobile from "figma:asset/7355363d5bbe4910fbf181181e9702179c6c7d50.webp";
+import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
+import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
+import yCupStack from "figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.webp";
 
 // Neural Language Transition Effect
 function NeuralTransition({ isVisible, language }: { isVisible: boolean, language: string }) {
@@ -336,13 +339,13 @@ const DEFAULT_PRODUCTS = [
   { id: 1, name: "Eco-Liner Food Box", category: "Food Packaging", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format", status: "Active" },
   { id: 2, name: "Double Wall Coffee Cup", category: "Beverage", image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800&auto=format", status: "Active" },
   { id: 3, name: "Industrial Kraft Bag", category: "Logistics", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
-  { id: 4, name: "Single Wall Cup (SW)", category: "Paper Cups", image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c?q=80&w=800&auto=format", status: "Active" },
+  { id: 4, name: "Single Wall Cup (SW)", category: "Paper Cups", image: yPaperCups, status: "Active" },
   { id: 5, name: "Marketing Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
   { id: 6, name: "Sterile Medicine Box", category: "Pharmaceutical", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?q=80&w=800&auto=format", status: "Active" },
   { id: 7, name: "Snack Retail Packaging", category: "FMCG", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=800&auto=format", status: "Active" },
   { id: 8, name: "Burger Ventilation Box", category: "Restaurant", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=800&auto=format", status: "Active" },
   { id: 9, name: "Premium Gift Bag", category: "Luxury", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format", status: "Active" },
-  { id: 10, name: "Eco Tea Sleeves", category: "Beverage", image: "https://images.unsplash.com/photo-1556742049-02e1f740d0ff?q=80&w=800&auto=format", status: "Active" },
+  { id: 10, name: "Eco Tea Sleeves", category: "Beverage", image: yCupStack, status: "Active" },
   { id: 11, name: "Industrial Tote", category: "Logistics", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
   { id: 12, name: "Sustainable Mailer", category: "Logistics", image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=800&auto=format", status: "Active" },
 ];
@@ -352,7 +355,7 @@ const DEFAULT_CLIENT_PROJECTS = [
     company: "TechFlow Systems",
     project: "Neural Hardware Packaging",
     desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?auto=format&q=80&w=1000"
+    image: yProductBoxes
   },
   {
     company: "GreenLeaf Organics",

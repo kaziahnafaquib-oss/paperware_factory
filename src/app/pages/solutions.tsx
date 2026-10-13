@@ -5,6 +5,7 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import imgPaperCups from 'figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.webp';
 import imgColorfulCups from 'figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp';
 import imgPharmaceuticals from 'figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp';
+import yPharmaBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
 
 const solutions = [
   {
@@ -21,7 +22,7 @@ const solutions = [
     icon: <ShieldCheck className="size-10" />,
     description: "Sterile-grade medical packaging solutions that meet international safety standards and regulatory compliance.",
     features: ["Tamper-evident design", "SGS certified", "High-barrier protection"],
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?auto=format&q=80&w=1000"
+    image: yPharmaBoxes
   },
   {
     id: "retail-fmcg",
