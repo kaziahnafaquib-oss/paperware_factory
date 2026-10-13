@@ -10,13 +10,13 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
-import imgCalendar from "figma:asset/d56cc7180a46e9766ae8656e08f26915e65b1e08.png";
-import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.png";
-import imgTissueBox from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.png";
-import imgMagazine from "figma:asset/6918c60927e9f8a4474f86ad7e0b378cadd0b766.png";
-import imgFlyer from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.png";
-import imgBrochure from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.png";
-import imgPaperBag from "figma:asset/510221172209f9745471ae8d0b0d125bd25a70f7.png";
+import imgCalendar from "figma:asset/d56cc7180a46e9766ae8656e08f26915e65b1e08.webp";
+import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.webp";
+import imgTissueBox from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.webp";
+import imgMagazine from "figma:asset/6918c60927e9f8a4474f86ad7e0b378cadd0b766.webp";
+import imgFlyer from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
+import imgBrochure from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
+import imgPaperBag from "figma:asset/510221172209f9745471ae8d0b0d125bd25a70f7.webp";
 
 const products = [
   { name: "Paper Bag", desc: "Luxury branded carry bags with premium handles.", category: "Packaging", image: imgPaperBag, price: "45.00", icon: ShoppingBag },

@@ -35,7 +35,7 @@ const products = [
     tech: "PUREFIBER TECH",
     time: "19M AGO",
     status: "LIVE",
-    image: "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMGtyYWZ0JTIwcGFwZXIlMjBiYWclMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3MjcwOTAyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMGtyYWZ0JTIwcGFwZXIlMjBiYWclMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3MjcwOTAyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     badge: "PRODUCTION",
     badgeColor: "bg-blue-600",
     stock: 4500
@@ -46,7 +46,7 @@ const products = [
     tech: "PUREFIBER TECH",
     time: "19M AGO",
     status: "LIVE",
-    image: "https://images.unsplash.com/photo-1604138290658-2bc80c707bbf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJkYm9hcmQlMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3MjcwOTAyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "https://images.unsplash.com/photo-1604138290658-2bc80c707bbf?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJkYm9hcmQlMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3MjcwOTAyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     badge: "PRODUCTION",
     badgeColor: "bg-blue-600",
     stock: 12000
@@ -57,7 +57,7 @@ const products = [
     tech: "NATUREFIRST PACKAGING",
     time: "23M AGO",
     status: "LIVE",
-    image: "https://images.unsplash.com/photo-1585192794786-54c2a1dbc4d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGVybWFsJTIwaW5zdWxhdGlvbiUyMHBhcGVyJTIwY3VwcyUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcyNzA5MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "https://images.unsplash.com/photo-1585192794786-54c2a1dbc4d2?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGVybWFsJTIwaW5zdWxhdGlvbiUyMHBhcGVyJTIwY3VwcyUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcyNzA5MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     badge: "PRODUCTION",
     badgeColor: "bg-blue-600",
     stock: 850
@@ -68,7 +68,7 @@ const products = [
     tech: "NATUREFIRST PACKAGING",
     time: "36M AGO",
     status: "LOW STOCK",
-    image: "https://images.unsplash.com/photo-1643185720431-9c050eebbc9a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYW1ib28lMjBmaWJlciUyMHBsYXRlcyUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcyNzA5MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "https://images.unsplash.com/photo-1643185720431-9c050eebbc9a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYW1ib28lMjBmaWJlciUyMHBsYXRlcyUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcyNzA5MDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     badge: "QC CHECK",
     badgeColor: "bg-[#fabf37] text-black",
     stock: 120
@@ -245,7 +245,7 @@ export default function ProductionInventoryView() {
                {/* Background Image */}
                <div className="absolute inset-0">
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                  <img loading="lazy" decoding="async" src={product.image} alt={product.name} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                </div>
 
                {/* Status Tag */}

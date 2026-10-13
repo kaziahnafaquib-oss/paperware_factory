@@ -1,4 +1,4 @@
-import image_370cc946765f24fecd2241c5798febf3f636cf5e from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png';
+import image_370cc946765f24fecd2241c5798febf3f636cf5e from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp';
 import React from "react";
 import { motion } from "motion/react";
 import { 
@@ -13,9 +13,9 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
-  { name: "Patient File", desc: "Durable medical record folders with antimicrobial coating.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c", price: "22.00", icon: FolderOpen },
-  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c", price: "35.00", icon: FileText },
-  { name: "Doctor's Prescription Pad", desc: "Secure serialized prescription pads with security features.", category: "Prescription", image: "https://images.unsplash.com/photo-1505751172107-573225a96220", price: "12.00", icon: ClipboardList },
+  { name: "Patient File", desc: "Durable medical record folders with antimicrobial coating.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c?auto=format&q=75&w=1600", price: "22.00", icon: FolderOpen },
+  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c?auto=format&q=75&w=1600", price: "35.00", icon: FileText },
+  { name: "Doctor's Prescription Pad", desc: "Secure serialized prescription pads with security features.", category: "Prescription", image: "https://images.unsplash.com/photo-1505751172107-573225a96220?auto=format&q=75&w=1600", price: "12.00", icon: ClipboardList },
   { name: "Report Envelope", desc: "Privacy-guaranteed clinical report packaging.", category: "Envelope", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "8.50", icon: FileText },
   { name: "Medicine Box", desc: "Precision-molded drug packaging with braille support.", category: "Packaging", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "14.50", icon: Pill },
   { name: "Medicine Literature", desc: "Micro-folded dosage guides and safety leaflets.", category: "Print", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "2.50", icon: BookOpen },

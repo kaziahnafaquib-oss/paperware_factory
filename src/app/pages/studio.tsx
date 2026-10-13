@@ -13,11 +13,11 @@ import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 
 const PRODUCTS_LIST = [
-  { id: 'cup', name: "Single Wall Cup", category: "Paper Cups", image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c", icon: '🥤' },
-  { id: 'box', name: "Burger Box", category: "Food Boxes", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add", icon: '🍔' },
-  { id: 'bag', name: "Luxury Paper Bag", category: "Paper Bags", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306", icon: '🛍️' },
-  { id: 'brochure', name: "Brand Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363", icon: '📄' },
-  { id: 'pharm', name: "Medicine Box", category: "Pharma", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286", icon: '💊' },
+  { id: 'cup', name: "Single Wall Cup", category: "Paper Cups", image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c?auto=format&q=75&w=1600", icon: '🥤' },
+  { id: 'box', name: "Burger Box", category: "Food Boxes", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", icon: '🍔' },
+  { id: 'bag', name: "Luxury Paper Bag", category: "Paper Bags", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", icon: '🛍️' },
+  { id: 'brochure', name: "Brand Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", icon: '📄' },
+  { id: 'pharm', name: "Medicine Box", category: "Pharma", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&q=75&w=1600", icon: '💊' },
 ];
 
 export function StudioPage() {
@@ -167,7 +167,7 @@ export function StudioPage() {
                              className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all text-left group ${selectedProductId === product.id ? 'bg-black border-black text-white' : 'bg-white border-zinc-100 text-zinc-400 hover:border-black/10'}`}
                            >
                              <div className="size-12 rounded-xl bg-zinc-100 overflow-hidden flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
-                                <img src={product.image} className="w-full h-full object-cover" />
+                                <img loading="lazy" decoding="async" src={product.image} className="w-full h-full object-cover" />
                              </div>
                              <div className="flex-1">
                                <p className={`font-black text-[11px] uppercase tracking-widest ${selectedProductId === product.id ? 'text-[#fabf37]' : 'text-black'}`}>{product.name}</p>
@@ -210,7 +210,7 @@ export function StudioPage() {
                       <SectionHeader title="Visual Identity" />
                       <label className="flex flex-col items-center justify-center w-full h-32 bg-zinc-50 border-2 border-dashed border-zinc-200 rounded-[24px] cursor-pointer hover:bg-zinc-100 hover:border-[#fabf37] transition-all group overflow-hidden relative">
                         {logo ? (
-                          <img src={logo} className="w-full h-full object-contain p-4" />
+                          <img loading="lazy" decoding="async" src={logo} className="w-full h-full object-contain p-4" />
                         ) : (
                           <div className="flex flex-col items-center gap-2">
                              <Upload className="size-6 text-zinc-300 group-hover:text-[#fabf37] transition-colors" />
@@ -467,7 +467,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
             
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center mt-10">
               {logo && (
-                <motion.img 
+                <motion.img loading="lazy" decoding="async" 
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   src={logo} 
@@ -503,7 +503,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
             <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/cardboard.png')]" />
             
             <div className="flex flex-col items-center p-12 text-center relative z-10">
-               {logo && <img src={logo} className="max-w-[200px] mb-8 drop-shadow-2xl" />}
+               {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[200px] mb-8 drop-shadow-2xl" />}
                <p className={`text-5xl font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-black'}`} style={{ fontFamily }}>{text}</p>
             </div>
 
@@ -524,7 +524,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
               <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
               
               <div className="mt-32 w-full flex flex-col items-center p-10 text-center relative z-10">
-                 {logo && <img src={logo} className="max-w-[180px] mb-8 drop-shadow-2xl" />}
+                 {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[180px] mb-8 drop-shadow-2xl" />}
                  <p className={`text-4xl font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-black'}`} style={{ fontFamily }}>{text}</p>
               </div>
 
@@ -548,7 +548,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
           >
              <div className="absolute inset-0 opacity-15 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]" />
              <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center">
-                {logo && <img src={logo} className="max-w-[140px] mb-8 drop-shadow-xl" />}
+                {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[140px] mb-8 drop-shadow-xl" />}
                 <p className={`text-2xl font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-black'}`} style={{ fontFamily }}>{text}</p>
              </div>
              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent" />
@@ -585,7 +585,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-6">
-               {logo && <img src={logo} className="max-w-[120px] grayscale opacity-40 hover:opacity-100 transition-opacity" />}
+               {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[120px] grayscale opacity-40 hover:opacity-100 transition-opacity" />}
                <div className="space-y-2">
                  <p className={`text-xl font-black uppercase tracking-tighter leading-none ${isDark ? 'text-white' : 'text-black'}`} style={{ fontFamily }}>{text}</p>
                  <p className="text-[9px] font-black opacity-30 uppercase tracking-[0.2em]">Medical Grade Packaging</p>

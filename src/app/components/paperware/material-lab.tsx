@@ -18,7 +18,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 92
       },
       description: "Optimized for high-end retail packaging with a specialized clay coating for vibrant color reproduction.",
-      image: "https://images.unsplash.com/photo-1586075010623-26c50dec4a05?q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1586075010623-26c50dec4a05?auto=format&q=80&w=1000"
     },
     {
       id: 1,
@@ -32,7 +32,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 100
       },
       description: "100% plastic-free aqueous barrier coating that provides superior moisture protection without compromising recyclability.",
-      image: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&q=80&w=1000"
     },
     {
       id: 2,
@@ -46,7 +46,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 100
       },
       description: "Raw, unbleached long-fiber pulp from sustainable Nordic forests. Extreme structural integrity for heavy industrial use.",
-      image: "https://images.unsplash.com/photo-1529690656645-13bc22998a4d?q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1529690656645-13bc22998a4d?auto=format&q=80&w=1000"
     }
   ];
 
@@ -62,7 +62,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
              
              <div className="relative aspect-square md:aspect-video rounded-[40px] md:rounded-[60px] overflow-hidden border border-white/10 bg-zinc-900/80 shadow-2xl backdrop-blur-3xl">
                 <AnimatePresence mode="wait">
-                  <motion.img 
+                  <motion.img loading="lazy" decoding="async" 
                     key={activeMaterial}
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}

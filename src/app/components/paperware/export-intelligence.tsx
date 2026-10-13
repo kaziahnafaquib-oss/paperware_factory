@@ -7,8 +7,8 @@ import {
   Leaf, Search, Check, Box, Plane, Truck
 } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
-import bangladeshFlagImage from 'figma:asset/ce6bea61e31dd50e8cbf06060db17726c1c41f3a.png';
-import paperwareShippingImage from 'figma:asset/19e5679ad58f7a50390ebe911dd3186e6a891ce7.png';
+import bangladeshFlagImage from 'figma:asset/ce6bea61e31dd50e8cbf06060db17726c1c41f3a.webp';
+import paperwareShippingImage from 'figma:asset/19e5679ad58f7a50390ebe911dd3186e6a891ce7.webp';
 
 // --- 3D Tilt Component with Glare - REDUCED ROTATION FOR SMOOTH EXPERIENCE ---
 const TiltCard = ({ children, className = "", glare = true }: { children: React.ReactNode; className?: string, glare?: boolean }) => {
@@ -139,7 +139,7 @@ export function ExportIntelligence() {
           }} 
           className="absolute top-32 right-[-5%] md:right-10 w-64 md:w-96 pointer-events-none z-10 opacity-80"
        >
-          <img 
+          <img loading="lazy" decoding="async" 
             src="https://images.unsplash.com/photo-1596767789311-667793d944c6?q=80&w=1080&auto=format&fit=crop" 
             alt="Cargo Ship Logistics" 
             className="w-full h-auto object-contain drop-shadow-2xl mix-blend-multiply"
@@ -295,7 +295,7 @@ export function ExportIntelligence() {
                   }}
                   className="absolute -right-8 md:-right-24 bottom-0 z-40 h-[100%] md:h-[130%] w-auto flex items-end pointer-events-none perspective-[1000px]"
                 >
-                   <motion.img 
+                   <motion.img loading="lazy" decoding="async" 
                       src={bangladeshFlagImage} 
                       alt="Bangladesh Flag Bearer"
                       animate={{ 
@@ -595,7 +595,7 @@ function HeroImageParallax() {
             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent z-10 pointer-events-none" />
             
             <motion.div style={{ y, scale }} className="w-full h-full">
-                <img 
+                <img loading="lazy" decoding="async" 
                     src={paperwareShippingImage} 
                     alt="Paperware Export Ready - Shipping Container Port" 
                     className="w-full h-full object-cover"

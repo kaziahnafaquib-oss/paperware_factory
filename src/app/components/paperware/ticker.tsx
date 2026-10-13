@@ -49,7 +49,7 @@ export const Ticker = React.memo(() => {
             ))}
             <div className={itemClass}>
               MADE IN BANGLADESH
-              <img src="https://flagcdn.com/bd.svg" alt="" width={20} height={12} className="h-3 w-auto rounded-sm shadow-sm" />
+              <img loading="lazy" decoding="async" src="https://flagcdn.com/bd.svg" alt="" width={20} height={12} className="h-3 w-auto rounded-sm shadow-sm" />
             </div>
             <div className="size-1.5 rounded-full bg-black/20" aria-hidden="true" />
           </div>

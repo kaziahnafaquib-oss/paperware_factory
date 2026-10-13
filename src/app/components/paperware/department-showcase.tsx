@@ -69,7 +69,7 @@ const departments = [
     name: "Lamination Unit",
     title: "Sustainable Barrier Coating",
     description: "Utilizing biodegradable PLA and water-based coatings to provide superior liquid resistance while maintaining 100% recyclability.",
-    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1080",
     icon: Layers,
     stats: [
       { label: "Daily Output", value: "25K Pcs" },
@@ -83,7 +83,7 @@ const departments = [
     name: "Forming Unit",
     title: "High-Speed Product Assembly",
     description: "State-of-the-art European forming machines that mold and seal packaging at incredible speeds with ultrasonic leak-proof technology.",
-    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1080",
     icon: Settings,
     stats: [
       { label: "Daily Output", value: "350K Pcs" },
@@ -97,7 +97,7 @@ const departments = [
     name: "Quality Check Unit",
     title: "Multi-Stage Inspection Lab",
     description: "Rigorous testing protocols in a medical-grade environment, ensuring every product meets international safety and hygiene standards.",
-    image: "https://images.unsplash.com/photo-1700727448542-50531bc60211?q=80&w=1080",
+    image: "https://images.unsplash.com/photo-1700727448542-50531bc60211?auto=format&q=80&w=1080",
     icon: ShieldCheck,
     stats: [
       { label: "Defect Rate", value: "< 0.01%" },

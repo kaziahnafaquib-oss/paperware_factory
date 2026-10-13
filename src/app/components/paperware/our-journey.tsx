@@ -216,7 +216,7 @@ function MilestoneItem({ milestone, index }: MilestoneItemProps) {
               suppressHydrationWarning
             />
           ) : (
-            <img 
+            <img loading="lazy" decoding="async" 
               src={milestone.videoUrl}
               alt={milestone.title}
               className="w-full h-full object-cover"
@@ -325,7 +325,7 @@ export function OurJourney() {
         year: "2019",
         title: "The Beginning",
         stat: "Founded",
-        videoUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -333,7 +333,7 @@ export function OurJourney() {
         year: "2020",
         title: "Growing Trust",
         stat: "50+ Partners",
-        videoUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -341,7 +341,7 @@ export function OurJourney() {
         year: "2021",
         title: "Scale Up",
         stat: "10K+ Customers",
-        videoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -349,7 +349,7 @@ export function OurJourney() {
         year: "2022",
         title: "Mass Production",
         stat: "5M+ Products",
-        videoUrl: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -357,7 +357,7 @@ export function OurJourney() {
         year: "2024",
         title: "Premium Status",
         stat: "150+ Clients",
-        videoUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -365,7 +365,7 @@ export function OurJourney() {
         year: "2025",
         title: "Going Global",
         stat: "International",
-        videoUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&w=800&q=80",
         videoType: "image"
       }
     ];

@@ -5,7 +5,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { openWhatsAppInquiry } from "../lib/inquiry";
 // Phase A0: replaced an unsafe stock photo (a gun silhouette) with a real packaging render from the project assets.
-import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png";
+import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
 
 export function Catalog3DPage() {
   const { t, isRTL } = useLanguage();
@@ -27,7 +27,7 @@ export function Catalog3DPage() {
       name: "Industrial Shipping Carton",
       description: "Triple-walled corrugated cardboard for heavy-duty global shipping.",
       specs: ["300kg Crush Test", "Water-resistant Layer", "Stackable Design"],
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
       colors: ["#78350F", "#451A03"],
       rating: 4.8
     },
@@ -36,7 +36,7 @@ export function Catalog3DPage() {
       name: "Eco-Coffee Carrier",
       description: "Multi-cup high-grip carriers made from molded pulp fibers.",
       specs: ["Spill-proof Geometry", "100% Pulp", "Space Saving"],
-      image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
       colors: ["#D1D5DB", "#9CA3AF"],
       rating: 5.0
     }

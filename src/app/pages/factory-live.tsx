@@ -21,9 +21,9 @@ export function FactoryLivePage() {
   const [isLive, setIsLive] = React.useState(true);
 
   const cams = [
-    { id: "CAM-01", name: "Main Assembly Line", location: "Sector A", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" },
-    { id: "CAM-02", name: "Quality Control", location: "Sector B", img: "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" },
-    { id: "CAM-03", name: "Warehouse Logistics", location: "Loading Dock", img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200" }
+    { id: "CAM-01", name: "Main Assembly Line", location: "Sector A", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" },
+    { id: "CAM-02", name: "Quality Control", location: "Sector B", img: "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" },
+    { id: "CAM-03", name: "Warehouse Logistics", location: "Loading Dock", img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" }
   ];
 
   return (

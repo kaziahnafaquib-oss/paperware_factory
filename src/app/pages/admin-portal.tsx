@@ -38,7 +38,7 @@ export function AdminPortal() {
         year: "2019",
         title: "The Beginning",
         stat: "Founded",
-        videoUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -46,7 +46,7 @@ export function AdminPortal() {
         year: "2020",
         title: "Growing Trust",
         stat: "50+ Partners",
-        videoUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -54,7 +54,7 @@ export function AdminPortal() {
         year: "2021",
         title: "Scale Up",
         stat: "10K+ Customers",
-        videoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -62,7 +62,7 @@ export function AdminPortal() {
         year: "2022",
         title: "Mass Production",
         stat: "5M+ Products",
-        videoUrl: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -70,7 +70,7 @@ export function AdminPortal() {
         year: "2024",
         title: "Premium Status",
         stat: "150+ Clients",
-        videoUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&w=800&q=80",
         videoType: "image"
       },
       {
@@ -78,7 +78,7 @@ export function AdminPortal() {
         year: "2025",
         title: "Going Global",
         stat: "International",
-        videoUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
+        videoUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&w=800&q=80",
         videoType: "image"
       }
     ];
@@ -394,7 +394,7 @@ export function AdminPortal() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="relative size-12 rounded-lg overflow-hidden bg-zinc-200">
-                      <img src={item.url} alt={item.name} className="w-full h-full object-cover" />
+                      <img loading="lazy" decoding="async" src={item.url} alt={item.name} className="w-full h-full object-cover" />
                       {item.type === 'team' && (
                         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                           <Users className="size-3 text-white" />
@@ -540,7 +540,7 @@ export function AdminPortal() {
                 )}
 
                 <div className="aspect-square bg-zinc-100 rounded-xl overflow-hidden">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={editingImage.url}
                     alt={editingImage.name}
                     className="w-full h-full object-cover"

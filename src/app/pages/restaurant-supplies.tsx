@@ -1,7 +1,7 @@
-import image_370cc946765f24fecd2241c5798febf3f636cf5e from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png';
-import image_44417efdbf939eba86a583d08d358bb76989e3cd from 'figma:asset/44417efdbf939eba86a583d08d358bb76989e3cd.png';
-import image_ee1e96d0bd347161979763a2b2031584e134c4d4 from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.png';
-import image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae from 'figma:asset/9a9c9fa960f9122b0d888aba39bcd4994971b7ae.png';
+import image_370cc946765f24fecd2241c5798febf3f636cf5e from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp';
+import image_44417efdbf939eba86a583d08d358bb76989e3cd from 'figma:asset/44417efdbf939eba86a583d08d358bb76989e3cd.webp';
+import image_ee1e96d0bd347161979763a2b2031584e134c4d4 from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.webp';
+import image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae from 'figma:asset/9a9c9fa960f9122b0d888aba39bcd4994971b7ae.webp';
 import React from "react";
 import { motion } from "motion/react";
 import { 
@@ -17,23 +17,23 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
-  { name: "FOOD BOX", desc: "Grease-resistant industrial grade food containers.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d", price: "8.50", icon: Box },
+  { name: "FOOD BOX", desc: "Grease-resistant industrial grade food containers.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=75&w=1600", price: "8.50", icon: Box },
   { name: "CHOWMEIN BOX", desc: "Leak-proof boxes with specialized thermal coating.", category: "Restaurant Packaging", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "6.20", icon: Utensils },
   { name: "MEAT BOX", desc: "Heavy-duty boxes for raw and processed meats.", category: "Restaurant Packaging", image: image_44417efdbf939eba86a583d08d358bb76989e3cd, price: "12.00", icon: Drumstick },
-  { name: "SANDWICH BOX", desc: "Clear-window display boxes for freshness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1560340841-eefc7aa04432", price: "5.50", icon: Sandwich },
-  { name: "BURGER BOX", desc: "Ventilated boxes to maintain crispness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1744842854127-2d948d9ea673", price: "7.00", icon: Sandwich },
-  { name: "PIZZA BOX", desc: "Triple-layer corrugated heat-retention boxes.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462", price: "15.00", icon: Pizza },
+  { name: "SANDWICH BOX", desc: "Clear-window display boxes for freshness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1560340841-eefc7aa04432?auto=format&q=75&w=1600", price: "5.50", icon: Sandwich },
+  { name: "BURGER BOX", desc: "Ventilated boxes to maintain crispness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1744842854127-2d948d9ea673?auto=format&q=75&w=1600", price: "7.00", icon: Sandwich },
+  { name: "PIZZA BOX", desc: "Triple-layer corrugated heat-retention boxes.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462?auto=format&q=75&w=1600", price: "15.00", icon: Pizza },
   { name: "CAKE BOX", desc: "Premium handle-integrated pastry packaging.", category: "Restaurant Packaging", image: image_ee1e96d0bd347161979763a2b2031584e134c4d4, price: "18.50", icon: Cake },
-  { name: "SWEET BOX", desc: "Traditional and luxury boxes with foil stamping.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1607940471713-a9376f150a0d", price: "25.00", icon: Candy },
-  { name: "FRIES BOX", desc: "Oil-resistant scoop cups for crispy fries.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1576107232684-1279f390859f", price: "4.00", icon: Box },
-  { name: "SHAWARMA BOX", desc: "Easy-tear open boxes for wraps and rolls.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1529006557810-274bc9344389", price: "5.00", icon: Utensils },
-  { name: "WAFFLE BOX & TRAY", desc: "Sturdy trays for waffles and toppings.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1562519990-50eb51e28292", price: "6.50", icon: Layers },
-  { name: "WEDGES CONE", desc: "Conical holders for potato wedges and snacks.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1610444585193-470557e491c1", price: "3.50", icon: IceCream },
-  { name: "ICE CREAM CONE", desc: "Protective sleeves for ice cream cones.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1580915411954-282cb1b0d780", price: "2.00", icon: IceCream },
+  { name: "SWEET BOX", desc: "Traditional and luxury boxes with foil stamping.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1607940471713-a9376f150a0d?auto=format&q=75&w=1600", price: "25.00", icon: Candy },
+  { name: "FRIES BOX", desc: "Oil-resistant scoop cups for crispy fries.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&q=75&w=1600", price: "4.00", icon: Box },
+  { name: "SHAWARMA BOX", desc: "Easy-tear open boxes for wraps and rolls.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1529006557810-274bc9344389?auto=format&q=75&w=1600", price: "5.00", icon: Utensils },
+  { name: "WAFFLE BOX & TRAY", desc: "Sturdy trays for waffles and toppings.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1562519990-50eb51e28292?auto=format&q=75&w=1600", price: "6.50", icon: Layers },
+  { name: "WEDGES CONE", desc: "Conical holders for potato wedges and snacks.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1610444585193-470557e491c1?auto=format&q=75&w=1600", price: "3.50", icon: IceCream },
+  { name: "ICE CREAM CONE", desc: "Protective sleeves for ice cream cones.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&q=75&w=1600", price: "2.00", icon: IceCream },
   { name: "SUGAR SACHET", desc: "Custom branded sugar and seasoning sachets.", category: "Restaurant Packaging", image: image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae, price: "0.50", icon: Coffee },
-  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1575424909138-70b05d80c092", price: "1.00", icon: FileText },
-  { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306", price: "3.00", icon: ShoppingBag },
-  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2", price: "4.50", icon: FileText },
+  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1575424909138-70b05d80c092?auto=format&q=75&w=1600", price: "1.00", icon: FileText },
+  { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", price: "3.00", icon: ShoppingBag },
+  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?auto=format&q=75&w=1600", price: "4.50", icon: FileText },
 ];
 
 export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {

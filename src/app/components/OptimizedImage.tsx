@@ -100,7 +100,7 @@ export function OptimizedImage({
     >
       {/* Blur placeholder */}
       {blur && blurPlaceholder && !isLoaded && (
-        <img
+        <img loading="lazy" decoding="async"
           src={blurPlaceholder}
           alt=""
           aria-hidden="true"

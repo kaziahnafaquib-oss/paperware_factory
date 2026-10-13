@@ -11,7 +11,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-import pkgShowcase from "figma:asset/f941795c19ecf31f77a6d084830e22f2ef6ea6c7.png";
+import pkgShowcase from "figma:asset/f941795c19ecf31f77a6d084830e22f2ef6ea6c7.webp";
 
 const jobs = [
   { title: "Factory Supervisor", location: "Dhaka, BD", type: "Full-time" },
@@ -70,9 +70,9 @@ const steps = [
 ];
 
 const lifeImages = [
-  "https://images.unsplash.com/photo-1602318492327-0383f002fa0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzdXN0YWluYWJsZSUyMGZhY3RvcnklMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjY1NDUyMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "https://images.unsplash.com/photo-1646579886741-12b59840c63f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZW5naW5lZXJpbmclMjB0ZWFtJTIwd29ya3Nob3B8ZW58MXx8fHwxNzY2NTQ1MjM1fDA",
-  "https://images.unsplash.com/photo-1672552226669-f6c3041972ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjBsb2dpc3RpY3MlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY2NTQ1MjM3fDA"
+  "https://images.unsplash.com/photo-1602318492327-0383f002fa0a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzdXN0YWluYWJsZSUyMGZhY3RvcnklMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjY1NDUyMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "https://images.unsplash.com/photo-1646579886741-12b59840c63f?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZW5naW5lZXJpbmclMjB0ZWFtJTIwd29ya3Nob3B8ZW58MXx8fHwxNzY2NTQ1MjM1fDA&q=75&w=1600",
+  "https://images.unsplash.com/photo-1672552226669-f6c3041972ea?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjBsb2dpc3RpY3MlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY2NTQ1MjM3fDA&q=75&w=1600"
 ];
 
 const testimonials = [
@@ -960,7 +960,7 @@ export function CareerPage() {
                     }}
                     className="backdrop-blur-md border border-white/5 p-8 rounded-[40px] flex flex-col sm:flex-row gap-6 items-center sm:items-start transition-colors"
                   >
-                    <img src={t.img} alt={t.name} className="size-16 rounded-2xl object-cover border-2 border-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.3)]" />
+                    <img loading="lazy" decoding="async" src={t.img} alt={t.name} className="size-16 rounded-2xl object-cover border-2 border-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.3)]" />
                     <div className="space-y-3 text-center sm:text-left">
                       <p className="text-white font-medium italic leading-relaxed">"{t.quote}"</p>
                       <div>

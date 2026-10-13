@@ -212,27 +212,27 @@ const EmailModal = React.lazy(() => import("./components/paperware/email-modal")
 const AuthModal = __PORTALS_ENABLED__ ? React.lazy(() => import("./components/paperware/auth-modal").then(module => ({ default: module.AuthModal }))) : null;
 
 // Assets from Figma Import
-import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
-import imgShoppingBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.png";
-import imgMap from "figma:asset/7707e2384f799b3aeb1bc03a9a49cb7ef91b6772.png";
+import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
+import imgShoppingBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.webp";
+import imgMap from "figma:asset/7707e2384f799b3aeb1bc03a9a49cb7ef91b6772.webp";
 // Partner logos - Using placeholder images for reliability
-const imgAlArabian = "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop";
-const imgBengalClassicTea = "https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?w=400&h=200&fit=crop";
-const imgCafeZ = "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=200&fit=crop";
-const imgCoffeeAvenue = "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=200&fit=crop";
-const imgCrimsoncup = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=200&fit=crop";
-const imgDhakaiKhana = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=200&fit=crop";
-const imgAbdulMonemLtd = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=200&fit=crop";
-const imgWalton = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop";
-const imgNovatek = "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=200&fit=crop";
-const imgMgi = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=200&fit=crop";
-const imgIcddrb = "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=400&h=200&fit=crop";
-const imgFresh = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop";
-import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.png";
-import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.png";
-import imgCardBg3 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.png";
-import imgFactoryIllustration from "figma:asset/f509e99bb4cc15f45dbb0d895480da5f9027b46c.png";
-import imgHeroMobile from "figma:asset/7355363d5bbe4910fbf181181e9702179c6c7d50.png";
+const imgAlArabian = "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75";
+const imgBengalClassicTea = "https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?auto=format&w=400&h=200&fit=crop&q=75";
+const imgCafeZ = "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&w=400&h=200&fit=crop&q=75";
+const imgCoffeeAvenue = "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&w=400&h=200&fit=crop&q=75";
+const imgCrimsoncup = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&w=400&h=200&fit=crop&q=75";
+const imgDhakaiKhana = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&w=400&h=200&fit=crop&q=75";
+const imgAbdulMonemLtd = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=400&h=200&fit=crop&q=75";
+const imgWalton = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=400&h=200&fit=crop&q=75";
+const imgNovatek = "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&w=400&h=200&fit=crop&q=75";
+const imgMgi = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=400&h=200&fit=crop&q=75";
+const imgIcddrb = "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?auto=format&w=400&h=200&fit=crop&q=75";
+const imgFresh = "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&w=400&h=200&fit=crop&q=75";
+import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
+import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.webp";
+import imgCardBg3 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.webp";
+import imgFactoryIllustration from "figma:asset/f509e99bb4cc15f45dbb0d895480da5f9027b46c.webp";
+import imgHeroMobile from "figma:asset/7355363d5bbe4910fbf181181e9702179c6c7d50.webp";
 
 // Neural Language Transition Effect
 function NeuralTransition({ isVisible, language }: { isVisible: boolean, language: string }) {
@@ -352,35 +352,35 @@ const DEFAULT_CLIENT_PROJECTS = [
     company: "TechFlow Systems",
     project: "Neural Hardware Packaging",
     desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?auto=format&q=80&w=1000"
   },
   {
     company: "GreenLeaf Organics",
     project: "Biodegradable Food Containers",
     desc: "100% plant-based fiber composition with zero-plastic coating.",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&q=80&w=1000"
   },
   {
     company: "Urban Brew Co.",
     project: "Thermal Insulation Cups",
     desc: "Double-wall patented construction maintaining heat for 4+ hours.",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&q=80&w=1000"
   },
   {
     company: "MediSafe Pharma",
     project: "Secure Sterility Boxes",
     desc: "ISO certified medical grade cardstock with tamper-evident seals.",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=1000"
   },
   {
     company: "Velocity Logistics",
     project: "Heavy-Duty Corrugated Units",
     desc: "Reinforced structural integrity for international freight.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
   }
 ];
 
-const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
+const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
 
 const DEFAULT_PARTNERS = [
   { id: "1", name: "Al Arabian", category: "Client", logo: imgAlArabian, description: "Strategic Partner" },

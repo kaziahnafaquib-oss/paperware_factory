@@ -11,10 +11,10 @@ import { toast } from "sonner";
 import { FullScreenVideoSection } from "../components/paperware/full-screen-video";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
-import imgSingleWall from "figma:asset/508ac66920d6bf79d8403965309bcc52fac5e5e7.png";
-import imgRippleWall from "figma:asset/bfe95f6268f355771c65cb6e1751781aaebe3d05.png";
-import imgDoubleWall from "figma:asset/b41403eedb4af19ba356d74c80558118d542f4cd.png";
-import imgErasebg from "figma:asset/49b7c1ac36cc61c1c728abd7230eab96c50bea6c.png";
+import imgSingleWall from "figma:asset/508ac66920d6bf79d8403965309bcc52fac5e5e7.webp";
+import imgRippleWall from "figma:asset/bfe95f6268f355771c65cb6e1751781aaebe3d05.webp";
+import imgDoubleWall from "figma:asset/b41403eedb4af19ba356d74c80558118d542f4cd.webp";
+import imgErasebg from "figma:asset/49b7c1ac36cc61c1c728abd7230eab96c50bea6c.webp";
 
 const variants = [
   {
@@ -187,8 +187,8 @@ export function PaperCupsPage({
     <div ref={containerRef} className="relative bg-[#e3d1ae] min-h-screen overflow-x-hidden selection:bg-black selection:text-[#fabf37]">
       {/* 3D Immersive Hero Section */}
       <section ref={heroRef} className="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden px-4 pt-32" onMouseMove={handleHeroMouseMove} onMouseLeave={handleHeroMouseLeave}>
-        <motion.div animate={{ y: [0, -40, 0], rotate: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="absolute top-20 left-[10%] opacity-20 hidden lg:block"><img src={imgErasebg} className="w-40 h-auto blur-sm" alt="" /></motion.div>
-        <motion.div animate={{ y: [0, 40, 0], rotate: [0, -15, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }} className="absolute bottom-20 right-[15%] opacity-20 hidden lg:block"><img src={imgErasebg} className="w-60 h-auto blur-[2px]" alt="" /></motion.div>
+        <motion.div animate={{ y: [0, -40, 0], rotate: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="absolute top-20 left-[10%] opacity-20 hidden lg:block"><img loading="lazy" decoding="async" src={imgErasebg} className="w-40 h-auto blur-sm" alt="" /></motion.div>
+        <motion.div animate={{ y: [0, 40, 0], rotate: [0, -15, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }} className="absolute bottom-20 right-[15%] opacity-20 hidden lg:block"><img loading="lazy" decoding="async" src={imgErasebg} className="w-60 h-auto blur-[2px]" alt="" /></motion.div>
 
         <div className="container mx-auto relative z-10 text-center">
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="mb-8 inline-flex items-center gap-2 bg-black text-[#fabf37] px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.3em] shadow-xl">
@@ -211,7 +211,7 @@ export function PaperCupsPage({
                className="relative z-20 will-change-transform"
              >
                {/* Floating effect handled by animate if needed, but keeping it simple for scroll sync */}
-               <img src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
+               <img loading="lazy" decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
              </motion.div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
@@ -321,7 +321,7 @@ export function PaperCupsPage({
                    }}
                    className="relative z-20 w-full flex items-center justify-center will-change-transform"
                  >
-                   <img 
+                   <img loading="lazy" decoding="async" 
                      src={imgErasebg} 
                      className="w-full max-w-[400px] h-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.9)] brightness-110 contrast-110" 
                      alt="Blueprint Cup" 
@@ -387,7 +387,7 @@ export function PaperCupsPage({
             >
               <div className="absolute inset-0 bg-[#fabf37] translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
               <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full px-8 text-center z-10">
-                 <motion.div whileHover={{ y: -30, scale: 1.1 }} className="transition-all duration-500 cursor-pointer"><img src={v.image} className="w-full max-w-[240px] mx-auto drop-shadow-2xl" alt="" /></motion.div>
+                 <motion.div whileHover={{ y: -30, scale: 1.1 }} className="transition-all duration-500 cursor-pointer"><img loading="lazy" decoding="async" src={v.image} className="w-full max-w-[240px] mx-auto drop-shadow-2xl" alt="" /></motion.div>
               </div>
               <div className="relative z-10">
                 <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 group-hover:text-black">{v.name}</h3>
@@ -584,7 +584,7 @@ export function PaperCupsPage({
                 >
                    {/* Main Cup Image - Aligned for the preview */}
                    <div className="relative w-full h-full flex items-center justify-center">
-                      <img 
+                      <img loading="lazy" decoding="async" 
                         src={imgErasebg} 
                         className="w-full h-auto drop-shadow-[0_60px_120px_rgba(0,0,0,0.3)] brightness-105 transform -rotate-[12deg] scale-[1.25]" 
                         alt="Custom Cup" 
@@ -604,7 +604,7 @@ export function PaperCupsPage({
                               exit={{ opacity: 0 }}
                               className="w-full"
                             >
-                              <img 
+                              <img loading="lazy" decoding="async" 
                                 src={logoUrl} 
                                 className="w-full h-auto object-contain mix-blend-multiply contrast-125 saturate-150 drop-shadow-sm" 
                                 alt="Uploaded Logo" 
@@ -749,7 +749,7 @@ export function PaperCupsPage({
              <div className="relative order-2 lg:order-1">
                 <div className="relative z-10 bg-[#f4e6cc] rounded-[80px] p-20 border border-black/5 shadow-2xl">
                    <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="relative">
-                     <img src={imgErasebg} className="w-full h-auto drop-shadow-2xl opacity-60 mix-blend-multiply" alt="Anatomy" />
+                     <img loading="lazy" decoding="async" src={imgErasebg} className="w-full h-auto drop-shadow-2xl opacity-60 mix-blend-multiply" alt="Anatomy" />
                      <div className="absolute top-[10%] -right-10 bg-black text-[#fabf37] px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">Reinforced Lip</span></div>
                      <div className="absolute top-[40%] -left-10 bg-white text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">PLA Lining</span></div>
                      <div className="absolute bottom-[20%] -right-5 bg-[#fabf37] text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">Air Pocket</span></div>

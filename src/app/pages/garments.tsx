@@ -12,9 +12,9 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
-  { name: "Hangtag", desc: "Premium textured clothing tags for apparel.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "2.50", icon: Tag },
-  { name: "Label", desc: "Woven and printed care labels for garments.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "1.20", icon: Ticket },
-  { name: "Garment Sticker", desc: "Size and branding stickers for retail.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633", price: "0.80", icon: Sticker },
+  { name: "Hangtag", desc: "Premium textured clothing tags for apparel.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "2.50", icon: Tag },
+  { name: "Label", desc: "Woven and printed care labels for garments.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "1.20", icon: Ticket },
+  { name: "Garment Sticker", desc: "Size and branding stickers for retail.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "0.80", icon: Sticker },
 ];
 
 export function GarmentSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {

@@ -39,7 +39,7 @@ import {
   Menu
 } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
-import partnerBanner from 'figma:asset/b075043713f864ee3b46a98de066b431d81fde8c.png';
+import partnerBanner from 'figma:asset/b075043713f864ee3b46a98de066b431d81fde8c.webp';
 
 export function PartnerProgramPage() {
   const { scrollY, scrollYProgress } = useScroll();
@@ -284,18 +284,18 @@ export function PartnerProgramPage() {
                     {[...Array(2)].map((_, i) => (
                         <div key={i} className="flex gap-16 items-center shrink-0">
                             {[
-                                { name: 'Al Arabian', src: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=400&h=200&fit=crop' },
-                                { name: 'Fresh', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=200&fit=crop' },
-                                { name: 'Bengal Classic Tea', src: 'https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?w=400&h=200&fit=crop' },
-                                { name: 'Cafe Z', src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=200&fit=crop' },
-                                { name: 'Coffee Avenue', src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=200&fit=crop' },
-                                { name: 'Crimson Cup', src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&h=200&fit=crop' },
-                                { name: 'Dhakai Khana', src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=200&fit=crop' },
-                                { name: 'Abdul Monem Ltd', src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=200&fit=crop' },
-                                { name: 'Walton', src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop' },
-                                { name: 'Novatek', src: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=200&fit=crop' },
-                                { name: 'MGI', src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=200&fit=crop' },
-                                { name: 'ICDDR,B', src: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=400&h=200&fit=crop' }
+                                { name: 'Al Arabian', src: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Fresh', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Bengal Classic Tea', src: 'https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Cafe Z', src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Coffee Avenue', src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Crimson Cup', src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Dhakai Khana', src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Abdul Monem Ltd', src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Walton', src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'Novatek', src: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'MGI', src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=400&h=200&fit=crop&q=75' },
+                                { name: 'ICDDR,B', src: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?auto=format&w=400&h=200&fit=crop&q=75' }
                             ].map((partner, idx) => (
                                 <div 
                                     key={idx}
@@ -450,7 +450,7 @@ export function PartnerProgramPage() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="size-5 rounded-full bg-zinc-200 border border-zinc-100 overflow-hidden">
-                                                     <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=100&h=100" className="w-full h-full object-cover" alt="Profile" />
+                                                     <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=75" className="w-full h-full object-cover" alt="Profile" />
                                                 </div>
                                             </div>
                                         </div>
@@ -576,7 +576,7 @@ export function PartnerProgramPage() {
                                                         <div className="font-black text-sm">Paperware<span className="text-[#fabf37]">.</span></div>
                                                     </div>
                                                     <div className="size-6 rounded-full bg-zinc-200 border border-white shadow-sm overflow-hidden">
-                                                        <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=100&h=100" className="w-full h-full object-cover" alt="Profile" />
+                                                        <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=75" className="w-full h-full object-cover" alt="Profile" />
                                                     </div>
                                                 </div>
 
@@ -1058,11 +1058,11 @@ export function PartnerProgramPage() {
              {[...Array(2)].map((_, listIndex) => (
                <div key={listIndex} className="flex gap-6">
                  {[
-                   { name: "Double Wall Coffee Cup", price: "$0.04/unit", min: "10k units", img: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGNvZmZlZSUyMGN1cCUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3Njc2NzE4Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Best Seller" },
-                   { name: "Eco Burger Box", price: "$0.12/unit", min: "5k units", img: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3Nzc1NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Trending" },
-                   { name: "Kraft Shopping Bag", price: "$0.15/unit", min: "2k units", img: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrcmFmdCUyMHBhcGVyJTIwc2hvcHBpbmclMjBiYWd8ZW58MXx8fHwxNzY3Nzc1NDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Eco Friendly" },
-                   { name: "Bio-Plastic Cutlery", price: "$0.02/unit", min: "20k units", img: "https://images.unsplash.com/photo-1605634579997-768a3597c88b?ixlib=rb-4.1.0&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "New" },
-                   { name: "Corrugated Pizza Box", price: "$0.18/unit", min: "1k units", img: "https://images.unsplash.com/photo-1595244565747-817f35497042?ixlib=rb-4.1.0&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "Hot" }
+                   { name: "Double Wall Coffee Cup", price: "$0.04/unit", min: "10k units", img: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGNvZmZlZSUyMGN1cCUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3Njc2NzE4Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Best Seller" },
+                   { name: "Eco Burger Box", price: "$0.12/unit", min: "5k units", img: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3Nzc1NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Trending" },
+                   { name: "Kraft Shopping Bag", price: "$0.15/unit", min: "2k units", img: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrcmFmdCUyMHBhcGVyJTIwc2hvcHBpbmclMjBiYWd8ZW58MXx8fHwxNzY3Nzc1NDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Eco Friendly" },
+                   { name: "Bio-Plastic Cutlery", price: "$0.02/unit", min: "20k units", img: "https://images.unsplash.com/photo-1605634579997-768a3597c88b?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "New" },
+                   { name: "Corrugated Pizza Box", price: "$0.18/unit", min: "1k units", img: "https://images.unsplash.com/photo-1595244565747-817f35497042?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "Hot" }
                  ].map((product, i) => (
                    <div 
                      key={i}

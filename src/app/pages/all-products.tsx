@@ -62,12 +62,12 @@ const categoryDetails = (t: any) => [
 ];
 
 const products = (t: any) => [
-  { id: 1, name: t('papercups_title') + " (SW)", category: t('papercups_title'), image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c", desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
-  { id: 2, name: t('restaurant_supplies_title') + " Box", category: t('restaurant_supplies_title'), image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add", desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
-  { id: 3, name: t('paper_bag'), category: t('paper_bag'), image: "https://images.unsplash.com/photo-1668012509229-782623ba3306", desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
-  { id: 4, name: "Brochure", category: t('marketing_materials_title'), image: "https://images.unsplash.com/photo-1544816155-12df9643f363", desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
-  { id: 5, name: "Medicine Box", category: t('pharma_supplies_title'), image: "https://images.unsplash.com/photo-1550572017-738a8a40f286", desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
-  { id: 6, name: "Snack Packaging", category: t('fmcg_supplies_title'), image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60", desc: "Moisture-locked retail box.", specs: [{ label: "Lock", value: "Neural Seal" }] },
+  { id: 1, name: t('papercups_title') + " (SW)", category: t('papercups_title'), image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c?auto=format&q=75&w=1600", desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
+  { id: 2, name: t('restaurant_supplies_title') + " Box", category: t('restaurant_supplies_title'), image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
+  { id: 3, name: t('paper_bag'), category: t('paper_bag'), image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
+  { id: 4, name: "Brochure", category: t('marketing_materials_title'), image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
+  { id: 5, name: "Medicine Box", category: t('pharma_supplies_title'), image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&q=75&w=1600", desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
+  { id: 6, name: "Snack Packaging", category: t('fmcg_supplies_title'), image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=75&w=1600", desc: "Moisture-locked retail box.", specs: [{ label: "Lock", value: "Neural Seal" }] },
 ];
 
 const tickerItems = (t: any) => [
@@ -86,31 +86,31 @@ const DEFAULT_CLIENT_PROJECTS = [
     company: "TechFlow Systems",
     project: "Neural Hardware Packaging",
     desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?auto=format&q=80&w=1000"
   },
   {
     company: "GreenLeaf Organics",
     project: "Biodegradable Food Containers",
     desc: "100% plant-based fiber composition with zero-plastic coating.",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&q=80&w=1000"
   },
   {
     company: "Urban Brew Co.",
     project: "Thermal Insulation Cups",
     desc: "Double-wall patented construction maintaining heat for 4+ hours.",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&q=80&w=1000"
   },
   {
     company: "MediSafe Pharma",
     project: "Secure Sterility Boxes",
     desc: "ISO certified medical grade cardstock with tamper-evident seals.",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=1000"
   },
   {
     company: "Velocity Logistics",
     project: "Heavy-Duty Corrugated Units",
     desc: "Reinforced structural integrity for international freight.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
   }
 ];
 
@@ -353,7 +353,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Manufacturing" />
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Manufacturing" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -374,7 +374,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, delay: 0.1, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img src="https://images.unsplash.com/photo-1744126175546-d7c5366e94f9?q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Offset Printing Machine" />
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1744126175546-d7c5366e94f9?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Offset Printing Machine" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -395,7 +395,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black md:col-span-2"
            >
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1500" className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Design Team" />
+              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&q=80&w=1500" className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Design Team" />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent p-12 flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -459,7 +459,7 @@ export function AllProductsPage({
              >
                 {[...clientProjects, ...clientProjects, ...clientProjects].map((project, idx) => (
                   <div key={`${project.company}-${idx}`} className="w-[280px] md:w-[350px] shrink-0 group relative h-[400px] md:h-[500px] rounded-[32px] overflow-hidden border border-zinc-200 hover:border-[#fabf37] transition-all duration-500 hover:shadow-2xl">
-                    <img src={project.image} alt={project.project} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
+                    <img loading="lazy" decoding="async" src={project.image} alt={project.project} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:via-black/20 transition-all duration-500" />
                     <div className="absolute inset-0 p-8 flex flex-col justify-end">
                       <div className="flex items-center gap-2 mb-2">

@@ -27,63 +27,63 @@ const CATEGORIES = [
   "Website Partner"
 ];
 
-const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
+const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
 
 const DEFAULT_PARTNERS: Partner[] = [
   {
     id: "1",
     name: "EcoPulp Industries",
     category: "Raw Material Supplier",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Premium sustainable paper pulp provider."
   },
   {
     id: "2",
     name: "ChemSafe Solutions",
     category: "Chemical Partner",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Certified food-grade coatings."
   },
   {
     id: "3",
     name: "FastTrack Logistics",
     category: "Delivery Partner",
-    logo: "https://images.unsplash.com/photo-1626863905121-3b0c0ed5b92c?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1626863905121-3b0c0ed5b92c?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Nationwide secure distribution network."
   },
   {
     id: "4",
     name: "ConnectTel",
     category: "Telco Partner",
-    logo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Enterprise communication infrastructure."
   },
   {
     id: "5",
     name: "NetStream",
     category: "Internet Partner",
-    logo: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&w=300&h=300&fit=crop&q=75",
     description: "High-speed fiber connectivity."
   },
   {
     id: "6",
     name: "DigitalCore",
     category: "Digital Partner",
-    logo: "https://images.unsplash.com/photo-1572044162444-ad6021194360?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1572044162444-ad6021194360?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Digital transformation solutions."
   },
   {
     id: "7",
     name: "SysMaster ERP",
     category: "ERP Partner",
-    logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Integrated resource planning systems."
   },
   {
     id: "8",
     name: "WebCrafters",
     category: "Website Partner",
-    logo: "https://images.unsplash.com/photo-1496200186974-4293800e2c20?w=300&h=300&fit=crop",
+    logo: "https://images.unsplash.com/photo-1496200186974-4293800e2c20?auto=format&w=300&h=300&fit=crop&q=75",
     description: "Web presence and e-commerce."
   }
 ];

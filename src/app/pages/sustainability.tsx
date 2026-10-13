@@ -8,8 +8,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   AreaChart, Area, PieChart, Pie, Cell
 } from "recharts";
-import bannerImage from "figma:asset/5c87293e5521da72382b054681e7166a818841e9.png";
-import exampleImage from 'figma:asset/de22a1513e35499b5f2c79ba9800a59dbb7543f8.png';
+import bannerImage from "figma:asset/5c87293e5521da72382b054681e7166a818841e9.webp";
+import exampleImage from 'figma:asset/de22a1513e35499b5f2c79ba9800a59dbb7543f8.webp';
 import { JourneySection } from "../components/sustainability/JourneySection";
 import { GreenCupSection } from "../components/sustainability/GreenCupSection";
 import { StorySection } from "../components/sustainability/StorySection";

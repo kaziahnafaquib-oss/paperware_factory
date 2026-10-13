@@ -378,7 +378,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               {[...socialFeed, ...socialFeed, ...socialFeed].map((post, i) => (
                 <div key={i} className="w-[300px] shrink-0 bg-zinc-50 rounded-[32px] overflow-hidden border border-black/5 group">
                   <div className="h-48 overflow-hidden">
-                    <img src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <img loading="lazy" decoding="async" src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   <div className="p-6 space-y-3">
                     <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">{post.date}</p>

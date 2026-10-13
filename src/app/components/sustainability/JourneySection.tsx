@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import earthGlobe from 'figma:asset/d9bc56d5ac1b8289e38bb2eca6596e00d255eb7a.png';
-import mossEarth from 'figma:asset/030a98abab19ca707b7d61f033927447b4531a95.png';
+import mossEarth from 'figma:asset/030a98abab19ca707b7d61f033927447b4531a95.webp';
 
 type WrapperProps = {
   additionalClassNames?: string;
@@ -81,7 +81,7 @@ function Earth3DFallback() {
             }}
           >
             {/* Moss Earth Image */}
-            <img 
+            <img loading="lazy" decoding="async" 
               src={mossEarth}
               alt="Sustainable Moss Earth"
               className="absolute inset-0 w-full h-full object-cover"

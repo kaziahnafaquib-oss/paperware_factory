@@ -36,9 +36,9 @@ export function ProductViewer3D() {
   };
 
   const views = [
-    { id: "exterior", name: "Exterior Design", img: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?q=80&w=1080" },
-    { id: "interior", name: "Internal Coating", img: "https://images.unsplash.com/photo-1517570582775-65c119c2b98d?q=80&w=1080" },
-    { id: "base", name: "Base Seal", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1080" }
+    { id: "exterior", name: "Exterior Design", img: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&q=80&w=1080" },
+    { id: "interior", name: "Internal Coating", img: "https://images.unsplash.com/photo-1517570582775-65c119c2b98d?auto=format&q=80&w=1080" },
+    { id: "base", name: "Base Seal", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&q=80&w=1080" }
   ];
 
   return (

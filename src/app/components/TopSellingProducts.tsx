@@ -2,8 +2,8 @@ import React from "react";
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.png";
-import imgTissueBox from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.png";
+import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.webp";
+import imgTissueBox from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.webp";
 
 const defaultProducts = [
   { id: 1, name: "8oz Paper Cup", category: "Paper Cups", image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c?auto=format&fit=crop&w=500&q=80", desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },

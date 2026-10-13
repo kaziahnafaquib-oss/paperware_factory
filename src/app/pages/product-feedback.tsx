@@ -618,7 +618,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     <div className="grid grid-cols-3 gap-4 mt-4">
                       {uploadedImages.map((img, idx) => (
                         <div key={idx} className="relative group">
-                          <img 
+                          <img loading="lazy" decoding="async" 
                             src={img} 
                             alt={`Upload ${idx + 1}`} 
                             className="w-full aspect-square object-cover rounded-2xl border-2 border-zinc-200"
@@ -1184,7 +1184,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 248,
                       comments: 12,
                       color: "from-purple-500 to-pink-500",
-                      image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "linkedin", 
@@ -1197,7 +1197,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 156,
                       comments: 8,
                       color: "from-blue-600 to-blue-700",
-                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "facebook", 
@@ -1210,7 +1210,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 342,
                       comments: 24,
                       color: "from-blue-500 to-blue-600",
-                      image: "https://images.unsplash.com/photo-1767562678474-c92cec881bc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1767562678474-c92cec881bc3?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "instagram", 
@@ -1223,7 +1223,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 189,
                       comments: 7,
                       color: "from-purple-500 to-pink-500",
-                      image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "linkedin", 
@@ -1236,7 +1236,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 203,
                       comments: 15,
                       color: "from-blue-600 to-blue-700",
-                      image: "https://images.unsplash.com/photo-1767562678474-c92cec881bc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1767562678474-c92cec881bc3?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "facebook", 
@@ -1249,7 +1249,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 421,
                       comments: 31,
                       color: "from-blue-500 to-blue-600",
-                      image: "https://images.unsplash.com/photo-1760804876161-ba0337e998fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1760804876161-ba0337e998fe?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "instagram", 
@@ -1262,7 +1262,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 167,
                       comments: 9,
                       color: "from-purple-500 to-pink-500",
-                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "linkedin", 
@@ -1275,7 +1275,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 298,
                       comments: 18,
                       color: "from-blue-600 to-blue-700",
-                      image: "https://images.unsplash.com/photo-1579642984744-4dd0fe83c38c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1579642984744-4dd0fe83c38c?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "facebook", 
@@ -1288,7 +1288,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 512,
                       comments: 42,
                       color: "from-blue-500 to-blue-600",
-                      image: "https://images.unsplash.com/photo-1760565030346-4b947220fe3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1760565030346-4b947220fe3a?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "instagram", 
@@ -1301,7 +1301,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 387,
                       comments: 28,
                       color: "from-purple-500 to-pink-500",
-                      image: "https://images.unsplash.com/photo-1764862193799-2069efee3962?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1764862193799-2069efee3962?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     // Duplicate for seamless loop
                     { 
@@ -1315,7 +1315,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 248,
                       comments: 12,
                       color: "from-purple-500 to-pink-500",
-                      image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                     { 
                       platform: "linkedin", 
@@ -1328,7 +1328,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       likes: 156,
                       comments: 8,
                       color: "from-blue-600 to-blue-700",
-                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+                      image: "https://images.unsplash.com/photo-1764457197458-d0a14f989cda?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800"
                     },
                   ].map((post, idx) => {
                     const PlatformIcon = post.platform === "instagram" ? Instagram : post.platform === "linkedin" ? Linkedin : Facebook;
@@ -1365,7 +1365,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                           {/* Post Image */}
                           {post.image && (
                             <div className="rounded-xl overflow-hidden border border-zinc-100">
-                              <img 
+                              <img loading="lazy" decoding="async" 
                                 src={post.image} 
                                 alt={post.product}
                                 className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
