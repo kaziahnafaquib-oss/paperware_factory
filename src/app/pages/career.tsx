@@ -380,8 +380,8 @@ function Marquee({ items }: { items: string[] }) {
         className="flex whitespace-nowrap gap-16 items-center pr-16"
       >
         {[...items, ...items].map((item, i) => (
-          <div key={i} className="flex items-center gap-6">
-            <span className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-black/10 hover:text-[#fabf37] transition-colors cursor-default">
+          <div key={i} className="flex items-center gap-6" aria-hidden={i >= items.length ? true : undefined}>
+            <span className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-black/50 hover:text-[#fabf37] transition-colors cursor-default">
               {item}
             </span>
             <div className="size-2 bg-[#fabf37] rounded-full" />
@@ -673,7 +673,7 @@ export function CareerPage() {
   const imageScale = useTransform(scrollYProgress, [0.6, 0.9], [1, 1.2]);
 
   return (
-    <div ref={containerRef} className="relative bg-zinc-950 min-h-screen text-white font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
+    <div ref={containerRef} className="relative bg-zinc-50 min-h-screen text-zinc-900 font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
       <CustomCursor />
       <div className="fixed bottom-8 left-8 z-[100] space-y-4">
         <LiveFactoryFeed />
@@ -718,10 +718,10 @@ export function CareerPage() {
               transition={{ 
                 x: { duration: 30, repeat: Infinity, ease: "linear" }
               }}
-              className="flex whitespace-nowrap gap-8 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-black/20"
+              className="flex whitespace-nowrap gap-8 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-black/50"
             >
               {[1, 2, 3, 4, 5].map(i => (
-                <div key={i} className="flex gap-8 items-center">
+                <div key={i} className="flex gap-8 items-center" aria-hidden={i > 1 ? true : undefined}>
                   <span>Future of Manufacturing</span>
                   <div className="size-1 bg-[#fabf37] rounded-full" />
                   <span>Sustainable Packaging Leaders</span>
@@ -1131,7 +1131,7 @@ export function CareerPage() {
                   className="w-full bg-zinc-100 border-none rounded-[24px] py-5 pl-16 pr-6 text-sm font-bold outline-none focus:ring-2 focus:ring-[#fabf37] transition-all"
                 />
               </div>
-              <button className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
+              <button type="button" tabIndex={-1} aria-hidden="true" className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
                 <Filter className="size-6" />
               </button>
             </div>

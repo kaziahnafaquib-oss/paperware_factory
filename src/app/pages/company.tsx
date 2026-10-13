@@ -109,7 +109,7 @@ function ParallaxImage({ src, alt, className }: { src: string, alt: string, clas
 }
 
 // Magnetic Button
-function MagneticButton({ children, onClick, className }: { children: React.ReactNode, onClick?: () => void, className?: string }) {
+function MagneticButton({ children, onClick, className, "aria-label": ariaLabel }: { children: React.ReactNode, onClick?: () => void, className?: string, "aria-label"?: string }) {
   const ref = React.useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -131,6 +131,7 @@ function MagneticButton({ children, onClick, className }: { children: React.Reac
 
   return (
     <motion.button
+      aria-label={ariaLabel}
       ref={ref}
       onClick={onClick}
       onMouseMove={handleMouseMove}
@@ -356,6 +357,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
               <MagneticButton
                 onClick={() => window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' })}
+                aria-label="Scroll to content"
                 className="size-20 md:size-24 rounded-full bg-black text-white flex items-center justify-center shrink-0 hover:scale-110 hover:bg-[#fabf37] hover:text-black transition-all duration-300 shadow-2xl shadow-zinc-300 ring-4 ring-zinc-50 group mt-4 md:mt-0"
               >
                 <motion.div
@@ -403,7 +405,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                         {section.title}
                       </h3>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-300">0{idx + 1}</span>
+                    <span className="text-[10px] font-mono text-zinc-500">0{idx + 1}</span>
                   </div>
 
                   {/* Description & Action */}
@@ -419,6 +421,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
                       <button
                         onClick={() => onPageChange(section.id)}
+                        aria-label={`Open ${section.title}`}
                         className="size-10 rounded-full bg-white border border-zinc-100 flex items-center justify-center text-zinc-900 group-hover:bg-[#fabf37] group-hover:text-black group-hover:scale-110 transition-all duration-300 shadow-sm"
                       >
                         <ArrowRight className="size-4 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />

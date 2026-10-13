@@ -355,7 +355,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
                 Digital Footprint
               </div>
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black">
-                Live <span className="text-zinc-300 italic">Transmission</span>
+                Live <span className="text-zinc-500 italic">Transmission</span>
               </h2>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -381,7 +381,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
                     <img loading="lazy" decoding="async" src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   <div className="p-6 space-y-3">
-                    <p className="text-[10px] font-black text-zinc-300 uppercase tracking-widest">{post.date}</p>
+                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{post.date}</p>
                     <p className="text-xs font-bold text-zinc-500 whitespace-normal line-clamp-2 leading-relaxed">
                       {post.cap}
                     </p>

@@ -444,7 +444,7 @@ export function SocialsPage() {
                         </div>
 
                         <div className="mt-auto text-center pt-8 border-t border-zinc-50">
-                          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-300">www.paperwarefactory.com</p>
+                          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500">www.paperwarefactory.com</p>
                         </div>
                       </div>
                     </div>

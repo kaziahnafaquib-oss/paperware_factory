@@ -4,6 +4,8 @@ import { Search, ShoppingBag, Filter, ArrowRight, Zap, Info, ChevronRight, Scale
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Hero3DBox } from "../components/Hero3DBox";
+import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
+import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
 
 const SocialMediaFeed = React.lazy(() => import("../components/SocialMediaFeed").then(module => ({ default: module.SocialMediaFeed })));
 const TopSellingProducts = React.lazy(() => import("../components/TopSellingProducts").then(module => ({ default: module.TopSellingProducts })));
@@ -62,7 +64,7 @@ const categoryDetails = (t: any) => [
 ];
 
 const products = (t: any) => [
-  { id: 1, name: t('papercups_title') + " (SW)", category: t('papercups_title'), image: "https://images.unsplash.com/photo-1517031330214-9b0c33b8c73c?auto=format&q=75&w=1600", desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
+  { id: 1, name: t('papercups_title') + " (SW)", category: t('papercups_title'), image: yPaperCups, desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
   { id: 2, name: t('restaurant_supplies_title') + " Box", category: t('restaurant_supplies_title'), image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
   { id: 3, name: t('paper_bag'), category: t('paper_bag'), image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
   { id: 4, name: "Brochure", category: t('marketing_materials_title'), image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
@@ -86,7 +88,7 @@ const DEFAULT_CLIENT_PROJECTS = [
     company: "TechFlow Systems",
     project: "Neural Hardware Packaging",
     desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: "https://images.unsplash.com/photo-1596489394863-14b35e0e148e?auto=format&q=80&w=1000"
+    image: yProductBoxes
   },
   {
     company: "GreenLeaf Organics",
@@ -244,7 +246,7 @@ export function AllProductsPage({
                 <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] leading-tight text-black max-w-[130px] group-hover:text-[#fabf37] transition-colors">
                   {cat.title}
                 </span>
-                <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-300 group-hover:text-zinc-500">
+                <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.15em] text-zinc-500 group-hover:text-zinc-700">
                   {cat.subtitle}
                 </span>
               </div>

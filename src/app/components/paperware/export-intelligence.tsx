@@ -140,7 +140,7 @@ export function ExportIntelligence() {
           className="absolute top-32 right-[-5%] md:right-10 w-64 md:w-96 pointer-events-none z-10 opacity-80"
        >
           <img loading="lazy" decoding="async" 
-            src="https://images.unsplash.com/photo-1596767789311-667793d944c6?q=80&w=1080&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?q=80&w=1080&auto=format&fit=crop" 
             alt="Cargo Ship Logistics" 
             className="w-full h-auto object-contain drop-shadow-2xl mix-blend-multiply"
           />

@@ -36,7 +36,7 @@ export function ManufacturingPage() {
   return (
     <div className="relative bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center overflow-hidden bg-black">
+      <section className="relative h-[80vh] flex items-center overflow-hidden bg-black text-white">
         <div className="absolute inset-0 z-0">
           <ImageWithFallback 
             src="https://images.unsplash.com/photo-1549030927-006822377380?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
@@ -87,7 +87,7 @@ export function ManufacturingPage() {
       </section>
 
       {/* Metrics Bar */}
-      <section className="bg-black border-y border-white/5 py-12">
+      <section className="bg-black text-white border-y border-white/5 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {metrics.map((m, i) => (
@@ -111,7 +111,7 @@ export function ManufacturingPage() {
       </section>
 
       {/* Industrial Flow */}
-      <section className="py-32 bg-zinc-50 relative overflow-hidden">
+      <section className="py-32 bg-zinc-50 text-zinc-900 relative overflow-hidden">
         {/* Decorative Grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
              style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -123,7 +123,7 @@ export function ManufacturingPage() {
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">Workflow Engine</span>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
                   THE ART OF <br />
-                  <span className="text-zinc-300">SCALABLE</span> <br />
+                  <span className="text-zinc-500">SCALABLE</span> <br />
                   PRODUCTION.
                 </h2>
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-[11px] leading-relaxed max-w-xl">

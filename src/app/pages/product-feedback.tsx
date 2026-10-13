@@ -671,6 +671,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                               key={val}
                               type="button"
                               onClick={() => setQualityMetrics(prev => ({ ...prev, [metric.key]: val }))}
+                              aria-label={`${metric.label}: ${val} of 5`}
+                              aria-pressed={qualityMetrics[metric.key as keyof typeof qualityMetrics] === val}
                               className={`flex-1 h-10 rounded-xl transition-all ${
                                 qualityMetrics[metric.key as keyof typeof qualityMetrics] >= val
                                   ? 'bg-[#fabf37] shadow-lg'
@@ -803,6 +805,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         key={val}
                         type="button"
                         onClick={() => setSustainabilityRating(val)}
+                        aria-label={`Sustainability: ${val} of 5`}
+                        aria-pressed={sustainabilityRating === val}
                         className={`flex-1 h-14 rounded-2xl transition-all flex items-center justify-center ${
                           sustainabilityRating >= val
                             ? 'bg-emerald-600 text-white shadow-lg'
@@ -1023,6 +1027,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   <button
                     type="button"
                     onClick={() => setIsAnonymous(!isAnonymous)}
+                    role="switch"
+                    aria-checked={isAnonymous}
+                    aria-label="Submit anonymously"
                     className={`relative w-16 h-8 rounded-full transition-all ${
                       isAnonymous ? 'bg-[#fabf37]' : 'bg-zinc-300'
                     }`}

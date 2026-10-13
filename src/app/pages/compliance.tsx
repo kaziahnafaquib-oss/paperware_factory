@@ -179,7 +179,7 @@ function TiltCard({ cert, i }: { cert: any, i: number }) {
           cert.highlight ? "border-white/10" : "border-zinc-100"
         }`}>
           <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${
-            cert.highlight ? "text-[#fabf37]" : "text-zinc-300"
+            cert.highlight ? "text-[#fabf37]" : "text-zinc-500"
           }`}>{cert.source}</span>
           <span className={`text-xs font-black ${
             cert.highlight ? "text-white" : "text-zinc-400"

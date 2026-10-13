@@ -121,7 +121,7 @@ const testimonialsData = [
     stars: 5,
     text: "We've been working with Paperware for a few years now. We're consistently satisfied. The quality of the cups is great, service is fast, prices are fair, and our customers are very happy.",
     author: "CERTIFIED COFFEE",
-    image: "https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=1000"
   },
   {
     stars: 5,
@@ -545,7 +545,7 @@ export function ClientsPage({
                     {/* Growth Badge */}
                     <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#fabf37]/10 rounded-full">
                       <ChevronRight className="size-3 text-[#fabf37]" />
-                      <span className="text-[10px] font-black text-[#fabf37]">{item.growth}</span>
+                      <span className="text-[10px] font-black text-[#a16207]">{item.growth}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -917,7 +917,7 @@ export function ClientsPage({
                 {[
                   { icon: Instagram, color: '#E4405F', label: 'IG', url: 'https://www.instagram.com/paperware_factory/' },
                   { icon: Linkedin, color: '#0A66C2', label: 'IN', url: 'https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true' },
-                  { icon: Music2, color: '#000000', label: 'TK', url: 'http://tiktok.com/paperwarefactory' },
+                  { icon: Music2, color: '#000000', label: 'TK', url: 'https://www.tiktok.com/@paperwarefactory' },
                   { icon: Facebook, color: '#1877F2', label: 'FB', url: 'https://www.facebook.com/paperwarefactory' },
                   { icon: Globe, color: '#000000', label: 'WEB', url: 'https://www.paperwarefactory.com' }
                 ].map((soc, idx) => (
@@ -926,6 +926,7 @@ export function ClientsPage({
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.open(soc.url, '_blank')}
+                    aria-label={`Paperware Factory ${({ IG: 'Instagram', IN: 'LinkedIn', TK: 'TikTok', FB: 'Facebook', WEB: 'website' } as Record<string, string>)[soc.label] ?? soc.label}`}
                     className="size-10 rounded-xl flex items-center justify-center text-white shadow-sm transition-all cursor-pointer"
                     style={{ backgroundColor: soc.color }}
                   >
@@ -1032,7 +1033,7 @@ const socialFeeds = [
     content: 'We are hiring! Join the team building the future of industrial packaging.', 
     icon: Linkedin, 
     color: '#0A66C2',
-    image: 'https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=400'
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400'
   },
 ];
 
@@ -1076,7 +1077,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
             <span className="text-[8px] font-bold text-zinc-400 font-mono">{feed.handle}</span>
           </div>
         </div>
-        <span className="text-[8px] font-black text-zinc-300 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
+        <span className="text-[8px] font-black text-zinc-500 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
       </div>
       
       {feed.image && (
@@ -1090,16 +1091,18 @@ function SocialFeedCard({ feed }: { feed: any }) {
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleLike}
+                 aria-label="Like this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Heart className="size-4" />
+                 <Heart className="size-4" aria-hidden="true" />
                </motion.button>
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleShare}
+                 aria-label="Copy link to this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Send className="size-4" />
+                 <Send className="size-4" aria-hidden="true" />
                </motion.button>
             </div>
           </div>
@@ -1112,26 +1115,28 @@ function SocialFeedCard({ feed }: { feed: any }) {
 
       <div className="flex items-center justify-between pt-3 border-t border-zinc-50 px-1">
         <div className="flex gap-4">
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={(e) => { e.stopPropagation(); toast("Comments coming soon..."); }}
           >
-            <MessageSquare className="size-3" />
+            <MessageSquare className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Comment</span>
-          </div>
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          </button>
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={handleShare}
           >
-            <Share2 className="size-3" />
+            <Share2 className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Share</span>
-          </div>
+          </button>
         </div>
         <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1" onClick={handleLike}>
-               <Heart className="size-3 text-zinc-300 group-hover:text-red-500 transition-colors" />
-               <span className="text-[8px] font-black text-zinc-300 group-hover:text-zinc-500">2.4k</span>
-            </div>
+            <button type="button" className="flex items-center gap-1" onClick={handleLike} aria-label="Like this post">
+               <Heart className="size-3 text-zinc-500 group-hover:text-red-500 transition-colors" aria-hidden="true" />
+               <span className="text-[8px] font-black text-zinc-500 group-hover:text-zinc-700">2.4k</span>
+            </button>
             <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
         </div>
       </div>

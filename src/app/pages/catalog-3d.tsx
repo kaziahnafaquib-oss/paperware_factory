@@ -113,13 +113,13 @@ export function Catalog3DPage() {
 
             {/* Interaction UI */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-2 rounded-full border border-white/10">
-              <button onClick={() => setRotation(prev => prev - 45)} className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev - 45)} aria-label="Rotate left" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <RefreshCw className="size-5 text-zinc-400" />
               </button>
               <div className="h-4 w-px bg-white/10" />
               <button className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">360 Mode</button>
               <div className="h-4 w-px bg-white/10" />
-              <button onClick={() => setRotation(prev => prev + 45)} className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev + 45)} aria-label="Rotate right" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <Expand className="size-5 text-zinc-400" />
               </button>
             </div>

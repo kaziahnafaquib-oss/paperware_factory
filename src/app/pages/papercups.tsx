@@ -516,6 +516,8 @@ export function PaperCupsPage({
                       <button 
                         key={color} 
                         onClick={() => setActiveStudioColor(color)} 
+                        aria-label={`Base material colour ${({ "#ffffff": "white", "#e3d1ae": "kraft", "#fabf37": "yellow", "#1a1a1a": "black" } as Record<string, string>)[color]}`}
+                        aria-pressed={activeStudioColor === color}
                         className={`size-14 rounded-full border-4 transition-all ${activeStudioColor === color ? 'border-black scale-110 shadow-xl' : ''}`} 
                         style={{ 
                           backgroundColor: color,
@@ -728,7 +730,7 @@ export function PaperCupsPage({
                    <div className="flex justify-between items-end"><p className="text-sm font-black uppercase tracking-[0.2em] text-zinc-500">Order Volume</p><p className="text-4xl font-black text-white">{cupCount.toLocaleString()} <span className="text-xs text-[#fabf37]">PCS</span></p></div>
                    <div className="relative h-4 rounded-full overflow-hidden border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
                       <motion.div initial={{ width: 0 }} animate={{ width: `${(cupCount / 1000000) * 100}%` }} className="absolute h-full bg-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.5)]" />
-                      <input type="range" min="10000" max="1000000" step="10000" value={cupCount} onChange={(e) => setCupCount(parseInt(e.target.value))} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
+                      <input type="range" aria-label="Order volume (cups)" min="10000" max="1000000" step="10000" value={cupCount} onChange={(e) => setCupCount(parseInt(e.target.value))} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
                    </div>
                  </div>
                  <div className="grid grid-cols-2 gap-8">

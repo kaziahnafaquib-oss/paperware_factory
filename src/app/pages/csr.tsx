@@ -96,7 +96,7 @@ export function CSRPage() {
                animate={{ y: [0, -5, 0] }}
                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
              >
-                <span className="relative z-10 text-[#fabf37] font-black uppercase tracking-[0.3em] text-sm px-6 py-3 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20 backdrop-blur-sm">
+                <span className="relative z-10 text-[#a16207] font-black uppercase tracking-[0.3em] text-sm px-6 py-3 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20 backdrop-blur-sm">
                   Our Commitment
                 </span>
              </motion.div>

@@ -132,7 +132,7 @@ export function PrivacyPolicy() {
             style={{ transformStyle: "preserve-3d" }}
           >
             <Shield className="size-4 text-[#fabf37]" />
-            <span className="text-xs font-bold tracking-wider uppercase text-[#fabf37]">
+            <span className="text-xs font-bold tracking-wider uppercase text-[#a16207]">
               {t("language") === "BN" ? "গোপনীয়তা নীতি" : "Privacy Policy"}
             </span>
           </Motion.div>
@@ -398,6 +398,7 @@ export function PrivacyPolicy() {
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              aria-label="Scroll to policy"
               className="w-12 h-12 rounded-full bg-[#fabf37] flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             >
               <ChevronDown className="size-6 text-black" strokeWidth={3} />
