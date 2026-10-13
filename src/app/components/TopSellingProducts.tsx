@@ -83,7 +83,7 @@ export function TopSellingProducts({
                      e.stopPropagation();
                      onProductClick?.(product);
                    }}
-                   aria-label={`View ${product.name}`}
+                   aria-label={`View ${product.name} and add it to your quote`}
                    className="size-10 bg-[#fabf37] rounded-xl flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg"
                  >
                    <Plus className="size-4" aria-hidden="true" />

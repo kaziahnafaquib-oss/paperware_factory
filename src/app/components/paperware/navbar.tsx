@@ -579,18 +579,14 @@ export const Navbar = React.memo(({
                     <motion.button
                       onClick={() => handleInternalPageChange('quotation-basket')}
                       aria-label={quoteBasketCount ? `Quotation basket, ${quoteBasketCount} item${quoteBasketCount === 1 ? "" : "s"}` : "Quotation basket"}
-                      className="after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-[''] relative size-[28px] md:size-[34px] bg-black rounded-full flex items-center justify-center shadow-lg mx-1 group overflow-hidden"
+                      className="after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-[''] relative size-[28px] md:size-[34px] bg-black rounded-full flex items-center justify-center shadow-lg mx-1 group"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
-                      animate={{ rotate: 360 }}
                       transition={{
-                        duration: 1, // 1 সেকেন্ড ধরে ঘুরবে
-                        repeat: Infinity, // চলতেই থাকবে
-                        repeatDelay: 5, // প্রতি ৫ সেকেন্ড পর প
                         ease: "easeInOut"
                       }}
                     >
-                      <motion.div className="absolute inset-0 bg-gradient-to-br from-[#fabf37]/20 to-transparent" initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} transition={{ duration: 0.3 }} />
+                      <motion.div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#fabf37]/20 to-transparent" initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} transition={{ duration: 0.3 }} />
                       <ShoppingBasket className="size-3 md:size-3.5 text-[#fabf37] relative z-10" />
                       {quoteBasketCount > 0 && (
                         <motion.div className="absolute -top-1 -right-1 size-4 bg-[#fabf37] rounded-full flex items-center justify-center border border-black shadow-sm" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 500, damping: 15 }}>
@@ -752,7 +748,7 @@ export const Navbar = React.memo(({
                   {[
                     { icon: Search, action: onSearchOpen, label: "Search" },
                     { icon: Phone, action: () => window.location.href = "tel:+8809638011101", label: "Call Us" },
-                    { icon: Send, action: onEmailOpen, label: "Send an inquiry" }
+                    { icon: Send, action: onEmailOpen, label: "Request a quote" }
                   ].map((item, idx) => (
                     <Tooltip.Root key={idx}>
                       <Tooltip.Trigger asChild>
@@ -760,17 +756,9 @@ export const Navbar = React.memo(({
                           type="button"
                           onClick={(e: React.MouseEvent) => { e.stopPropagation(); item.action(); }}
                           aria-label={item.label}
-                          className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-['']"
+                          className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:h-11 after:w-full after:content-['']"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 15,
-                            repeat: Infinity,
-                            repeatDelay: 15,
-                            delay: (idx + 1) * 8,
-                            ease: "easeInOut"
-                          }}
                         >
                           <motion.div className="absolute inset-0 bg-[#fabf37]/10 rounded-full" initial={{ scale: 0, opacity: 0 }} whileHover={{ scale: 1, opacity: 1 }} />
                           <item.icon className="size-3 md:size-3.5 relative z-10" />
