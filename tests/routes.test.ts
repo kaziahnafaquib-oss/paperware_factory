@@ -64,3 +64,10 @@ test("every navigation target used in components has a route (catches broken lin
   }
   assert.deepEqual(problems, [], `Unknown navigation targets:\n${problems.join("\n")}`);
 });
+
+test("public/sitemap.xml lists exactly the indexable routes (run `npm run sitemap` after changing routes)", () => {
+  const xml = readFileSync(join(import.meta.dirname, "..", "public", "sitemap.xml"), "utf8");
+  const locs = [...xml.matchAll(/<loc>https:\/\/paperwarefactory\.com([^<]*)<\/loc>/g)].map((m) => m[1]).sort();
+  const expected = ROUTES.filter((r) => !r.noindex).map((r) => r.path).sort();
+  assert.deepEqual(locs, expected);
+});

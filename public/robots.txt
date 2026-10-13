@@ -1,5 +1,6 @@
-# Paperware Factory
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /portal
 
 Sitemap: https://paperwarefactory.com/sitemap.xml
