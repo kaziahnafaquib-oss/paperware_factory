@@ -10,10 +10,11 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
+import yCosmeticBoxes from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.webp";
 
 const products = [
   { name: "Food & Beverage Packaging", desc: "Moisture-locked boxes for snacks and drinks.", category: "FMCG", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=75&w=1600", price: "12.50", icon: Package },
-  { name: "Personal Care", desc: "Luxury aesthetic packaging for cosmetics.", category: "FMCG", image: "https://images.unsplash.com/photo-1761125802333-d145773f4461?auto=format&q=75&w=1600", price: "45.00", icon: Box },
+  { name: "Personal Care", desc: "Luxury aesthetic packaging for cosmetics.", category: "FMCG", image: yCosmeticBoxes, price: "45.00", icon: Box },
   { name: "Product Packaging", desc: "Generic to custom high-run product boxes.", category: "FMCG", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&q=75&w=1600", price: "18.00", icon: Box },
   { name: "Home Care Packaging", desc: "Durable boxes for cleaning and home supplies.", category: "FMCG", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&q=75&w=1600", price: "22.00", icon: Package },
   { name: "Confectionary Goods", desc: "Decorative and food-safe chocolate/sweet boxes.", category: "FMCG", image: "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&q=75&w=1600", price: "35.00", icon: Package },

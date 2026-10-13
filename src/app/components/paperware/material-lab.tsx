@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Beaker, Droplets, Wind, ShieldCheck, Box, Fingerprint, Layers, Cpu } from "lucide-react";
+import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
 
 export const MaterialLab = React.memo(function MaterialLab() {
   const [activeMaterial, setActiveMaterial] = useState(0);
@@ -18,7 +19,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 92
       },
       description: "Optimized for high-end retail packaging with a specialized clay coating for vibrant color reproduction.",
-      image: "https://images.unsplash.com/photo-1760804876161-ba0337e998fe?auto=format&q=80&w=1000"
+      image: yProductBoxes
     },
     {
       id: 1,

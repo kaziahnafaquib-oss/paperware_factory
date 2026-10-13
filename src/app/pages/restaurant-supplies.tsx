@@ -15,6 +15,8 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
+import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
+import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 
 const products = [
   { name: "FOOD BOX", desc: "Grease-resistant industrial grade food containers.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=75&w=1600", price: "8.50", icon: Box },
@@ -31,9 +33,9 @@ const products = [
   { name: "WEDGES CONE", desc: "Conical holders for potato wedges and snacks.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=75&w=1600", price: "3.50", icon: IceCream },
   { name: "ICE CREAM CONE", desc: "Protective sleeves for ice cream cones.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&q=75&w=1600", price: "2.00", icon: IceCream },
   { name: "SUGAR SACHET", desc: "Custom branded sugar and seasoning sachets.", category: "Restaurant Packaging", image: image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae, price: "0.50", icon: Coffee },
-  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1517254456976-ee8682099819?auto=format&q=75&w=1600", price: "1.00", icon: FileText },
+  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: yStationery, price: "1.00", icon: FileText },
   { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", price: "3.00", icon: ShoppingBag },
-  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1511108690759-009324a90311?auto=format&q=75&w=1600", price: "4.50", icon: FileText },
+  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: yBrochures, price: "4.50", icon: FileText },
 ];
 
 export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {

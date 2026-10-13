@@ -14,6 +14,7 @@ import { AccountOverview } from "./AccountOverview";
 import { DigitalVault } from "./DigitalVault";
 import { OrderHistory } from "./OrderHistory";
 import { GlobalSettings } from "./GlobalSettings";
+import yCarryBags from "figma:asset/510221172209f9745471ae8d0b0d125bd25a70f7.webp";
 
 const SpendingChart = React.lazy(() => import('./SpendingChart'));
 
@@ -117,7 +118,7 @@ const supportTickets = [
 const suggestedProducts = [
   { name: "Eco-Friendly Straws", price: "$0.02/unit", image: "https://images.unsplash.com/photo-1572048572872-2394404cf1f3?auto=format&fit=crop&q=80&w=200", tag: "New Arrival" },
   { name: "Custom Napkins", price: "$0.01/unit", image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&q=80&w=200", tag: "Best Seller" },
-  { name: "Kraft Paper Bags", price: "$0.15/unit", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&fit=crop&q=80&w=200", tag: "Trending" },
+  { name: "Kraft Paper Bags", price: "$0.15/unit", image: yCarryBags, tag: "Trending" },
   { name: "Compostable Cutlery", price: "$0.05/unit", image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?auto=format&fit=crop&q=80&w=200", tag: "Eco Choice" },
   { name: "Bamboo Plates", price: "$0.12/unit", image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=200", tag: "Organic" },
   { name: "Salad Bowls", price: "$0.18/unit", image: "https://images.unsplash.com/photo-1714013709645-267311b9b045?auto=format&fit=crop&q=80&w=200", tag: "Popular" },

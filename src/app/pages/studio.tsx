@@ -11,9 +11,10 @@ import {
 
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
+import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
 
 const PRODUCTS_LIST = [
-  { id: 'cup', name: "Single Wall Cup", category: "Paper Cups", image: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&q=75&w=1600", icon: '🥤' },
+  { id: 'cup', name: "Single Wall Cup", category: "Paper Cups", image: yPaperCups, icon: '🥤' },
   { id: 'box', name: "Burger Box", category: "Food Boxes", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", icon: '🍔' },
   { id: 'bag', name: "Luxury Paper Bag", category: "Paper Bags", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", icon: '🛍️' },
   { id: 'brochure', name: "Brand Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", icon: '📄' },
