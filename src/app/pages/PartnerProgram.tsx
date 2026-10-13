@@ -989,6 +989,7 @@ export function PartnerProgramPage() {
                                           setAttachment(e.target.files[0]);
                                         }
                                       }}
+                                      aria-label="Attach a file (PDF, Word or image)"
                                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     />
                                     {attachment ? (

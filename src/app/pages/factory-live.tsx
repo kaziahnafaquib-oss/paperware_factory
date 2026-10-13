@@ -38,7 +38,7 @@ export function FactoryLivePage() {
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500">Live Production Stream</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-              Factory <span className="text-zinc-800">Ops</span> <br /> <span className="text-[#fabf37]">Real-Time</span>
+              Factory <span className="text-zinc-500">Ops</span> <br /> <span className="text-[#fabf37]">Real-Time</span>
             </h1>
           </div>
 
@@ -76,6 +76,7 @@ export function FactoryLivePage() {
               <div className="absolute top-8 right-8 z-20">
                 <button 
                   onClick={() => setIsLive(!isLive)}
+                  aria-label={isLive ? "Pause live feed" : "Play live feed"}
                   className="size-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-colors"
                 >
                   {isLive ? <Pause className="size-5" /> : <Play className="size-5" />}
@@ -99,6 +100,8 @@ export function FactoryLivePage() {
                     <button 
                       key={i}
                       onClick={() => setActiveCam(i)}
+                      aria-label={`Camera ${i + 1}`}
+                      aria-pressed={activeCam === i}
                       className={`size-3 rounded-full transition-all ${activeCam === i ? 'bg-[#fabf37] w-12' : 'bg-white/20'}`}
                     />
                   ))}

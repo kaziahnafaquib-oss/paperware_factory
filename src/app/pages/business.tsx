@@ -207,7 +207,7 @@ export function BusinessPage() {
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
                 <ImageWithFallback src="https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=1200" alt="Investor" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Capital Growth</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Investor<br />Relations</h3>
@@ -224,7 +224,7 @@ export function BusinessPage() {
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
                 <ImageWithFallback src="https://images.unsplash.com/photo-1521791136364-798a730bb361?auto=format&fit=crop&q=80&w=1200" alt="Partners" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Global Network</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Partner<br />Program</h3>

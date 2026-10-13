@@ -196,6 +196,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
                       onPageChange('contact');
                     }
                   }}
+                  aria-label="Contact us about our plans"
                   className="size-16 rounded-full bg-black text-[#fabf37] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
                 >
                   <ArrowRight className="size-8" />

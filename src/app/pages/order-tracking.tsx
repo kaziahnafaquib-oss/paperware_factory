@@ -357,6 +357,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                     <div className="flex -space-x-2">
                        <a 
                          href="https://www.instagram.com/paperware_factory/" 
+                         aria-label="Paperware Factory on Instagram"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -365,6 +366,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.facebook.com/paperwarefactory" 
+                         aria-label="Paperware Factory on Facebook"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -373,6 +375,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.linkedin.com/company/paperwarefactory/" 
+                         aria-label="Paperware Factory on LinkedIn"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"

@@ -287,14 +287,14 @@ export function StudioPage() {
                {/* Engine Controls Overlay */}
                <div className="absolute top-10 left-10 flex flex-col gap-3 z-30">
                   <div className="p-1 bg-black/5 rounded-2xl flex flex-col gap-1 border border-black/5">
-                    <button onClick={() => setLighting('studio')} className={`p-3 rounded-xl transition-all ${lighting === 'studio' ? 'bg-white text-black shadow-lg' : 'text-zinc-400 hover:text-black'}`}>
+                    <button onClick={() => setLighting('studio')} aria-label="Studio lighting" aria-pressed={lighting === 'studio'} className={`p-3 rounded-xl transition-all ${lighting === 'studio' ? 'bg-white text-black shadow-lg' : 'text-zinc-400 hover:text-black'}`}>
                       <Sun className="size-5" />
                     </button>
-                    <button onClick={() => setLighting('night')} className={`p-3 rounded-xl transition-all ${lighting === 'night' ? 'bg-black text-white shadow-lg' : 'text-zinc-400 hover:text-black'}`}>
+                    <button onClick={() => setLighting('night')} aria-label="Night lighting" aria-pressed={lighting === 'night'} className={`p-3 rounded-xl transition-all ${lighting === 'night' ? 'bg-black text-white shadow-lg' : 'text-zinc-400 hover:text-black'}`}>
                       <Moon className="size-5" />
                     </button>
                   </div>
-                  <button onClick={() => { setRotation(15); addLog("Re-calibrating camera..."); }} className="p-4 bg-white border border-black/5 rounded-2xl text-zinc-400 hover:text-black hover:scale-110 transition-all shadow-sm">
+                  <button onClick={() => { setRotation(15); addLog("Re-calibrating camera..."); }} aria-label="Reset view" className="p-4 bg-white border border-black/5 rounded-2xl text-zinc-400 hover:text-black hover:scale-110 transition-all shadow-sm">
                     <RotateCcw className="size-5" />
                   </button>
                </div>
@@ -352,6 +352,7 @@ export function StudioPage() {
                     max="180" 
                     value={rotation}
                     onChange={(e) => setRotation(parseInt(e.target.value))}
+                    aria-label="Rotation"
                     className="flex-1 h-1.5 bg-zinc-100 rounded-full appearance-none cursor-pointer accent-black hover:bg-zinc-200 transition-all"
                   />
                   <div className="flex items-center gap-3">
@@ -404,7 +405,7 @@ export function StudioPage() {
                      </div>
                      <h3 className="text-2xl font-black uppercase tracking-tighter leading-none">Initialize <br /> Bulk Quotation</h3>
                   </div>
-                  <button className="relative z-10 bg-black text-[#fabf37] size-20 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl group/btn">
+                  <button type="button" tabIndex={-1} aria-hidden="true" className="relative z-10 bg-black text-[#fabf37] size-20 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-2xl group/btn">
                      <ArrowRight className="size-8 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                </div>

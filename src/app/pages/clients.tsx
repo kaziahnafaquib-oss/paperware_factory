@@ -545,7 +545,7 @@ export function ClientsPage({
                     {/* Growth Badge */}
                     <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#fabf37]/10 rounded-full">
                       <ChevronRight className="size-3 text-[#fabf37]" />
-                      <span className="text-[10px] font-black text-[#fabf37]">{item.growth}</span>
+                      <span className="text-[10px] font-black text-[#a16207]">{item.growth}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -917,7 +917,7 @@ export function ClientsPage({
                 {[
                   { icon: Instagram, color: '#E4405F', label: 'IG', url: 'https://www.instagram.com/paperware_factory/' },
                   { icon: Linkedin, color: '#0A66C2', label: 'IN', url: 'https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true' },
-                  { icon: Music2, color: '#000000', label: 'TK', url: 'http://tiktok.com/paperwarefactory' },
+                  { icon: Music2, color: '#000000', label: 'TK', url: 'https://www.tiktok.com/@paperwarefactory' },
                   { icon: Facebook, color: '#1877F2', label: 'FB', url: 'https://www.facebook.com/paperwarefactory' },
                   { icon: Globe, color: '#000000', label: 'WEB', url: 'https://www.paperwarefactory.com' }
                 ].map((soc, idx) => (
@@ -926,6 +926,7 @@ export function ClientsPage({
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.open(soc.url, '_blank')}
+                    aria-label={`Paperware Factory ${({ IG: 'Instagram', IN: 'LinkedIn', TK: 'TikTok', FB: 'Facebook', WEB: 'website' } as Record<string, string>)[soc.label] ?? soc.label}`}
                     className="size-10 rounded-xl flex items-center justify-center text-white shadow-sm transition-all cursor-pointer"
                     style={{ backgroundColor: soc.color }}
                   >

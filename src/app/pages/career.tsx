@@ -1131,7 +1131,7 @@ export function CareerPage() {
                   className="w-full bg-zinc-100 border-none rounded-[24px] py-5 pl-16 pr-6 text-sm font-bold outline-none focus:ring-2 focus:ring-[#fabf37] transition-all"
                 />
               </div>
-              <button className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
+              <button type="button" tabIndex={-1} aria-hidden="true" className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
                 <Filter className="size-6" />
               </button>
             </div>

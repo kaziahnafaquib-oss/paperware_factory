@@ -331,16 +331,16 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
 
               <motion.div variants={fadeInUp} className="pt-8 lg:pt-12 border-t-2 border-dashed border-zinc-100 flex flex-wrap items-center justify-between gap-4 relative z-10">
                 <div className="flex items-center gap-4">
-                  <motion.a whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }} href="https://www.facebook.com/paperwarefactory" target="_blank" className="text-[#fabf37] hover:text-black transition-colors">
+                  <motion.a whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }} href="https://www.facebook.com/paperwarefactory" target="_blank" rel="noopener noreferrer" aria-label="Paperware Factory on Facebook" className="text-[#fabf37] hover:text-black transition-colors">
                     <Facebook className="size-5" />
                   </motion.a>
-                  <motion.a whileHover={{ scale: 1.2, rotate: -5 }} whileTap={{ scale: 0.9 }} href="https://www.instagram.com/paperware_factory/" target="_blank" className="text-[#fabf37] hover:text-black transition-colors">
+                  <motion.a whileHover={{ scale: 1.2, rotate: -5 }} whileTap={{ scale: 0.9 }} href="https://www.instagram.com/paperware_factory/" target="_blank" rel="noopener noreferrer" aria-label="Paperware Factory on Instagram" className="text-[#fabf37] hover:text-black transition-colors">
                     <Instagram className="size-5" />
                   </motion.a>
-                  <motion.a whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }} href="https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true" target="_blank" className="text-[#fabf37] hover:text-black transition-colors">
+                  <motion.a whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }} href="https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="Paperware Factory on LinkedIn" className="text-[#fabf37] hover:text-black transition-colors">
                     <Linkedin className="size-5" />
                   </motion.a>
-                  <motion.a whileHover={{ scale: 1.2, rotate: -5 }} whileTap={{ scale: 0.9 }} href="http://tiktok.com/paperwarefactory" target="_blank" className="text-[#fabf37] hover:text-black transition-colors">
+                  <motion.a whileHover={{ scale: 1.2, rotate: -5 }} whileTap={{ scale: 0.9 }} href="https://www.tiktok.com/@paperwarefactory" target="_blank" rel="noopener noreferrer" aria-label="Paperware Factory on TikTok" className="text-[#fabf37] hover:text-black transition-colors">
                     <Youtube className="size-5" />
                   </motion.a>
                 </div>
@@ -677,6 +677,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <div className="flex -space-x-2">
                   <motion.a
                     href={socialLinks.instagram}
+                    aria-label="Paperware Factory on Instagram"
                     target="_blank"
                     whileHover={{ scale: 1.2, zIndex: 10, y: -3 }}
                     className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm relative cursor-pointer"
@@ -685,6 +686,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   </motion.a>
                   <motion.a
                     href={socialLinks.facebook}
+                    aria-label="Paperware Factory on Facebook"
                     target="_blank"
                     whileHover={{ scale: 1.2, zIndex: 10, y: -3 }}
                     animate={{
@@ -703,6 +705,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   </motion.a>
                   <motion.a
                     href={socialLinks.linkedin}
+                    aria-label="Paperware Factory on LinkedIn"
                     target="_blank"
                     whileHover={{ scale: 1.2, zIndex: 10, y: -3 }}
                     className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm relative cursor-pointer"

@@ -102,7 +102,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               <p className="text-base md:text-2xl font-bold text-zinc-600 leading-tight max-w-2xl uppercase italic">
                 {t('about_text_1')} We are not just manufacturers; we are supply chain architects.
               </p>
-              <button className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
+              <button type="button" tabIndex={-1} aria-hidden="true" className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
                 <Play className="size-6 md:size-8 fill-current group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
