@@ -17,10 +17,13 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
+import pCarryBagPink from "figma:asset/products/carry-bag-pink.webp";
+import pChowmeinBoxes from "figma:asset/products/chowmein-boxes.webp";
+import pTakeawayFoodBox from "figma:asset/products/takeaway-food-box.webp";
 
 const products = [
-  { name: "FOOD BOX", desc: "Grease-resistant industrial grade food containers.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=75&w=1600", price: "8.50", icon: Box },
-  { name: "CHOWMEIN BOX", desc: "Leak-proof boxes with specialized thermal coating.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&fit=crop&q=80&w=800", price: "6.20", icon: Utensils },
+  { name: "FOOD BOX", desc: "Grease-resistant industrial grade food containers.", category: "Restaurant Packaging", image: pTakeawayFoodBox, price: "8.50", icon: Box },
+  { name: "CHOWMEIN BOX", desc: "Leak-proof boxes with specialized thermal coating.", category: "Restaurant Packaging", image: pChowmeinBoxes, price: "6.20", icon: Utensils },
   { name: "MEAT BOX", desc: "Heavy-duty boxes for raw and processed meats.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1631010231888-777b6285ef84?auto=format&fit=crop&q=80&w=800", price: "12.00", icon: Drumstick },
   { name: "SANDWICH BOX", desc: "Clear-window display boxes for freshness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1560340841-eefc7aa04432?auto=format&q=75&w=1600", price: "5.50", icon: Sandwich },
   { name: "BURGER BOX", desc: "Ventilated boxes to maintain crispness.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1744842854127-2d948d9ea673?auto=format&q=75&w=1600", price: "7.00", icon: Sandwich },
@@ -34,7 +37,7 @@ const products = [
   { name: "ICE CREAM CONE", desc: "Protective sleeves for ice cream cones.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&q=75&w=1600", price: "2.00", icon: IceCream },
   { name: "SUGAR SACHET", desc: "Custom branded sugar and seasoning sachets.", category: "Restaurant Packaging", image: image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae, price: "0.50", icon: Coffee },
   { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: yStationery, price: "1.00", icon: FileText },
-  { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", price: "3.00", icon: ShoppingBag },
+  { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: pCarryBagPink, price: "3.00", icon: ShoppingBag },
   { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: yBrochures, price: "4.50", icon: FileText },
 ];
 

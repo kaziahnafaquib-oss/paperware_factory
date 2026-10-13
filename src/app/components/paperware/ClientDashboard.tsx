@@ -15,6 +15,7 @@ import { DigitalVault } from "./DigitalVault";
 import { OrderHistory } from "./OrderHistory";
 import { GlobalSettings } from "./GlobalSettings";
 import yCarryBags from "figma:asset/510221172209f9745471ae8d0b0d125bd25a70f7.webp";
+import pGiftBagPurple from "figma:asset/products/gift-bag-purple.webp";
 
 const SpendingChart = React.lazy(() => import('./SpendingChart'));
 
@@ -123,7 +124,7 @@ const suggestedProducts = [
   { name: "Bamboo Plates", price: "$0.12/unit", image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=200", tag: "Organic" },
   { name: "Salad Bowls", price: "$0.18/unit", image: "https://images.unsplash.com/photo-1714013709645-267311b9b045?auto=format&fit=crop&q=80&w=200", tag: "Popular" },
   { name: "Hot Cups", price: "$0.08/unit", image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=200", tag: "Winter Special" },
-  { name: "Paper Carriers", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&fit=crop&q=80&w=200", tag: "Durable" },
+  { name: "Paper Carriers", price: "$0.10/unit", image: pGiftBagPurple, tag: "Durable" },
   { name: "Wooden Spoons", price: "$0.04/unit", image: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&fit=crop&q=80&w=200", tag: "Eco-Friendly" },
   { name: "Burger Boxes", price: "$0.09/unit", image: "https://images.unsplash.com/photo-1744842854127-2d948d9ea673?auto=format&fit=crop&q=80&w=200", tag: "Greaseproof" },
   { name: "Clear Cups", price: "$0.06/unit", image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?auto=format&fit=crop&q=80&w=200", tag: "Recyclable" },
