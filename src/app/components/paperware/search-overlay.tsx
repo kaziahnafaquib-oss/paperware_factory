@@ -1,5 +1,6 @@
 import React from "react";
 import { useEscapeKey } from "../../hooks/useEscapeKey";
+import { useDialogFocus } from "../../hooks/useDialogFocus";
 import { motion, AnimatePresence } from "motion/react";
 import { Search, X, TrendingUp, Clock, ArrowRight, HelpCircle, Package, Globe, Zap } from "lucide-react";
 import { toast } from "sonner";
@@ -40,6 +41,8 @@ const SEARCHABLE_PRODUCTS = [
 
 export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }: SearchOverlayProps) {
   useEscapeKey(isOpen, onClose);
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  useDialogFocus(dialogRef, isOpen);
   const [query, setQuery] = React.useState("");
   const [recentSearches, setRecentSearches] = React.useState<string[]>(["Paper Cup 8oz", "Burger Box"]);
 
@@ -72,6 +75,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label="Search products and pages"
