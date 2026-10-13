@@ -18,7 +18,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 92
       },
       description: "Optimized for high-end retail packaging with a specialized clay coating for vibrant color reproduction.",
-      image: "https://images.unsplash.com/photo-1586075010623-26c50dec4a05?auto=format&q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1760804876161-ba0337e998fe?auto=format&q=80&w=1000"
     },
     {
       id: 1,
@@ -46,7 +46,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 100
       },
       description: "Raw, unbleached long-fiber pulp from sustainable Nordic forests. Extreme structural integrity for heavy industrial use.",
-      image: "https://images.unsplash.com/photo-1529690656645-13bc22998a4d?auto=format&q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&q=80&w=1000"
     }
   ];
 

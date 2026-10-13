@@ -13,9 +13,9 @@ import { TopSellingProducts } from "../components/TopSellingProducts";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
-  { name: "Patient File", desc: "Durable medical record folders with antimicrobial coating.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c?auto=format&q=75&w=1600", price: "22.00", icon: FolderOpen },
-  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", image: "https://images.unsplash.com/photo-1584362923647-7847ad730b2c?auto=format&q=75&w=1600", price: "35.00", icon: FileText },
-  { name: "Doctor's Prescription Pad", desc: "Secure serialized prescription pads with security features.", category: "Prescription", image: "https://images.unsplash.com/photo-1505751172107-573225a96220?auto=format&q=75&w=1600", price: "12.00", icon: ClipboardList },
+  { name: "Patient File", desc: "Durable medical record folders with antimicrobial coating.", category: "Record", image: "https://images.unsplash.com/photo-1664575602276-acd073f104c1?auto=format&q=75&w=1600", price: "22.00", icon: FolderOpen },
+  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&q=75&w=1600", price: "35.00", icon: FileText },
+  { name: "Doctor's Prescription Pad", desc: "Secure serialized prescription pads with security features.", category: "Prescription", image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&q=75&w=1600", price: "12.00", icon: ClipboardList },
   { name: "Report Envelope", desc: "Privacy-guaranteed clinical report packaging.", category: "Envelope", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "8.50", icon: FileText },
   { name: "Medicine Box", desc: "Precision-molded drug packaging with braille support.", category: "Packaging", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "14.50", icon: Pill },
   { name: "Medicine Literature", desc: "Micro-folded dosage guides and safety leaflets.", category: "Print", image: image_370cc946765f24fecd2241c5798febf3f636cf5e, price: "2.50", icon: BookOpen },

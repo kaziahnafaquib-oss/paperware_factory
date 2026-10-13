@@ -12,9 +12,9 @@ import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
   { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: "https://images.unsplash.com/photo-1707589165239-10294fab6b13?auto=format&q=75&w=1600", icon: Contact },
-  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?auto=format&q=75&w=1600", icon: Mail },
+  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1579642984744-4dd0fe83c38c?auto=format&q=75&w=1600", icon: Mail },
   { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&q=75&w=1600", icon: FileText },
-  { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: "https://images.unsplash.com/photo-1522204538344-922f76cee07a?auto=format&q=75&w=1600", icon: FileText },
+  { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&q=75&w=1600", icon: FileText },
   { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&q=75&w=1600", icon: FileText },
   { name: "Delivery Note", desc: "Industrial strength logbooks for logistics.", category: "Logistics", image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&q=75&w=1600", icon: Truck },
   { name: "Note Book", desc: "Custom branded corporate notebooks.", category: "Office", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&q=75&w=1600", icon: Notebook },

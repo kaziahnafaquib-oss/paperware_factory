@@ -5,9 +5,9 @@ import { ImageWithFallback } from "../figma/ImageWithFallback";
 
 // Replaced figma assets with reliable Unsplash URLs
 const imgHeidelberg = "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?q=80&w=1080&auto=format";
-const imgOriginalHeidelberg = "https://images.unsplash.com/photo-1565514020176-db931df334c4?q=80&w=1080&auto=format";
+const imgOriginalHeidelberg = "https://images.unsplash.com/photo-1744126175546-d7c5366e94f9?q=80&w=1080&auto=format";
 const imgPYQ203C = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1080&auto=format";
-const imgPYQ401C = "https://images.unsplash.com/photo-1531297461136-82lw9z1l3b1a?q=80&w=1080&auto=format";
+const imgPYQ401C = "https://images.unsplash.com/photo-1717386255773-a456c611dc4e?q=80&w=1080&auto=format";
 
 const departments = [
   {

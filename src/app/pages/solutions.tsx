@@ -21,7 +21,7 @@ const solutions = [
     icon: <ShieldCheck className="size-10" />,
     description: "Sterile-grade medical packaging solutions that meet international safety standards and regulatory compliance.",
     features: ["Tamper-evident design", "SGS certified", "High-barrier protection"],
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?auto=format&q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=1000"
   },
   {
     id: "retail-fmcg",

@@ -117,19 +117,19 @@ const supportTickets = [
 const suggestedProducts = [
   { name: "Eco-Friendly Straws", price: "$0.02/unit", image: "https://images.unsplash.com/photo-1572048572872-2394404cf1f3?auto=format&fit=crop&q=80&w=200", tag: "New Arrival" },
   { name: "Custom Napkins", price: "$0.01/unit", image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?auto=format&fit=crop&q=80&w=200", tag: "Best Seller" },
-  { name: "Kraft Paper Bags", price: "$0.15/unit", image: "https://images.unsplash.com/photo-1623945033469-450f3c5f4035?auto=format&fit=crop&q=80&w=200", tag: "Trending" },
+  { name: "Kraft Paper Bags", price: "$0.15/unit", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&fit=crop&q=80&w=200", tag: "Trending" },
   { name: "Compostable Cutlery", price: "$0.05/unit", image: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?auto=format&fit=crop&q=80&w=200", tag: "Eco Choice" },
   { name: "Bamboo Plates", price: "$0.12/unit", image: "https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&fit=crop&q=80&w=200", tag: "Organic" },
-  { name: "Salad Bowls", price: "$0.18/unit", image: "https://images.unsplash.com/photo-1534939561126-855f86218185?auto=format&fit=crop&q=80&w=200", tag: "Popular" },
+  { name: "Salad Bowls", price: "$0.18/unit", image: "https://images.unsplash.com/photo-1714013709645-267311b9b045?auto=format&fit=crop&q=80&w=200", tag: "Popular" },
   { name: "Hot Cups", price: "$0.08/unit", image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=200", tag: "Winter Special" },
-  { name: "Paper Carriers", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1605642913174-2c634c0587d5?auto=format&fit=crop&q=80&w=200", tag: "Durable" },
-  { name: "Wooden Spoons", price: "$0.04/unit", image: "https://images.unsplash.com/photo-1627995964724-c155d0459c0d?auto=format&fit=crop&q=80&w=200", tag: "Eco-Friendly" },
-  { name: "Burger Boxes", price: "$0.09/unit", image: "https://images.unsplash.com/photo-1594910069352-78d2b9986345?auto=format&fit=crop&q=80&w=200", tag: "Greaseproof" },
-  { name: "Clear Cups", price: "$0.06/unit", image: "https://images.unsplash.com/photo-1596450514734-60c7f2025359?auto=format&fit=crop&q=80&w=200", tag: "Recyclable" },
-  { name: "Pizza Boxes", price: "$0.25/unit", image: "https://images.unsplash.com/photo-1593560708920-639846018318?auto=format&fit=crop&q=80&w=200", tag: "Customizable" },
+  { name: "Paper Carriers", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&fit=crop&q=80&w=200", tag: "Durable" },
+  { name: "Wooden Spoons", price: "$0.04/unit", image: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&fit=crop&q=80&w=200", tag: "Eco-Friendly" },
+  { name: "Burger Boxes", price: "$0.09/unit", image: "https://images.unsplash.com/photo-1744842854127-2d948d9ea673?auto=format&fit=crop&q=80&w=200", tag: "Greaseproof" },
+  { name: "Clear Cups", price: "$0.06/unit", image: "https://images.unsplash.com/photo-1649191629386-d828988cc053?auto=format&fit=crop&q=80&w=200", tag: "Recyclable" },
+  { name: "Pizza Boxes", price: "$0.25/unit", image: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462?auto=format&fit=crop&q=80&w=200", tag: "Customizable" },
   { name: "Sushi Trays", price: "$0.20/unit", image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&q=80&w=200", tag: "Premium" },
   { name: "Tissue Packs", price: "$0.03/unit", image: "https://images.unsplash.com/photo-1583321500900-82807e458f3c?auto=format&fit=crop&q=80&w=200", tag: "Soft" },
-  { name: "Trash Bags", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1610444391696-6d24495574c8?auto=format&fit=crop&q=80&w=200", tag: "Bio-Degradable" },
+  { name: "Trash Bags", price: "$0.10/unit", image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&fit=crop&q=80&w=200", tag: "Bio-Degradable" },
 ];
 
 const feedItems = [

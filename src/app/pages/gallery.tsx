@@ -8,7 +8,7 @@ const galleryImages = [
   { url: "https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?auto=format&q=80&w=800", title: "Food Packaging", client: "Tasty Eats" },
   { url: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&q=80&w=800", title: "Branded Carry Bags", client: "Fashion Hub" },
   { url: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=800", title: "Medical Boxes", client: "Pharma Care" },
-  { url: "https://images.unsplash.com/photo-1544391681-671e3d36005d?auto=format&q=80&w=800", title: "Ripple Cups", client: "Hot Sip" },
+  { url: "https://images.unsplash.com/photo-1649191629386-d828988cc053?auto=format&q=80&w=800", title: "Ripple Cups", client: "Hot Sip" },
 ];
 
 export function GalleryPage() {

@@ -26,14 +26,14 @@ const products = [
   { name: "CAKE BOX", desc: "Premium handle-integrated pastry packaging.", category: "Restaurant Packaging", image: image_ee1e96d0bd347161979763a2b2031584e134c4d4, price: "18.50", icon: Cake },
   { name: "SWEET BOX", desc: "Traditional and luxury boxes with foil stamping.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1607940471713-a9376f150a0d?auto=format&q=75&w=1600", price: "25.00", icon: Candy },
   { name: "FRIES BOX", desc: "Oil-resistant scoop cups for crispy fries.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&q=75&w=1600", price: "4.00", icon: Box },
-  { name: "SHAWARMA BOX", desc: "Easy-tear open boxes for wraps and rolls.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1529006557810-274bc9344389?auto=format&q=75&w=1600", price: "5.00", icon: Utensils },
-  { name: "WAFFLE BOX & TRAY", desc: "Sturdy trays for waffles and toppings.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1562519990-50eb51e28292?auto=format&q=75&w=1600", price: "6.50", icon: Layers },
-  { name: "WEDGES CONE", desc: "Conical holders for potato wedges and snacks.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1610444585193-470557e491c1?auto=format&q=75&w=1600", price: "3.50", icon: IceCream },
+  { name: "SHAWARMA BOX", desc: "Easy-tear open boxes for wraps and rolls.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&q=75&w=1600", price: "5.00", icon: Utensils },
+  { name: "WAFFLE BOX & TRAY", desc: "Sturdy trays for waffles and toppings.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&q=75&w=1600", price: "6.50", icon: Layers },
+  { name: "WEDGES CONE", desc: "Conical holders for potato wedges and snacks.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1567570671796-c8fed5eb1e7d?auto=format&q=75&w=1600", price: "3.50", icon: IceCream },
   { name: "ICE CREAM CONE", desc: "Protective sleeves for ice cream cones.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&q=75&w=1600", price: "2.00", icon: IceCream },
   { name: "SUGAR SACHET", desc: "Custom branded sugar and seasoning sachets.", category: "Restaurant Packaging", image: image_9a9c9fa960f9122b0d888aba39bcd4994971b7ae, price: "0.50", icon: Coffee },
-  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1575424909138-70b05d80c092?auto=format&q=75&w=1600", price: "1.00", icon: FileText },
+  { name: "TABLE MAT", desc: "Disposable paper table mats with branding.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1517254456976-ee8682099819?auto=format&q=75&w=1600", price: "1.00", icon: FileText },
   { name: "CARRY BAG", desc: "Durable kraft paper bags for takeaway.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", price: "3.00", icon: ShoppingBag },
-  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?auto=format&q=75&w=1600", price: "4.50", icon: FileText },
+  { name: "FOOD MENU", desc: "High-quality printed disposable or reusable menus.", category: "Restaurant Packaging", image: "https://images.unsplash.com/photo-1511108690759-009324a90311?auto=format&q=75&w=1600", price: "4.50", icon: FileText },
 ];
 
 export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {
