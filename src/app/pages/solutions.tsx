@@ -169,7 +169,7 @@ export function SolutionsPage() {
                 />
               </div>
               <div className="absolute -bottom-10 -left-10 bg-white p-12 rounded-[40px] shadow-2xl max-w-xs -rotate-3">
-                <p className="text-4xl font-black tracking-tighter mb-2">99.8%</p>
+                <p className="text-4xl font-black tracking-tighter mb-2 text-black">99.8%</p>
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Production Reliability Rating</p>
               </div>
             </div>

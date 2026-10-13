@@ -386,13 +386,13 @@ export function ClientsPage({
                 <span className="text-[8px] font-black uppercase tracking-[0.3em]">CORE_v4.2.0</span>
               </motion.div>
               
-              <h1 className="text-[60px] md:text-[120px] lg:text-[160px] font-black uppercase tracking-tighter leading-[0.8] text-black">
+              <h1 className="text-[60px] md:text-[120px] lg:text-[160px] font-black uppercase tracking-tighter leading-[0.8] text-black"><span className="sr-only">{t('building_legacies')}</span><span aria-hidden="true">
                 {t('building_legacies').split(" ").map((word, wi) => (
                   <span key={wi} className="inline-block mr-4 last:mr-0">
                     {word}
                   </span>
                 ))}
-              </h1>
+              </span></h1>
 
               <div className="mt-12 flex flex-col items-center gap-6">
                 <p className="text-black/60 font-black uppercase tracking-[0.4em] text-[10px] md:text-xs">

@@ -841,7 +841,7 @@ export function PaperCupsPage({
           <div className="flex flex-wrap justify-between items-center gap-12 opacity-40 hover:opacity-100 transition-opacity">
             {certifications.map((cert, i) => (
               <div key={i} className="group cursor-default">
-                <p className="text-2xl font-black uppercase tracking-tighter group-hover:text-[#fabf37] transition-colors">{cert.name}</p>
+                <p className="text-2xl font-black uppercase tracking-tighter text-black group-hover:text-[#fabf37] transition-colors">{cert.name}</p>
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{cert.desc}</p>
               </div>
             ))}

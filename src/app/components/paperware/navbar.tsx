@@ -1,4 +1,5 @@
 import React from "react";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
 import image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2 from 'figma:asset/2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2.png';
 import { Button } from "../ui/button";
 import { Search, Phone, Send, ChevronDown, ShoppingBasket, Globe, Menu, X, Zap, Activity, Cpu, Facebook, Instagram, Linkedin, MapPin, Youtube } from "lucide-react";
@@ -150,7 +151,9 @@ export const Navbar = React.memo(({
   const { t, language, setLanguage, tone, setTone } = useLanguage();
   const { posts } = useSocialMedia();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  useEscapeKey(isMobileMenuOpen, () => setIsMobileMenuOpen(false));
   const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null);
+  useEscapeKey(activeDropdown !== null, () => setActiveDropdown(null));
   const [mobileExpanded, setMobileExpanded] = React.useState<string | null>(null);
   const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
   const [time, setTime] = React.useState(new Date());
@@ -575,7 +578,8 @@ export const Navbar = React.memo(({
                   <Tooltip.Trigger asChild>
                     <motion.button
                       onClick={() => handleInternalPageChange('quotation-basket')}
-                      className="relative size-[28px] md:size-[34px] bg-black rounded-full flex items-center justify-center shadow-lg mx-1 group overflow-hidden"
+                      aria-label={quoteBasketCount ? `Quotation basket, ${quoteBasketCount} item${quoteBasketCount === 1 ? "" : "s"}` : "Quotation basket"}
+                      className="after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-[''] relative size-[28px] md:size-[34px] bg-black rounded-full flex items-center justify-center shadow-lg mx-1 group overflow-hidden"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       animate={{ rotate: 360 }}
@@ -748,14 +752,15 @@ export const Navbar = React.memo(({
                   {[
                     { icon: Search, action: onSearchOpen, label: "Search" },
                     { icon: Phone, action: () => window.location.href = "tel:+8809638011101", label: "Call Us" },
-                    { icon: Send, action: onEmailOpen, label: "Email" }
+                    { icon: Send, action: onEmailOpen, label: "Send an inquiry" }
                   ].map((item, idx) => (
                     <Tooltip.Root key={idx}>
                       <Tooltip.Trigger asChild>
                         <motion.button
                           type="button"
                           onClick={(e: React.MouseEvent) => { e.stopPropagation(); item.action(); }}
-                          className="p-1 text-black/60 hover:text-black transition-all relative group"
+                          aria-label={item.label}
+                          className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-['']"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           animate={{ rotate: 360 }}
@@ -788,6 +793,8 @@ export const Navbar = React.memo(({
                   e.stopPropagation();
                   setIsMobileMenuOpen(prev => !prev);
                 }}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMobileMenuOpen}
                 className="p-1.5 md:p-2 text-black/60 hover:text-black transition-all ml-0.5 relative group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -826,7 +833,7 @@ export const Navbar = React.memo(({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.3 }}
-              className="fixed top-[115px] right-[10%] w-[320px] bg-[#d6c8a9] border-2 border-black rounded-[24px] shadow-2xl p-4 font-['Poppins',sans-serif] max-h-[40vh] overflow-y-auto custom-scrollbar z-[4000] pointer-events-auto"
+              className="fixed top-[115px] right-[10%] w-[320px] bg-[#d6c8a9] border-2 border-black rounded-[24px] shadow-2xl p-4 font-['Poppins',sans-serif] max-h-[calc(100dvh-215px)] overflow-y-auto overscroll-contain custom-scrollbar z-[4000] pointer-events-auto"
             >
               <div className="flex flex-col gap-2">
                 {links.map((link) => (

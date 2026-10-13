@@ -539,6 +539,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         whileHover={{ y: -5 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setRating(s)}
+                        aria-label={`${s} star${s === 1 ? "" : "s"}`}
+                        aria-pressed={rating === s}
                         className={`flex-1 h-16 md:h-20 rounded-2xl md:rounded-3xl flex items-center justify-center transition-all duration-300 border-2 ${
                           rating >= s 
                             ? 'bg-[#fabf37] text-black border-[#fabf37] shadow-lg shadow-[#fabf37]/30' 
@@ -739,6 +741,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                           key={val}
                           type="button"
                           onClick={() => setDeliveryRating(val)}
+                          aria-label={`Delivery: ${val} star${val === 1 ? "" : "s"}`}
+                          aria-pressed={deliveryRating === val}
                           className={`flex-1 h-12 rounded-xl transition-all flex items-center justify-center ${
                             deliveryRating >= val
                               ? 'bg-blue-600 text-white'
@@ -764,6 +768,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                           key={val}
                           type="button"
                           onClick={() => setPackagingRating(val)}
+                          aria-label={`Packaging: ${val} star${val === 1 ? "" : "s"}`}
+                          aria-pressed={packagingRating === val}
                           className={`flex-1 h-12 rounded-xl transition-all flex items-center justify-center ${
                             packagingRating >= val
                               ? 'bg-blue-600 text-white'

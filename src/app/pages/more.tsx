@@ -137,9 +137,10 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               className="bg-[#fabf37] px-6 py-2 md:px-10 md:py-4 mb-2 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="text-5xl sm:text-7xl md:text-[120px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(30px)" }}>
+              <h1 className="sr-only">The ecosystem</h1>
+              <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[120px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(30px)" }}>
                 THE
-              </h1>
+              </p>
             </motion.div>
 
             {/* "ECOSYSTEM" block */}
@@ -150,9 +151,9 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               className="bg-[#fabf37] px-6 py-4 md:px-12 md:py-8 relative shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="text-5xl sm:text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(50px)" }}>
+              <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(50px)" }}>
                 ECOSYSTEM.
-              </h1>
+              </p>
               
               {/* Scroll to Explore overlay - Adjusted position to prevent overlap */}
               <div className="absolute -bottom-14 md:-bottom-16 left-0 w-full flex justify-center">

@@ -179,7 +179,7 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
       {/* CTA */}
       <section className="container mx-auto px-4 py-32 text-center">
         <div className="max-w-2xl mx-auto space-y-12">
-          <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter">Ready to <span className="text-[#fabf37]">Modernize</span>?</h2>
+          <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter text-black">Ready to <span className="text-[#fabf37]">Modernize</span>?</h2>
           <button className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
             Download Catalog
           </button>

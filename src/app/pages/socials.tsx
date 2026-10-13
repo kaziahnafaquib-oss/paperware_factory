@@ -669,7 +669,7 @@ export function SocialsPage() {
                       </div>
                     </div>
                     <div className="p-8 space-y-4">
-                      <h3 className="font-black text-xl uppercase tracking-tight leading-none">{item.title}</h3>
+                      <h3 className="font-black text-xl uppercase tracking-tight leading-none text-black">{item.title}</h3>
                       <div className="flex items-center justify-between pt-4 border-t border-zinc-50">
                         <div className="flex -space-x-2">
                           {[1,2,3].map(i => <div key={i} className="size-6 rounded-full border-2 border-white bg-zinc-200" />)}

@@ -746,7 +746,7 @@ export function CareerPage() {
               </motion.div>
             </Magnetic>
             
-            <h1 className="text-[36px] sm:text-[48px] md:text-[86px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black perspective-2000 break-words">
+            <h1 className="text-[36px] sm:text-[48px] md:text-[86px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black perspective-2000 break-words"><span className="sr-only">Build your career in manufacturing</span><span aria-hidden="true">
               <TextReveal text="Build Your" /> <br />
               <motion.span 
                 initial={{ x: -100, opacity: 0, rotateY: -90, translateZ: 100 }}
@@ -757,7 +757,7 @@ export function CareerPage() {
                 <GlitchText text="Career" />
               </motion.span> <br />
               <TextReveal text="In Manufacturing" />
-            </h1>
+            </span></h1>
 
             <motion.p 
               initial={{ opacity: 0, y: 30 }}
@@ -795,7 +795,7 @@ export function CareerPage() {
                   <stat.icon className="size-7 sm:size-10 text-black group-hover:text-black" />
                 </div>
                 <div className="text-center w-full space-y-1">
-                  <span className="text-3xl sm:text-5xl font-black block leading-none group-hover:text-[#fabf37] transition-colors">
+                  <span className="text-3xl sm:text-5xl font-black block leading-none text-black group-hover:text-[#fabf37] transition-colors">
                     <Counter value={stat.value} />
                   </span>
                   <span className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.25em] text-zinc-400 group-hover:text-white/50 block transition-colors whitespace-nowrap">
@@ -852,7 +852,7 @@ export function CareerPage() {
                 <div className={`size-16 rounded-2xl ${v.color} flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform shadow-inner`}>
                   <v.icon className="size-8" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{v.title}</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-black">{v.title}</h3>
                 <p className="text-zinc-500 text-sm font-medium leading-relaxed">{v.desc}</p>
               </Thick3DCard>
             ))}
@@ -1057,7 +1057,7 @@ export function CareerPage() {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-zinc-50 transition-colors"
                 >
-                  <span className="font-black uppercase tracking-tight text-sm md:text-base">{faq.q}</span>
+                  <span className="font-black uppercase tracking-tight text-sm md:text-base text-black">{faq.q}</span>
                   <div className={`transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`}>
                     <ChevronDown className="size-5" />
                   </div>

@@ -50,7 +50,7 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
           <div className="size-16 rounded-3xl bg-[#fabf37] flex items-center justify-center text-black shadow-xl">
             <ShoppingBasket className="size-8" />
           </div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter italic">FMCG Sector</h2>
+          <h2 className="text-3xl font-black uppercase tracking-tighter italic text-black">FMCG Sector</h2>
           <p className="text-zinc-500 font-bold leading-relaxed max-w-2xl">Focusing on high-run efficiency, moisture barriers, and vibrant color reproduction for consumer shelf dominance.</p>
           <ul className="space-y-3">
               <li className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-black/40"><CircleCheck className="size-4 text-[#fabf37]" /> Moisture Lock</li>

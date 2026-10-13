@@ -75,7 +75,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
              ].map((item, i) => (
                <div key={i} className="bg-white p-8 rounded-[40px] border border-black/5 flex flex-col items-center text-center space-y-4 hover:border-[#fabf37] transition-all">
                   <div className="text-zinc-300 group-hover:text-[#fabf37] transition-colors">{item.icon}</div>
-                  <h4 className="text-xs font-black uppercase tracking-widest">{item.title}</h4>
+                  <h4 className="text-xs font-black uppercase tracking-widest text-black">{item.title}</h4>
                </div>
              ))}
           </div>

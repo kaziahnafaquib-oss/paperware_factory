@@ -325,6 +325,8 @@ export function FAQPage() {
                     className={`bg-white rounded-[40px] border-2 transition-all overflow-hidden ${activeIdx === i ? 'border-[#fabf37] shadow-2xl shadow-[#fabf37]/10' : 'border-black/5 hover:border-black/20'}`}
                   >
                     <button 
+                      type="button"
+                      aria-expanded={activeIdx === i}
                       onClick={() => setActiveIdx(activeIdx === i ? null : i)}
                       className="w-full p-8 lg:p-10 flex items-start justify-between text-left group"
                     >

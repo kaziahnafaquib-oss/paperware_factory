@@ -45,7 +45,7 @@ export function GalleryPage() {
               <div className="absolute inset-0 p-10 flex flex-col justify-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                 <p className="text-[#fabf37] font-black uppercase tracking-[0.2em] text-[10px]">{item.client}</p>
                 <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-6">{item.title}</h3>
-                <button className="size-14 rounded-2xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-colors">
+                <button type="button" aria-label={`Enlarge ${item.title}`} className="size-14 rounded-2xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-colors">
                   <Maximize2 className="size-6" />
                 </button>
               </div>

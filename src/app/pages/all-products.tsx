@@ -137,6 +137,7 @@ export function AllProductsPage({
 
   return (
     <div className="bg-white min-h-screen relative overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]">
+      <h1 className="sr-only">All products</h1>
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.div 
           animate={{ 

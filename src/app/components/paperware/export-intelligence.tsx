@@ -233,10 +233,10 @@ export function ExportIntelligence() {
                 </motion.div>
 
                 {/* Massive BANGLADESH Text - TRUE 3D STACK */}
-                <div className="relative z-10 perspective-[500px] preserve-3d group hover:scale-105 transition-transform duration-700">
+                <div aria-hidden="true" className="relative z-10 perspective-[500px] preserve-3d group hover:scale-105 transition-transform duration-700">
                    {/* Stacked layers for 3D depth */}
                    {[...Array(8)].map((_, i) => (
-                     <motion.h1 
+                     <motion.p 
                         key={i}
                         initial={{ opacity: 0, z: -100 }}
                         animate={{ opacity: 1, z: -i * 4 }}
@@ -249,10 +249,10 @@ export function ExportIntelligence() {
                         }}
                      >
                        BANGLADESH
-                     </motion.h1>
+                     </motion.p>
                    ))}
                    
-                   <motion.h1 
+                   <motion.p 
                      initial={{ opacity: 0, scale: 1.5, z: 100 }}
                      animate={{ opacity: 1, scale: 1, z: 10 }}
                      transition={{ delay: 0.2, duration: 1, type: "spring", bounce: 0.4 }}
@@ -260,15 +260,15 @@ export function ExportIntelligence() {
                      style={{ transformStyle: "preserve-3d", WebkitTextStroke: "1px rgba(255,255,255,0.1)" }}
                    >
                      BANGLADESH
-                   </motion.h1>
+                   </motion.p>
                    
                    {/* Depth Shadow Layer - Moves differently on scroll */}
-                   <motion.h1 
+                   <motion.p 
                      style={{ y: textShadowY, x: textShadowY, opacity: useTransform(scrollYProgress, [0, 0.5], [0.5, 0]) }}
                      className="absolute top-0 left-0 text-[10vw] md:text-[120px] leading-[0.8] font-black tracking-tighter text-zinc-200/50 -z-20 blur-sm translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4"
                    >
                      BANGLADESH
-                   </motion.h1>
+                   </motion.p>
                 </div>
 
                 {/* Floating 3D Paper Sheets */}

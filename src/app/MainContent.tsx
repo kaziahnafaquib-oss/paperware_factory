@@ -588,6 +588,8 @@ export function MainContent() {
       case "home":
         return (
           <div id="main-content" className="bg-white relative overflow-hidden font-['Poppins',sans-serif]">
+            {/* Phase B a11y: the page had no <h1>. Visually hidden until the hero gets a real headline (Phase A-3). */}
+            <h1 className="sr-only">Paperware Factory: custom-printed paper cups and paper packaging, made in Dhaka, Bangladesh</h1>
 
             {/* 1. IMMERSIVE HERO WITH VIDEO */}
             <div className="relative">

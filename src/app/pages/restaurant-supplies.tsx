@@ -81,7 +81,7 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
               <div className="size-16 rounded-2xl bg-zinc-50 flex items-center justify-center mb-6 text-[#fabf37] group-hover:scale-110 transition-transform duration-300">
                 {item.icon}
               </div>
-              <h4 className="text-xl font-black uppercase mb-4">{item.title}</h4>
+              <h4 className="text-xl font-black uppercase mb-4 text-black">{item.title}</h4>
               <p className="text-zinc-500 font-bold text-sm leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}

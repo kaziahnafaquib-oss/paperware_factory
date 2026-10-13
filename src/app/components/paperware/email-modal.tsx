@@ -1,4 +1,5 @@
 import React from "react";
+import { useEscapeKey } from "../../hooks/useEscapeKey";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Send, User, Mail, MessageSquare, ShieldCheck, Factory, Building2, Phone, Hash, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
@@ -10,6 +11,7 @@ interface EmailModalProps {
 }
 
 export function EmailModal({ isOpen, onClose }: EmailModalProps) {
+  useEscapeKey(isOpen, onClose);
   const [loading, setLoading] = React.useState(false);
 
   // Phase A0: no backend yet; hand the RFQ to WhatsApp instead of faking "transmitted".
@@ -27,7 +29,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 overflow-y-auto outline-none">
+        <div role="dialog" aria-modal="true" aria-label="Request a quotation" className="fixed inset-0 z-[2000] flex items-center justify-center p-4 overflow-y-auto outline-none">
           {/* Backdrop */}
           <motion.div 
             initial={{ opacity: 0 }}
