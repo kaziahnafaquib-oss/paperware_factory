@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import imgMap from "figma:asset/7707e2384f799b3aeb1bc03a9a49cb7ef91b6772.png";
+import imgMap from "figma:asset/7707e2384f799b3aeb1bc03a9a49cb7ef91b6772.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function CoverageArea() {
@@ -53,7 +53,7 @@ export function CoverageArea() {
           >
             <div className="relative group">
               <div className="absolute inset-0 bg-[#fabf37]/10 blur-[60px] rounded-full group-hover:bg-[#fabf37]/20 transition-colors" />
-              <img 
+              <img loading="lazy" decoding="async" 
                 src={imgMap} 
                 alt="Bangladesh Coverage Map" 
                 className="relative z-10 w-full max-w-3xl h-auto drop-shadow-[0_40px_100px_rgba(250,191,55,0.1)] transition-transform duration-700 hover:scale-105"

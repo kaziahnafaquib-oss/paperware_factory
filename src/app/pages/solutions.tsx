@@ -2,9 +2,10 @@ import React from "react";
 import { motion } from "motion/react";
 import { Building2, ShoppingBag, Factory, Truck, ShieldCheck, Zap, Globe as Globe2, ArrowRight, Package, Box, Lightbulb, Users } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import imgPaperCups from 'figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.png';
-import imgColorfulCups from 'figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.png';
-import imgPharmaceuticals from 'figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.png';
+import imgPaperCups from 'figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.webp';
+import imgColorfulCups from 'figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp';
+import imgPharmaceuticals from 'figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp';
+import yPharmaBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
 
 const solutions = [
   {
@@ -13,7 +14,7 @@ const solutions = [
     icon: <ShoppingBag className="size-10" />,
     description: "Premium biodegradable packaging for the food industry, focusing on temperature retention and moisture resistance.",
     features: ["Oil-resistant coating", "Compostable materials", "Custom branding"],
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&q=80&w=1000"
   },
   {
     id: "pharmaceutical",
@@ -21,7 +22,7 @@ const solutions = [
     icon: <ShieldCheck className="size-10" />,
     description: "Sterile-grade medical packaging solutions that meet international safety standards and regulatory compliance.",
     features: ["Tamper-evident design", "SGS certified", "High-barrier protection"],
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?q=80&w=1000"
+    image: yPharmaBoxes
   },
   {
     id: "retail-fmcg",
@@ -29,7 +30,7 @@ const solutions = [
     icon: <Package className="size-10" />,
     description: "Scalable packaging systems for fast-moving consumer goods, optimized for high-speed automated production lines.",
     features: ["Multi-color offset", "Space-efficient design", "Eco-friendly inks"],
-    image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=80&w=1000"
   },
   {
     id: "industrial-bulk",
@@ -37,7 +38,7 @@ const solutions = [
     icon: <Factory className="size-10" />,
     description: "Heavy-duty paperware designed for industrial transport and storage, capable of handling high stress and weight.",
     features: ["Double-wall strength", "Moisture barrier", "Stackable geometry"],
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
   }
 ];
 
@@ -47,8 +48,8 @@ export function SolutionsPage() {
       {/* Hero Section */}
       <section className="relative pt-48 pb-32 overflow-hidden bg-black text-white">
         <div className="absolute inset-0 opacity-20">
-          <img 
-            src="https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=2000" 
+          <img loading="lazy" decoding="async" 
+            src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&q=80&w=1600" 
             className="w-full h-full object-cover grayscale" 
             alt="Industrial Background"
           />
@@ -81,8 +82,8 @@ export function SolutionsPage() {
             const paperImages: Record<string, string> = {
               "food-beverage": imgColorfulCups,
               "pharmaceutical": imgPharmaceuticals,
-              "retail-fmcg": "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?q=80&w=1000",
-              "industrial-bulk": "https://images.unsplash.com/photo-1549030927-006822377380?q=80&w=1000"
+              "retail-fmcg": "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?auto=format&q=80&w=1000",
+              "industrial-bulk": "https://images.unsplash.com/photo-1549030927-006822377380?auto=format&q=80&w=1000"
             };
 
             return (
@@ -162,8 +163,8 @@ export function SolutionsPage() {
             </div>
             <div className="relative">
               <div className="aspect-square rounded-[60px] overflow-hidden bg-black rotate-3">
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1000" 
+                <img loading="lazy" decoding="async" 
+                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=1000" 
                   className="w-full h-full object-cover opacity-60 grayscale" 
                   alt="Process" 
                 />

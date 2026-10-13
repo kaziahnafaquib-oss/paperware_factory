@@ -48,7 +48,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
       platform: "Instagram", 
       icon: Instagram, 
       color: "text-pink-500",
-      img: "https://images.unsplash.com/photo-1765371512971-9d4da531d004?q=80&w=800",
+      img: "https://images.unsplash.com/photo-1765371512971-9d4da531d004?auto=format&q=80&w=800",
       caption: "Our minimalist design HQ where engineering meets sustainability. Creating the future of paperware.",
       date: "1h ago"
     },
@@ -56,7 +56,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
       platform: "LinkedIn", 
       icon: Linkedin, 
       color: "text-blue-700",
-      img: "https://images.unsplash.com/photo-1761125802333-d145773f4461?q=80&w=800",
+      img: "https://images.unsplash.com/photo-1761125802333-d145773f4461?auto=format&q=80&w=800",
       caption: "Enterprise solutions for sustainable high-volume manufacturing. Scaling global impact with Tier-1 partners.",
       date: "4h ago"
     },
@@ -64,7 +64,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
       platform: "Facebook", 
       icon: Facebook, 
       color: "text-blue-600",
-      img: "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?q=80&w=800",
+      img: "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?auto=format&q=80&w=800",
       caption: "Next-gen automation active at our Dhaka site. Precision routing and high-speed delivery protocols.",
       date: "Yesterday"
     }
@@ -357,6 +357,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                     <div className="flex -space-x-2">
                        <a 
                          href="https://www.instagram.com/paperware_factory/" 
+                         aria-label="Paperware Factory on Instagram"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -365,6 +366,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.facebook.com/paperwarefactory" 
+                         aria-label="Paperware Factory on Facebook"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -373,6 +375,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.linkedin.com/company/paperwarefactory/" 
+                         aria-label="Paperware Factory on LinkedIn"
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"

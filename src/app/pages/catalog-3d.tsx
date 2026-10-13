@@ -5,7 +5,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { openWhatsAppInquiry } from "../lib/inquiry";
 // Phase A0: replaced an unsafe stock photo (a gun silhouette) with a real packaging render from the project assets.
-import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png";
+import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
 
 export function Catalog3DPage() {
   const { t, isRTL } = useLanguage();
@@ -27,7 +27,7 @@ export function Catalog3DPage() {
       name: "Industrial Shipping Carton",
       description: "Triple-walled corrugated cardboard for heavy-duty global shipping.",
       specs: ["300kg Crush Test", "Water-resistant Layer", "Stackable Design"],
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
       colors: ["#78350F", "#451A03"],
       rating: 4.8
     },
@@ -36,7 +36,7 @@ export function Catalog3DPage() {
       name: "Eco-Coffee Carrier",
       description: "Multi-cup high-grip carriers made from molded pulp fibers.",
       specs: ["Spill-proof Geometry", "100% Pulp", "Space Saving"],
-      image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
       colors: ["#D1D5DB", "#9CA3AF"],
       rating: 5.0
     }
@@ -113,13 +113,13 @@ export function Catalog3DPage() {
 
             {/* Interaction UI */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-2 rounded-full border border-white/10">
-              <button onClick={() => setRotation(prev => prev - 45)} className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev - 45)} aria-label="Rotate left" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <RefreshCw className="size-5 text-zinc-400" />
               </button>
               <div className="h-4 w-px bg-white/10" />
               <button className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">360 Mode</button>
               <div className="h-4 w-px bg-white/10" />
-              <button onClick={() => setRotation(prev => prev + 45)} className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev + 45)} aria-label="Rotate right" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <Expand className="size-5 text-zinc-400" />
               </button>
             </div>

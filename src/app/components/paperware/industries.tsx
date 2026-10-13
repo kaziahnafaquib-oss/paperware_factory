@@ -127,7 +127,7 @@ export const Industries = React.memo(function Industries({ onExplore }: { onExpl
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-3xl mb-16 md:mb-24"
         >
-          <span className="inline-block text-[#fabf37] font-bold uppercase tracking-[0.25em] text-[8px] md:text-[9px] mb-4 md:mb-6 px-3 py-1 bg-[#fabf37]/10 border border-[#fabf37]/30 rounded backdrop-blur-sm">
+          <span className="inline-block text-[#a16207] font-bold uppercase tracking-[0.25em] text-[8px] md:text-[9px] mb-4 md:mb-6 px-3 py-1 bg-[#fabf37]/10 border border-[#fabf37]/30 rounded backdrop-blur-sm">
             {t('sectors_tag')}
           </span>
           
@@ -213,7 +213,7 @@ export const Industries = React.memo(function Industries({ onExplore }: { onExpl
                         {item.icon}
                       </motion.div>
                     </motion.div>
-                    <span className="text-5xl font-black text-zinc-100 group-hover:text-zinc-900/5 transition-colors duration-300 select-none" style={{ transform: 'translateZ(10px)' }}>
+                    <span aria-hidden="true" className="text-5xl font-black text-zinc-100 group-hover:text-zinc-900/5 transition-colors duration-300 select-none" style={{ transform: 'translateZ(10px)' }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>

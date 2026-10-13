@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { ROUTES, PATH_REDIRECTS, pathFor, idForPath, isKnownId, normalizePath } from "../src/app/routes/routeTable.ts";
+import { ROUTES, PATH_REDIRECTS, pathFor, idForPath, isKnownId, normalizePath, surfaceFor } from "../src/app/routes/routeTable.ts";
 
 const SRC = join(import.meta.dirname, "..", "src", "app");
 
@@ -70,4 +70,13 @@ test("public/sitemap.xml lists exactly the indexable routes (run `npm run sitema
   const locs = [...xml.matchAll(/<loc>https:\/\/paperwarefactory\.com([^<]*)<\/loc>/g)].map((m) => m[1]).sort();
   const expected = ROUTES.filter((r) => !r.noindex).map((r) => r.path).sort();
   assert.deepEqual(locs, expected);
+});
+
+test("page surfaces: light by default, dark only where the page is designed dark", () => {
+  assert.equal(surfaceFor("home"), "light");
+  assert.equal(surfaceFor("partners"), "light");
+  assert.equal(surfaceFor("career"), "light");
+  assert.equal(surfaceFor("export"), "dark");
+  assert.equal(surfaceFor("unknown-id"), "light");
+  for (const r of ROUTES) assert.ok(r.surface === undefined || r.surface === "light" || r.surface === "dark", r.id);
 });

@@ -85,7 +85,7 @@ export function OptimizedImage({
     <div className={`relative overflow-hidden ${className}`}>
       {/* Blur placeholder */}
       {!isLoaded && (
-        <img
+        <img loading="lazy" decoding="async"
           src={blurPlaceholder}
           alt=""
           className="absolute inset-0 w-full h-full object-cover blur-xl scale-110"

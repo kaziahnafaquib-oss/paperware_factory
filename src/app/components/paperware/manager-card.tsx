@@ -37,7 +37,7 @@ export function ManagerCard() {
          <div className="absolute top-0 right-0 w-32 h-32 bg-[#fabf37]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="size-16 rounded-full overflow-hidden border-2 border-[#fabf37] relative z-10">
-          <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200" alt="Manager" />
+          <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
           <div className="absolute bottom-0 right-0 size-3 bg-emerald-500 border-2 border-white rounded-full" />
         </div>
         
@@ -99,7 +99,7 @@ export function ManagerCard() {
 
                     <div className="flex flex-col items-center text-center space-y-4 mb-8">
                          <div className="size-24 rounded-full overflow-hidden border-4 border-[#fabf37] relative shadow-lg">
-                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200" alt="Manager" />
+                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
                         </div>
                         <div>
                              <h3 className="text-2xl font-black uppercase tracking-tight">Sarah Jenkins</h3>
@@ -164,7 +164,7 @@ export function ManagerCard() {
                 <div className="p-4 bg-black text-white flex items-center justify-between">
                     <div className="flex items-center gap-3">
                          <div className="size-8 rounded-full overflow-hidden border border-white/20">
-                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200" alt="Manager" />
+                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
                         </div>
                         <div>
                              <p className="text-xs font-black uppercase tracking-wide">Sarah Jenkins</p>

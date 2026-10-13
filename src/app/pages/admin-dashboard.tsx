@@ -176,10 +176,10 @@ export default function AdminDashboard({
       ];
       const statuses = ["production", "qc_check", "dispatched", "pending_material"];
       const images = [
-        "https://images.unsplash.com/photo-1727021024931-90c226e8448d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBpbmR1c3RyaWFsJTIwcGFja2FnaW5nJTIwYmlvZGVncmFkYWJsZSUyMGZvb2QlMjBjb250YWluZXJzJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfHx8fDE3NjcxODQ4NjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1658418467495-134ce7d69430?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMGFuZCUyMHdoaXRlJTIwcGFwZXIlMjBjb2ZmZWUlMjBjdXAlMjBpbmR1c3RyaWFsJTIwc3R5bGV8ZW58MXx8fHwxNzY3MTg0ODY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1550572017-738a8a40f286?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwcGFja2FnaW5nJTIwYm94JTIwc3RlcmlsZSUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXx8fHwxNzY3MTg0ODY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-        "https://images.unsplash.com/photo-1747006116196-fc20e136e4c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNhcmRib2FyZCUyMGJveGVzJTIwd2FyZWhvdXNlJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfHx8fDE3NjcxODQ4NzR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+        "https://images.unsplash.com/photo-1727021024931-90c226e8448d?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBpbmR1c3RyaWFsJTIwcGFja2FnaW5nJTIwYmlvZGVncmFkYWJsZSUyMGZvb2QlMjBjb250YWluZXJzJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfHx8fDE3NjcxODQ4NjB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "https://images.unsplash.com/photo-1658418467495-134ce7d69430?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibGFjayUyMGFuZCUyMHdoaXRlJTIwcGFwZXIlMjBjb2ZmZWUlMjBjdXAlMjBpbmR1c3RyaWFsJTIwc3R5bGV8ZW58MXx8fHwxNzY3MTg0ODY0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwcGFja2FnaW5nJTIwYm94JTIwc3RlcmlsZSUyMGJsYWNrJTIwYW5kJTIwd2hpdGV8ZW58MXx8fHwxNzY3MTg0ODY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+        "https://images.unsplash.com/photo-1747006116196-fc20e136e4c0?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGlwcGluZyUyMGNhcmRib2FyZCUyMGJveGVzJTIwd2FyZWhvdXNlJTIwYmxhY2slMjBhbmQlMjB3aGl0ZXxlbnwxfHx8fDE3NjcxODQ4NzR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
       ];
       
       const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
@@ -571,7 +571,7 @@ export default function AdminDashboard({
                             </div>
                         )}
 
-                        <img src={item.image} alt={item.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110 transition-all duration-700" />
+                        <img loading="lazy" decoding="async" src={item.image} alt={item.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 scale-105 group-hover:scale-110 transition-all duration-700" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 flex flex-col justify-end">
                           <div className="flex items-center justify-between mb-2">
                               <p className="text-[9px] font-black text-[#fabf37] uppercase flex items-center gap-2">
@@ -762,10 +762,10 @@ export default function AdminDashboard({
                                                      
                                                      {/* Placeholder Image 1 */}
                                                      <div className="col-span-1 bg-zinc-100 rounded-lg relative group/img overflow-hidden border border-zinc-100">
-                                                        <img 
-                                                            src="https://images.unsplash.com/photo-1704324564365-3e0c351e5864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGN1cCUyMHBhY2thZ2luZyUyMHByb2R1Y3R8ZW58MXx8fHwxNzY3MTg4NDY1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" 
+                                                        <img loading="lazy" decoding="async" 
+                                                            src="https://images.unsplash.com/photo-1704324564365-3e0c351e5864?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGN1cCUyMHBhY2thZ2luZyUyMHByb2R1Y3R8ZW58MXx8fHwxNzY3MTg4NDY1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" 
                                                             alt="IMG_01"
-                                                            onClick={() => setViewingImage("https://images.unsplash.com/photo-1704324564365-3e0c351e5864?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGN1cCUyMHBhY2thZ2luZyUyMHByb2R1Y3R8ZW58MXx8fHwxNzY3MTg4NDY1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral")}
+                                                            onClick={() => setViewingImage("https://images.unsplash.com/photo-1704324564365-3e0c351e5864?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGN1cCUyMHBhY2thZ2luZyUyMHByb2R1Y3R8ZW58MXx8fHwxNzY3MTg4NDY1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral")}
                                                             className="absolute inset-0 w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
                                                          />
                                                         <button className="absolute top-1 right-1 bg-black/50 text-white p-0.5 rounded-full opacity-0 group-hover/img:opacity-100 transition-opacity">
@@ -779,8 +779,8 @@ export default function AdminDashboard({
                                                             className="absolute inset-0 w-full h-full cursor-pointer group/video"
                                                             onClick={() => setViewingVideo("https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4")}
                                                         >
-                                                            <img 
-                                                                src="https://images.unsplash.com/photo-1727857934741-93f20b9ffe71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBvZmZpY2UlMjBtZWV0aW5nJTIwdmlkZW8lMjB0aHVtYm5haWx8ZW58MXx8fHwxNzY3MTg4ODA4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                                                            <img loading="lazy" decoding="async" 
+                                                                src="https://images.unsplash.com/photo-1727857934741-93f20b9ffe71?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjBvZmZpY2UlMjBtZWV0aW5nJTIwdmlkZW8lMjB0aHVtYm5haWx8ZW58MXx8fHwxNzY3MTg4ODA4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
                                                                 alt="Video Thumbnail"
                                                                 className="w-full h-full object-cover transition-transform duration-500 group-hover/video:scale-110"
                                                             />
@@ -1531,7 +1531,7 @@ export default function AdminDashboard({
               className="relative max-w-5xl max-h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={viewingImage} alt="Full View" className="w-full h-full object-contain" />
+              <img loading="lazy" decoding="async" src={viewingImage} alt="Full View" className="w-full h-full object-contain" />
               <button 
                 onClick={() => setViewingImage(null)}
                 className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-white hover:text-black transition-colors"

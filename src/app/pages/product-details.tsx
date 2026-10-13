@@ -1,6 +1,6 @@
-import imgBoxGroup from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.png';
-import imgBoxBeige from 'figma:asset/44417efdbf939eba86a583d08d358bb76989e3cd.png';
-import imgBoxRed from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.png';
+import imgBoxGroup from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp';
+import imgBoxBeige from 'figma:asset/44417efdbf939eba86a583d08d358bb76989e3cd.webp';
+import imgBoxRed from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.webp';
 import React from "react";
 import { motion, AnimatePresence } from "motion/react"; 
 import { 
@@ -113,10 +113,10 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
   ];
 
   const clientVideos = [
-    { client: "Global Foods Ltd", location: "Singapore", thumb: "https://images.unsplash.com/photo-1631010231931-d2c396b444ec?q=80&w=600" },
-    { client: "EcoBrews Co", location: "UK", thumb: "https://images.unsplash.com/photo-1661260518150-184aa3f44186?q=80&w=600" },
-    { client: "PharmaCore", location: "Germany", thumb: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600" },
-    { client: "Urban Retail", location: "Dubai", thumb: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600" }
+    { client: "Global Foods Ltd", location: "Singapore", thumb: "https://images.unsplash.com/photo-1631010231931-d2c396b444ec?auto=format&q=80&w=600" },
+    { client: "EcoBrews Co", location: "UK", thumb: "https://images.unsplash.com/photo-1661260518150-184aa3f44186?auto=format&q=80&w=600" },
+    { client: "PharmaCore", location: "Germany", thumb: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=600" },
+    { client: "Urban Retail", location: "Dubai", thumb: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&q=80&w=600" }
   ];
 
   const handleShare = (platform: string) => {
@@ -296,7 +296,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       onClick={() => img && setActiveImageIdx(i)}
                       className={`size-16 md:size-20 rounded-xl md:rounded-2xl overflow-hidden border-2 transition-all shrink-0 ${activeImageIdx === i ? 'border-[#fabf37] scale-105 shadow-lg' : 'border-black/5 opacity-50 hover:opacity-100'} ${!img ? 'bg-zinc-100 cursor-default' : ''}`}
                     >
-                      {img && <img src={img} className="w-full h-full object-cover" alt={`Gallery ${i}`} />}
+                      {img && <img loading="lazy" decoding="async" src={img} className="w-full h-full object-cover" alt={`Gallery ${i}`} />}
                     </button>
                   ))}
                </div>
@@ -835,10 +835,10 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                  {[...Array(2)].map((_, i) => (
                    <div key={i} className="flex gap-6 md:gap-8">
                       {[
-                        { name: "Eco-Pack V2", cat: "Sustainable", img: "https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=400" },
-                        { name: "Industrial Wrap", cat: "Heavy Duty", img: "https://images.unsplash.com/photo-1631010231888-777b6285ef84?q=80&w=400" },
-                        { name: "Digital Die-cut", cat: "Precision", img: "https://images.unsplash.com/photo-1746227638992-50b1e1e0d96b?q=80&w=400" },
-                        { name: "Premium Board", cat: "Luxury", img: "https://images.unsplash.com/photo-1611423475613-e6bca6bde7bb?q=80&w=400" }
+                        { name: "Eco-Pack V2", cat: "Sustainable", img: "https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?auto=format&q=80&w=400" },
+                        { name: "Industrial Wrap", cat: "Heavy Duty", img: "https://images.unsplash.com/photo-1631010231888-777b6285ef84?auto=format&q=80&w=400" },
+                        { name: "Digital Die-cut", cat: "Precision", img: "https://images.unsplash.com/photo-1746227638992-50b1e1e0d96b?auto=format&q=80&w=400" },
+                        { name: "Premium Board", cat: "Luxury", img: "https://images.unsplash.com/photo-1611423475613-e6bca6bde7bb?auto=format&q=80&w=400" }
                       ].map((item, idx) => (
                         <div 
                           key={idx} 
@@ -857,7 +857,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                              }}
                              className="aspect-[4/3] rounded-[32px] overflow-hidden bg-zinc-100 border border-black/5 mb-6 relative"
                            >
-                              <img src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.name} />
+                              <img loading="lazy" decoding="async" src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.name} />
                               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-black/5">
                                  {item.cat}
                               </div>
@@ -889,7 +889,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                   onBack();
                 }}
               >
-                 <img src="https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="All Products" />
+                 <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="All Products" />
                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                  <div className="absolute inset-0 p-10 flex flex-col justify-end">
                     <div className="flex items-center gap-3 mb-4">
@@ -926,7 +926,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                    }
                 }}
               >
-                 <img src="https://images.unsplash.com/photo-1758448511255-ac2a24a135d7?q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="Contact Us" />
+                 <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1758448511255-ac2a24a135d7?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="Contact Us" />
                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                  <div className="absolute inset-0 p-10 flex flex-col justify-end">
                     <div className="flex items-center gap-3 mb-4">
@@ -982,7 +982,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                        whileHover={{ y: -10 }}
                        className="min-w-[280px] sm:min-w-[320px] md:min-w-[450px] aspect-video bg-zinc-900 rounded-[32px] md:rounded-[48px] overflow-hidden relative group cursor-pointer shadow-xl"
                      >
-                        <img src={video.thumb} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700" alt={video.client} />
+                        <img loading="lazy" decoding="async" src={video.thumb} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700" alt={video.client} />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-colors">
                            <div className="size-16 md:size-20 rounded-full bg-[#fabf37]/20 border border-[#fabf37]/40 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
                               <PlayCircle className="size-8 md:size-10 text-[#fabf37] fill-[#fabf37]/20" />

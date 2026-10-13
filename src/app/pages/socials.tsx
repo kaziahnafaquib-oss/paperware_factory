@@ -1,8 +1,8 @@
-import image_8788d2f066ca9921baf05e502ac560c2c717da5a from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.png';
+import image_8788d2f066ca9921baf05e502ac560c2c717da5a from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.webp';
 import React from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 import { Facebook, Instagram, Linkedin, Globe, ArrowRight, Music2, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
-import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.png";
+import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.webp";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
@@ -141,28 +141,28 @@ export function SocialsPage() {
     {
       platform: "Instagram",
       icon: Instagram,
-      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
       caption: "Our new automated paper rolling system is live! Efficiency increased by 40%.",
       date: "2 HOURS AGO"
     },
     {
       platform: "Facebook",
       icon: Facebook,
-      image: "https://images.unsplash.com/photo-1761034278174-bf8d69530182?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+      image: "https://images.unsplash.com/photo-1761034278174-bf8d69530182?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
       caption: "Sunrise at the Trimohoni plant. Sustainable packaging starts with a vision.",
       date: "5 HOURS AGO"
     },
     {
       platform: "LinkedIn",
       icon: Linkedin,
-      image: "https://images.unsplash.com/photo-1753758541974-e9e1d66cfbd9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+      image: "https://images.unsplash.com/photo-1753758541974-e9e1d66cfbd9?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
       caption: "Honored to be recognized for our eco-friendly packaging designs 2024.",
       date: "1 DAY AGO"
     },
     {
       platform: "TikTok",
       icon: Music2,
-      image: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+      image: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
       caption: "Unboxing our new premium matte finish boxes. The texture is everything! ✨",
       date: "3 HOURS AGO"
     }
@@ -177,7 +177,7 @@ export function SocialsPage() {
         className="fixed inset-0 pointer-events-none opacity-[0.04] grayscale -z-20"
       >
         <ImageWithFallback 
-          src="https://images.unsplash.com/photo-1758440519640-7234ba375d2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
+          src="https://images.unsplash.com/photo-1758440519640-7234ba375d2e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1600"
           alt="texture"
           className="w-full h-full object-cover"
         />
@@ -332,7 +332,7 @@ export function SocialsPage() {
                   </div>
                   <div className="aspect-square bg-zinc-50 rounded-[28px] md:rounded-[32px] flex items-center justify-center p-6 border border-dashed border-zinc-200 group-hover:border-[#fabf37] transition-colors">
                     <ImageWithFallback 
-                      src="https://images.unsplash.com/photo-1664727303928-8182653d4e6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" 
+                      src="https://images.unsplash.com/photo-1664727303928-8182653d4e6d?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=400" 
                       alt="QR Code"
                       className="size-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
                     />
@@ -409,7 +409,7 @@ export function SocialsPage() {
                             whileHover={{ scale: 1.05 }}
                             className="size-20 rounded-3xl bg-[#fdf2d7] mx-auto flex items-center justify-center border border-[#fabf37]/20 shadow-sm"
                           >
-                            <img src={image_8788d2f066ca9921baf05e502ac560c2c717da5a} alt="Small Logo" className="size-14 object-contain" />
+                            <img loading="lazy" decoding="async" src={image_8788d2f066ca9921baf05e502ac560c2c717da5a} alt="Small Logo" className="size-14 object-contain" />
                           </motion.div>
                           <h3 className="font-black text-2xl tracking-tight text-zinc-900">Paperware</h3>
                           <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full border border-emerald-100">
@@ -444,7 +444,7 @@ export function SocialsPage() {
                         </div>
 
                         <div className="mt-auto text-center pt-8 border-t border-zinc-50">
-                          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-300">www.paperwarefactory.com</p>
+                          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500">www.paperwarefactory.com</p>
                         </div>
                       </div>
                     </div>
@@ -564,7 +564,7 @@ export function SocialsPage() {
             <div className="w-full bg-black rounded-[40px] md:rounded-[60px] p-8 md:p-16 relative overflow-hidden">
               <div className="absolute inset-0 opacity-20">
                 <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1554249906-53d1582266b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
+                  src="https://images.unsplash.com/photo-1554249906-53d1582266b4?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1600"
                   alt="map"
                   className="w-full h-full object-cover"
                 />
@@ -649,9 +649,9 @@ export function SocialsPage() {
                 className="grid grid-cols-1 md:grid-cols-3 gap-8"
               >
                 {[
-                  { img: "https://images.unsplash.com/photo-1748944078144-ab9efab63c92?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600", tag: "Process", title: "Sustainable Packaging 101" },
-                  { img: "https://images.unsplash.com/photo-1694109016554-9a52bff4e9f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600", tag: "Design", title: "Minimalist Coffee Cups" },
-                  { img: "https://images.unsplash.com/photo-1664727303928-8182653d4e6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600", tag: "Community", title: "Behind the Scenes at Trimohoni" }
+                  { img: "https://images.unsplash.com/photo-1748944078144-ab9efab63c92?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600", tag: "Process", title: "Sustainable Packaging 101" },
+                  { img: "https://images.unsplash.com/photo-1694109016554-9a52bff4e9f1?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600", tag: "Design", title: "Minimalist Coffee Cups" },
+                  { img: "https://images.unsplash.com/photo-1664727303928-8182653d4e6d?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600", tag: "Community", title: "Behind the Scenes at Trimohoni" }
                 ].map((item, idx) => (
                   <motion.div 
                     key={idx}

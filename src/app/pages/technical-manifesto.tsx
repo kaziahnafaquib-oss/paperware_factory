@@ -474,7 +474,7 @@ export function TechnicalManifestoPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-6xl md:text-9xl font-black uppercase tracking-tighter"
           >
-            CORE <span className="text-zinc-800">PILLARS.</span>
+            CORE <span className="text-zinc-500">PILLARS.</span>
           </motion.h2>
           <p className="text-[#fabf37] font-black uppercase tracking-[0.5em] text-[10px]">The DNA of Our Innovation</p>
         </div>
@@ -518,7 +518,7 @@ export function TechnicalManifestoPage() {
                        transition={{ delay: i * 0.1 }}
                        className="flex items-start gap-8 group cursor-pointer"
                      >
-                        <div className="text-3xl font-black text-zinc-800 group-hover:text-[#fabf37] transition-colors">0{i+1}</div>
+                        <div aria-hidden="true" className="text-3xl font-black text-zinc-800 group-hover:text-[#fabf37] transition-colors">0{i+1}</div>
                         <div className="space-y-2">
                            <h4 className="text-xl font-black uppercase tracking-tight group-hover:translate-x-2 transition-transform">{item.title}</h4>
                            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest leading-relaxed max-w-sm">{item.desc}</p>

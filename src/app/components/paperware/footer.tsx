@@ -1,4 +1,4 @@
-import logoBlack from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.png';
+import logoBlack from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.webp';
 import React from "react";
 import { ArrowRight, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube, Music2, Send, ExternalLink, Clock } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";

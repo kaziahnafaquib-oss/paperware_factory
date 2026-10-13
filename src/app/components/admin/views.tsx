@@ -1052,7 +1052,7 @@ export function CMSView({
         id: Date.now(),
         name: formData.get('name') as string,
         category: formData.get('category') as string,
-        image: formData.get('image') as string || "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2070",
+        image: formData.get('image') as string || "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&q=80&w=1600",
         status: "Active"
       };
       if (onUpdateProducts) onUpdateProducts([...products, newProduct]);
@@ -1103,7 +1103,7 @@ export function CMSView({
           {products.map((p: any) => (
             <div key={p.id} className="bg-zinc-900/50 border border-white/5 rounded-3xl overflow-hidden group">
               <div className="aspect-video relative">
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                <img loading="lazy" decoding="async" src={p.image} alt={p.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <button 
                     onClick={() => setEditingProduct(p)}
@@ -1479,7 +1479,7 @@ export function CMSView({
                 <div className="relative">
                   <div className="size-16 rounded-2xl bg-black flex items-center justify-center text-[#fabf37] font-black text-xl overflow-hidden border border-white/5">
                     {t.image ? (
-                      <img src={t.image} alt="" className="w-full h-full object-cover opacity-60" />
+                      <img loading="lazy" decoding="async" src={t.image} alt="" className="w-full h-full object-cover opacity-60" />
                     ) : (
                       <span>{t.client[0]}</span>
                     )}
@@ -1613,7 +1613,7 @@ export function CMSView({
           {clientProjects.map((project: any, idx: number) => (
             <div key={idx} className="bg-zinc-900/50 border border-white/5 rounded-[32px] overflow-hidden group hover:border-[#fabf37]/50 transition-all">
                <div className="relative h-48">
-                 <img src={project.image} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all" />
+                 <img loading="lazy" decoding="async" src={project.image} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all" />
                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
                     <button 
                       onClick={() => {

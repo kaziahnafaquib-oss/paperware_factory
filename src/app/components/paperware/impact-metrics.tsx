@@ -155,7 +155,7 @@ export function ImpactMetrics() {
                        </div>
                     </motion.div>
                     
-                    <h3 className="text-3xl font-black text-zinc-300 uppercase tracking-tighter mb-2 group-hover:text-red-500 transition-colors">The Waste</h3>
+                    <h3 className="text-3xl font-black text-zinc-500 uppercase tracking-tighter mb-2 group-hover:text-red-500 transition-colors">The Waste</h3>
                     <div className="inline-block bg-zinc-200 rounded-full px-4 py-1">
                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Non-Recyclable</span>
                     </div>
@@ -203,7 +203,7 @@ export function ImpactMetrics() {
                        </div>
                        
                        {/* Branding */}
-                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-900/10 font-black text-6xl leading-none tracking-tighter pointer-events-none">
+                       <div aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-900/10 font-black text-6xl leading-none tracking-tighter pointer-events-none">
                           PAPER<br/>WARE
                        </div>
                     </motion.div>

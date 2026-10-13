@@ -182,7 +182,7 @@ export default function SustainabilityView() {
                     }
                   }
                   if (isImage) {
-                    return <img src={videoUrl} className="w-full h-full object-cover opacity-80" alt="Hero Background" />;
+                    return <img loading="lazy" decoding="async" src={videoUrl} className="w-full h-full object-cover opacity-80" alt="Hero Background" />;
                   }
                   return (
                     <video

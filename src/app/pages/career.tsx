@@ -11,7 +11,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-import pkgShowcase from "figma:asset/f941795c19ecf31f77a6d084830e22f2ef6ea6c7.png";
+import pkgShowcase from "figma:asset/f941795c19ecf31f77a6d084830e22f2ef6ea6c7.webp";
 
 const jobs = [
   { title: "Factory Supervisor", location: "Dhaka, BD", type: "Full-time" },
@@ -70,9 +70,9 @@ const steps = [
 ];
 
 const lifeImages = [
-  "https://images.unsplash.com/photo-1602318492327-0383f002fa0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzdXN0YWluYWJsZSUyMGZhY3RvcnklMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjY1NDUyMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "https://images.unsplash.com/photo-1646579886741-12b59840c63f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZW5naW5lZXJpbmclMjB0ZWFtJTIwd29ya3Nob3B8ZW58MXx8fHwxNzY2NTQ1MjM1fDA",
-  "https://images.unsplash.com/photo-1672552226669-f6c3041972ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjBsb2dpc3RpY3MlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY2NTQ1MjM3fDA"
+  "https://images.unsplash.com/photo-1602318492327-0383f002fa0a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzdXN0YWluYWJsZSUyMGZhY3RvcnklMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjY1NDUyMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+  "https://images.unsplash.com/photo-1646579886741-12b59840c63f?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZW5naW5lZXJpbmclMjB0ZWFtJTIwd29ya3Nob3B8ZW58MXx8fHwxNzY2NTQ1MjM1fDA&q=75&w=1600",
+  "https://images.unsplash.com/photo-1672552226669-f6c3041972ea?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjBsb2dpc3RpY3MlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY2NTQ1MjM3fDA&q=75&w=1600"
 ];
 
 const testimonials = [
@@ -380,8 +380,8 @@ function Marquee({ items }: { items: string[] }) {
         className="flex whitespace-nowrap gap-16 items-center pr-16"
       >
         {[...items, ...items].map((item, i) => (
-          <div key={i} className="flex items-center gap-6">
-            <span className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-black/10 hover:text-[#fabf37] transition-colors cursor-default">
+          <div key={i} className="flex items-center gap-6" aria-hidden={i >= items.length ? true : undefined}>
+            <span className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-black/50 hover:text-[#fabf37] transition-colors cursor-default">
               {item}
             </span>
             <div className="size-2 bg-[#fabf37] rounded-full" />
@@ -673,7 +673,7 @@ export function CareerPage() {
   const imageScale = useTransform(scrollYProgress, [0.6, 0.9], [1, 1.2]);
 
   return (
-    <div ref={containerRef} className="relative bg-zinc-950 min-h-screen text-white font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
+    <div ref={containerRef} className="relative bg-zinc-50 min-h-screen text-zinc-900 font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
       <CustomCursor />
       <div className="fixed bottom-8 left-8 z-[100] space-y-4">
         <LiveFactoryFeed />
@@ -718,10 +718,10 @@ export function CareerPage() {
               transition={{ 
                 x: { duration: 30, repeat: Infinity, ease: "linear" }
               }}
-              className="flex whitespace-nowrap gap-8 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-black/20"
+              className="flex whitespace-nowrap gap-8 text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-black/50"
             >
               {[1, 2, 3, 4, 5].map(i => (
-                <div key={i} className="flex gap-8 items-center">
+                <div key={i} className="flex gap-8 items-center" aria-hidden={i > 1 ? true : undefined}>
                   <span>Future of Manufacturing</span>
                   <div className="size-1 bg-[#fabf37] rounded-full" />
                   <span>Sustainable Packaging Leaders</span>
@@ -960,7 +960,7 @@ export function CareerPage() {
                     }}
                     className="backdrop-blur-md border border-white/5 p-8 rounded-[40px] flex flex-col sm:flex-row gap-6 items-center sm:items-start transition-colors"
                   >
-                    <img src={t.img} alt={t.name} className="size-16 rounded-2xl object-cover border-2 border-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.3)]" />
+                    <img loading="lazy" decoding="async" src={t.img} alt={t.name} className="size-16 rounded-2xl object-cover border-2 border-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.3)]" />
                     <div className="space-y-3 text-center sm:text-left">
                       <p className="text-white font-medium italic leading-relaxed">"{t.quote}"</p>
                       <div>
@@ -1131,7 +1131,7 @@ export function CareerPage() {
                   className="w-full bg-zinc-100 border-none rounded-[24px] py-5 pl-16 pr-6 text-sm font-bold outline-none focus:ring-2 focus:ring-[#fabf37] transition-all"
                 />
               </div>
-              <button className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
+              <button type="button" tabIndex={-1} aria-hidden="true" className="bg-black text-white p-5 rounded-[24px] hover:bg-[#fabf37] hover:text-black transition-all shadow-lg">
                 <Filter className="size-6" />
               </button>
             </div>

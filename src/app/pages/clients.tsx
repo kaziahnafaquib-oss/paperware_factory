@@ -12,41 +12,41 @@ import {
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 // Client Logos
-import imgSwish from "figma:asset/d07c4da6a8a6d0044e29458d685d2f999a52427b.png";
-import imgIntercontinental from "figma:asset/e5cd2ece8d72457632c8666eea18c92ebb1e78a3.png";
-import imgHolidayInn from "figma:asset/f6b9e36dbf11e2d246417fbb2d258155f7f9a479.png";
-import imgEagleAgency from "figma:asset/a6b5ca68042a20a6c62623c3448766c4fc7beb4e.png";
-import imgDhakaBoatClub from "figma:asset/484cddbb0a4719fc316882618a25f084e2b1abc9.png";
-import imgCafeBir from "figma:asset/4b036cd41a84569f614c98aef871a7ce4d2d0c80.png";
-import imgAci from "figma:asset/f16a78ba0dd54cbdf4aa6d7054825e515e96f035.png";
-import imgGauravJewellers from "figma:asset/c82ff60537a7a75c52b852cde7d1fc285e19a6c1.png";
-import imgDiamondWorld from "figma:asset/e82f545f1fdff4d8d7c1a2a00edf14bc22e11bf5.png";
-import imgSquareHospitals from "figma:asset/944389e54537c0eb55260dcebf9f7900b792dd7f.png";
-import imgRenata from "figma:asset/61b07ca520a337d43cd3ab040af7a1f5a28a9d9d.png";
+import imgSwish from "figma:asset/d07c4da6a8a6d0044e29458d685d2f999a52427b.webp";
+import imgIntercontinental from "figma:asset/e5cd2ece8d72457632c8666eea18c92ebb1e78a3.webp";
+import imgHolidayInn from "figma:asset/f6b9e36dbf11e2d246417fbb2d258155f7f9a479.webp";
+import imgEagleAgency from "figma:asset/a6b5ca68042a20a6c62623c3448766c4fc7beb4e.webp";
+import imgDhakaBoatClub from "figma:asset/484cddbb0a4719fc316882618a25f084e2b1abc9.webp";
+import imgCafeBir from "figma:asset/4b036cd41a84569f614c98aef871a7ce4d2d0c80.webp";
+import imgAci from "figma:asset/f16a78ba0dd54cbdf4aa6d7054825e515e96f035.webp";
+import imgGauravJewellers from "figma:asset/c82ff60537a7a75c52b852cde7d1fc285e19a6c1.webp";
+import imgDiamondWorld from "figma:asset/e82f545f1fdff4d8d7c1a2a00edf14bc22e11bf5.webp";
+import imgSquareHospitals from "figma:asset/944389e54537c0eb55260dcebf9f7900b792dd7f.webp";
+import imgRenata from "figma:asset/61b07ca520a337d43cd3ab040af7a1f5a28a9d9d.webp";
 import imgRadiant from "figma:asset/9069057e3e51904ef3041bc4c5eb56fed98e0164.png";
 import imgPmchl from "figma:asset/e64cd2ee50c742639b1135197a7c8220e104d1cc.png";
-import imgNovatek from "figma:asset/acfbf69c5be13b6af2d163459f1ceb3477eebd2a.png";
+import imgNovatek from "figma:asset/acfbf69c5be13b6af2d163459f1ceb3477eebd2a.webp";
 import imgLovenTaste from "figma:asset/67a4f8b2c9653ea62d2c8349b427d6fe380b99a9.png";
-import imgKonaCafe from "figma:asset/d90e47ede71caca60446757a1cace25c72162637.png";
-import imgKhanas from "figma:asset/b7ddc1b83ba4ac963d95acc6932cc7c077231065.png";
+import imgKonaCafe from "figma:asset/d90e47ede71caca60446757a1cace25c72162637.webp";
+import imgKhanas from "figma:asset/b7ddc1b83ba4ac963d95acc6932cc7c077231065.webp";
 import imgKaziKaziTea from "figma:asset/b48146b672186270c6b579b89a93120549b72b77.png";
-import imgIspahani from "figma:asset/e192b13abd540f9f302f8a638db3c8bdde925335.png";
+import imgIspahani from "figma:asset/e192b13abd540f9f302f8a638db3c8bdde925335.webp";
 import imgIccbHeritage from "figma:asset/258cc4f6b52d788b372a16376b04f2d5d5dcf3b4.png";
-import imgHerfy from "figma:asset/4b9569cdcf589af5e6886c82fd2b3d0f05e39eef.png";
-import imgCoffeelime from "figma:asset/b7b18e09947e3be75f397ac05fbd8f17d645fe76.png";
-import imgCoffeelicious from "figma:asset/2aa86228832bdc318b2b0d093ace834c92c7996b.png";
-import imgCoffeeBuzz from "figma:asset/289023b85676588401219cb6a006f1a3401d1a36.png";
-import imgCoffeeAvenue from "figma:asset/e1b52edc4bd49baf663705f27f615b1ffa798c3a.png";
+import imgHerfy from "figma:asset/4b9569cdcf589af5e6886c82fd2b3d0f05e39eef.webp";
+import imgCoffeelime from "figma:asset/b7b18e09947e3be75f397ac05fbd8f17d645fe76.webp";
+import imgCoffeelicious from "figma:asset/2aa86228832bdc318b2b0d093ace834c92c7996b.webp";
+import imgCoffeeBuzz from "figma:asset/289023b85676588401219cb6a006f1a3401d1a36.webp";
+import imgCoffeeAvenue from "figma:asset/e1b52edc4bd49baf663705f27f615b1ffa798c3a.webp";
 import imgCocacola from "figma:asset/e2067cd206580d5e1214472e4e8e9f6af3a8c607.png";
-import imgClubGelato from "figma:asset/3003225026d617c618b47dd6eb290f69ae46f136.png";
-import imgChaChill from "figma:asset/009e5f3c631e1858a665531672d0ffcc69d21dcc.png";
-import imgTranscom from "figma:asset/fa6c46cdcb30bd3f437a9a5827e6450447989634.png";
-import imgTheWaffleHouse from "figma:asset/647a60ec209ee728f98c8f2028802218f584350d.png";
-import imgTheLocalCoffee from "figma:asset/058c912908a675dd8f29e166420432fcc4643d90.png";
-import imgTerraBistro from "figma:asset/cebce585c69603a15f21e8c16a2274c0439654c4.png";
-import imgTeaLounge from "figma:asset/d3505f2cc7c33731db33889792afb434adfda40f.png";
-import imgTeaFirin from "figma:asset/0dd1f563ffeac48fcd397177d2282cf47d8042d4.png";
-import imgTawaz from "figma:asset/1d8bbb76a453d602341aa98feb4226a2e93ebd18.png";
+import imgClubGelato from "figma:asset/3003225026d617c618b47dd6eb290f69ae46f136.webp";
+import imgChaChill from "figma:asset/009e5f3c631e1858a665531672d0ffcc69d21dcc.webp";
+import imgTranscom from "figma:asset/fa6c46cdcb30bd3f437a9a5827e6450447989634.webp";
+import imgTheWaffleHouse from "figma:asset/647a60ec209ee728f98c8f2028802218f584350d.webp";
+import imgTheLocalCoffee from "figma:asset/058c912908a675dd8f29e166420432fcc4643d90.webp";
+import imgTerraBistro from "figma:asset/cebce585c69603a15f21e8c16a2274c0439654c4.webp";
+import imgTeaLounge from "figma:asset/d3505f2cc7c33731db33889792afb434adfda40f.webp";
+import imgTeaFirin from "figma:asset/0dd1f563ffeac48fcd397177d2282cf47d8042d4.webp";
+import imgTawaz from "figma:asset/1d8bbb76a453d602341aa98feb4226a2e93ebd18.webp";
 
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
@@ -121,7 +121,7 @@ const testimonialsData = [
     stars: 5,
     text: "We've been working with Paperware for a few years now. We're consistently satisfied. The quality of the cups is great, service is fast, prices are fair, and our customers are very happy.",
     author: "CERTIFIED COFFEE",
-    image: "https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=1000"
+    image: "https://images.unsplash.com/photo-1561047029-3000c68339ca?auto=format&fit=crop&q=80&w=1000"
   },
   {
     stars: 5,
@@ -545,7 +545,7 @@ export function ClientsPage({
                     {/* Growth Badge */}
                     <div className="inline-flex items-center gap-1 px-2 py-1 bg-[#fabf37]/10 rounded-full">
                       <ChevronRight className="size-3 text-[#fabf37]" />
-                      <span className="text-[10px] font-black text-[#fabf37]">{item.growth}</span>
+                      <span className="text-[10px] font-black text-[#a16207]">{item.growth}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -917,7 +917,7 @@ export function ClientsPage({
                 {[
                   { icon: Instagram, color: '#E4405F', label: 'IG', url: 'https://www.instagram.com/paperware_factory/' },
                   { icon: Linkedin, color: '#0A66C2', label: 'IN', url: 'https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true' },
-                  { icon: Music2, color: '#000000', label: 'TK', url: 'http://tiktok.com/paperwarefactory' },
+                  { icon: Music2, color: '#000000', label: 'TK', url: 'https://www.tiktok.com/@paperwarefactory' },
                   { icon: Facebook, color: '#1877F2', label: 'FB', url: 'https://www.facebook.com/paperwarefactory' },
                   { icon: Globe, color: '#000000', label: 'WEB', url: 'https://www.paperwarefactory.com' }
                 ].map((soc, idx) => (
@@ -926,6 +926,7 @@ export function ClientsPage({
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => window.open(soc.url, '_blank')}
+                    aria-label={`Paperware Factory ${({ IG: 'Instagram', IN: 'LinkedIn', TK: 'TikTok', FB: 'Facebook', WEB: 'website' } as Record<string, string>)[soc.label] ?? soc.label}`}
                     className="size-10 rounded-xl flex items-center justify-center text-white shadow-sm transition-all cursor-pointer"
                     style={{ backgroundColor: soc.color }}
                   >
@@ -1032,7 +1033,7 @@ const socialFeeds = [
     content: 'We are hiring! Join the team building the future of industrial packaging.', 
     icon: Linkedin, 
     color: '#0A66C2',
-    image: 'https://images.unsplash.com/photo-1556740758-90eb39f3203c?auto=format&fit=crop&q=80&w=400'
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=400'
   },
 ];
 
@@ -1076,7 +1077,7 @@ function SocialFeedCard({ feed }: { feed: any }) {
             <span className="text-[8px] font-bold text-zinc-400 font-mono">{feed.handle}</span>
           </div>
         </div>
-        <span className="text-[8px] font-black text-zinc-300 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
+        <span className="text-[8px] font-black text-zinc-500 font-mono uppercase tracking-widest bg-zinc-50 px-2 py-1 rounded-md">{feed.time}</span>
       </div>
       
       {feed.image && (
@@ -1090,16 +1091,18 @@ function SocialFeedCard({ feed }: { feed: any }) {
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleLike}
+                 aria-label="Like this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Heart className="size-4" />
+                 <Heart className="size-4" aria-hidden="true" />
                </motion.button>
                <motion.button 
                  whileHover={{ scale: 1.2 }} 
                  onClick={handleShare}
+                 aria-label="Copy link to this post"
                  className="size-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30"
                >
-                 <Send className="size-4" />
+                 <Send className="size-4" aria-hidden="true" />
                </motion.button>
             </div>
           </div>
@@ -1112,26 +1115,28 @@ function SocialFeedCard({ feed }: { feed: any }) {
 
       <div className="flex items-center justify-between pt-3 border-t border-zinc-50 px-1">
         <div className="flex gap-4">
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={(e) => { e.stopPropagation(); toast("Comments coming soon..."); }}
           >
-            <MessageSquare className="size-3" />
+            <MessageSquare className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Comment</span>
-          </div>
-          <div 
-            className="flex items-center gap-1.5 text-zinc-300 hover:text-black transition-colors"
+          </button>
+          <button
+            type="button"
+            className="flex items-center gap-1.5 text-zinc-500 hover:text-black transition-colors"
             onClick={handleShare}
           >
-            <Share2 className="size-3" />
+            <Share2 className="size-3" aria-hidden="true" />
             <span className="text-[8px] font-black uppercase">Share</span>
-          </div>
+          </button>
         </div>
         <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1" onClick={handleLike}>
-               <Heart className="size-3 text-zinc-300 group-hover:text-red-500 transition-colors" />
-               <span className="text-[8px] font-black text-zinc-300 group-hover:text-zinc-500">2.4k</span>
-            </div>
+            <button type="button" className="flex items-center gap-1" onClick={handleLike} aria-label="Like this post">
+               <Heart className="size-3 text-zinc-500 group-hover:text-red-500 transition-colors" aria-hidden="true" />
+               <span className="text-[8px] font-black text-zinc-500 group-hover:text-zinc-700">2.4k</span>
+            </button>
             <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
-import imgPaperBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.png";
+import imgPaperBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function FeaturedProducts() {
@@ -69,7 +69,7 @@ export function FeaturedProducts() {
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-white/20 blur-[60px] md:blur-[100px] rounded-full scale-110 md:scale-150 -z-10" />
               
-              <img 
+              <img loading="lazy" decoding="async" 
                 src={imgPaperBag} 
                 alt="Paper Bag" 
                 className="h-[300px] md:h-[450px] w-auto drop-shadow-[0_30px_50px_rgba(0,0,0,0.4)] transition-transform duration-700 group-hover:scale-105" 

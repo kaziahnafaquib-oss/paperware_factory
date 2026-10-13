@@ -149,7 +149,7 @@ export const RealtimeOps = React.memo(() => {
                   <Activity className="size-4 md:size-5 text-[#fabf37] animate-pulse" />
                   <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">Live Production Stream</span>
                 </div>
-                <span className="text-[8px] md:text-[10px] font-black text-[#fabf37] bg-[#fabf37]/10 px-2 md:px-3 py-1 rounded-full uppercase truncate max-w-[120px] md:max-w-none">Batch: {activeBatch}</span>
+                <span className="text-[8px] md:text-[10px] font-black text-[#a16207] bg-[#fabf37]/10 px-2 md:px-3 py-1 rounded-full uppercase truncate max-w-[120px] md:max-w-none">Batch: {activeBatch}</span>
               </div>
 
               <div className="space-y-3 md:space-y-4">
@@ -198,7 +198,7 @@ export const RealtimeOps = React.memo(() => {
               {/* HUD Elements */}
               <div className="absolute top-10 right-10 text-right space-y-1">
                 <p className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Rotation Axis</p>
-                <p className="text-[14px] font-black text-[#fabf37] tabular-nums">{rotationDisplay}°</p>
+                <p className="text-[14px] font-black text-[#a16207] tabular-nums">{rotationDisplay}°</p>
               </div>
               
               <div className="absolute top-10 left-10 space-y-1">

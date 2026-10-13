@@ -17,29 +17,29 @@ export function ManufacturingPage() {
       title: "Material Sourcing",
       desc: "Ethically harvested fibers from FSC-certified forests, ensuring zero deforestation.",
       icon: <Wind className="size-8" />,
-      image: "https://images.unsplash.com/photo-1711885417467-6eac5cb81607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+      image: "https://images.unsplash.com/photo-1711885417467-6eac5cb81607?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
     },
     {
       title: "Precision Forming",
       desc: "High-speed German forming technology with ultrasonic sealing for leak-proof durability.",
       icon: <Gauge className="size-8" />,
-      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
     },
     {
       title: "Smart Monitoring",
       desc: "AI-driven quality control pipelines inspecting every unit for structural integrity.",
       icon: <Activity className="size-8" />,
-      image: "https://images.unsplash.com/photo-1717386255773-a456c611dc4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+      image: "https://images.unsplash.com/photo-1717386255773-a456c611dc4e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
     }
   ];
 
   return (
     <div className="relative bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center overflow-hidden bg-black">
+      <section className="relative h-[80vh] flex items-center overflow-hidden bg-black text-white">
         <div className="absolute inset-0 z-0">
           <ImageWithFallback 
-            src="https://images.unsplash.com/photo-1549030927-006822377380?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+            src="https://images.unsplash.com/photo-1549030927-006822377380?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
             alt="Manufacturing Factory"
             className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000"
           />
@@ -87,7 +87,7 @@ export function ManufacturingPage() {
       </section>
 
       {/* Metrics Bar */}
-      <section className="bg-black border-y border-white/5 py-12">
+      <section className="bg-black text-white border-y border-white/5 py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {metrics.map((m, i) => (
@@ -111,7 +111,7 @@ export function ManufacturingPage() {
       </section>
 
       {/* Industrial Flow */}
-      <section className="py-32 bg-zinc-50 relative overflow-hidden">
+      <section className="py-32 bg-zinc-50 text-zinc-900 relative overflow-hidden">
         {/* Decorative Grid */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
              style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
@@ -123,7 +123,7 @@ export function ManufacturingPage() {
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">Workflow Engine</span>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
                   THE ART OF <br />
-                  <span className="text-zinc-300">SCALABLE</span> <br />
+                  <span className="text-zinc-500">SCALABLE</span> <br />
                   PRODUCTION.
                 </h2>
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-[11px] leading-relaxed max-w-xl">
@@ -155,7 +155,7 @@ export function ManufacturingPage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-[60px] overflow-hidden border-[12px] border-white shadow-2xl relative">
                 <ImageWithFallback 
-                  src="https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+                  src="https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
                   alt="Machinery Detail"
                   className="w-full h-full object-cover"
                 />
@@ -201,7 +201,7 @@ export function ManufacturingPage() {
       <section className="py-32 bg-black text-white overflow-hidden relative">
         <div className="absolute right-0 top-0 w-1/2 h-full opacity-30">
           <ImageWithFallback 
-            src="https://images.unsplash.com/photo-1717386255773-a456c611dc4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg"
+            src="https://images.unsplash.com/photo-1717386255773-a456c611dc4e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=75&w=1600"
             alt="AI Monitoring"
             className="w-full h-full object-cover grayscale"
           />

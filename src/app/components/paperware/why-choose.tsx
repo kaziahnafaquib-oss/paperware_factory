@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "motion/react";
-import imgBackground from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.png";
-import imgBackground1 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.png";
-import imgBackground2 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.png";
+import imgBackground from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
+import imgBackground1 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.webp";
+import imgBackground2 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function WhyChoose() {
@@ -52,7 +52,7 @@ export function WhyChoose() {
               transition={{ delay: i * 0.2, duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="group relative h-[650px] rounded-t-[240px] rounded-b-[40px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-zinc-100"
             >
-              <img 
+              <img loading="lazy" decoding="async" 
                 src={item.image} 
                 alt={item.title} 
                 className="absolute inset-0 size-full object-cover transition-transform duration-1000 group-hover:scale-110"

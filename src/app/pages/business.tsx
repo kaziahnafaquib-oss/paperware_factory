@@ -206,8 +206,8 @@ export function BusinessPage() {
                 whileHover={{ scale: 1.01 }}
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
-                <ImageWithFallback src="https://images.unsplash.com/photo-1551288049-bbbda536339a?auto=format&fit=crop&q=80&w=1200" alt="Investor" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                <ImageWithFallback src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80&w=1200" alt="Investor" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Capital Growth</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Investor<br />Relations</h3>
@@ -223,8 +223,8 @@ export function BusinessPage() {
                 whileHover={{ scale: 1.01 }}
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
-                <ImageWithFallback src="https://images.unsplash.com/photo-1521791136364-798a730bb361?auto=format&fit=crop&q=80&w=1200" alt="Partners" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                <ImageWithFallback src="https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&fit=crop&q=80&w=1200" alt="Partners" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Global Network</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Partner<br />Program</h3>
@@ -354,7 +354,7 @@ export function BusinessPage() {
              </div>
              <h2 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
                 Localized Everywhere.<br />
-                <span className="text-zinc-300">46+ Languages.</span>
+                <span className="text-zinc-500">46+ Languages.</span>
               </h2>
               <p className="text-zinc-500 font-medium leading-relaxed max-w-2xl mx-auto">
                 Our business interface adapts instantly to your region's language and regulatory requirements. Managing global supply chains has never been this intuitive.

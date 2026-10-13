@@ -257,7 +257,7 @@ export function JourneyMediaView({ milestones: initialMilestones, onMilestonesUp
                           suppressHydrationWarning
                         />
                       ) : (
-                        <img 
+                        <img loading="lazy" decoding="async" 
                           src={milestone.videoUrl} 
                           alt={milestone.title}
                           className="w-full h-full object-cover"

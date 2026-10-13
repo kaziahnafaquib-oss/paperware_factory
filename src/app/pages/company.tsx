@@ -2,9 +2,9 @@ import React from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "motion/react";
 import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles, Instagram, Linkedin, Twitter, Facebook } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.png";
-import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.png";
-import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.png";
+import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
+import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
+import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.webp";
 
 // Animation Variants
 const fadeInUp = {
@@ -109,7 +109,7 @@ function ParallaxImage({ src, alt, className }: { src: string, alt: string, clas
 }
 
 // Magnetic Button
-function MagneticButton({ children, onClick, className }: { children: React.ReactNode, onClick?: () => void, className?: string }) {
+function MagneticButton({ children, onClick, className, "aria-label": ariaLabel }: { children: React.ReactNode, onClick?: () => void, className?: string, "aria-label"?: string }) {
   const ref = React.useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -131,6 +131,7 @@ function MagneticButton({ children, onClick, className }: { children: React.Reac
 
   return (
     <motion.button
+      aria-label={ariaLabel}
       ref={ref}
       onClick={onClick}
       onMouseMove={handleMouseMove}
@@ -160,7 +161,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "About Us",
       subtitle: "The Origin",
       desc: "Architects of the modern supply chain. We don't just manufacture; we engineer the future of packaging.",
-      image: "https://images.unsplash.com/photo-1554227231-54aa5db01c51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjBwYWNrYWdpbmclMjBtYWNoaW5lcnklMjBpbmR1c3RyaWFsJTIwbWluaW1hbGlzdCUyMHdoaXRlfGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "https://images.unsplash.com/photo-1554227231-54aa5db01c51?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjBwYWNrYWdpbmclMjBtYWNoaW5lcnklMjBpbmR1c3RyaWFsJTIwbWluaW1hbGlzdCUyMHdoaXRlfGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
       stats: "Est. 2021",
       icon: Factory,
@@ -171,7 +172,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Our Clients",
       subtitle: "Global Trust",
       desc: "Powering the brands you love. We are the silent engine behind their success.",
-      image: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       stats: "500+ Partners",
       icon: Users,
       colSpan: "md:col-span-1"
@@ -181,7 +182,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Sustainability",
       subtitle: "Eco Core",
       desc: "Defaulting to green. Environmental responsibility meets industrial scale.",
-      image: "https://images.unsplash.com/photo-1584022438855-930ac64c51be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMHBhcGVyJTIwdGV4dHVyZSUyMGVjbyUyMGZyaWVuZGx5JTIwYnJvd24lMjBjcmFmdCUyMG1pbmltYWxpc3R8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "https://images.unsplash.com/photo-1584022438855-930ac64c51be?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMHBhcGVyJTIwdGV4dHVyZSUyMGVjbyUyMGZyaWVuZGx5JTIwYnJvd24lMjBjcmFmdCUyMG1pbmltYWxpc3R8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
       stats: "100% Eco",
       icon: Leaf,
@@ -192,7 +193,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Compliance",
       subtitle: "Certified",
       desc: "Excellence without compromise. Adhering to the strictest international standards.",
-      image: "https://images.unsplash.com/photo-1735448213858-6bdfdf78967a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaGFybWFjZXV0aWNhbCUyMGxhYiUyMGNsZWFuJTIwcm9vbSUyMHdoaXRlJTIwbWluaW1hbGlzdHxlbnwxfHx8fDE3NjcxMTQwNDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "https://images.unsplash.com/photo-1735448213858-6bdfdf78967a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaGFybWFjZXV0aWNhbCUyMGxhYiUyMGNsZWFuJTIwcm9vbSUyMHdoaXRlJTIwbWluaW1hbGlzdHxlbnwxfHx8fDE3NjcxMTQwNDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
       stats: "ISO 9001",
       icon: ShieldCheck,
@@ -203,7 +204,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Future Plan",
       subtitle: "Vision 2030",
       desc: "Innovating for tomorrow. Investing in next-gen automated machinery.",
-      image: "https://images.unsplash.com/photo-1590038667005-7d82ac6f864b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjByb2JvdGljcyUyMGxvZ2lzdGljcyUyMGZ1dHVyaXN0aWN8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: "https://images.unsplash.com/photo-1590038667005-7d82ac6f864b?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjByb2JvdGljcyUyMGxvZ2lzdGljcyUyMGZ1dHVyaXN0aWN8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
       stats: "R&D Focused",
       icon: Zap,
@@ -356,6 +357,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
               <MagneticButton
                 onClick={() => window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' })}
+                aria-label="Scroll to content"
                 className="size-20 md:size-24 rounded-full bg-black text-white flex items-center justify-center shrink-0 hover:scale-110 hover:bg-[#fabf37] hover:text-black transition-all duration-300 shadow-2xl shadow-zinc-300 ring-4 ring-zinc-50 group mt-4 md:mt-0"
               >
                 <motion.div
@@ -403,7 +405,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                         {section.title}
                       </h3>
                     </div>
-                    <span className="text-[10px] font-mono text-zinc-300">0{idx + 1}</span>
+                    <span className="text-[10px] font-mono text-zinc-500">0{idx + 1}</span>
                   </div>
 
                   {/* Description & Action */}
@@ -419,6 +421,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
                       <button
                         onClick={() => onPageChange(section.id)}
+                        aria-label={`Open ${section.title}`}
                         className="size-10 rounded-full bg-white border border-zinc-100 flex items-center justify-center text-zinc-900 group-hover:bg-[#fabf37] group-hover:text-black group-hover:scale-110 transition-all duration-300 shadow-sm"
                       >
                         <ArrowRight className="size-4 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
@@ -553,11 +556,11 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
             {[...Array(2)].map((_, setIndex) => (
               <div key={setIndex} className="flex gap-6">
                 {[
-                  { img: "https://images.unsplash.com/photo-1610187224249-1c5aa1841c2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwc2hvd2Nhc2UlMjBwYWNrYWdpbmclMjBkZXNpZ24lMjBzdHVkaW98ZW58MXx8fHwxNzY3MTE0NzI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_co" },
-                  { img: "https://images.unsplash.com/photo-1634881091477-5ebe7ac70074?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5rZWRpbiUyMGNvcnBvcmF0ZSUyMHBvc3QlMjBtZWV0aW5nJTIwb2ZmaWNlfGVufDF8fHx8MTc2NzExNDcyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Linkedin, tag: "Paperware Industries" },
-                  { img: "https://images.unsplash.com/photo-1587470049607-de08c66f308c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0d2l0dGVyJTIwcG9zdCUyMHVwZGF0ZSUyMHRlY2glMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NzExNDcyOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Twitter, tag: "@paperware_tech" },
-                  { img: "https://images.unsplash.com/photo-1730971991690-f8825d74c055?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnN0YWdyYW0lMjBwb3N0JTIwbWluaW1hbGlzdCUyMGxpZmVzdHlsZSUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcxMTQ3Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_life" },
-                  { img: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Facebook, tag: "Paperware Logistics" }
+                  { img: "https://images.unsplash.com/photo-1610187224249-1c5aa1841c2c?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwc2hvd2Nhc2UlMjBwYWNrYWdpbmclMjBkZXNpZ24lMjBzdHVkaW98ZW58MXx8fHwxNzY3MTE0NzI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_co" },
+                  { img: "https://images.unsplash.com/photo-1634881091477-5ebe7ac70074?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5rZWRpbiUyMGNvcnBvcmF0ZSUyMHBvc3QlMjBtZWV0aW5nJTIwb2ZmaWNlfGVufDF8fHx8MTc2NzExNDcyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Linkedin, tag: "Paperware Industries" },
+                  { img: "https://images.unsplash.com/photo-1587470049607-de08c66f308c?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0d2l0dGVyJTIwcG9zdCUyMHVwZGF0ZSUyMHRlY2glMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NzExNDcyOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Twitter, tag: "@paperware_tech" },
+                  { img: "https://images.unsplash.com/photo-1730971991690-f8825d74c055?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnN0YWdyYW0lMjBwb3N0JTIwbWluaW1hbGlzdCUyMGxpZmVzdHlsZSUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcxMTQ3Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_life" },
+                  { img: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Facebook, tag: "Paperware Logistics" }
                 ].map((item, i) => (
                   <div key={i} className="relative w-[300px] h-[400px] shrink-0 group rounded-2xl overflow-hidden cursor-pointer">
                     <ImageWithFallback src={item.img} alt="Social" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />

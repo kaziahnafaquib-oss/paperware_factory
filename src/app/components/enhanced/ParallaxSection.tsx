@@ -68,7 +68,7 @@ export function ParallaxImage({
 
   return (
     <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.img
+      <motion.img loading="lazy" decoding="async"
         src={src}
         alt={alt}
         style={{ y, scale }}

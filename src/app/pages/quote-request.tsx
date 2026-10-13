@@ -145,7 +145,7 @@ export function QuoteRequestPage() {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Company Name</label>
-                  <input 
+                  <input aria-label="Company Name" 
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleInputChange}
@@ -157,6 +157,7 @@ export function QuoteRequestPage() {
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Business Category</label>
                   <select 
                     name="businessType"
+                    aria-label="Business type"
                     value={formData.businessType}
                     onChange={handleInputChange}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
@@ -171,7 +172,7 @@ export function QuoteRequestPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Trade / TIN Number</label>
-                  <input 
+                  <input aria-label="Trade / TIN Number" 
                     name="tin"
                     value={formData.tin}
                     onChange={handleInputChange}
@@ -191,7 +192,7 @@ export function QuoteRequestPage() {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Liaison Name</label>
-                  <input 
+                  <input aria-label="Liaison Name" 
                     name="contactPerson"
                     value={formData.contactPerson}
                     onChange={handleInputChange}
@@ -201,7 +202,7 @@ export function QuoteRequestPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Email</label>
-                  <input 
+                  <input aria-label="Email" 
                     type="email"
                     name="email"
                     value={formData.email}
@@ -212,7 +213,7 @@ export function QuoteRequestPage() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Phone</label>
-                  <input 
+                  <input aria-label="Phone" 
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
@@ -235,7 +236,7 @@ export function QuoteRequestPage() {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Destination Country</label>
-                    <input 
+                    <input aria-label="Destination Country" 
                       name="destinationCountry"
                       value={formData.destinationCountry}
                       onChange={handleInputChange}
@@ -245,7 +246,7 @@ export function QuoteRequestPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Destination City / Port</label>
-                    <input 
+                    <input aria-label="Destination City / Port" 
                       name="destinationCity"
                       value={formData.destinationCity}
                       onChange={handleInputChange}
@@ -255,7 +256,7 @@ export function QuoteRequestPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Delivery Area / Zip Code</label>
-                    <input 
+                    <input aria-label="Delivery Area / Zip Code" 
                       name="zipCode"
                       value={formData.zipCode}
                       onChange={handleInputChange}
@@ -267,7 +268,7 @@ export function QuoteRequestPage() {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Product Type</label>
-                    <select 
+                    <select aria-label="Product Type" 
                       name="productType"
                       value={formData.productType}
                       onChange={handleInputChange}
@@ -282,7 +283,7 @@ export function QuoteRequestPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Est. Quantity (Units)</label>
-                    <input 
+                    <input aria-label="Est. Quantity (Units)" 
                       name="quantity"
                       value={formData.quantity}
                       onChange={handleInputChange}
@@ -293,7 +294,7 @@ export function QuoteRequestPage() {
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Expected Timeline</label>
                     <div className="relative">
-                      <input 
+                      <input aria-label="Expected Timeline" 
                         type="date"
                         name="expectedDate"
                         value={formData.expectedDate}
@@ -315,6 +316,7 @@ export function QuoteRequestPage() {
               <h4 className="text-lg font-black uppercase tracking-widest">Special Requirements / Compliance</h4>
             </div>
             <textarea 
+              aria-label="Special requirements / compliance"
               name="requirements"
               value={formData.requirements}
               onChange={handleInputChange}
@@ -391,7 +393,7 @@ export function QuoteRequestPage() {
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Product Type</label>
-                        <select 
+                        <select aria-label="Product Type" 
                           value={line.productType}
                           onChange={(e) => handleProductLineChange(line.id, 'productType', e.target.value)}
                           className="w-full bg-black/60 border border-white/10 rounded-[24px] px-6 py-4 text-xs font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
@@ -407,7 +409,7 @@ export function QuoteRequestPage() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Quantity</label>
-                        <input 
+                        <input aria-label="Quantity" 
                           type="number"
                           value={line.quantity}
                           onChange={(e) => handleProductLineChange(line.id, 'quantity', e.target.value)}
@@ -417,7 +419,7 @@ export function QuoteRequestPage() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Customization</label>
-                        <input 
+                        <input aria-label="Customization" 
                           value={line.customization}
                           onChange={(e) => handleProductLineChange(line.id, 'customization', e.target.value)}
                           placeholder="Logo print, colors..."
@@ -440,7 +442,7 @@ export function QuoteRequestPage() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Incoterms</label>
-                <select 
+                <select aria-label="Incoterms" 
                   name="incoterms"
                   value={formData.incoterms}
                   onChange={handleInputChange}
@@ -455,7 +457,7 @@ export function QuoteRequestPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Payment Terms</label>
-                <select 
+                <select aria-label="Payment Terms" 
                   name="paymentTerms"
                   value={formData.paymentTerms}
                   onChange={handleInputChange}
@@ -470,7 +472,7 @@ export function QuoteRequestPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Currency</label>
-                <select 
+                <select aria-label="Currency" 
                   name="currency"
                   value={formData.currency}
                   onChange={handleInputChange}
@@ -544,7 +546,7 @@ export function QuoteRequestPage() {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Shipping Method</label>
-                    <select 
+                    <select aria-label="Shipping Method" 
                       name="shippingMethod"
                       value={formData.shippingMethod}
                       onChange={handleInputChange}
@@ -557,7 +559,7 @@ export function QuoteRequestPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Preferred Contact Method</label>
-                    <select 
+                    <select aria-label="Preferred Contact Method" 
                       name="preferredContact"
                       value={formData.preferredContact}
                       onChange={handleInputChange}
@@ -571,7 +573,7 @@ export function QuoteRequestPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Past Order Reference (Optional)</label>
-                    <input 
+                    <input aria-label="Past Order Reference (Optional)" 
                       name="pastOrderRef"
                       value={formData.pastOrderRef}
                       onChange={handleInputChange}
