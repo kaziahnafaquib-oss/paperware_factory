@@ -9,7 +9,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
 import pConfectioneryBoxes from "figma:asset/products/confectionery-boxes.webp";
 import pCookieBoxes from "figma:asset/products/cookie-boxes.webp";
@@ -104,7 +103,6 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Global Brand Trust */}
       <section className="container mx-auto px-4 mb-32">

@@ -10,7 +10,6 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { toast } from "sonner";
 import { FullScreenVideoSection } from "../components/paperware/full-screen-video";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import imgSingleWall from "figma:asset/508ac66920d6bf79d8403965309bcc52fac5e5e7.webp";
 import imgRippleWall from "figma:asset/bfe95f6268f355771c65cb6e1751781aaebe3d05.webp";
 import imgDoubleWall from "figma:asset/b41403eedb4af19ba356d74c80558118d542f4cd.webp";
@@ -69,21 +68,15 @@ const comparisonSpecs = [
 ];
 
 const productionSteps = [
-  { icon: <Settings className="size-6" />, title: "Sourcing", desc: "Premium FSC certified kraft fiber." },
+  { icon: <Settings className="size-6" />, title: "Sourcing", desc: "Premium kraft paperboard." },
   { icon: <Box className="size-6" />, title: "Forming", desc: "High-precision automated molding." },
   { icon: <ShieldCheck className="size-6" />, title: "Testing", desc: "Batch-wise leakage & thermal stress test." },
   { icon: <Truck className="size-6" />, title: "Global Logistics", desc: "Climate-neutral delivery network." },
 ];
 
-const certifications = [
-  { name: "FDA Approved", desc: "Food-grade safety compliance" },
-  { name: "ISO 9001", desc: "Quality management systems" },
-  { name: "FSC Certified", desc: "Responsible forest management" },
-  { name: "BRCGS", desc: "Global food safety standard" },
-];
 
 const bulkBenefits = [
-  { title: "Volume Pricing", desc: "Tiered discounts starting from 50k units." },
+  { title: "Volume Pricing", desc: "Tiered pricing for bulk orders." },
   { title: "Priority Support", desc: "Dedicated account manager for enterprise clients." },
   { title: "Custom Tooling", desc: "Exclusive molds and shapes for your brand." },
   { title: "Warehousing", desc: "Free storage for scheduled release deliveries." },
@@ -251,7 +244,7 @@ export function PaperCupsPage({
             <div key={index} className="flex items-center gap-12 text-xs font-black uppercase tracking-[0.3em]">
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>100% ECO-FRIENDLY MATERIALS</span>
+                <span>ECO-FRIENDLY MATERIALS</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
@@ -344,7 +337,7 @@ export function PaperCupsPage({
                  <div className="absolute bottom-6 right-6 size-12 border-b border-r border-[#fabf37]/20 rounded-br-3xl" />
               </div>
 
-              {/* ISO Pill Badge - Exactly as per Screenshot */}
+              {/* Origin badge */}
               <motion.div 
                 style={{ y: useTransform(smoothBlueprint, [0.8, 1], [50, 0]), opacity: useTransform(smoothBlueprint, [0.8, 1], [0, 1]) }}
                 className="absolute bottom-[-5%] right-[-5%] bg-[#fabf37] text-black px-10 py-8 rounded-[50px] shadow-[0_40px_100px_rgba(250,191,55,0.4)] flex items-center gap-6 z-20"
@@ -353,8 +346,8 @@ export function PaperCupsPage({
                     <CircleCheck className="size-8" />
                  </div>
                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">ISO CERTIFIED PLANT</span>
-                    <span className="text-3xl font-black tracking-tighter leading-none">Precision 0.01mm</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">Made in Dhaka</span>
+                    <span className="text-3xl font-black tracking-tighter leading-none">Custom printed</span>
                  </div>
               </motion.div>
             </div>
@@ -504,7 +497,7 @@ export function PaperCupsPage({
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-12">
               <div className="space-y-4">
-                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">Live Preview</span>
+                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">Preview</span>
                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-zinc-900">{t('studio_interactive')}</h2>
                 <p className="text-zinc-600 font-bold text-lg max-w-md">{t('studio_desc')}</p>
               </div>
@@ -624,7 +617,7 @@ export function PaperCupsPage({
                                   <div className="size-2.5 bg-[#fabf37] rounded-full animate-pulse shadow-[0_0_15px_#fabf37]" />
                                   <span className="text-[#fabf37] font-black uppercase tracking-[0.3em] text-[10px]">Project Paperware</span>
                                </div>
-                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>3D Real-time Render</span>
+                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>3D Preview</span>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -718,10 +711,6 @@ export function PaperCupsPage({
                <div className="space-y-6">
                  <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-white italic">Eco <br /> Dynamics</h2>
                  <p className="text-zinc-400 font-bold text-xl leading-relaxed max-lg">Every decision matters. Calculate the ecological weight of your brand and discover the impact of switching to Paperware sustainable fibers.</p>
-               </div>
-               <div className="flex gap-12">
-                 <div className="space-y-2"><p className="text-[50px] font-black text-[#fabf37]">98%</p><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Recyclability Rate</p></div>
-                 <div className="space-y-2"><p className="text-[50px] font-black text-[#fabf37]">0.4s</p><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Forming Speed</p></div>
                </div>
             </div>
             <div className="backdrop-blur-3xl p-12 lg:p-20 rounded-[80px] border border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.5)]" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
@@ -837,20 +826,6 @@ export function PaperCupsPage({
         </div>
       </section>
 
-      {/* Certification Wall */}
-      <section className="py-24 bg-white border-b border-black/5">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-between items-center gap-12 opacity-40 hover:opacity-100 transition-opacity">
-            {certifications.map((cert, i) => (
-              <div key={i} className="group cursor-default">
-                <p className="text-2xl font-black uppercase tracking-tighter text-black group-hover:text-[#fabf37] transition-colors">{cert.name}</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{cert.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* WEBM Video Test Section */}
       <section className="py-32 bg-[#ffbd32] text-white text-center relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
@@ -911,8 +886,6 @@ export function PaperCupsPage({
         
       </section>
 
-      {/* Social Media Feed - Positioned after Final CTA */}
-      <SocialMediaFeed />
     </div>
   );
 }

@@ -15,7 +15,6 @@ import { GreenCupSection } from "../components/sustainability/GreenCupSection";
 import { StorySection } from "../components/sustainability/StorySection";
 import { ProcessStepsSection } from "../components/sustainability/ProcessStepsSection";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const impactData = [
   { month: 'Jan', co2: 45, water: 120 },
@@ -428,7 +427,6 @@ export function SustainabilityPage() {
               Follow our sustainability journey and green initiatives across social platforms
             </p>
           </div>
-          <SocialMediaFeed />
         </motion.div>
       </div>
     </div>

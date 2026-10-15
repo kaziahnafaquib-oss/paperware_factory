@@ -14,7 +14,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 import pCarryBagPink from "figma:asset/products/carry-bag-pink.webp";
@@ -61,7 +60,7 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
             Restaurant <br /> <span className="text-zinc-500">Supplies</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
-            Our food packaging is engineered for the modern culinary industry. Leak-proof, heat-retaining, and 100% sustainable materials that keep your food as fresh as it was in the kitchen.
+            Our food packaging is engineered for the modern culinary industry. Leak-proof, heat-retaining, sustainable materials that keep your food as fresh as it was in the kitchen.
           </p>
         </div>
       </section>
@@ -72,7 +71,7 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
           {[
             { icon: <Thermometer className="size-8" />, title: "Heat Retention", desc: "Keeps food hot for up to 45 minutes." },
             { icon: <Droplets className="size-8" />, title: "Grease Proof", desc: "Specialized coating prevents oil leakage." },
-            { icon: <ShieldCheck className="size-8" />, title: "FDA Approved", desc: "100% food-safe virgin pulp materials." },
+            { icon: <ShieldCheck className="size-8" />, title: "Food Safe", desc: "Food-grade virgin pulp materials." },
           ].map((item, i) => (
             <motion.div 
               key={i} 
@@ -144,7 +143,6 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Industrial Banner */}
       <section className="bg-black py-32 relative overflow-hidden rounded-[80px] mx-4">
@@ -155,19 +153,8 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
               Scale Your <span className="text-[#fabf37]">Chain</span>
             </h2>
             <p className="text-zinc-500 font-bold text-xl leading-relaxed">
-              Supporting global food chains with consistent high-volume supply. Our manufacturing lines run 24/7 to ensure your packaging never stops.
+              Supporting global food chains with consistent high-volume supply.
             </p>
-            <div className="flex flex-wrap gap-8 pt-8">
-              <div className="space-y-2">
-                <p className="text-3xl font-black text-white">10M+</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Boxes Monthly</p>
-              </div>
-              <div className="w-px h-16 bg-white/10 hidden md:block" />
-              <div className="space-y-2">
-                <p className="text-3xl font-black text-white">100%</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Biodegradable</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

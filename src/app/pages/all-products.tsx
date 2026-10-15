@@ -7,7 +7,6 @@ import { Hero3DBox } from "../components/Hero3DBox";
 import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
 import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
 
-const SocialMediaFeed = React.lazy(() => import("../components/SocialMediaFeed").then(module => ({ default: module.SocialMediaFeed })));
 const TopSellingProducts = React.lazy(() => import("../components/TopSellingProducts").then(module => ({ default: module.TopSellingProducts })));
 // Remove Canvas and Fiber imports as they are causing environment crashes
 
@@ -75,7 +74,6 @@ const products = (t: any) => [
 const tickerItems = (t: any) => [
   t('precision'),
   t('high_speed'),
-  t('neural_core'),
   t('eco_friendly_title'),
   t('quality_index'),
   t('global_logistics'),
@@ -83,45 +81,12 @@ const tickerItems = (t: any) => [
   t('production_inventory')
 ];
 
-const DEFAULT_CLIENT_PROJECTS = [
-  {
-    company: "TechFlow Systems",
-    project: "Neural Hardware Packaging",
-    desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: yProductBoxes
-  },
-  {
-    company: "GreenLeaf Organics",
-    project: "Biodegradable Food Containers",
-    desc: "100% plant-based fiber composition with zero-plastic coating.",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&q=80&w=1000"
-  },
-  {
-    company: "Urban Brew Co.",
-    project: "Thermal Insulation Cups",
-    desc: "Double-wall patented construction maintaining heat for 4+ hours.",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&q=80&w=1000"
-  },
-  {
-    company: "MediSafe Pharma",
-    project: "Secure Sterility Boxes",
-    desc: "ISO certified medical grade cardstock with tamper-evident seals.",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=1000"
-  },
-  {
-    company: "Velocity Logistics",
-    project: "Heavy-Duty Corrugated Units",
-    desc: "Reinforced structural integrity for international freight.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
-  }
-];
 
 export function AllProductsPage({ 
   onProductClick, 
   onAddToQuote, 
   onPageChange,
   products: dynamicProducts,
-  clientProjects = DEFAULT_CLIENT_PROJECTS
 }: { 
   onProductClick: (p: any) => void, 
   onAddToQuote: (p: any) => void, 
@@ -261,9 +226,6 @@ export function AllProductsPage({
           <TopSellingProducts onProductClick={onProductClick} products={dynamicProducts} />
         </React.Suspense>
         
-        <React.Suspense fallback={<div className="h-64 flex items-center justify-center">Loading...</div>}>
-          <SocialMediaFeed />
-        </React.Suspense>
 
         <div className="max-w-5xl mx-auto mb-32 relative px-4">
           <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-full h-[400px] bg-gradient-to-b from-[#fabf37]/5 via-transparent to-transparent blur-[100px] pointer-events-none" />
@@ -442,42 +404,6 @@ export function AllProductsPage({
            </motion.div>
         </div>
 
-        <div className="pb-0">
-           <div className="flex items-center gap-3 mb-12 justify-center">
-             <div className="h-[2px] w-12 bg-[#fabf37]" />
-             <span className="text-black text-xs font-black uppercase tracking-[0.3em]">{t('recent_deployments') || 'RECENT DEPLOYMENTS'}</span>
-             <div className="h-[2px] w-12 bg-[#fabf37]" />
-           </div>
-           
-           <div className="relative w-full overflow-hidden">
-             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-             
-             <motion.div 
-               className="flex gap-8"
-               animate={{ x: ["0%", "-50%"] }}
-               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-               style={{ width: "fit-content" }}
-             >
-                {[...clientProjects, ...clientProjects, ...clientProjects].map((project, idx) => (
-                  <div key={`${project.company}-${idx}`} className="w-[280px] md:w-[350px] shrink-0 group relative h-[400px] md:h-[500px] rounded-[32px] overflow-hidden border border-zinc-200 hover:border-[#fabf37] transition-all duration-500 hover:shadow-2xl">
-                    <img loading="lazy" decoding="async" src={project.image} alt={project.project} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:via-black/20 transition-all duration-500" />
-                    <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="size-2 bg-[#fabf37] rounded-full" />
-                        <span className="text-[#fabf37] text-[9px] font-black uppercase tracking-widest">{project.company}</span>
-                      </div>
-                      <h3 className="text-white text-xl font-black uppercase tracking-tighter mb-2 leading-none">{project.project}</h3>
-                      <p className="text-white/60 text-[10px] font-bold leading-relaxed max-w-[280px] group-hover:text-white transition-colors line-clamp-2">
-                        {project.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-             </motion.div>
-           </div>
-        </div>
       </div>
   );
 }

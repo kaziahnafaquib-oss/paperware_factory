@@ -21,7 +21,7 @@ const solutions = [
     title: "Pharmaceuticals",
     icon: <ShieldCheck className="size-10" />,
     description: "Sterile-grade medical packaging solutions that meet international safety standards and regulatory compliance.",
-    features: ["Tamper-evident design", "SGS certified", "High-barrier protection"],
+    features: ["Tamper-evident design", "High-barrier protection"],
     image: yPharmaBoxes
   },
   {
@@ -168,10 +168,6 @@ export function SolutionsPage() {
                   className="w-full h-full object-cover opacity-60 grayscale" 
                   alt="Process" 
                 />
-              </div>
-              <div className="absolute -bottom-10 -left-10 bg-white p-12 rounded-[40px] shadow-2xl max-w-xs -rotate-3">
-                <p className="text-4xl font-black tracking-tighter mb-2 text-black">99.8%</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Production Reliability Rating</p>
               </div>
             </div>
           </div>

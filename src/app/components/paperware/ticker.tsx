@@ -17,16 +17,10 @@ export const Ticker = React.memo(() => {
 
   const items: { icon: React.ReactNode; label: string }[] = [
     { icon: <Layers className="size-4" />, label: t("ticker_1") },
-    { icon: <Database className="size-4" />, label: t("ticker_2") },
     { icon: <Globe className="size-4" />, label: t("ticker_3") },
-    { icon: <Leaf className="size-4" />, label: t("ticker_6") },
     { icon: <Layers className="size-4" />, label: t("ticker_7") },
     { icon: <PenTool className="size-4" />, label: t("ticker_8") },
-    { icon: <Clock className="size-4" />, label: t("ticker_9") },
-    { icon: <Microscope className="size-4" />, label: t("ticker_10") },
-    { icon: <Truck className="size-4" />, label: t("ticker_12") },
     { icon: <Plane className="size-4" />, label: t("ticker_13") },
-    { icon: <Zap className="size-4" />, label: t("ticker_14") },
     { icon: <Recycle className="size-4" />, label: t("ticker_15") },
   ];
 

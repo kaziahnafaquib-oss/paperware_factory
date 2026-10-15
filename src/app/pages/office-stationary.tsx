@@ -8,7 +8,6 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 
@@ -51,12 +50,11 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
 
       {/* Stats */}
       <section className="container mx-auto px-4 mb-32">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
           {[
             { label: "Paper Weight", value: "80-350 GSM" },
             { label: "Print Tech", value: "Offset / Digital" },
             { label: "Finishing", value: "Matte / Gloss / Spot UV" },
-            { label: "Daily Output", value: "250K+ Units" },
           ].map((stat, i) => (
             <div key={i} className="p-8 bg-white border border-black/5 rounded-[32px] shadow-sm">
               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">{stat.label}</p>
@@ -113,7 +111,6 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Fast Delivery Banner */}
       <section className="container mx-auto px-4 mb-32">
@@ -133,14 +130,6 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
             </p>
           </div>
           <div className="lg:w-1/2 flex justify-center lg:justify-end relative z-10">
-            <div className="bg-black text-[#fabf37] p-10 rounded-[40px] shadow-2xl space-y-4 max-w-sm">
-              <p className="text-xs font-black uppercase tracking-[0.2em] opacity-50">Logistics Hub Status</p>
-              <div className="flex items-center gap-4">
-                <div className="size-3 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-xl font-black italic uppercase">Express Active</span>
-              </div>
-              <p className="text-[10px] font-bold text-zinc-500">Global shipping network operating at 100% capacity. Average dispatch: 14 hours.</p>
-            </div>
           </div>
         </div>
       </section>
