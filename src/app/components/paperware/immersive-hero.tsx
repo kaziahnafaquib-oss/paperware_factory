@@ -228,7 +228,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
           >
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="size-8 text-[#fabf37] animate-spin" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Initializing Stream...</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Loading video...</span>
             </div>
           </motion.div>
         )}

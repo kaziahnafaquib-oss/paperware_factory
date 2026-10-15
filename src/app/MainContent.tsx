@@ -24,7 +24,6 @@ import { ContactMenu } from "./components/paperware/contact-menu";
 import { BottomNav } from "./components/paperware/bottom-nav";
 import { HUDOverlay as SharedHUDOverlay } from "./components/paperware/hud-overlay";
 const WhoWeAreSection = React.lazy(() => import("./components/paperware/who-we-are").then(module => ({ default: module.WhoWeAreSection })));
-const ImpactMetrics = React.lazy(() => import("./components/paperware/impact-metrics").then(module => ({ default: module.ImpactMetrics })));
 const PageDiscovery = React.lazy(() => import("./components/paperware/page-discovery").then(module => ({ default: module.PageDiscovery })));
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 const FeaturedProductsSlider = React.lazy(() => import("./components/paperware/featured-products-slider").then(module => ({ default: module.FeaturedProductsSlider })));
@@ -634,10 +633,6 @@ export function MainContent() {
               />
             </DeferredSection>
 
-            {/* IMPACT METRICS - SUSTAINABILITY STATS */}
-            <DeferredSection>
-              <ImpactMetrics />
-            </DeferredSection>
 
             {/* 6. PREMIUM CLIENTS SHOWCASE */}
             <DeferredSection>

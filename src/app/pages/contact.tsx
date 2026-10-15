@@ -237,8 +237,8 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   className="absolute inset-0 rounded-full border-t-2 border-[#fabf37]"
                 />
                 <div className="text-center">
-                  <p className="text-[#fabf37] text-4xl font-black italic tracking-tighter">99.9%</p>
-                  <p className="text-zinc-500 text-[8px] font-black uppercase tracking-[0.2em]">Efficiency Rating</p>
+                  <p className="text-[#fabf37] text-4xl font-black italic tracking-tighter">Dhaka</p>
+                  <p className="text-zinc-500 text-[8px] font-black uppercase tracking-[0.2em]">Made in Bangladesh</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -422,8 +422,8 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </div>
 
                 <div className="relative z-10">
-                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">Live Chat <br />Support</p>
-                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">Talk to Human</p>
+                  <p className="text-black font-black text-base lg:text-lg uppercase leading-none mb-1">WhatsApp <br />Chat</p>
+                  <p className="text-[6px] lg:text-[7px] font-black uppercase tracking-widest text-black/60">Talk to our team</p>
                 </div>
               </motion.button>
 
@@ -465,7 +465,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <motion.div variants={fadeInUp} className="space-y-4 lg:space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-zinc-50 rounded-full border border-zinc-100">
                     <span className="size-2 rounded-full bg-[#fabf37]" />
-                    <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest text-zinc-500">Secure Protocol</span>
+                    <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest text-zinc-500">Send an inquiry</span>
                   </div>
                   <h2 className="text-3xl lg:text-5xl font-black uppercase tracking-tighter leading-none">
                     {t('contact_subtitle').split(' ')[0]} <br /> <span className="text-[#fabf37]">{t('contact_subtitle').split(' ')[1]}</span>
@@ -718,7 +718,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2, ease: "easeInOut" }}
                   className="text-[9px] font-black uppercase tracking-widest text-black"
                 >
-                  Active Stream
+                  Follow us
                 </motion.span>
               </div>
             </div>
@@ -771,10 +771,6 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
           </div>
 
           <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 relative z-10">
-            <div className="flex items-center gap-3">
-              <Terminal className="size-3.5" />
-              <p className="text-[7px] font-black uppercase tracking-[0.4em]">Protocol: Glass-Sync-Alpha</p>
-            </div>
             <div className="flex items-center gap-6">
               <p className="text-[7px] font-black uppercase tracking-[0.4em]">Paperware Media Hub</p>
               <div className="flex items-center gap-2">

@@ -265,7 +265,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             className="max-w-xs text-right hidden md:block"
           >
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest leading-relaxed">
-              Global supply chain transparency. Real-time manufacturing and logistics telemetry. Powered by Paperware Industrial Network.
+              Ask us for the status of your order.
             </p>
           </motion.div>
         </div>
@@ -383,7 +383,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                           <Linkedin className="size-4 text-blue-700" />
                        </a>
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-black">Active Stream</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-black">Follow us</span>
                  </div>
               </div>
             </div>
@@ -429,10 +429,6 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             </div>
 
             <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 relative z-10">
-               <div className="flex items-center gap-3">
-                  <Terminal className="size-3.5" />
-                  <p className="text-[8px] font-black uppercase tracking-[0.4em]">Protocol: Glass-Sync-Alpha</p>
-               </div>
                <div className="flex items-center gap-6">
                   <p className="text-[8px] font-black uppercase tracking-[0.4em]">Paperware Media Hub</p>
                   <div className="flex items-center gap-2">
@@ -769,8 +765,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
         <div className="mt-24 pt-16 border-t border-black/5 grid grid-cols-1 md:grid-cols-3 gap-12" style={{ perspective: "1000px" }}>
           {[
             { icon: Info, title: "Lead Times", desc: "Production typically takes 12-14 business days after design approval." },
-            { icon: Globe, title: "Global Reach", desc: "Delivery available to 46+ countries via air and sea freight." },
-            { icon: ShieldCheck, title: "Certified QC", desc: "Every batch undergoes a 12-point quality inspection." }
+            { icon: Globe, title: "Global Reach", desc: "Delivery by air and sea freight." },
+            { icon: ShieldCheck, title: "Quality Checked", desc: "Every batch is quality checked." }
           ].map((item, i) => (
             <motion.div 
               key={i} 
