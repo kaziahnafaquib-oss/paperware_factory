@@ -166,7 +166,8 @@ export function PaperCupsPage({
       const k = sy / A;                       // A: hero -> card, cup comes straight down,
       const u = Math.min(1, Math.max(0, (k - 0.45) / 0.55)); // then eases sideways into the card
       const e = u * u * (3 - 2 * u);
-      const spin = k * k * (3 - 2 * k);       // one full turn on the way down, eased in/out
+      const q = Math.min(1, k / 0.5);         // one full turn in the first half of the descent,
+      const spin = q * q * (3 - 2 * q);       // then a calm, straight glide into the card
       return { x: dx * (1 - e), y: dy0 + sy, scale: s0 + (1 - s0) * e, rotate: 360 * spin };
     }
     return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: ends in the Blueprint card and stays there
