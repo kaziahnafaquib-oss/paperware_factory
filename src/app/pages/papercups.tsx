@@ -145,40 +145,59 @@ export function PaperCupsPage({
   // Hero cup vanishes exactly when the blueprint section begins its core animation
   const heroCupOpacity = useTransform(blueprintScroll, [0, 0.005], [1, 0]); 
 
-  // Blueprint cup journey, locked 1:1 to the page scroll (no spring, so no lag):
-  // the cup rests in the card until it reaches the middle of the screen, then stays
-  // there while you scroll (it travels down the page with you) until it lands beside
-  // the "Product Tiers" heading, after which it scrolls away with that section.
-  // Start/landing points are measured on screen (desktop and mobile differ).
+  // One continuous cup, locked 1:1 to the page scroll (no spring, so no lag):
+  //   A) starts in the "Purely Engineered" hero circle and comes down with the scroll,
+  //      drifting across into the Blueprint card;
+  //   B) rests in the card for a short stretch;
+  //   C) continues down and lands beside the "Product Tiers" heading.
+  // The hero keeps an invisible cup purely as the measured start point. All positions
+  // are measured on screen, so desktop and mobile layouts both work.
+  const heroSlotRef = React.useRef<HTMLDivElement>(null);
   const cupSlotRef = React.useRef<HTMLDivElement>(null);
   const tiersRef = React.useRef<HTMLElement>(null);
   const { scrollY: pageScrollY } = useScroll();
-  const restScroll = useMotionValue(100000); // scroll position where the follow starts
-  const landingY = useMotionValue(600);      // total distance the cup travels
-  const blueprintCupY = useTransform<number, number>([pageScrollY, restScroll, landingY], ([sy, rest, land]) =>
-    Math.min(Math.max(sy - rest, 0), land)
-  );
-  const travel = useTransform<number, number>([blueprintCupY, landingY], ([y, land]) => (land > 0 ? y / land : 0));
-  const blueprintCupScale = useTransform(travel, [0, 1], [1, 0.55]);
-  const blueprintCupRotate = useTransform(travel, [0, 1], [0, 10]);
+  type Path = { A: number; H: number; land: number; dx: number; dy0: number; s0: number };
+  const pathRef = React.useRef<Path>({ A: 0, H: 300, land: 0, dx: 0, dy0: 0, s0: 1.12 });
+  const pathVersion = useMotionValue(0); // bumped after each measure to recompute
+  const cupOffset = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
+    const { A, H, land, dx, dy0, s0 } = pathRef.current;
+    if (A > 0 && sy < A) {
+      const k = sy / A;                       // A: hero -> card, cup holds its screen position
+      return { x: dx * (1 - k), y: dy0 + sy, scale: s0 + (1 - s0) * k, rotate: 0 };
+    }
+    if (sy < A + H) return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: rests in the card
+    const t = Math.min(sy - A - H, land);     // C: card -> Product Tiers
+    const k = land > 0 ? t / land : 1;
+    return { x: 0, y: t, scale: 1 - 0.45 * k, rotate: 10 * k };
+  });
+  const blueprintCupX = useTransform(cupOffset, (o) => o.x);
+  const blueprintCupY = useTransform(cupOffset, (o) => o.y);
+  const blueprintCupScale = useTransform(cupOffset, (o) => o.scale);
+  const blueprintCupRotate = useTransform(cupOffset, (o) => o.rotate);
 
   React.useLayoutEffect(() => {
     const measure = () => {
-      const cup = cupSlotRef.current, tiers = tiersRef.current;
-      if (!cup || !tiers) return;
-      const r = cup.getBoundingClientRect();
-      // untransformed centre of the cup in document coordinates
-      const cupCentre = r.top + r.height / 2 + window.scrollY - blueprintCupY.get();
-      const target = tiers.getBoundingClientRect().top + window.scrollY + 140; // beside the heading
-      restScroll.set(cupCentre - window.innerHeight / 2);
-      landingY.set(Math.max(0, target - cupCentre));
+      const hero = heroSlotRef.current, cup = cupSlotRef.current, tiers = tiersRef.current;
+      if (!hero || !cup || !tiers) return;
+      const sy = window.scrollY;
+      const h = hero.getBoundingClientRect();
+      const c = cup.getBoundingClientRect();
+      // untransformed centres in document coordinates (scale/rotate keep the centre)
+      const hx = h.left + h.width / 2, hy = h.top + h.height / 2 + sy;
+      const cx = c.left + c.width / 2 - blueprintCupX.get(), cy = c.top + c.height / 2 + sy - blueprintCupY.get();
+      const landTarget = tiers.getBoundingClientRect().top + sy + 140; // beside the heading
+      const A = Math.max(1, cy - hy);         // scroll distance from hero to card
+      const heroImg = hero.querySelector("img"), cardImg = cup.querySelector("img");
+      const s0 = heroImg && cardImg && cardImg.clientWidth ? heroImg.clientWidth / cardImg.clientWidth : 1;
+      pathRef.current = { A, H: 300, land: Math.max(0, landTarget - cy), dx: hx - cx, dy0: hy - cy, s0 };
+      pathVersion.set(pathVersion.get() + 1);
     };
     measure();
     window.addEventListener("resize", measure);
     const t = setTimeout(measure, 800); // after images/fonts settle
     return () => { window.removeEventListener("resize", measure); clearTimeout(t); };
   }, []);
-  const blueprintCupOpacity = useTransform(blueprintScroll, [0, 0.005], [0, 1]);
+  const blueprintCupOpacity = 1;
 
   const boxShadowOpacity = useTransform(smoothBlueprint, [0.8, 1], [0, 0.6]);
 
@@ -222,20 +241,11 @@ export function PaperCupsPage({
             <motion.span initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="block text-[#fabf37]" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{t('purely_engineered').split(' ')[1]}</motion.span>
           </h1>
           <div className="relative max-w-4xl mx-auto">
-             <motion.div 
-               style={{ 
-                 y: heroCupY, 
-                 scale: heroCupScale, 
-                 opacity: heroCupOpacity,
-                 rotateX: heroRotation.y,
-                 rotateY: heroRotation.x,
-                 perspective: 1000
-               }} 
-               className="relative z-20 will-change-transform"
-             >
+             {/* Invisible start marker for the travelling cup (see cup journey above) */}
+             <div ref={heroSlotRef} aria-hidden="true" style={{ opacity: 0 }} className="relative z-20">
                {/* Floating effect handled by animate if needed, but keeping it simple for scroll sync */}
                <img loading="lazy" decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
-             </motion.div>
+             </div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
           </div>
@@ -338,6 +348,7 @@ export function PaperCupsPage({
                    ref={cupSlotRef}
                    style={{ 
                      opacity: blueprintCupOpacity,
+                     x: blueprintCupX,
                      y: blueprintCupY,
                      scale: blueprintCupScale,
                      rotate: blueprintCupRotate,
