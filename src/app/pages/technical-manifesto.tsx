@@ -231,7 +231,7 @@ export function TechnicalManifestoPage() {
           >
             <div className="size-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
             <span className="text-sm md:text-xl font-bold uppercase tracking-[0.5em] text-zinc-500">
-              System Online <span className="text-white">v2.0</span>
+              Paperware <span className="text-white">Factory</span>
             </span>
           </motion.div>
 
@@ -291,7 +291,7 @@ export function TechnicalManifestoPage() {
             <div className="absolute top-full left-0 w-full h-4 bg-zinc-400 origin-top skew-x-[10deg] rotate-x-[-90deg]" />
 
             <div className="absolute -top-10 -right-20 bg-black text-[#fabf37] border-2 border-[#fabf37] px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl">
-              PROTO: v4.0.1
+              Dhaka
             </div>
           </motion.div>
 

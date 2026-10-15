@@ -21,7 +21,7 @@ export function OurERPPage() {
     { icon: <Layers />, title: "Line Control", desc: "Production scheduling and monitoring." },
     { icon: <ShieldCheck />, title: "Quality Checks", desc: "Quality inspections at every stage." },
     { icon: <Box />, title: "Precision Packing", desc: "Digital label sync with global standards." },
-    { icon: <Database />, title: "Inventory 360", desc: "Predictive stock replenishment system." }
+    { icon: <Database />, title: "Inventory 360", desc: "Stock tracking and replenishment." }
   ];
 
   const logisticsInsights = [
@@ -47,7 +47,7 @@ export function OurERPPage() {
               className="inline-flex items-center gap-3 px-5 py-2.5 bg-zinc-50 rounded-full border border-black/5"
             >
               <div className="size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black">Operational Backbone: PAPERWARE OS v4.0</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black">Operational Backbone: ERPNext</span>
             </motion.div>
             
             <motion.h1 

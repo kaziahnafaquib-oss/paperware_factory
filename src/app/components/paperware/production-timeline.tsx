@@ -7,7 +7,7 @@ export function ProductionTimeline() {
     {
       id: "01",
       title: "Sustainable Sourcing",
-      desc: "Raw Nordic pulp collection with 100% FSC compliance tracking.",
+      desc: "Paperboard and pulp sourcing from our suppliers.",
       icon: <Zap className="size-6" />,
       status: "completed"
     },
@@ -28,7 +28,7 @@ export function ProductionTimeline() {
     {
       id: "04",
       title: "Automated QC Audit",
-      desc: "AI-driven visual inspection for color and structural integrity.",
+      desc: "Visual inspection for colour and structural integrity.",
       icon: <ShieldCheck className="size-6" />,
       status: "upcoming"
     },
@@ -114,14 +114,6 @@ export function ProductionTimeline() {
           ))}
         </div>
 
-        <div className="mt-20 flex flex-wrap justify-center gap-12 grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-           {['FSC Certified', 'ISO 9001', 'ISO 14001', 'BRCGS Global', 'FDA Approved'].map((cert, i) => (
-             <div key={i} className="flex items-center gap-3">
-                <div className="size-2 rounded-full bg-[#fabf37]" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white">{cert}</span>
-             </div>
-           ))}
-        </div>
       </div>
     </section>
   );

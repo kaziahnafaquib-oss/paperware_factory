@@ -383,7 +383,7 @@ export function ClientsPage({
                 className="inline-flex items-center gap-3 bg-black text-white px-5 py-2.5 rounded-xl mb-10 shadow-lg border border-white/10 mx-auto"
               >
                 <Cpu className="size-3.5 text-[#fabf37] animate-pulse" />
-                <span className="text-[8px] font-black uppercase tracking-[0.3em]">CORE_v4.2.0</span>
+                <span className="text-[8px] font-black uppercase tracking-[0.3em]">CLIENTS</span>
               </motion.div>
               
               <h1 className="text-[60px] md:text-[120px] lg:text-[160px] font-black uppercase tracking-tighter leading-[0.8] text-black"><span className="sr-only">{t('building_legacies')}</span><span aria-hidden="true">

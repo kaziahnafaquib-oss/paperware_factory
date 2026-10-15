@@ -51,7 +51,7 @@ export function Catalog3DPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Product Showroom v4.0</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Product Showroom</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
               360° <span className="text-zinc-600">Product</span> <br /> <span className="text-[#fabf37]">Preview</span>

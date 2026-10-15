@@ -392,7 +392,7 @@ export function AllProductsPage({
                   <div className="flex items-center gap-2">
                     <div className="size-1.5 bg-[#fabf37] rounded-full animate-pulse" />
                     <span className="text-[#fabf37] text-[10px] font-black uppercase tracking-[0.3em]">
-                      LIVE
+                      PAPERWARE
                     </span>
                   </div>
                   <span className="text-white text-sm font-black uppercase tracking-tighter">

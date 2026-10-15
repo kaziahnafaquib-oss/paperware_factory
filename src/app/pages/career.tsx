@@ -28,7 +28,7 @@ const values = [
   },
   { 
     title: "Sustainability", 
-    desc: "100% biodegradable solutions for a greener tomorrow.", 
+    desc: "Biodegradable solutions for a greener tomorrow.", 
     icon: Leaf,
     color: "bg-green-500/10 text-green-500"
   },
@@ -585,9 +585,9 @@ function DepartmentExplorer() {
   const [hovered, setHovered] = React.useState<number | null>(null);
   const depts = [
     { name: "Automation", icon: Settings, count: 4, desc: "Building the brains of our factory." },
-    { name: "Eco-Design", icon: Leaf, count: 2, desc: "Designing 100% waste-free products." },
+    { name: "Eco-Design", icon: Leaf, count: 2, desc: "Designing low-waste products." },
     { name: "Logistics", icon: Truck, count: 6, desc: "Smart routing and global delivery." },
-    { name: "AI Ops", icon: Binary, count: 3, desc: "Predictive maintenance & data flows." }
+    { name: "Operations", icon: Binary, count: 3, desc: "Maintenance and production data." }
   ];
 
   return (

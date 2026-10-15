@@ -140,8 +140,8 @@ export function SolutionsPage() {
                   Our Approach
                 </span>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-                  The Neural <br /> 
-                  Workflow.
+                  How We <br /> 
+                  Work.
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

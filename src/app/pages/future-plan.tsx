@@ -83,7 +83,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Strategic Timeline</h2>
             <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Evolutionary <br />Roadmap</h3>
           </div>
-          <p className="text-zinc-500 font-bold max-w-md text-right">Our production milestones are driven by real-time market data and scalability projections.</p>
+          <p className="text-zinc-500 font-bold max-w-md text-right">Our production milestones and where we are investing next.</p>
         </div>
 
         <div className="grid md:grid-cols-5 gap-6">

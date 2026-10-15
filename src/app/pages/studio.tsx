@@ -89,7 +89,7 @@ export function StudioPage() {
                 </h1>
                 <div className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.4em] flex items-center gap-2">
                    <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                   System Online: Paperware Core v4.2.0
+                   Paperware Design Studio
                 </div>
              </div>
           </div>
@@ -304,7 +304,7 @@ export function StudioPage() {
                <div className="absolute top-10 right-10 text-right z-30 pointer-events-none">
                   <div className="flex items-center gap-4 justify-end">
                      <div className="text-right">
-                        <p className="text-[10px] font-black text-black uppercase tracking-[0.4em]">Matrix Render: v4.2</p>
+                        <p className="text-[10px] font-black text-black uppercase tracking-[0.4em]">3D Preview</p>
                         <p className="text-[9px] font-black text-[#fabf37] uppercase tracking-[0.3em] mt-1">Ready</p>
                      </div>
                      <div className="h-10 w-px bg-black/10" />

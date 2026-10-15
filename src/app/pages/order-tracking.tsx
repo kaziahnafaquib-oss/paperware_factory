@@ -43,32 +43,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
   const headerRotateX = useTransform(scrollYProgress, [0, 0.2], [0, 25]);
   const headerZ = useTransform(scrollYProgress, [0, 0.2], [0, -200]);
 
-  const socialPosts = [
-    { 
-      platform: "Instagram", 
-      icon: Instagram, 
-      color: "text-pink-500",
-      img: "https://images.unsplash.com/photo-1765371512971-9d4da531d004?auto=format&q=80&w=800",
-      caption: "Our minimalist design HQ where engineering meets sustainability. Creating the future of paperware.",
-      date: "1h ago"
-    },
-    { 
-      platform: "LinkedIn", 
-      icon: Linkedin, 
-      color: "text-blue-700",
-      img: "https://images.unsplash.com/photo-1761125802333-d145773f4461?auto=format&q=80&w=800",
-      caption: "Enterprise solutions for sustainable high-volume manufacturing. Scaling global impact with Tier-1 partners.",
-      date: "4h ago"
-    },
-    { 
-      platform: "Facebook", 
-      icon: Facebook, 
-      color: "text-blue-600",
-      img: "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?auto=format&q=80&w=800",
-      caption: "Next-gen automation active at our Dhaka site. Precision routing and high-speed delivery protocols.",
-      date: "Yesterday"
-    }
-  ];
+  const socialPosts: { platform: string; content: string; date: string; [k: string]: any }[] = []; // no demo posts
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,7 +149,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 transition={{ duration: 1, delay: 0.5 }}
                 className="h-px bg-[#fabf37]" 
               />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">Logistics Terminal v5.2</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">Order Status</span>
             </div>
             
             <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-black flex flex-col items-start gap-3 md:gap-2" style={{ transformStyle: "preserve-3d" }}>

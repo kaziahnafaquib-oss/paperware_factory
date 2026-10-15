@@ -53,7 +53,7 @@ export function ManufacturingPage() {
           >
             <div className="flex items-center gap-4">
               <div className="h-[2px] w-12 bg-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Factory Core v4.0</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Our Factory</span>
             </div>
             
             <h1 className="text-6xl md:text-[120px] font-black text-white leading-[0.9] tracking-tighter uppercase">

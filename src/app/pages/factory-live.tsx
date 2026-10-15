@@ -38,7 +38,7 @@ export function FactoryLivePage() {
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500">Factory Floor</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-              Factory <span className="text-zinc-500">Ops</span> <br /> <span className="text-[#fabf37]">Real-Time</span>
+              Factory <span className="text-zinc-500">Ops</span> <br /> <span className="text-[#fabf37]">Floor</span>
             </h1>
           </div>
 

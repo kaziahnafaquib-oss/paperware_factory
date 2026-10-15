@@ -443,7 +443,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
         {/* Floating HUD Telemetry */}
         <div className="hidden lg:block absolute bottom-12 left-12 space-y-4 text-left">
           {[
-            { icon: <Leaf className="size-3" />, label: "SUSTAINABILITY", value: "100% ECO-FRIENDLY" },
+            { icon: <Leaf className="size-3" />, label: "SUSTAINABILITY", value: "ECO-FRIENDLY" },
             { icon: <Globe2 className="size-3" />, label: "EXPORT", value: "READY WORLDWIDE" },
             { icon: <MapPin className="size-3" />, label: "ORIGIN", value: "MADE IN BANGLADESH 🇧🇩" }
           ].map((item, i) => (

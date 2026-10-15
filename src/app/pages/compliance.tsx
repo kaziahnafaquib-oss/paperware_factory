@@ -28,7 +28,7 @@ const certs = [
   { 
     title: "Recyclability", 
     desc: "Repulpable, biodegradable paper-based materials.", 
-    status: "CERTIFIED",
+    status: "MATERIAL",
     year: "2024",
     icon: Box,
     highlight: false,

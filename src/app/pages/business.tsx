@@ -91,7 +91,7 @@ export function BusinessPage() {
           >
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-black/5 shadow-sm">
               <div className="size-2 bg-[#fabf37] rounded-full animate-pulse" />
-              <span className="text-[10px] font-black text-black/60 uppercase tracking-[0.4em]">Industrial Command v4.0</span>
+              <span className="text-[10px] font-black text-black/60 uppercase tracking-[0.4em]">Paperware Factory</span>
             </div>
             
             <h1 className="text-6xl md:text-9xl font-black text-black tracking-tighter uppercase leading-[0.85]">

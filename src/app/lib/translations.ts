@@ -144,7 +144,7 @@ const EN = {
   fmcg_supplies_title: "FMCG PRODUCTS",
   supplies_subtitle: "SUPPLIES",
   // Studio
-  studio_v: "STUDIO v2.5",
+  studio_v: "STUDIO",
   live_engine_active: "All Products",
   product_matrix: "Product Matrix",
   global_scale: "Global Scale",
