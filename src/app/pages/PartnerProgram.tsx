@@ -56,12 +56,6 @@ export function PartnerProgramPage() {
   const [attachment, setAttachment] = React.useState<File | null>(null);
 
   // Scroll animation for Partner Portal section
-  const portalSectionRef = React.useRef(null);
-  const { scrollYProgress: portalScrollProgress } = useScroll({
-    target: portalSectionRef,
-    offset: ["start start", "end end"]
-  });
-  const portalPhoneY = useTransform(portalScrollProgress, [0, 1], ["0%", "-40%"]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -315,35 +309,6 @@ export function PartnerProgramPage() {
             </div>
         </motion.div>
 
-        {/* Live Digital Feed */}
-        <div className="bg-black py-3 relative overflow-hidden">
-            <div className="flex overflow-hidden">
-                 <motion.div 
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-                    className="flex gap-8 whitespace-nowrap items-center"
-                 >
-                    {[...Array(2)].map((_, i) => (
-                        <div key={i} className="flex gap-8 items-center">
-                            {/* Live Feed Items (To be managed via Admin Portal) */}
-                            {[
-                                { text: "Customer Support Team is Online", time: "Active now" },
-                                { text: "New Product Catalog Updated", time: "10m ago" },
-                                { text: "Warehouse Operations Running Normally", time: "15m ago" },
-                                { text: "Welcome to our New Partners", time: "1h ago" },
-                                { text: "Weekly Newsletter Sent", time: "2h ago" }
-                            ].map((item, idx) => (
-                                <div key={idx} className="flex items-center gap-3 text-white/80">
-                                    <span className="size-2 rounded-full bg-[#fabf37] animate-pulse" />
-                                    <span className="text-xs font-mono uppercase tracking-wider">{item.text}</span>
-                                    <span className="text-[10px] text-zinc-500 font-mono">[{item.time}]</span>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                 </motion.div>
-            </div>
-        </div>
       </section>
 
       {/* Benefits Grid */}
@@ -382,290 +347,9 @@ export function PartnerProgramPage() {
         </div>
       </section>
 
-      {/* Client Portal Preview Section - Scroll Linked */}
-      <div ref={portalSectionRef} className="relative h-[110vh] lg:h-[120vh] bg-white text-zinc-900">
-          <div className="sticky top-0 h-screen flex items-start lg:items-center overflow-hidden pt-24 lg:pt-0">
-              <div className="container mx-auto px-4 relative z-10">
-                  <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-20">
-                      <div className="lg:w-1/2">
-                          <motion.div
-                              initial={{ opacity: 0, y: 30 }}
-                              whileInView={{ opacity: 1, y: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 0.6 }}
-                          >
-                              <div className="flex items-center gap-2 mb-4 lg:mb-6 text-[#fabf37]">
-                                  <Users className="size-5" />
-                                  <span className="font-bold uppercase tracking-widest text-sm">Partner Portal</span>
-                              </div>
-                              <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 lg:mb-6 leading-tight text-black">Everything You Need <br/><span className="text-[#fabf37]">In One Place</span></h2>
-                              <p className="text-zinc-500 text-base lg:text-lg mb-6 lg:mb-8 leading-relaxed">
-                                  Gain complete control over your wholesale operations with our state-of-the-art client portal. Track orders, manage inventory, and access exclusive resources instantly.
-                              </p>
-                              
-                              <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                  {[
-                                      "Real-time Order Tracking",
-                                      "Instant Invoices & Billing",
-                                      "Marketing Asset Library",
-                                      "Direct Support Channel"
-                                  ].map((item, i) => (
-                                      <motion.div 
-                                          key={i}
-                                          initial={{ opacity: 0, x: -20 }}
-                                          whileInView={{ opacity: 1, x: 0 }}
-                                          viewport={{ once: true }}
-                                          transition={{ delay: 0.2 + (i * 0.1) }}
-                                          className="flex items-center gap-3 bg-zinc-50 border border-zinc-200 p-4 rounded-xl"
-                                      >
-                                          <CheckCircle className="size-5 text-[#fabf37] shrink-0" />
-                                          <span className="font-bold text-sm text-zinc-800">{item}</span>
-                                      </motion.div>
-                                  ))}
-                              </div>
-                          </motion.div>
-                      </div>
-                      
-                      <div className="lg:w-1/2 w-full flex justify-center items-center h-[350px] sm:h-[450px] lg:h-[500px]">
-                          {/* Composition Wrapper - Centered to prevent clipping, Scaled for mobile */}
-                          <div className="relative w-[480px] h-[400px] scale-[0.65] sm:scale-[0.85] md:scale-100 origin-center">
-                              
-                              {/* Desktop View (Background) */}
-                              <motion.div
-                                  initial={{ opacity: 0, x: -30, scale: 0.9 }}
-                                  whileInView={{ opacity: 1, x: 0, scale: 1 }}
-                                  viewport={{ once: true }}
-                                  transition={{ duration: 0.8, delay: 0.2 }}
-                                  className="absolute left-0 top-1/2 -translate-y-1/2 z-0 w-[400px] rounded-xl bg-zinc-900 p-1.5 shadow-2xl border border-zinc-800"
-                              >
-                                    <div className="w-full bg-zinc-50 rounded-lg overflow-hidden flex flex-col h-[260px]">
-                                        {/* Desktop Header */}
-                                        <div className="h-9 bg-white border-b border-zinc-200 flex items-center justify-between px-3 shrink-0">
-                                            <div className="flex items-center gap-4">
-                                                <div className="font-black text-xs">Paperware<span className="text-[#fabf37]">.</span></div>
-                                                <div className="hidden md:flex items-center gap-1.5 px-2 py-1 bg-zinc-100 rounded-md text-[8px] text-zinc-400 w-32">
-                                                    <Search className="size-2.5" />
-                                                    <span>Search...</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <div className="size-5 rounded-full bg-zinc-200 border border-zinc-100 overflow-hidden">
-                                                     <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=75" className="w-full h-full object-cover" alt="Profile" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Desktop Body */}
-                                        <div className="flex flex-1 overflow-hidden">
-                                            {/* Sidebar */}
-                                            <div className="w-28 bg-white border-r border-zinc-200 p-2 flex flex-col gap-0.5 shrink-0">
-                                                {[
-                                                    { icon: LayoutDashboard, label: "Dashboard", active: true },
-                                                    { icon: ShoppingBag, label: "Orders", active: false },
-                                                    { icon: Package, label: "Products", active: false },
-                                                    { icon: Users, label: "Customers", active: false },
-                                                ].map((item, i) => (
-                                                    <div key={i} className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-[8px] font-bold transition-colors ${item.active ? 'bg-[#fabf37]/10 text-black' : 'text-zinc-500 hover:bg-zinc-50'}`}>
-                                                        <item.icon className={`size-2.5 ${item.active ? 'text-[#fabf37]' : 'text-zinc-400'}`} />
-                                                        {item.label}
-                                                    </div>
-                                                ))}
-                                                
-                                                <div className="mt-auto bg-zinc-900 rounded-lg p-2 text-white relative overflow-hidden group cursor-pointer">
-                                                    <div className="relative z-10">
-                                                        <div className="text-[6px] font-bold opacity-60 mb-0.5">Pro Plan</div>
-                                                        <div className="text-[8px] font-black mb-0.5">Upgrade</div>
-                                                        <div className="text-[6px] bg-white text-black px-1.5 py-0.5 rounded w-fit font-bold">View Plans</div>
-                                                    </div>
-                                                    <div className="absolute -right-2 -bottom-4 bg-[#fabf37] size-8 rounded-full opacity-20 group-hover:opacity-30 transition-opacity" />
-                                                </div>
-                                            </div>
-
-                                            {/* Main Content */}
-                                            <div className="flex-1 p-3 overflow-hidden bg-zinc-50/50">
-                                                <div className="mb-2">
-                                                    <h3 className="font-black text-xs text-zinc-900">Dashboard</h3>
-                                                </div>
-
-                                                {/* Cards */}
-                                                <div className="flex gap-2 mb-2 overflow-visible">
-                                                    <div className="bg-white p-2 rounded-lg border border-zinc-100 shadow-sm flex-1 min-w-0">
-                                                        <div className="text-[6px] uppercase font-bold text-zinc-400 mb-0.5">Total Revenue</div>
-                                                        <div className="text-xs font-black text-zinc-900">$45,231</div>
-                                                        <div className="flex items-center gap-0.5 text-[6px] font-bold text-green-500 mt-0.5">
-                                                            <TrendingUp className="size-2" />
-                                                            +20%
-                                                        </div>
-                                                    </div>
-                                                    <div className="bg-white p-2 rounded-lg border border-zinc-100 shadow-sm flex-1 min-w-0">
-                                                        <div className="text-[6px] uppercase font-bold text-zinc-400 mb-0.5">Active Orders</div>
-                                                        <div className="text-xs font-black text-zinc-900">+573</div>
-                                                        <div className="flex items-center gap-0.5 text-[6px] font-bold text-green-500 mt-0.5">
-                                                            <TrendingUp className="size-2" />
-                                                            +12%
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Revenue Chart Stub */}
-                                                <div className="bg-white p-2 rounded-lg border border-zinc-100 shadow-sm h-full w-full">
-                                                     <div className="flex items-center gap-1.5 mb-2">
-                                                        <div className="size-1.5 rounded-full bg-[#fabf37]" />
-                                                        <div className="text-[8px] font-bold text-zinc-900">Revenue</div>
-                                                    </div>
-                                                    <div className="flex items-end justify-between h-8 gap-1.5 px-0.5">
-                                                        {[40, 60, 45, 80, 55, 90, 70, 85, 60, 75, 50, 95].map((h, i) => (
-                                                            <div key={i} className="flex-1 bg-zinc-100 rounded-t-[1px] relative overflow-hidden">
-                                                                <div 
-                                                                    className="absolute bottom-0 left-0 w-full bg-zinc-900 rounded-t-[1px]" 
-                                                                    style={{ height: `${h}%` }} 
-                                                                />
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                              </motion.div>
-
-                              {/* Floating Notification */}
-                              <motion.div 
-                                  initial={{ scale: 0, opacity: 0 }}
-                                  whileInView={{ scale: 1, opacity: 1 }}
-                                  transition={{ delay: 0.5, type: "spring" }}
-                                  className="absolute right-[160px] top-1/2 -translate-y-1/2 z-20 bg-white p-2 pr-3 rounded-xl shadow-xl border border-zinc-100 flex items-center gap-2"
-                              >
-                                  <div className="size-8 rounded-full bg-green-50 flex items-center justify-center border border-green-100">
-                                      <CheckCircle className="size-4 text-green-500" />
-                                  </div>
-                                  <div>
-                                      <div className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider">New Order</div>
-                                      <div className="text-xs font-black text-zinc-900">Confirmed</div>
-                                  </div>
-                              </motion.div>
-
-                              {/* Phone Frame - Positioned Absolute Right */}
-                              <motion.div
-                                  initial={{ opacity: 0, x: 30 }}
-                                  whileInView={{ opacity: 1, x: 0 }}
-                                  viewport={{ once: true }}
-                                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-[200px] rounded-[2rem] bg-zinc-900 p-2 shadow-2xl border-[3px] border-zinc-800"
-                              >
-                                  {/* Screen Container with Scroll */}
-                                  <div className="w-full h-[400px] bg-white rounded-[1.6rem] overflow-hidden relative">
-                                      {/* Dynamic Notch Island */}
-                                      <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-4 bg-black rounded-full z-20 flex items-center justify-center gap-1.5 px-2">
-                                          <div className="size-0.5 rounded-full bg-zinc-800" />
-                                          <div className="size-0.5 rounded-full bg-blue-900/50" />
-                                      </div>
-                                      
-                                      {/* Scrolling Content - Controlled by Page Scroll */}
-                                      <motion.div
-                                          style={{ y: portalPhoneY }}
-                                          className="w-full bg-zinc-50"
-                                      >
-                                          {/* App UI - Repeated Twice for Loop */}
-                                          {[1, 2].map((_, loopIdx) => (
-                                            <div key={loopIdx} className="p-3 space-y-3 pb-6">
-                                                {/* App Header */}
-                                                <div className="flex items-center justify-between mb-1 mt-3">
-                                                    <div>
-                                                        <div className="text-[8px] text-zinc-400 font-bold uppercase tracking-wider">Welcome</div>
-                                                        <div className="font-black text-sm">Paperware<span className="text-[#fabf37]">.</span></div>
-                                                    </div>
-                                                    <div className="size-6 rounded-full bg-zinc-200 border border-white shadow-sm overflow-hidden">
-                                                        <ImageWithFallback src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=75" className="w-full h-full object-cover" alt="Profile" />
-                                                    </div>
-                                                </div>
-
-                                                {/* Top Cards Row */}
-                                                <div className="flex gap-2 overflow-visible pb-1">
-                                                    {/* Revenue Card (Black) */}
-                                                    <div className="bg-black text-white p-3 rounded-xl shadow-lg w-24 shrink-0 relative overflow-hidden">
-                                                        <div className="relative z-10">
-                                                            <div className="p-1 bg-zinc-800 w-fit rounded-md mb-1.5">
-                                                                <DollarSign className="size-2.5 text-[#fabf37]" />
-                                                            </div>
-                                                            <div className="text-sm font-black text-[#fabf37]">$12k</div>
-                                                            <div className="text-[6px] text-zinc-400 font-bold uppercase tracking-wider mt-0.5">Revenue</div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Gold Partner Status (Yellow) */}
-                                                    <div className="bg-[#fabf37] text-black p-3 rounded-xl shadow-lg w-24 shrink-0 relative overflow-hidden flex flex-col justify-between">
-                                                        <div className="flex items-start justify-between">
-                                                            <div className="p-1 bg-black/10 w-fit rounded-md">
-                                                                <Star className="size-2.5 text-black" />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div className="text-[6px] font-bold uppercase tracking-wider opacity-70">Status</div>
-                                                            <div className="text-[10px] font-black leading-tight">Gold Partner</div>
-                                                        </div>
-                                                        <Star className="absolute -right-2 -top-2 size-8 text-black/10 rotate-12" />
-                                                    </div>
-                                                </div>
-
-                                                {/* Recent Activity */}
-                                                <div className="bg-white p-3 rounded-xl shadow-sm border border-zinc-100">
-                                                    <div className="flex items-center justify-between mb-2">
-                                                        <h3 className="font-bold text-[8px]">Recent Orders</h3>
-                                                        <ArrowRight className="size-2.5 text-zinc-300" />
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        {[
-                                                            { id: "#9921", status: "Proc.", amount: "$1.2k", icon: ShoppingBag, bg: "bg-blue-50" },
-                                                            { id: "#9919", status: "Deli.", amount: "$2.3k", icon: CheckCircle, bg: "bg-green-50" },
-                                                            { id: "#9920", status: "Ship.", amount: "$850", icon: Package, bg: "bg-orange-50" },
-                                                        ].map((order, i) => (
-                                                            <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-zinc-50 border border-zinc-100/50">
-                                                                <div className="flex items-center gap-2">
-                                                                    <div className={`size-6 rounded-lg ${order.bg} flex items-center justify-center`}>
-                                                                        <order.icon className="size-3 text-black/70" />
-                                                                    </div>
-                                                                    <div>
-                                                                        <div className="text-[8px] font-black text-zinc-900">{order.id}</div>
-                                                                        <div className="text-[6px] font-bold text-zinc-400">{order.status}</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div className="font-black text-[8px]">{order.amount}</div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-
-                                                {/* Summer Catalog Banner */}
-                                                <div className="relative overflow-hidden rounded-xl bg-[#fabf37] p-3 text-black mt-1">
-                                                    <div className="relative z-10">
-                                                        <div className="font-black text-xs leading-tight mb-1">Summer<br/>Catalog</div>
-                                                        <div className="text-[6px] font-bold bg-black text-white px-2 py-0.5 rounded-full w-fit">View Now</div>
-                                                    </div>
-                                                    <Star className="absolute -right-3 -bottom-3 size-16 text-black/10 rotate-12" />
-                                                </div>
-                                            </div>
-                                          ))}
-                                      </motion.div>
-
-                                      {/* Gradient overlay at bottom for fade effect */}
-                                      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none z-10" />
-                                  </div>
-
-                                  {/* Side Buttons */}
-                                  <div className="absolute top-24 -right-[6px] w-[6px] h-12 bg-zinc-800 rounded-r-md" />
-                                  <div className="absolute top-40 -right-[6px] w-[6px] h-12 bg-zinc-800 rounded-r-md" />
-                                  <div className="absolute top-24 -left-[6px] w-[6px] h-8 bg-zinc-800 rounded-l-md" />
-                              </motion.div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
 
       {/* Application Section */}
-      <section id="application-form" className="-mt-48 pt-0 pb-24 bg-white text-zinc-900 relative overflow-hidden z-20">
+      <section id="application-form" className="pt-24 pb-24 bg-white text-zinc-900 relative overflow-hidden z-20">
         {/* Decorative elements */}
         <motion.div 
             style={{ y: blobY }}
@@ -1059,11 +743,11 @@ export function PartnerProgramPage() {
              {[...Array(2)].map((_, listIndex) => (
                <div key={listIndex} className="flex gap-6">
                  {[
-                   { name: "Double Wall Coffee Cup", price: "$0.04/unit", min: "10k units", img: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGNvZmZlZSUyMGN1cCUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3Njc2NzE4Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Best Seller" },
-                   { name: "Eco Burger Box", price: "$0.12/unit", min: "5k units", img: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3Nzc1NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Trending" },
-                   { name: "Kraft Shopping Bag", price: "$0.15/unit", min: "2k units", img: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrcmFmdCUyMHBhcGVyJTIwc2hvcHBpbmclMjBiYWd8ZW58MXx8fHwxNzY3Nzc1NDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Eco Friendly" },
-                   { name: "Bio-Plastic Cutlery", price: "$0.02/unit", min: "20k units", img: "https://images.unsplash.com/photo-1711885417467-6eac5cb81607?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "New" },
-                   { name: "Corrugated Pizza Box", price: "$0.18/unit", min: "1k units", img: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "Hot" }
+                   { name: "Double Wall Coffee Cup", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGNvZmZlZSUyMGN1cCUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3Njc2NzE4Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Best Seller" },
+                   { name: "Eco Burger Box", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3Nzc1NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Trending" },
+                   { name: "Kraft Shopping Bag", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrcmFmdCUyMHBhcGVyJTIwc2hvcHBpbmclMjBiYWd8ZW58MXx8fHwxNzY3Nzc1NDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Eco Friendly" },
+                   { name: "Bio-Plastic Cutlery", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1711885417467-6eac5cb81607?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "New" },
+                   { name: "Corrugated Pizza Box", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "Hot" }
                  ].map((product, i) => (
                    <div 
                      key={i}
@@ -1105,8 +789,8 @@ export function PartnerProgramPage() {
               <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-40">
                    {[
                       { icon: ShieldCheck, text: "SECURE PARTNERSHIP" },
-                      { icon: Globe, text: "GLOBAL COMPLIANCE" },
-                      { icon: Award, text: "CERTIFIED QUALITY" }
+                      { icon: Globe, text: "EXPORT READY" },
+                      { icon: Award, text: "QUALITY CHECKED" }
                    ].map((item, i) => (
                        <motion.div 
                           key={i}

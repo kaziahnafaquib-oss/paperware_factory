@@ -65,30 +65,10 @@ export function TechnicalManifestoPage() {
   });
 
   const coreValues = [
-    {
-      title: "Neural Efficiency",
-      desc: "Synchronizing human intent with industrial precision at 0.04ms latency.",
-      icon: <Cpu />,
-      stats: "0.04ms / SYNC"
-    },
-    {
-      title: "Sustainable Ledger",
-      desc: "Every gram of paper tracked via immutable eco-blockchain protocols.",
-      icon: <Database />,
-      stats: "100% / TRACKED"
-    },
-    {
-      title: "Kinetic Velocity",
-      desc: "High-speed multimodal logistics distributed through 46 neural nodes.",
-      icon: <Zap />,
-      stats: "2.4M / DAILY"
-    },
-    {
-      title: "Zero-Latency QC",
-      desc: "Computer vision scanning ensuring 99.9% defect-free manufacturing.",
-      icon: <Activity />,
-      stats: "99.9% / ACCURACY"
-    }
+    { title: "Efficiency", desc: "Lean production that keeps material waste low.", icon: <Cpu />, stats: "EFFICIENCY" },
+    { title: "Traceability", desc: "Batch records for materials and production.", icon: <Database />, stats: "TRACEABLE" },
+    { title: "Logistics", desc: "Road, sea and air delivery from Dhaka.", icon: <Zap />, stats: "LOGISTICS" },
+    { title: "Quality Control", desc: "Quality checks on every production run.", icon: <Activity />, stats: "QUALITY" }
   ];
 
   React.useEffect(() => {
@@ -358,48 +338,10 @@ export function TechnicalManifestoPage() {
                     transition={{ delay: 0.3 }}
                     className="text-zinc-400 font-bold text-lg leading-relaxed max-w-xl"
                   >
-                    Our infrastructure is decentralized. Every factory node operates as an autonomous cell within a global neural network, synchronized via our proprietary Ledger-X.
+                    Our production, quality and logistics teams work from one plan, from order to delivery.
                   </motion.p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8">
-                  {[
-                    { label: "Latency", val: "0.04", suffix: "ms", sub: "Global Sync" },
-                    { label: "Throughput", val: "2.4", suffix: "M", sub: "Daily Capacity" },
-                    { label: "Automation", val: "94.2", suffix: "%", sub: "Full Integration" },
-                    { label: "Redundancy", val: "3.0", suffix: "x", sub: "Fail-Safe Tier" }
-                  ].map((stat, i) => (
-                    <motion.div 
-                      key={i}
-                      style={{ transformStyle: "preserve-3d", transform: `translateZ(${i * 10}px)` }}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.1 }}
-                      whileHover={{ 
-                        scale: 1.1, 
-                        rotateY: 15,
-                        translateZ: 50,
-                        color: "#fabf37",
-                        backgroundColor: "rgba(250, 191, 55, 0.05)" 
-                      }}
-                      className="p-6 bg-zinc-900/50 border border-white/5 rounded-3xl backdrop-blur-md relative overflow-hidden group"
-                    >
-                      <div className="relative z-10">
-                        <p className="text-xs font-black text-zinc-500 uppercase tracking-widest mb-1">{stat.label}</p>
-                        <CountingStat value={stat.val} suffix={stat.suffix} delay={i * 0.1} />
-                        <p className="text-[9px] font-bold text-zinc-600 uppercase mt-1">{stat.sub}</p>
-                      </div>
-                      
-                      {/* Scanning Light Effect on Card */}
-                      <motion.div 
-                        animate={{ top: ["-100%", "200%"] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
-                        className="absolute left-0 right-0 h-[2px] bg-[#fabf37]/20 blur-sm"
-                      />
-                      <div className="absolute inset-0 bg-black/40 rounded-3xl translate-z-[-10px] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.div>
-                  ))}
-                </div>
               </motion.div>
 
               <div className="relative" style={{ transformStyle: "preserve-3d" }}>
@@ -442,8 +384,8 @@ export function TechnicalManifestoPage() {
                       <div className="flex items-center gap-4">
                         <Activity className="size-12 animate-pulse" />
                         <div className="space-y-1">
-                          <p className="text-[10px] font-black uppercase opacity-40">Real-time Load</p>
-                          <p className="text-4xl font-black italic">OPTIMAL</p>
+                          <p className="text-[10px] font-black uppercase opacity-40">Production</p>
+                          <p className="text-4xl font-black italic">DHAKA</p>
                         </div>
                       </div>
                     </div>
@@ -486,101 +428,6 @@ export function TechnicalManifestoPage() {
         </div>
       </section>
 
-      {/* 4. THE COMMAND CENTER: FULL SCREEN DARK SECTION */}
-      <section className="py-40 bg-zinc-950 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#fabf37]/50 to-transparent" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-32 items-center">
-             <div className="space-y-16">
-                <div className="space-y-8">
-                   <h3 className="text-5xl font-black uppercase tracking-tighter italic">"WE DON'T MANUFACTURE <br />PRODUCTS. WE ENGINEER <br /><span className="text-[#fabf37]">PERFECTION AT SCALE.</span>"</h3>
-                   <div className="flex items-center gap-6">
-                      <div className="size-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                         <Globe className="size-8 text-[#fabf37]" />
-                      </div>
-                      <div>
-                         <p className="text-sm font-black uppercase">Global Standards</p>
-                         <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Integrating EU, GCC & US Protocols</p>
-                      </div>
-                   </div>
-                </div>
-
-                <div className="space-y-12">
-                   {[
-                     { title: "Smart Contracts", desc: "Automated supply chain agreements on blockchain." },
-                     { title: "Vision QC", desc: "Computer vision scanning at 240 frames per second." },
-                     { title: "Dynamic Routing", desc: "AI-optimized global logistics based on real-time port data." }
-                   ].map((item, i) => (
-                     <motion.div 
-                       key={i} 
-                       initial={{ opacity: 0, x: -20 }}
-                       whileInView={{ opacity: 1, x: 0 }}
-                       transition={{ delay: i * 0.1 }}
-                       className="flex items-start gap-8 group cursor-pointer"
-                     >
-                        <div aria-hidden="true" className="text-3xl font-black text-zinc-800 group-hover:text-[#fabf37] transition-colors">0{i+1}</div>
-                        <div className="space-y-2">
-                           <h4 className="text-xl font-black uppercase tracking-tight group-hover:translate-x-2 transition-transform">{item.title}</h4>
-                           <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-widest leading-relaxed max-w-sm">{item.desc}</p>
-                        </div>
-                     </motion.div>
-                   ))}
-                </div>
-             </div>
-
-             <div className="relative">
-                <div className="bg-black border border-white/5 rounded-[60px] p-16 space-y-16 relative overflow-hidden group">
-                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,#fabf3710,transparent)]" />
-                   
-                   <div className="flex justify-between items-center">
-                      <div className="space-y-1">
-                         <p className="text-[10px] font-black uppercase text-[#fabf37]">Neural Core</p>
-                         <p className="text-2xl font-black uppercase tracking-tighter">System Analytics</p>
-                      </div>
-                      <Workflow className="size-8 text-zinc-800 group-hover:text-[#fabf37] transition-colors" />
-                   </div>
-
-                   <div className="space-y-8">
-                      {[
-                        { label: "Predictive Health", value: "98%", color: "bg-[#fabf37]" },
-                        { label: "Security Layer", value: "100%", color: "bg-emerald-500" },
-                        { label: "Material Yield", value: "94.5%", color: "bg-[#fabf37]" }
-                      ].map((bar, i) => (
-                        <div key={i} className="space-y-3">
-                           <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                              <span className="text-zinc-500">{bar.label}</span>
-                              <span>{bar.value}</span>
-                           </div>
-                           <div className="h-1.5 bg-zinc-900 rounded-full overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                whileInView={{ width: bar.value }}
-                                transition={{ duration: 1.5, ease: "easeOut" }}
-                                className={`h-full ${bar.color}`}
-                              />
-                           </div>
-                        </div>
-                      ))}
-                   </div>
-
-                   <div className="p-8 bg-zinc-900 rounded-3xl border border-white/5 flex items-center gap-6">
-                      <div className="size-12 rounded-2xl bg-black flex items-center justify-center text-emerald-400">
-                         <ShieldCheck className="size-6" />
-                      </div>
-                      <div>
-                         <p className="text-[10px] font-black uppercase">Active Protection</p>
-                         <p className="text-xs font-bold text-zinc-500">Node-04 Integrity Verified</p>
-                      </div>
-                   </div>
-
-                   <button className="w-full py-6 rounded-[30px] bg-white text-black font-black uppercase tracking-widest text-[11px] hover:bg-[#fabf37] transition-colors">
-                      Download Tech Documentation
-                   </button>
-                </div>
-             </div>
-          </div>
-        </div>
-      </section>
 
       {/* 5. CTA: JOIN THE ECOSYSTEM */}
       <section className="py-40 container mx-auto px-4 text-center">

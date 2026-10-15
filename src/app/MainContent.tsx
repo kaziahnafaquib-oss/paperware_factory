@@ -26,7 +26,6 @@ import { HUDOverlay as SharedHUDOverlay } from "./components/paperware/hud-overl
 const WhoWeAreSection = React.lazy(() => import("./components/paperware/who-we-are").then(module => ({ default: module.WhoWeAreSection })));
 const ImpactMetrics = React.lazy(() => import("./components/paperware/impact-metrics").then(module => ({ default: module.ImpactMetrics })));
 const PageDiscovery = React.lazy(() => import("./components/paperware/page-discovery").then(module => ({ default: module.PageDiscovery })));
-import { RealtimeOps } from "./components/paperware/realtime-ops"; // Manufacturing page
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 const FeaturedProductsSlider = React.lazy(() => import("./components/paperware/featured-products-slider").then(module => ({ default: module.FeaturedProductsSlider })));
 const PremiumContact = React.lazy(() => import("./components/paperware/premium-contact").then(module => ({ default: module.PremiumContact })));
@@ -692,7 +691,7 @@ export function MainContent() {
       case "tracking": return <OrderTrackingPage onViewJourney={() => handlePageChange("product-journey")} onFeedbackClick={() => handlePageChange("product-feedback")} />;
       case "product-journey": return <ProductJourneyPage onBack={() => handlePageChange("tracking")} />;
       case "gallery": return <GalleryPage />;
-      case "manufacturing": return <><ManufacturingPage /><ProductionTimeline /><RealtimeOps /></>;
+      case "manufacturing": return <><ManufacturingPage /><ProductionTimeline /></>;
       case "studio": return <StudioPage />;
       case "socials": return <SocialsPage />;
       case "catalog-3d": return <Catalog3DPage />;

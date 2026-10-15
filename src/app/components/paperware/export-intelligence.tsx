@@ -329,7 +329,7 @@ export function ExportIntelligence() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-xl font-medium text-zinc-500 max-w-2xl mx-auto leading-relaxed"
           >
-            We are fully equipped, certified, and ready to export high-quality, sustainable paper solutions to international markets.
+            We are equipped and ready to export high-quality, sustainable paper solutions to international markets.
           </motion.p>
         </motion.div>
 
@@ -344,7 +344,7 @@ export function ExportIntelligence() {
             {/* Why Import From Us - Staggered Scroll Cards */}
             <div className="grid grid-cols-2 gap-6">
                 {[
-                  { icon: Leaf, title: "Sustainable", desc: "100% Traced Fibers" },
+                  { icon: Leaf, title: "Sustainable", desc: "Responsibly sourced" },
                   { icon: Search, title: "Quality", desc: "A+ Grade Index" },
                   { icon: ShieldCheck, title: "Eco-First", desc: "Zero Waste Vision" },
                   { icon: Check, title: "Precision", desc: "Automated Lines" }
@@ -405,60 +405,6 @@ export function ExportIntelligence() {
             </div>
         </div>
 
-        {/* Stats Section - 3D Flip Cards with Horizontal Entry */}
-        <div className="mb-32 perspective-[1000px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                    { label: "HIGH DEMAND REGION", main: "GCC & MIDDLE EAST", status: "+24% STATUS", statusColor: "text-emerald-400" },
-                    { label: "PREFERRED PACK SIZE", main: "1000 UNITS / BULK", status: "OPTIMAL STATUS", statusColor: "text-emerald-400" },
-                    { label: "COMPLIANCE INDEX", main: "EU/US COMPLIANT", status: "100% STATUS", statusColor: "text-emerald-400" },
-                    { label: "SHIPPING EFFICIENCY", main: "3.2 DAYS SAVINGS", status: "AI ROUTE STATUS", statusColor: "text-emerald-400" },
-                ].map((stat, i) => (
-                    <TiltCard key={i}>
-                        <motion.div
-                            initial={{ opacity: 0, rotateY: 90, x: 50 }}
-                            whileInView={{ opacity: 1, rotateY: 0, x: 0 }}
-                            transition={{ delay: i * 0.1, duration: 0.5, type: "spring", stiffness: 100 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            whileHover={{ scale: 1.05 }}
-                            className="bg-black rounded-[30px] p-6 aspect-square flex flex-col justify-between text-white group hover:bg-[#fabf37] hover:text-black transition-colors duration-300 shadow-xl relative overflow-hidden"
-                        >
-                            {/* Decorative Background Shape */}
-                            <div className="absolute -right-8 -top-8 size-24 bg-white/5 rounded-full blur-xl group-hover:bg-black/10 transition-colors" />
-
-                            <motion.p style={{ z: 20 }} className="text-[9px] font-black uppercase tracking-widest opacity-60 group-hover:opacity-100 group-hover:text-black/60 transition-opacity relative z-10">
-                                {stat.label}
-                            </motion.p>
-                            
-                            <motion.h3 style={{ z: 40 }} className="text-xl font-black uppercase tracking-tighter leading-[0.9] group-hover:text-black transition-colors relative z-10">
-                                {stat.main.split(' ').map((word, idx) => (
-                                    <motion.span 
-                                        key={idx} 
-                                        className="block"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.3 + (idx * 0.1) }}
-                                    >{word}</motion.span>
-                                ))}
-                            </motion.h3>
-                            
-                            <motion.div style={{ z: 30 }} className="flex items-center gap-2 relative z-10">
-                                 <motion.div
-                                    animate={{ rotate: [0, 45, 0], scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                                    className="p-1.5 bg-white/10 rounded-full group-hover:bg-black/10"
-                                 >
-                                    <TrendingUp className={`size-3.5 ${stat.statusColor} group-hover:text-black`} />
-                                 </motion.div>
-                                 <span className={`text-[9px] font-black uppercase tracking-widest ${stat.statusColor} group-hover:text-black`}>
-                                    {stat.status}
-                                 </span>
-                            </motion.div>
-                        </motion.div>
-                    </TiltCard>
-                ))}
-            </div>
-        </div>
 
         {/* Contact / CTA Section - Floating 3D */}
         <motion.div 
