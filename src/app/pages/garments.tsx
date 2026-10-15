@@ -9,7 +9,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 
 const products = [
   { name: "Hangtag", desc: "Premium textured clothing tags for apparel.", category: "GARMENTS", image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&q=75&w=1600", price: "2.50", icon: Tag },
@@ -98,7 +97,6 @@ export function GarmentSuppliesPage({ onProductClick }: { onProductClick: (p: an
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Global Brand Trust */}
       <section className="container mx-auto px-4 mb-32">

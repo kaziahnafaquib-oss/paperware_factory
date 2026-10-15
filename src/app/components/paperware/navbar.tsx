@@ -266,21 +266,11 @@ export const Navbar = React.memo(({
         <div className="fixed top-0 left-0 right-0 flex flex-col items-center pointer-events-none z-[5000]">
           <div className="w-full h-8 bg-[#fabf37]/90 backdrop-blur-sm flex items-center justify-between px-4 md:px-8 pointer-events-auto relative z-[5001] shadow-sm border-b border-white/10">
             <div className="flex items-center gap-2">
-              <Cpu className="size-3 text-black" />
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black">Factory Automation: Active</span>
               <span className="hidden md:flex items-center gap-2 ml-4 px-2 py-0.5 bg-black/5 rounded text-[9px] font-black uppercase tracking-[0.2em] text-black">
                 Made In Bangladesh <img src="https://flagcdn.com/bd.svg" className="w-3 h-auto" alt="BD" />
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="hidden md:inline-block text-[9px] font-black uppercase tracking-[0.2em] text-black/60">System v4.0</span>
-              <div className="flex items-center gap-1.5 px-2 py-0.5 bg-black/10 rounded-full border border-black/5">
-                <motion.div
-                  animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }}
-                  className="size-1.5 bg-red-500 rounded-full"
-                />
-                <span className="text-[8px] font-black uppercase tracking-widest text-black">LIVE</span>
-              </div>
             </div>
           </div>
 

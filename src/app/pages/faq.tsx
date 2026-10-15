@@ -20,25 +20,25 @@ const faqs = [
   { 
     cat: 'prod',
     q: "What is the Minimum Order Quantity (MOQ)?", 
-    a: "Standard MOQ for custom-printed enterprise solutions is 10,000 units per design. However, for our strategic partners, we offer a 'Scaling Protocol' that allows for lower initial volumes during market testing phases.",
+    a: "Minimum order quantities depend on the product and print. Tell us your volume and we will confirm the MOQ for your order.",
     tags: ["Bulk", "Customization"]
   },
   { 
     cat: 'log',
     q: "Do you offer international supply chain support?", 
-    a: "Yes, our logistics engine is integrated with major global ports. We handle everything from Chittagong Port FOB to door-to-door DDP shipments for North American and European markets.",
+    a: "Yes. We ship from Chittagong Port and can arrange FOB or door-to-door delivery. Ask us for a quote for your destination.",
     tags: ["Export", "Global"]
   },
   { 
     cat: 'sust',
-    q: "Are your materials certified food-safe and eco-friendly?", 
-    a: "Absolutely. We utilize FSC-certified paper stock and soy-based industrial inks. Our facility is ISO 22000 certified, ensuring the highest standards of food safety hygiene in the manufacturing process.",
-    tags: ["ISO", "FSC"]
+    q: "Are your materials food-safe and eco-friendly?", 
+    a: "We use food-grade paper stock and soy-based inks. Ask us for the documentation your market requires.",
+    tags: ["Food Safe"]
   },
   { 
     cat: 'prod',
     q: "Can we request a physical prototype before mass production?", 
-    a: "Our Studio team provides 3D digital visualizations within 24 hours. Physical prototypes can be dispatched via express courier within 3-5 business days of design approval.",
+    a: "Our studio team prepares digital previews of your design, and physical samples can be sent by courier after design approval.",
     tags: ["Studio", "Prototyping"]
   },
   { 
@@ -50,7 +50,7 @@ const faqs = [
   { 
     cat: 'sust',
     q: "How do you handle production waste?", 
-    a: "We operate a 'Circular Loop' system where 100% of our paper offcuts are recycled back into industrial-grade packaging materials, achieving near-zero waste in our primary production lines.",
+    a: "Paper offcuts from production are collected for recycling.",
     tags: ["Recycling", "Sustainability"]
   }
 ];
@@ -165,14 +165,10 @@ export function FAQPage() {
                    </motion.div>
                    <div className="flex flex-col">
                       <span className="text-[10px] font-black uppercase tracking-tighter leading-none">Paperware Core</span>
-                      <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">v4.0 Protocol</span>
+                      <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">Help Centre</span>
                    </div>
                 </div>
                 <div className="h-px w-12 bg-black/10" />
-                <span className="text-zinc-500 font-bold text-[10px] uppercase tracking-[0.4em] flex items-center gap-3">
-                  <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] animate-pulse" /> 
-                  Live ERP Stream
-                </span>
               </div>
 
               <div className="relative">
@@ -209,19 +205,9 @@ export function FAQPage() {
                 className="flex flex-col md:flex-row md:items-end gap-12"
               >
                 <p className="text-zinc-600 font-bold text-xl max-w-xl leading-tight">
-                  Immersive manufacturing standards and real-time operational directives for the global B2B ecosystem.
+                  Answers to common questions about orders, materials and delivery.
                 </p>
                 
-                <div className="flex gap-4">
-                   <div className="px-6 py-4 bg-white/50 backdrop-blur-xl border border-black/5 rounded-2xl bg-[rgba(0,0,0,0.5)]">
-                      <p className="text-[8px] font-black uppercase text-zinc-400 mb-1">Compliance</p>
-                      <p className="text-xl font-black">99.8%</p>
-                   </div>
-                   <div className="px-6 py-4 bg-white/50 backdrop-blur-xl border border-black/5 rounded-2xl">
-                      <p className="text-[8px] font-black uppercase text-zinc-400 mb-1">Latency</p>
-                      <p className="text-xl font-black">12ms</p>
-                   </div>
-                </div>
               </motion.div>
             </motion.div>
 
@@ -390,7 +376,7 @@ export function FAQPage() {
          <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-12" style={{ perspective: "1000px" }}>
                {[
-                 { icon: HardHat, title: "On-Site Compliance", desc: "Every order follows rigorous ISO and LEED manufacturing compliance protocols." },
+                 { icon: HardHat, title: "On-Site Compliance", desc: "Every order follows our manufacturing and quality procedures." },
                  { icon: Microscope, title: "Technical Audits", desc: "Access detailed laboratory reports for all batches upon enterprise request." },
                  { icon: ShieldCheck, title: "Data Integrity", desc: "Your business data and custom designs are protected under industrial non-disclosure terms." }
                ].map((item, i) => (

@@ -24,9 +24,7 @@ import { ContactMenu } from "./components/paperware/contact-menu";
 import { BottomNav } from "./components/paperware/bottom-nav";
 import { HUDOverlay as SharedHUDOverlay } from "./components/paperware/hud-overlay";
 const WhoWeAreSection = React.lazy(() => import("./components/paperware/who-we-are").then(module => ({ default: module.WhoWeAreSection })));
-const ImpactMetrics = React.lazy(() => import("./components/paperware/impact-metrics").then(module => ({ default: module.ImpactMetrics })));
 const PageDiscovery = React.lazy(() => import("./components/paperware/page-discovery").then(module => ({ default: module.PageDiscovery })));
-import { RealtimeOps } from "./components/paperware/realtime-ops"; // Manufacturing page
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 const FeaturedProductsSlider = React.lazy(() => import("./components/paperware/featured-products-slider").then(module => ({ default: module.FeaturedProductsSlider })));
 const PremiumContact = React.lazy(() => import("./components/paperware/premium-contact").then(module => ({ default: module.PremiumContact })));
@@ -327,7 +325,8 @@ function PageLoader() {
 
 // Default values
 // Use a reliable direct MP4 for background video (Paper/Factory theme)
-const DEFAULT_HERO_VIDEO = "https://assets.mixkit.co/videos/preview/mixkit-manufacturing-mask-production-4113-large.mp4"; // Reliable Mixkit URL
+const DEFAULT_HERO_VIDEO = "https://www.youtube.com/watch?v=_AvASsD4tQY"; // Paperware Factory channel: "3d video with Text & logo"
+const DEFAULT_HERO_POSTER = "https://i.ytimg.com/vi/_AvASsD4tQY/maxresdefault.jpg";
 // Backup: https://www.youtube-nocookie.com/embed/lyFix6BpGNI?autoplay=1&mute=1&loop=1&playlist=lyFix6BpGNI&controls=0
 const DEFAULT_CLIENTS_VIDEO = "https://player.vimeo.com/external/370338531.sd.mp4?s=70d1d511efd500148283471491bb0ad8&profile_id=164&oauth2_token_id=57447761";
 const DEFAULT_HERO_CONTENT = {
@@ -599,6 +598,7 @@ export function MainContent() {
               <ImmersiveHero
                 key={heroVideoUrl} // Force remount on URL change
                 videoUrl={heroVideoUrl}
+                posterImage={DEFAULT_HERO_POSTER}
                 brochureUrl={brochureUrl}
                 onExplore={handlePageChange}
                 onDownload={handleBrochureDownload}
@@ -635,10 +635,6 @@ export function MainContent() {
               />
             </DeferredSection>
 
-            {/* IMPACT METRICS - SUSTAINABILITY STATS */}
-            <DeferredSection>
-              <ImpactMetrics />
-            </DeferredSection>
 
             {/* 6. PREMIUM CLIENTS SHOWCASE */}
             <DeferredSection>
@@ -692,7 +688,7 @@ export function MainContent() {
       case "tracking": return <OrderTrackingPage onViewJourney={() => handlePageChange("product-journey")} onFeedbackClick={() => handlePageChange("product-feedback")} />;
       case "product-journey": return <ProductJourneyPage onBack={() => handlePageChange("tracking")} />;
       case "gallery": return <GalleryPage />;
-      case "manufacturing": return <><ManufacturingPage /><ProductionTimeline /><RealtimeOps /></>;
+      case "manufacturing": return <><ManufacturingPage /><ProductionTimeline /></>;
       case "studio": return <StudioPage />;
       case "socials": return <SocialsPage />;
       case "catalog-3d": return <Catalog3DPage />;

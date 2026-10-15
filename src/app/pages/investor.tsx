@@ -68,7 +68,7 @@ export function InvestorPage() {
                   { title: "Capacity Expansion", desc: "Scaling production floors to meet surging regional demand." },
                   { title: "New Production Lines", desc: "Diversifying product range with high-speed automated machinery." },
                   { title: "Renewable Initiatives", desc: "Transitioning factory nodes to solar and zero-carbon energy." },
-                  { title: "Digital Transformation", desc: "Enhancing AI-driven quality control and supply chain automation." },
+                  { title: "Digital Transformation", desc: "Improving quality control and supply chain automation." },
                   { title: "Market Expansion", desc: "Strategic entry into nationwide and high-value export markets." }
                 ].map((item, i) => (
                   <div key={i} className="p-8 bg-zinc-50 rounded-[40px] border border-zinc-100 group hover:bg-black hover:text-white transition-all duration-500">
@@ -94,20 +94,6 @@ export function InvestorPage() {
               <p className="text-zinc-600 font-medium leading-relaxed">
                 We ensure transparency through ERPNext-based financial tracking, reporting, and operational monitoring. Every batch, every transaction, and every efficiency metric is recorded in real-time.
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-8 pt-4">
-                <div className="space-y-1">
-                  <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Financial Sync</div>
-                  <div className="text-xl font-black text-black uppercase">Real-time</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Audit Status</div>
-                  <div className="text-xl font-black text-black uppercase">Verified</div>
-                </div>
-                <div className="space-y-1">
-                  <div className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Reporting</div>
-                  <div className="text-xl font-black text-black uppercase">Automated</div>
-                </div>
-              </div>
             </div>
           </div>
 

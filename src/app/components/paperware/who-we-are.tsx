@@ -236,23 +236,6 @@ export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
                 </p>
               </motion.div>
 
-              {/* Quick Stats Row */}
-              <motion.div
-                style={{ opacity }}
-                className="grid grid-cols-3 gap-6 py-2 border-l-2 border-[#fabf37] pl-6"
-              >
-                {[
-                  { label: "Years Exp.", value: "5+", icon: Award },
-                  { label: "Eco Score", value: "100%", icon: Recycle },
-                  { label: "Team Size", value: "100+", icon: Users },
-                ].map((stat, i) => (
-                  <div key={i} className="flex flex-col gap-1">
-                    <stat.icon className="size-4 text-[#fabf37] mb-1" />
-                    <p className="font-black text-black leading-none text-base">{stat.value}</p>
-                    <p className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider">{stat.label}</p>
-                  </div>
-                ))}
-              </motion.div>
 
               {/* Button */}
               <motion.div

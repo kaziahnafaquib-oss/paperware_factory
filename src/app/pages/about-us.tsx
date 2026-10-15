@@ -109,15 +109,6 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           </motion.div>
         </div>
 
-        {/* Floating Decoration */}
-        <div className="absolute bottom-10 right-10 hidden lg:block">
-          <div className="p-10 bg-black text-white rounded-[48px] border border-white/10 shadow-2xl space-y-4 max-w-xs">
-            <Activity className="size-8 text-[#fabf37]" />
-            <p className="text-xs font-black uppercase tracking-widest leading-relaxed">
-              Real-time monitoring of over 200 production metrics.
-            </p>
-          </div>
-        </div>
       </section>
 
       {/* 2. OUR PROMISE - THE CORE VALUES */}
@@ -138,9 +129,9 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               {[
                 { icon: ShieldCheck, title: "Uncompromising Hygiene", desc: "Every cup is produced in a sanitized, medical-grade environment." },
-                { icon: Zap, title: "AI-Driven Precision", desc: "Automated quality checks with less than 0.1% defect rate." },
-                { icon: Leaf, title: "100% Biodegradable", desc: "Utilizing FSC-certified paper and eco-friendly soy-based inks." },
-                { icon: Globe, title: "Global Logistics", desc: "From Dhaka to the world, tracked with real-time telemetry." }
+                { icon: Zap, title: "Precision", desc: "Automated quality checks on every production run." },
+                { icon: Leaf, title: "Biodegradable", desc: "Paper-based packaging and eco-friendly inks." },
+                { icon: Globe, title: "Global Logistics", desc: "From Dhaka to the world." }
               ].map((value, i) => (
                 <motion.div
                   key={i}
@@ -340,16 +331,6 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 <p className="text-xs md:text-lg font-bold text-zinc-400 leading-relaxed uppercase">
                   {t('about_text_2')} At Paperware, we believe growth thrives on responsibility. Delivering safe, hygienic, and eco-friendly packaging you can trust.
                 </p>
-                <div className="grid grid-cols-2 gap-4 md:gap-8">
-                  <div className="space-y-1 md:space-y-2">
-                    <p className="text-2xl md:text-3xl font-black italic text-[#fabf37]">24/7</p>
-                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">Monitoring</p>
-                  </div>
-                  <div className="space-y-1 md:space-y-2">
-                    <p className="text-2xl md:text-3xl font-black italic text-[#fabf37]">&lt; 2%</p>
-                    <p className="text-[8px] md:text-[10px] font-black uppercase text-zinc-500 tracking-widest">Downtime</p>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -362,12 +343,6 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                   alt="Innovation"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-6 md:bottom-10 left-6 md:left-10 p-6 md:p-8 bg-black/80 backdrop-blur-xl rounded-[24px] md:rounded-[32px] border border-white/5 max-w-[200px] md:max-w-xs">
-                  <Cpu className="size-6 md:size-8 text-[#fabf37] mb-2 md:mb-4" />
-                  <p className="text-[9px] md:text-xs font-black uppercase tracking-widest leading-relaxed">
-                    15% annual efficiency gains.
-                  </p>
-                </div>
               </div>
             </div>
           </div>

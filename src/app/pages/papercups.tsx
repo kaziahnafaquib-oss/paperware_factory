@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "motion/react";
 import { 
   ArrowRight, Sparkles, ShieldCheck, Thermometer, Leaf, Zap, 
   Settings, Box, Truck, CheckCircle2, Recycle, Globe, MapPin,
@@ -10,7 +10,6 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { toast } from "sonner";
 import { FullScreenVideoSection } from "../components/paperware/full-screen-video";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import imgSingleWall from "figma:asset/508ac66920d6bf79d8403965309bcc52fac5e5e7.webp";
 import imgRippleWall from "figma:asset/bfe95f6268f355771c65cb6e1751781aaebe3d05.webp";
 import imgDoubleWall from "figma:asset/b41403eedb4af19ba356d74c80558118d542f4cd.webp";
@@ -69,21 +68,15 @@ const comparisonSpecs = [
 ];
 
 const productionSteps = [
-  { icon: <Settings className="size-6" />, title: "Sourcing", desc: "Premium FSC certified kraft fiber." },
+  { icon: <Settings className="size-6" />, title: "Sourcing", desc: "Premium kraft paperboard." },
   { icon: <Box className="size-6" />, title: "Forming", desc: "High-precision automated molding." },
   { icon: <ShieldCheck className="size-6" />, title: "Testing", desc: "Batch-wise leakage & thermal stress test." },
   { icon: <Truck className="size-6" />, title: "Global Logistics", desc: "Climate-neutral delivery network." },
 ];
 
-const certifications = [
-  { name: "FDA Approved", desc: "Food-grade safety compliance" },
-  { name: "ISO 9001", desc: "Quality management systems" },
-  { name: "FSC Certified", desc: "Responsible forest management" },
-  { name: "BRCGS", desc: "Global food safety standard" },
-];
 
 const bulkBenefits = [
-  { title: "Volume Pricing", desc: "Tiered discounts starting from 50k units." },
+  { title: "Volume Pricing", desc: "Tiered pricing for bulk orders." },
   { title: "Priority Support", desc: "Dedicated account manager for enterprise clients." },
   { title: "Custom Tooling", desc: "Exclusive molds and shapes for your brand." },
   { title: "Warehousing", desc: "Free storage for scheduled release deliveries." },
@@ -152,11 +145,88 @@ export function PaperCupsPage({
   // Hero cup vanishes exactly when the blueprint section begins its core animation
   const heroCupOpacity = useTransform(blueprintScroll, [0, 0.005], [1, 0]); 
 
-  // Blueprint cup starts BELOW the section and rises UP into the target circle
-  const blueprintCupY = useTransform(smoothBlueprint, [0, 1], [800, 0]); 
-  const blueprintCupScale = useTransform(smoothBlueprint, [0, 1], [0.8, 1]);
-  const blueprintCupOpacity = useTransform(blueprintScroll, [0, 0.005], [0, 1]); 
-  const blueprintCupRotate = useTransform(smoothBlueprint, [0, 1], [-15, 0]);
+  // One continuous cup, locked 1:1 to the page scroll (no spring, so no lag):
+  //   A) starts in the "Purely Engineered" hero circle and comes down with the scroll,
+  //      drifting across into the Blueprint card;
+  //   B) ends in the Blueprint card and stays there.
+  // The hero keeps an invisible cup purely as the measured start point. All positions
+  // are measured on screen, so desktop and mobile layouts both work.
+  const heroSlotRef = React.useRef<HTMLDivElement>(null);
+  const heroCircleRef = React.useRef<HTMLDivElement>(null);
+  const cupSlotRef = React.useRef<HTMLDivElement>(null);
+  const { scrollY: rawScrollY } = useScroll();
+  // light smoothing so wheel steps glide, without noticeable lag
+  const pageScrollY = useSpring(rawScrollY, { stiffness: 400, damping: 50, mass: 0.4 });
+  type Path = { A: number; dx: number; dy0: number; s0: number };
+  const pathRef = React.useRef<Path>({ A: 0, dx: 0, dy0: 0, s0: 1.12 });
+  const pathVersion = useMotionValue(0); // bumped after each measure to recompute
+  const cupOffset = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
+    const { A, dx, dy0, s0 } = pathRef.current;
+    if (A > 0 && sy < A) {
+      const k = sy / A;                       // A: hero -> card, cup comes straight down,
+      const u = Math.min(1, Math.max(0, (k - 0.45) / 0.55)); // then eases sideways into the card
+      const e = u * u * (3 - 2 * u);
+      // gentle sway on the way down that fades out, so it lands upright with no extra turn
+      const sway = 14 * Math.sin(2 * Math.PI * k) * (1 - k);
+      return { x: dx * (1 - e), y: dy0 + sy, scale: s0 + (1 - s0) * e, rotate: sway };
+    }
+    return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: ends in the Blueprint card and stays there
+  });
+  // "Rim compression" label fades in only as the cup settles into the Blueprint card
+  const rimLabelOpacity = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
+    const { A } = pathRef.current;
+    if (A <= 1) return 0;
+    return Math.min(1, Math.max(0, (sy - 0.9 * A) / (0.1 * A)));
+  });
+  const rimLabelX = useTransform(rimLabelOpacity, (v) => 20 * (1 - v));
+  const blueprintCupX = useTransform(cupOffset, (o) => o.x);
+  const blueprintCupY = useTransform(cupOffset, (o) => o.y);
+  const blueprintCupScale = useTransform(cupOffset, (o) => o.scale);
+  const blueprintCupRotate = useTransform(cupOffset, (o) => o.rotate);
+
+  React.useLayoutEffect(() => {
+    const measure = () => {
+      const hero = heroSlotRef.current, circle = heroCircleRef.current, cup = cupSlotRef.current;
+      if (!hero || !circle || !cup) return;
+      const sy = window.scrollY;
+      const h = hero.getBoundingClientRect();
+      const c = cup.getBoundingClientRect();
+      // untransformed centres in document coordinates (scale/rotate keep the centre)
+      // start: the cup's visible body centred in the hero circle
+      // (the artwork's body sits ~3.5% right / 2.9% above the image centre)
+      const o = circle.getBoundingClientRect();
+      const heroImgEl = hero.querySelector("img");
+      const hw = heroImgEl?.clientWidth ?? h.width, hh = heroImgEl?.clientHeight ?? h.height;
+      const hx = o.left + o.width / 2 + 0.015 * hw, /* nudged slightly right of centre */ hy = o.top + o.height / 2 + sy + 0.029 * hh;
+      const cx = c.left + c.width / 2 - blueprintCupX.get(), cy = c.top + c.height / 2 + sy - blueprintCupY.get();
+      const A = Math.max(1, cy - hy);         // scroll distance from hero to card
+      const heroImg = hero.querySelector("img"), cardImg = cup.querySelector("img");
+      const s0 = heroImg && cardImg && cardImg.clientWidth ? heroImg.clientWidth / cardImg.clientWidth : 1;
+      pathRef.current = { A, dx: hx - cx, dy0: hy - cy, s0 };
+      pathVersion.set(pathVersion.get() + 1);
+    };
+    measure();
+    // re-measure whenever layout settles or shifts (fonts, lazy images, resize)
+    let raf = 0;
+    const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
+    window.addEventListener("resize", schedule);
+    window.addEventListener("load", schedule);
+    document.fonts?.ready.then(schedule);
+    const ro = new ResizeObserver(schedule);
+    ro.observe(document.body);
+    [heroSlotRef.current, heroCircleRef.current, cupSlotRef.current].forEach((el) => el && ro.observe(el));
+    const imgs = [heroSlotRef.current, cupSlotRef.current].flatMap((el) => (el ? [...el.querySelectorAll("img")] : []));
+    imgs.forEach((img) => img.addEventListener("load", schedule));
+    const t = setTimeout(schedule, 800);
+    return () => {
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("load", schedule);
+      imgs.forEach((img) => img.removeEventListener("load", schedule));
+      ro.disconnect(); cancelAnimationFrame(raf); clearTimeout(t);
+    };
+  }, []);
+  const blueprintCupOpacity = 1;
+
   const boxShadowOpacity = useTransform(smoothBlueprint, [0.8, 1], [0, 0.6]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -199,22 +269,13 @@ export function PaperCupsPage({
             <motion.span initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="block text-[#fabf37]" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{t('purely_engineered').split(' ')[1]}</motion.span>
           </h1>
           <div className="relative max-w-4xl mx-auto">
-             <motion.div 
-               style={{ 
-                 y: heroCupY, 
-                 scale: heroCupScale, 
-                 opacity: heroCupOpacity,
-                 rotateX: heroRotation.y,
-                 rotateY: heroRotation.x,
-                 perspective: 1000
-               }} 
-               className="relative z-20 will-change-transform"
-             >
+             {/* Invisible start marker for the travelling cup (see cup journey above) */}
+             <div ref={heroSlotRef} aria-hidden="true" style={{ opacity: 0 }} className="relative z-20">
                {/* Floating effect handled by animate if needed, but keeping it simple for scroll sync */}
-               <img loading="lazy" decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
-             </motion.div>
+               <img decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
+             </div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
+             <div ref={heroCircleRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
           </div>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-4 md:mt-8 flex flex-wrap justify-center gap-4">
             <button 
@@ -251,7 +312,7 @@ export function PaperCupsPage({
             <div key={index} className="flex items-center gap-12 text-xs font-black uppercase tracking-[0.3em]">
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>100% ECO-FRIENDLY MATERIALS</span>
+                <span>ECO-FRIENDLY MATERIALS</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
@@ -263,7 +324,7 @@ export function PaperCupsPage({
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>24/7 PRODUCTION CYCLE</span>
+                <span>CUSTOM PRINTED CUPS</span>
               </div>
             </div>
           ))}
@@ -271,7 +332,7 @@ export function PaperCupsPage({
       </div>
 
       {/* Technical Blueprint Section */}
-      <section ref={blueprintRef} className="py-40 bg-[#1a1a1a] text-white relative overflow-visible">
+      <section ref={blueprintRef} className="py-40 bg-[#1a1a1a] text-white relative z-20 overflow-visible [content-visibility:visible]">
         <div className="absolute inset-0" style={{ opacity: 0.05, backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-24">
@@ -295,7 +356,7 @@ export function PaperCupsPage({
             </div>
             <div className="lg:w-1/2 relative group">
               {/* Box container - Overflow visible to allow the cup to "enter" from the top curve */}
-              <div className="relative border border-[#fabf37]/10 rounded-[60px] p-12 bg-[#0c0c0c] backdrop-blur-2xl min-h-[550px] flex items-center justify-center overflow-visible shadow-2xl z-10">
+              <div className="relative border border-[#fabf37]/10 rounded-[60px] p-12 bg-[#0c0c0c] min-h-[550px] flex items-center justify-center overflow-visible shadow-2xl z-10">
                  {/* Grid Overlay */}
                  <div className="absolute inset-0 opacity-20 pointer-events-none rounded-[60px] overflow-hidden" style={{ backgroundImage: 'radial-gradient(#fabf37 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }} />
                  
@@ -312,8 +373,10 @@ export function PaperCupsPage({
 
                  {/* Blueprint Cup Landing Animation - Sync'd with Scroll View */}
                  <motion.div 
+                   ref={cupSlotRef}
                    style={{ 
                      opacity: blueprintCupOpacity,
+                     x: blueprintCupX,
                      y: blueprintCupY,
                      scale: blueprintCupScale,
                      rotate: blueprintCupRotate,
@@ -321,7 +384,7 @@ export function PaperCupsPage({
                    }}
                    className="relative z-20 w-full flex items-center justify-center will-change-transform"
                  >
-                   <img loading="lazy" decoding="async" 
+                   <img decoding="async" 
                      src={imgErasebg} 
                      className="w-full max-w-[400px] h-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.9)] brightness-110 contrast-110" 
                      alt="Blueprint Cup" 
@@ -329,9 +392,7 @@ export function PaperCupsPage({
                    
                    {/* Blueprint Labels - Rim Compression exactly as per screenshot */}
                    <motion.div 
-                     initial={{ opacity: 0, x: 20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     transition={{ delay: 0.5 }}
+                     style={{ opacity: rimLabelOpacity, x: rimLabelX }}
                      className="absolute top-[5%] right-[10%] flex flex-col items-start gap-0"
                    >
                       <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-sm whitespace-nowrap shadow-lg rotate-[-5deg]">RIM COMPRESSION</div>
@@ -344,17 +405,17 @@ export function PaperCupsPage({
                  <div className="absolute bottom-6 right-6 size-12 border-b border-r border-[#fabf37]/20 rounded-br-3xl" />
               </div>
 
-              {/* ISO Pill Badge - Exactly as per Screenshot */}
+              {/* Origin badge */}
               <motion.div 
-                style={{ y: useTransform(smoothBlueprint, [0.8, 1], [50, 0]), opacity: useTransform(smoothBlueprint, [0.8, 1], [0, 1]) }}
+                style={{ y: useTransform(smoothBlueprint, [0.3, 0.6], [30, 0]), opacity: useTransform(smoothBlueprint, [0.3, 0.6], [0, 1]) }}
                 className="absolute bottom-[-5%] right-[-5%] bg-[#fabf37] text-black px-10 py-8 rounded-[50px] shadow-[0_40px_100px_rgba(250,191,55,0.4)] flex items-center gap-6 z-20"
               >
                  <div className="size-14 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
                     <CircleCheck className="size-8" />
                  </div>
                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">ISO CERTIFIED PLANT</span>
-                    <span className="text-3xl font-black tracking-tighter leading-none">Precision 0.01mm</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">Made in Dhaka</span>
+                    <span className="text-3xl font-black tracking-tighter leading-none">Custom printed</span>
                  </div>
               </motion.div>
             </div>
@@ -504,7 +565,7 @@ export function PaperCupsPage({
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-12">
               <div className="space-y-4">
-                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">Live Preview</span>
+                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">Preview</span>
                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-zinc-900">{t('studio_interactive')}</h2>
                 <p className="text-zinc-600 font-bold text-lg max-w-md">{t('studio_desc')}</p>
               </div>
@@ -624,7 +685,7 @@ export function PaperCupsPage({
                                   <div className="size-2.5 bg-[#fabf37] rounded-full animate-pulse shadow-[0_0_15px_#fabf37]" />
                                   <span className="text-[#fabf37] font-black uppercase tracking-[0.3em] text-[10px]">Project Paperware</span>
                                </div>
-                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>3D Real-time Render</span>
+                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>3D Preview</span>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -718,10 +779,6 @@ export function PaperCupsPage({
                <div className="space-y-6">
                  <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-white italic">Eco <br /> Dynamics</h2>
                  <p className="text-zinc-400 font-bold text-xl leading-relaxed max-lg">Every decision matters. Calculate the ecological weight of your brand and discover the impact of switching to Paperware sustainable fibers.</p>
-               </div>
-               <div className="flex gap-12">
-                 <div className="space-y-2"><p className="text-[50px] font-black text-[#fabf37]">98%</p><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Recyclability Rate</p></div>
-                 <div className="space-y-2"><p className="text-[50px] font-black text-[#fabf37]">0.4s</p><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Forming Speed</p></div>
                </div>
             </div>
             <div className="backdrop-blur-3xl p-12 lg:p-20 rounded-[80px] border border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.5)]" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
@@ -837,20 +894,6 @@ export function PaperCupsPage({
         </div>
       </section>
 
-      {/* Certification Wall */}
-      <section className="py-24 bg-white border-b border-black/5">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-between items-center gap-12 opacity-40 hover:opacity-100 transition-opacity">
-            {certifications.map((cert, i) => (
-              <div key={i} className="group cursor-default">
-                <p className="text-2xl font-black uppercase tracking-tighter text-black group-hover:text-[#fabf37] transition-colors">{cert.name}</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{cert.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* WEBM Video Test Section */}
       <section className="py-32 bg-[#ffbd32] text-white text-center relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
@@ -911,8 +954,6 @@ export function PaperCupsPage({
         
       </section>
 
-      {/* Social Media Feed - Positioned after Final CTA */}
-      <SocialMediaFeed />
     </div>
   );
 }

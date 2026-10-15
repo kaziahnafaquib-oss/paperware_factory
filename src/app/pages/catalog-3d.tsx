@@ -35,7 +35,7 @@ export function Catalog3DPage() {
       id: "PW-003",
       name: "Eco-Coffee Carrier",
       description: "Multi-cup high-grip carriers made from molded pulp fibers.",
-      specs: ["Spill-proof Geometry", "100% Pulp", "Space Saving"],
+      specs: ["Spill-proof Geometry", "Paper Pulp", "Space Saving"],
       image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
       colors: ["#D1D5DB", "#9CA3AF"],
       rating: 5.0
@@ -51,7 +51,7 @@ export function Catalog3DPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Product Showroom v4.0</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Product Showroom</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
               360° <span className="text-zinc-600">Product</span> <br /> <span className="text-[#fabf37]">Preview</span>
@@ -166,24 +166,6 @@ export function Catalog3DPage() {
             </div>
           </div>
 
-        </div>
-
-        {/* Industrial Footer Stats */}
-        <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-t border-white/5">
-          {[
-            { label: "Durability", value: "A++", icon: ShieldCheck },
-            { label: "Eco-Rating", value: "100%", icon: Zap },
-            { label: "Global Ships", value: "24h", icon: Factory },
-            { label: "Certifications", value: "ISO", icon: Info }
-          ].map((stat, i) => (
-            <div key={i} className="space-y-2">
-              <div className="flex items-center gap-2 text-zinc-600">
-                <stat.icon className="size-3" />
-                <span className="text-[9px] font-black uppercase tracking-widest">{stat.label}</span>
-              </div>
-              <p className="text-2xl font-black italic text-[#fabf37]">{stat.value}</p>
-            </div>
-          ))}
         </div>
 
       </div>

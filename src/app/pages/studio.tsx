@@ -89,7 +89,7 @@ export function StudioPage() {
                 </h1>
                 <div className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.4em] flex items-center gap-2">
                    <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                   System Online: Paperware Core v4.2.0
+                   Paperware Design Studio
                 </div>
              </div>
           </div>
@@ -304,8 +304,8 @@ export function StudioPage() {
                <div className="absolute top-10 right-10 text-right z-30 pointer-events-none">
                   <div className="flex items-center gap-4 justify-end">
                      <div className="text-right">
-                        <p className="text-[10px] font-black text-black uppercase tracking-[0.4em]">Matrix Render: v4.2</p>
-                        <p className="text-[9px] font-black text-[#fabf37] uppercase tracking-[0.3em] mt-1">Efficiency: Optimal</p>
+                        <p className="text-[10px] font-black text-black uppercase tracking-[0.4em]">3D Preview</p>
+                        <p className="text-[9px] font-black text-[#fabf37] uppercase tracking-[0.3em] mt-1">Ready</p>
                      </div>
                      <div className="h-10 w-px bg-black/10" />
                      <Globe className="size-6 text-black/10" />
@@ -337,7 +337,7 @@ export function StudioPage() {
                   <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-12 pointer-events-none opacity-20">
                      <span className="text-[8px] font-black uppercase tracking-[0.6em] text-black">Z-AXIS: {rotation}°</span>
                      <div className="size-1 rounded-full bg-black" />
-                     <span className="text-[8px] font-black uppercase tracking-[0.6em] text-black">ENGINE: REALTIME</span>
+                     <span className="text-[8px] font-black uppercase tracking-[0.6em] text-black">3D PREVIEW</span>
                   </div>
                </div>
 
@@ -365,37 +365,8 @@ export function StudioPage() {
 
             {/* Bottom Insight Panel */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-               <div className="bg-zinc-900 text-white rounded-[32px] p-8 md:col-span-1 space-y-6 shadow-xl">
-                  <div className="flex justify-between items-center">
-                     <h4 className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Eco Footprint</h4>
-                     <Leaf className="size-5 text-emerald-500" />
-                  </div>
-                  <div className="space-y-4">
-                     <div className="flex justify-between items-end">
-                        <span className="text-4xl font-black">{sustainabilityScore}%</span>
-                        <span className="text-[10px] font-black text-zinc-500 uppercase pb-1">Biodegradable</span>
-                     </div>
-                     <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <motion.div initial={{ width: 0 }} animate={{ width: `${sustainabilityScore}%` }} className="h-full bg-emerald-500" />
-                     </div>
-                  </div>
-               </div>
 
-               <div className="bg-white rounded-[32px] p-8 md:col-span-1 border border-black/5 shadow-xl space-y-6">
-                  <div className="flex justify-between items-center text-black">
-                     <h4 className="text-[10px] font-black uppercase tracking-widest opacity-40">Industrial Cost</h4>
-                     <DollarSign className="size-5 text-[#fabf37]" />
-                  </div>
-                  <div className="space-y-4">
-                     <div className="flex justify-between items-end">
-                        <span className="text-4xl font-black">${estimatedCost.toFixed(2)}</span>
-                        <span className="text-[10px] font-black text-zinc-400 uppercase pb-1">Per Unit</span>
-                     </div>
-                     <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest leading-relaxed">Based on 10K MOQ baseline</p>
-                  </div>
-               </div>
-
-               <div className="bg-[#fabf37] text-black rounded-[32px] p-8 md:col-span-2 flex items-center justify-between shadow-xl group overflow-hidden relative">
+               <div className="bg-[#fabf37] text-black rounded-[32px] p-8 md:col-span-4 flex items-center justify-between shadow-xl group overflow-hidden relative">
                   <div className="absolute top-0 right-0 p-8 opacity-10">
                      <Wand2 className="size-24 -rotate-12 group-hover:rotate-0 transition-transform duration-700" />
                   </div>

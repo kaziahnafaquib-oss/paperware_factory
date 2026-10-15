@@ -28,7 +28,7 @@ const values = [
   },
   { 
     title: "Sustainability", 
-    desc: "100% biodegradable solutions for a greener tomorrow.", 
+    desc: "Biodegradable solutions for a greener tomorrow.", 
     icon: Leaf,
     color: "bg-green-500/10 text-green-500"
   },
@@ -585,9 +585,9 @@ function DepartmentExplorer() {
   const [hovered, setHovered] = React.useState<number | null>(null);
   const depts = [
     { name: "Automation", icon: Settings, count: 4, desc: "Building the brains of our factory." },
-    { name: "Eco-Design", icon: Leaf, count: 2, desc: "Designing 100% waste-free products." },
+    { name: "Eco-Design", icon: Leaf, count: 2, desc: "Designing low-waste products." },
     { name: "Logistics", icon: Truck, count: 6, desc: "Smart routing and global delivery." },
-    { name: "AI Ops", icon: Binary, count: 3, desc: "Predictive maintenance & data flows." }
+    { name: "Operations", icon: Binary, count: 3, desc: "Maintenance and production data." }
   ];
 
   return (
@@ -675,17 +675,6 @@ export function CareerPage() {
   return (
     <div ref={containerRef} className="relative bg-zinc-50 min-h-screen text-zinc-900 font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
       <CustomCursor />
-      <div className="fixed bottom-8 left-8 z-[100] space-y-4">
-        <LiveFactoryFeed />
-        <motion.div
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="hidden lg:block w-72"
-        >
-          <LiveProductionGraph />
-        </motion.div>
-      </div>
       
       <ParticleBackground />
       
@@ -742,7 +731,7 @@ export function CareerPage() {
                 className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-black text-[#fabf37] text-[10px] md:text-xs font-black uppercase tracking-widest shadow-2xl"
               >
                 <div className="size-2 rounded-full bg-[#fabf37] animate-ping" />
-                Live Production Status: Active
+                Now Hiring
               </motion.div>
             </Magnetic>
             
@@ -783,29 +772,6 @@ export function CareerPage() {
           </div>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mb-32">
-          {stats.map((stat, i) => (
-            <SmoothTiltCard
-              key={i}
-              className="bg-white hover:bg-black group p-6 sm:p-12 rounded-[40px] md:rounded-[60px] flex flex-col items-center gap-6 border-b-[12px] border-r-[12px] border-zinc-100 hover:border-zinc-900 transition-all shadow-2xl cursor-crosshair"
-            >
-              <div className="flex flex-col items-center gap-6 w-full">
-                <div className="size-14 sm:size-20 rounded-[24px] sm:rounded-[32px] bg-[#fabf37]/10 group-hover:bg-[#fabf37] flex items-center justify-center transition-all duration-500 group-hover:rotate-[15deg]">
-                  <stat.icon className="size-7 sm:size-10 text-black group-hover:text-black" />
-                </div>
-                <div className="text-center w-full space-y-1">
-                  <span className="text-3xl sm:text-5xl font-black block leading-none text-black group-hover:text-[#fabf37] transition-colors">
-                    <Counter value={stat.value} />
-                  </span>
-                  <span className="text-[10px] sm:text-[12px] font-black uppercase tracking-[0.25em] text-zinc-400 group-hover:text-white/50 block transition-colors whitespace-nowrap">
-                    {stat.label}
-                  </span>
-                </div>
-              </div>
-            </SmoothTiltCard>
-          ))}
-        </div>
 
         {/* Department Explorer */}
         <div className="mb-12 relative">
@@ -915,65 +881,6 @@ export function CareerPage() {
           </div>
         </motion.div>
 
-        {/* Testimonials */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-32"
-        >
-          <div className="bg-black rounded-[60px] p-8 md:p-20 relative overflow-hidden">
-            <motion.div 
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 5, 0],
-                opacity: [0.05, 0.1, 0.05]
-              }}
-              transition={{ duration: 10, repeat: Infinity }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            >
-              <Factory className="size-[500px] text-white" />
-            </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
-              <div className="space-y-6">
-                <motion.h2 
-                  initial={{ x: -50, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white"
-                >
-                  Voices of <br /> Paperware
-                </motion.h2>
-                <p className="text-zinc-400 font-medium text-lg">Hear it directly from the people who are building the future of sustainable manufacturing.</p>
-              </div>
-              <div className="space-y-6">
-                {testimonials.map((t, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ x: 50, opacity: 0, backgroundColor: "rgba(24, 24, 27, 0.5)" }} // zinc-900/50 as RGBA
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.2 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      rotateZ: i % 2 === 0 ? 1 : -1,
-                      backgroundColor: "#1a1a1a"
-                    }}
-                    className="backdrop-blur-md border border-white/5 p-8 rounded-[40px] flex flex-col sm:flex-row gap-6 items-center sm:items-start transition-colors"
-                  >
-                    <img loading="lazy" decoding="async" src={t.img} alt={t.name} className="size-16 rounded-2xl object-cover border-2 border-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.3)]" />
-                    <div className="space-y-3 text-center sm:text-left">
-                      <p className="text-white font-medium italic leading-relaxed">"{t.quote}"</p>
-                      <div>
-                        <p className="text-[#fabf37] font-black uppercase text-sm tracking-widest">{t.name}</p>
-                        <p className="text-zinc-500 font-bold text-xs uppercase tracking-[0.2em]">{t.role}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Hiring Process */}
         <motion.div 

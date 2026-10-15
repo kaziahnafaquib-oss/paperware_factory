@@ -91,7 +91,7 @@ export function BusinessPage() {
           >
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/60 backdrop-blur-xl border border-black/5 shadow-sm">
               <div className="size-2 bg-[#fabf37] rounded-full animate-pulse" />
-              <span className="text-[10px] font-black text-black/60 uppercase tracking-[0.4em]">Industrial Command v4.0</span>
+              <span className="text-[10px] font-black text-black/60 uppercase tracking-[0.4em]">Paperware Factory</span>
             </div>
             
             <h1 className="text-6xl md:text-9xl font-black text-black tracking-tighter uppercase leading-[0.85]">
@@ -113,13 +113,6 @@ export function BusinessPage() {
             </div>
           </motion.div>
 
-          {/* Industrial Metrics */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-24 text-left">
-            <BusinessMetric label="Factory Floor Area" value="120,000 sq ft" trend="L4 Grade" />
-            <BusinessMetric label="Production Lines" value="24 Active" trend="24/7 Ops" />
-            <BusinessMetric label="Machine Nodes" value="482 High-Speed" trend="Automated" />
-            <BusinessMetric label="Monthly Output" value="100M+ Units" trend="Optimal" />
-          </div>
         </div>
       </section>
 
@@ -145,7 +138,7 @@ export function BusinessPage() {
                  icon={Factory}
                  title="Mass Production"
                  desc="High-speed continuous lines for volume orders. Designed for maximum throughput and minimum lead times."
-                 tags={["High-Speed", "ISO 9001", "24/7 Service"]}
+                 tags={["High-Speed", "Custom Print"]}
                />
             </div>
             <div className="relative group">
@@ -166,8 +159,8 @@ export function BusinessPage() {
                <ServiceCard 
                  icon={Cpu}
                  title="Automated Quality"
-                 desc="Every unit is scanned by AI-vision systems to ensure 100% adherence to structural and visual specs."
-                 tags={["AI Vision", "Real-time QC", "Zero Waste"]}
+                 desc="Production is checked against structural and visual specs."
+                 tags={["Quality Checks", "Low Waste"]}
                />
             </div>
           </div>
@@ -239,105 +232,6 @@ export function BusinessPage() {
         </div>
       </section>
 
-      {/* 4. ERP DATA SYNC VISUALIZATION (HUD STYLE) - Reframed as Factory Monitoring */}
-      <section className="py-32 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="bg-black rounded-[64px] overflow-hidden relative min-h-[700px] flex items-center p-12 md:p-24 shadow-2xl">
-            {/* Animated Grid Background */}
-            <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/10 via-transparent to-[#fabf37]/10" />
-
-            <div className="grid lg:grid-cols-2 gap-20 relative z-10 items-center">
-              <div className="space-y-10">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                  <Terminal className="size-4" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Deep Integration Protocol</span>
-                </div>
-                <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-[0.9]">
-                  Real-time ERP<br />
-                  <span className="text-[#fabf37]">Data Synergy</span>
-                </h2>
-                <p className="text-zinc-400 text-lg font-medium leading-relaxed max-w-lg">
-                  Integrate your internal systems directly with our production floors. Monitor batch status, material consumption, and delivery ETAs in milliseconds.
-                </p>
-                
-                <div className="space-y-6">
-                  {[
-                    { label: "Inventory Automation", val: 100 },
-                    { label: "Order Pipeline Transparency", val: 100 },
-                    { label: "Global Node Connectivity", val: 46 }
-                  ].map((stat, i) => (
-                    <div key={i} className="space-y-2">
-                      <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-zinc-500">
-                        <span>{stat.label}</span>
-                        <span className="text-white">{stat.val}%</span>
-                      </div>
-                      <div className="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
-                        <motion.div 
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${stat.val}%` }}
-                          transition={{ duration: 1.5, delay: i * 0.2 }}
-                          className="h-full bg-gradient-to-r from-blue-500 to-[#fabf37]"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative">
-                {/* HUD UI Component Mockup */}
-                <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[48px] p-8 aspect-square flex flex-col justify-between group overflow-hidden">
-                   <div className="absolute -inset-10 bg-blue-500/10 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity" />
-                   
-                   <div className="flex justify-between items-start relative z-10">
-                      <div className="size-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10">
-                        <Monitor className="text-[#fabf37]" />
-                      </div>
-                      <div className="text-right">
-                        <div className="text-[8px] font-black text-zinc-500 uppercase tracking-[0.3em]">Neural Link</div>
-                        <div className="text-xl font-black text-white uppercase">Active</div>
-                      </div>
-                   </div>
-
-                   <div className="space-y-8 relative z-10">
-                      <div className="flex items-end gap-1">
-                        <div className="h-8 w-1 bg-white/20 rounded-full" />
-                        <div className="h-16 w-1 bg-[#fabf37] rounded-full" />
-                        <div className="h-12 w-1 bg-white/20 rounded-full" />
-                        <div className="h-24 w-1 bg-blue-500 rounded-full" />
-                        <div className="h-20 w-1 bg-white/20 rounded-full" />
-                        <div className="h-32 w-1 bg-[#fabf37] rounded-full" />
-                        <div className="h-24 w-1 bg-white/20 rounded-full" />
-                      </div>
-                      <div>
-                        <div className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.4em] mb-4">Live Production Stream</div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                            <div className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">Efficiency</div>
-                            <div className="text-lg font-black text-white tracking-tighter">99.9%</div>
-                          </div>
-                          <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                            <div className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">Active Units</div>
-                            <div className="text-lg font-black text-white tracking-tighter">12.4M</div>
-                          </div>
-                        </div>
-                      </div>
-                   </div>
-
-                   <div className="pt-8 border-t border-white/5 flex justify-between items-center relative z-10">
-                      <div className="flex gap-2">
-                        <div className="size-2 bg-green-500 rounded-full animate-pulse" />
-                        <span className="text-[8px] font-black text-zinc-500 uppercase tracking-[0.2em]">Secure Node 01 - DB_DHAKA</span>
-                      </div>
-                      <Lock className="size-3 text-zinc-500" />
-                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 5. MULTI-LANGUAGE HUB */}
       <section className="py-32 px-4 relative overflow-hidden">
@@ -354,7 +248,7 @@ export function BusinessPage() {
              </div>
              <h2 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tighter leading-none">
                 Localized Everywhere.<br />
-                <span className="text-zinc-500">46+ Languages.</span>
+                <span className="text-zinc-500">Many Languages.</span>
               </h2>
               <p className="text-zinc-500 font-medium leading-relaxed max-w-2xl mx-auto">
                 Our business interface adapts instantly to your region's language and regulatory requirements. Managing global supply chains has never been this intuitive.

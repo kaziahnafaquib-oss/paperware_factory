@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { Radio, ArrowRight, Activity, Globe as Globe2, ShieldCheck, Zap, Volume2, VolumeX, Loader2, Leaf, MapPin, AlertCircle, ExternalLink, Mouse } from "lucide-react";
+import { Radio, ArrowRight, Activity, Globe as Globe2, ShieldCheck, Zap, Volume2, VolumeX, Loader2, Pause, Play, Leaf, MapPin, AlertCircle, ExternalLink, Mouse } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
 interface ImmersiveHeroProps {
@@ -12,6 +12,9 @@ interface ImmersiveHeroProps {
 }
 
 export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, posterImage }: ImmersiveHeroProps) => {
+  // The background video always plays; a visible Pause/Play control lets anyone stop it
+  // (WCAG 2.2.2). When paused, the still poster is shown instead.
+  const [videoPaused, setVideoPaused] = React.useState(false);
   const { t } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const videoRef1 = React.useRef<HTMLVideoElement>(null);
@@ -228,7 +231,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
           >
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="size-8 text-[#fabf37] animate-spin" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Initializing Stream...</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Loading video...</span>
             </div>
           </motion.div>
         )}
@@ -239,8 +242,13 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
         style={{ opacity: videoOpacity }}
         className="absolute inset-0 z-0"
       >
-        {(videoId || fullEmbedUrl) && !youtubeError ? (
-          <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+        {videoPaused && posterImage ? (
+          <img src={posterImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        ) : (videoId || fullEmbedUrl) && !youtubeError ? (
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-black bg-cover bg-center"
+            style={posterImage ? { backgroundImage: `url(${posterImage})` } : undefined}
+          >
             <div className="absolute inset-0 w-full h-full scale-100">
               <iframe
                 ref={iframeRef}
@@ -264,6 +272,8 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
               />
             </div>
           </div>
+        ) : (videoId || fullEmbedUrl) && youtubeError && posterImage ? (
+          <img src={posterImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
         ) : (videoId || fullEmbedUrl) && youtubeError ? (
           // YouTube Error Fallback UI
           <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-center justify-center">
@@ -348,7 +358,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
       />
 
       {/* Main Content Overlay */}
-      <div className="relative z-20 h-full flex flex-col items-center justify-end pb-32 md:pb-12 px-4 text-center">
+      <div className="relative z-20 h-full flex flex-col items-center justify-end pb-44 md:pb-16 px-4 text-center">
         {/* Inner Background Video Layer Removed */}
 
         <motion.div
@@ -358,9 +368,9 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-7xl"
         >
-          <div className="flex flex-col items-center gap-12 md:gap-10">
+          <div className="flex flex-col items-center">
             {/* Buttons Row */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8">
+            <div className="flex flex-row justify-center items-center gap-3 md:gap-8">
               <button
                 onClick={() => {
                   if (brochureUrl) {
@@ -370,7 +380,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                     onExplore("products");
                   }
                 }}
-                className="group relative overflow-hidden bg-[#fabf37] text-black w-44 md:w-52 px-6 md:px-8 py-3.5 md:py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(250,191,55,0.2)]"
+                className="group relative overflow-hidden bg-[#fabf37] text-black w-36 md:w-52 px-4 md:px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(250,191,55,0.2)]"
               >
                 <span className="relative z-10">E-Catalog</span>
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
@@ -378,72 +388,19 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
 
               <button
                 onClick={() => onExplore("contact")}
-                className="group bg-[#d6c8a9]/10 backdrop-blur-xl text-white border border-[#d6c8a9]/30 w-44 md:w-52 px-6 md:px-8 py-3.5 md:py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:bg-[#d6c8a9] hover:text-black relative"
+                className="group bg-[#d6c8a9]/10 backdrop-blur-xl text-white border border-[#d6c8a9]/30 w-36 md:w-52 px-4 md:px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:bg-[#d6c8a9] hover:text-black relative"
               >
                 Contact Sales
               </button>
             </div>
 
-            {/* Explore More Section with Lines */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2 }}
-              className="flex flex-col items-center gap-4"
-            >
-              {/* Top Horizontal Line - Small */}
-              <div className="w-24 h-[3px] bg-gradient-to-r from-transparent via-[#fabf37] to-transparent shadow-[0_0_20px_#fabf37]" />
-
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] md:tracking-[0.35em] text-[#fabf37] text-center whitespace-nowrap drop-shadow-[0_0_10px_rgba(250,191,55,0.5)]">
-                Explore More
-              </span>
-
-              {/* Bottom Animated Icon */}
-              <div className="relative mt-2">
-                {/* Immersive Glow Effect */}
-                <motion.div
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.1, 0.4, 0.1]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 bg-[#fabf37] rounded-full blur-2xl pointer-events-none"
-                />
-
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative text-[#fabf37] flex flex-col items-center"
-                >
-                  <Mouse className="size-8 stroke-[1.5px] drop-shadow-[0_0_15px_rgba(250,191,55,0.4)]" />
-
-                  {/* Animated Internal Scroll Dot */}
-                  <motion.div
-                    animate={{
-                      y: [0, 8, 0],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeIn"
-                    }}
-                    className="absolute top-[8px] w-[2px] h-[5px] bg-white rounded-full shadow-[0_0_10px_#fff]"
-                  />
-                </motion.div>
-              </div>
-            </motion.div>
           </div>
         </motion.div>
 
         {/* Floating HUD Telemetry */}
         <div className="hidden lg:block absolute bottom-12 left-12 space-y-4 text-left">
           {[
-            { icon: <Leaf className="size-3" />, label: "SUSTAINABILITY", value: "100% ECO-FRIENDLY" },
+            { icon: <Leaf className="size-3" />, label: "SUSTAINABILITY", value: "ECO-FRIENDLY" },
             { icon: <Globe2 className="size-3" />, label: "EXPORT", value: "READY WORLDWIDE" },
             { icon: <MapPin className="size-3" />, label: "ORIGIN", value: "MADE IN BANGLADESH 🇧🇩" }
           ].map((item, i) => (
@@ -467,6 +424,19 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
       {/* HUD Corner Accents */}
       <div className="absolute top-12 left-12 size-12 border-t-2 border-l-2 border-white/10 rounded-tl-2xl" />
       <div className="absolute top-12 right-12 size-12 border-t-2 border-r-2 border-white/10 rounded-tr-2xl" />
+
+      {/* Video Pause/Play */}
+      {posterImage && (
+        <button
+          type="button"
+          onClick={() => setVideoPaused((v) => !v)}
+          aria-pressed={videoPaused}
+          aria-label={videoPaused ? "Play background video" : "Pause background video"}
+          className="absolute bottom-28 left-4 lg:left-auto lg:bottom-12 lg:right-[14rem] z-30 size-10 rounded-full border border-white/10 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-[#fabf37] hover:text-black hover:border-[#fabf37] transition-all"
+        >
+          {videoPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+        </button>
+      )}
 
       {/* Sound Toggle */}
       <button

@@ -26,45 +26,9 @@ const certs = [
     source: "Direct"
   },
   { 
-    title: "ISO 9001:2015", 
-    desc: "Our strategic raw material suppliers maintain strict international quality management standards.", 
-    status: "SUPPLIER COMPLIANT",
-    year: "Active Chain",
-    icon: Award,
-    highlight: false,
-    source: "Supply Chain"
-  },
-  { 
-    title: "FSC Certified", 
-    desc: "100% of our paper and pulp are sourced from FSC certified responsible managed forests.", 
-    status: "CERTIFIED SOURCING",
-    year: "Active Chain",
-    icon: Globe,
-    highlight: false,
-    source: "Supply Chain"
-  },
-  { 
-    title: "Carbon Neutral", 
-    desc: "Partnering with net-zero suppliers to ensure eco-friendly material production.", 
-    status: "ECO-PARTNERED",
-    year: "Target 2030",
-    icon: TrendingUp,
-    highlight: false,
-    source: "Vision"
-  },
-  { 
-    title: "Eco-Ink Standard", 
-    desc: "Use of soy-based and non-toxic industrial inks for food-grade packaging safety.", 
-    status: "ACTIVE",
-    year: "2024",
-    icon: Droplets,
-    highlight: false,
-    source: "Material"
-  },
-  { 
     title: "Recyclability", 
-    desc: "100% repulpable and biodegradable material verification for all paperware.", 
-    status: "CERTIFIED",
+    desc: "Repulpable, biodegradable paper-based materials.", 
+    status: "MATERIAL",
     year: "2024",
     icon: Box,
     highlight: false,
@@ -83,9 +47,6 @@ const certs = [
 
 const roadmap = [
   { year: "2024", task: "Direct Factory & Fire Safety Licensing", status: "Completed" },
-  { year: "2025", task: "ISO 14001: Environmental Management Systems", status: "Planned" },
-  { year: "2027", task: "Full BRCGS Global Standard for Packaging Materials", status: "Strategic" },
-  { year: "2030", task: "Carbon Neutral Net-Zero Manufacturing Facility", status: "Vision" },
 ];
 
 const stats = [
@@ -372,41 +333,6 @@ export function CompliancePage() {
           </motion.p>
         </motion.div>
 
-        {/* Dynamic Stats Grid with Extreme Floating & Depth */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-32" style={{ transformStyle: "preserve-3d" }}>
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 100, translateZ: -100 }}
-              whileInView={{ opacity: 1, y: 0, translateZ: 0 }}
-              transition={{ delay: i * 0.1, duration: 1, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ 
-                y: -20, 
-                scale: 1.05,
-                rotateX: 8,
-                rotateY: 8,
-              }}
-              className="bg-white p-10 rounded-[48px] border border-zinc-100 flex flex-col items-center text-center space-y-8 group transition-all duration-700 shadow-2xl relative overflow-hidden hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)] hover:bg-zinc-50"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <div 
-                style={{ transform: "translateZ(40px)" }}
-                className="size-20 rounded-[32px] bg-zinc-50 flex items-center justify-center text-black group-hover:bg-[#fabf37] group-hover:rotate-12 transition-all duration-700 shadow-xl"
-              >
-                <stat.icon className="size-7" />
-              </div>
-              <div className="space-y-3" style={{ transform: "translateZ(20px)" }}>
-                <div className="text-xl md:text-2xl font-black text-black group-hover:text-[#fabf37] transition-colors leading-none tracking-tighter">
-                  {stat.value}<span className="text-[#fabf37] group-hover:text-black">{stat.unit}</span>
-                </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-500 group-hover:text-zinc-700 transition-colors">
-                  {stat.label}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
         {/* Certificate Grid with Enhanced Reveal */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-40">
@@ -418,9 +344,9 @@ export function CompliancePage() {
         {/* Visual Pillars Section with Extreme 3D Flip */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-56" style={{ transformStyle: "preserve-3d" }}>
           {[
-            { title: "Ethical Sourcing", icon: Leaf, desc: "Materials verified for sustainable forestry and zero child-labor policy.", color: "bg-emerald-50 text-emerald-600" },
-            { title: "Quality Control", icon: Scale, desc: "12-point inspection rig for every batch produced in our facility.", color: "bg-blue-50 text-blue-600" },
-            { title: "Legal Safety", icon: Lock, desc: "Full compliance with BRCGS and ISO international safety protocols.", color: "bg-zinc-900 text-[#fabf37]" }
+            { title: "Ethical Sourcing", icon: Leaf, desc: "Responsible material sourcing and a zero child-labour policy.", color: "bg-emerald-50 text-emerald-600" },
+            { title: "Quality Control", icon: Scale, desc: "Quality checks on every batch produced in our facility.", color: "bg-blue-50 text-blue-600" },
+            { title: "Legal Safety", icon: Lock, desc: "Licensed factory operating under Bangladesh factory and fire safety regulations.", color: "bg-zinc-900 text-[#fabf37]" }
           ].map((pillar, i) => (
             <motion.div
               key={i}

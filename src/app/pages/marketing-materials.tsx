@@ -9,7 +9,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import pBrochures from "figma:asset/products/brochures.webp";
 import pDeskCalendars from "figma:asset/products/desk-calendars.webp";
 import pFlyers from "figma:asset/products/flyers.webp";
@@ -119,7 +118,6 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Industrial Footer Section */}
       <section className="container mx-auto px-4">

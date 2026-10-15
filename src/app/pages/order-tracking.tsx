@@ -43,32 +43,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
   const headerRotateX = useTransform(scrollYProgress, [0, 0.2], [0, 25]);
   const headerZ = useTransform(scrollYProgress, [0, 0.2], [0, -200]);
 
-  const socialPosts = [
-    { 
-      platform: "Instagram", 
-      icon: Instagram, 
-      color: "text-pink-500",
-      img: "https://images.unsplash.com/photo-1765371512971-9d4da531d004?auto=format&q=80&w=800",
-      caption: "Our minimalist design HQ where engineering meets sustainability. Creating the future of paperware.",
-      date: "1h ago"
-    },
-    { 
-      platform: "LinkedIn", 
-      icon: Linkedin, 
-      color: "text-blue-700",
-      img: "https://images.unsplash.com/photo-1761125802333-d145773f4461?auto=format&q=80&w=800",
-      caption: "Enterprise solutions for sustainable high-volume manufacturing. Scaling global impact with Tier-1 partners.",
-      date: "4h ago"
-    },
-    { 
-      platform: "Facebook", 
-      icon: Facebook, 
-      color: "text-blue-600",
-      img: "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?auto=format&q=80&w=800",
-      caption: "Next-gen automation active at our Dhaka site. Precision routing and high-speed delivery protocols.",
-      date: "Yesterday"
-    }
-  ];
+  const socialPosts: { platform: string; content: string; date: string; [k: string]: any }[] = []; // no demo posts
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,7 +149,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 transition={{ duration: 1, delay: 0.5 }}
                 className="h-px bg-[#fabf37]" 
               />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">Logistics Terminal v5.2</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">Order Status</span>
             </div>
             
             <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-black flex flex-col items-start gap-3 md:gap-2" style={{ transformStyle: "preserve-3d" }}>
@@ -265,7 +240,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             className="max-w-xs text-right hidden md:block"
           >
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest leading-relaxed">
-              Global supply chain transparency. Real-time manufacturing and logistics telemetry. Powered by Paperware Industrial Network.
+              Ask us for the status of your order.
             </p>
           </motion.div>
         </div>
@@ -383,7 +358,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                           <Linkedin className="size-4 text-blue-700" />
                        </a>
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-black">Active Stream</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-black">Follow us</span>
                  </div>
               </div>
             </div>
@@ -429,10 +404,6 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             </div>
 
             <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 relative z-10">
-               <div className="flex items-center gap-3">
-                  <Terminal className="size-3.5" />
-                  <p className="text-[8px] font-black uppercase tracking-[0.4em]">Protocol: Glass-Sync-Alpha</p>
-               </div>
                <div className="flex items-center gap-6">
                   <p className="text-[8px] font-black uppercase tracking-[0.4em]">Paperware Media Hub</p>
                   <div className="flex items-center gap-2">
@@ -769,8 +740,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
         <div className="mt-24 pt-16 border-t border-black/5 grid grid-cols-1 md:grid-cols-3 gap-12" style={{ perspective: "1000px" }}>
           {[
             { icon: Info, title: "Lead Times", desc: "Production typically takes 12-14 business days after design approval." },
-            { icon: Globe, title: "Global Reach", desc: "Delivery available to 46+ countries via air and sea freight." },
-            { icon: ShieldCheck, title: "Certified QC", desc: "Every batch undergoes a 12-point quality inspection." }
+            { icon: Globe, title: "Global Reach", desc: "Delivery by air and sea freight." },
+            { icon: ShieldCheck, title: "Quality Checked", desc: "Every batch is quality checked." }
           ].map((item, i) => (
             <motion.div 
               key={i} 

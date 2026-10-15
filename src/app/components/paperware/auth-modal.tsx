@@ -130,6 +130,21 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
 
             </form>
 
+            {/* Local development only: import.meta.env.DEV is false in every production build,
+                so this button never ships. There is no real authentication behind this modal yet. */}
+            {import.meta.env.DEV && (
+              <div className="mt-4 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => { onLoginSuccess(); onClose(); }}
+                  className="w-full py-4 rounded-3xl border-2 border-dashed border-white/20 text-white font-black uppercase tracking-[0.2em] text-[10px] hover:border-[#fabf37] hover:text-[#fabf37] transition-colors"
+                >
+                  Demo login ({type === 'admin' ? 'Admin' : 'Customer'})
+                </button>
+                <p className="text-center text-[10px] font-bold text-zinc-400">Local dev only. Not available on the live site.</p>
+              </div>
+            )}
+
             {type === 'client' && (
               <div className="mt-8 text-center">
                 <button

@@ -11,68 +11,7 @@ interface ClientLogo {
 }
 
 // Fallback logos (shown if no logos uploaded in admin portal)
-const FALLBACK_LOGOS: ClientLogo[] = [
-  {
-    id: "1",
-    name: "Tech Corp",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "2",
-    name: "Global Industries",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "3",
-    name: "Innovation Labs",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "4",
-    name: "Future Systems",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "5",
-    name: "Prime Solutions",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "6",
-    name: "Elite Partners",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "7",
-    name: "NextGen Co",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "8",
-    name: "Quantum Inc",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "9",
-    name: "Stellar Group",
-    image: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "10",
-    name: "Velocity Ltd",
-    image: "https://images.unsplash.com/photo-1599305446868-59e861c4a1d5?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "11",
-    name: "Apex Corp",
-    image: "https://images.unsplash.com/photo-1599305446902-d3eae5c4c986?auto=format&w=400&h=200&fit=crop&q=75"
-  },
-  {
-    id: "12",
-    name: "Summit Partners",
-    image: "https://images.unsplash.com/photo-1599305446924-6c5e6d7a75e7?auto=format&w=400&h=200&fit=crop&q=75"
-  }
-];
+const FALLBACK_LOGOS: ClientLogo[] = []; // real client logos only (none uploaded yet)
 
 interface PremiumClientsProps {
   clients?: ClientLogo[];
@@ -144,32 +83,6 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
     fetchClientLogos();
   }, [propClients]);
 
-  const stats = [
-    {
-      icon: Users,
-      value: "150+",
-      label: "Trusted Clients",
-      color: "text-blue-500"
-    },
-    {
-      icon: Award,
-      value: "5+",
-      label: "Years Experience",
-      color: "text-purple-500"
-    },
-    {
-      icon: TrendingUp,
-      value: "98%",
-      label: "Satisfaction Rate",
-      color: "text-green-500"
-    },
-    {
-      icon: Star,
-      value: "4.9/5",
-      label: "Average Rating",
-      color: "text-[#fabf37]"
-    }
-  ];
 
   return (
     <section ref={containerRef} className="relative py-24 md:py-32 overflow-hidden">
@@ -197,65 +110,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
           }}
         >
           {/* Split layout design */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Big number with 3D + Scroll */}
-            <div className="relative" style={{ perspective: "1500px" }}>
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0, rotateY: -30 }}
-                whileInView={{ scale: 1, opacity: 1, rotateY: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="relative"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {/* Giant background number with depth + scroll effects */}
-                <motion.div
-                  className="text-[200px] md:text-[280px] font-black leading-none text-[#fabf37]/10 select-none"
-                  style={{
-                    transform: "translateZ(-50px)",
-                    textShadow: "8px 8px 0px rgba(250, 191, 55, 0.05)",
-                    scale: scaleNumber,
-                    rotate: rotateNumber
-                  }}
-                >
-                  150+
-                </motion.div>
-
-                {/* Overlay badge with 3D float */}
-                <motion.div
-                  animate={{
-                    y: [0, -15, 0],
-                    rotateX: [0, 5, 0],
-                    rotateY: [0, -5, 0]
-                  }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-[#fabf37] px-8 py-6 rounded-[32px] shadow-2xl"
-                  style={{
-                    transform: "translateZ(80px)",
-                    transformStyle: "preserve-3d",
-                    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(250, 191, 55, 0.2)"
-                  }}
-                >
-                  <div className="flex items-center gap-4">
-                    <motion.div
-                      animate={{ rotate: [0, 10, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity }}
-                      style={{ transform: "translateZ(20px)" }}
-                    >
-                      <Award className="size-8" strokeWidth={2.5} />
-                    </motion.div>
-                    <div style={{ transform: "translateZ(15px)" }}>
-                      <p className="text-xs font-black uppercase tracking-widest opacity-70">Since 2019</p>
-                      <p className="text-2xl font-black uppercase tracking-tight">Trusted Partner</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
+          <div className="max-w-3xl mx-auto">
 
             {/* Right side - Content with 3D layers */}
             <div className="space-y-6" style={{ perspective: "1000px" }}>
@@ -328,57 +183,15 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
                 className="text-xl text-zinc-600 font-bold leading-relaxed max-w-xl"
                 style={{ transform: "translateZ(20px)" }}
               >
-                Join 150+ leading brands who choose us for exceptional packaging solutions and unwavering quality.
+                Join the brands that choose us for their packaging.
               </motion.p>
 
-              {/* Mini stats inline with 3D cards */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="flex flex-wrap gap-6 pt-4"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <motion.div
-                  className="flex items-center gap-3"
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: "translateZ(25px)"
-                  }}
-                >
-                  <div className="size-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
-                    <TrendingUp className="size-6 text-emerald-600" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-black text-zinc-900">98%</p>
-                    <p className="text-xs font-bold text-zinc-500 uppercase">Satisfaction</p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  className="flex items-center gap-3"
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: "translateZ(25px)"
-                  }}
-                >
-                  <div className="size-12 rounded-2xl bg-[#fabf37]/10 flex items-center justify-center">
-                    <Star className="size-6 text-[#fabf37]" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-black text-zinc-900">4.9/5</p>
-                    <p className="text-xs font-bold text-zinc-500 uppercase">Rating</p>
-                  </div>
-                </motion.div>
-              </motion.div>
             </div>
           </div>
         </motion.div>
 
         {/* Logo Showcase - Auto Scroll with Parallax */}
+        {clients.length > 0 && (
         <motion.div
           className="space-y-12 mb-12"
           style={{
@@ -488,6 +301,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
             </motion.div>
           </div>
         </motion.div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div

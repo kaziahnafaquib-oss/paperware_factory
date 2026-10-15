@@ -10,7 +10,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
-import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 import pMedicineBoxes from "figma:asset/products/medicine-boxes.webp";
@@ -54,9 +53,8 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
       <section className="container mx-auto px-4 mb-32">
         <div className="grid md:grid-cols-4 gap-6">
           {[
-            { icon: <ShieldCheck />, title: "FDA Compliant", desc: "Safe for drugs." },
+            { icon: <ShieldCheck />, title: "Pharma Grade", desc: "Safe for drugs." },
             { icon: <Microscope />, title: "Sterile Lab", desc: "Dust-free production." },
-            { icon: <CheckCircle2 />, title: "ISO 15378", desc: "Pharma management." },
             { icon: <ShieldAlert />, title: "Anti-Counterfeit", desc: "Secure printing." },
           ].map((item, i) => (
             <div key={i} className="p-8 bg-white border border-black/5 rounded-[32px] flex flex-col items-center text-center space-y-4">
@@ -105,7 +103,6 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
       </section>
 
       <TopSellingProducts onProductClick={onProductClick} />
-      <SocialMediaFeed />
 
       {/* Pharma Logistics Banner */}
       <section className="container mx-auto px-4 mb-32">
@@ -130,7 +127,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
               The <span className="text-emerald-500">Sterile</span> Standard
             </h2>
             <p className="text-zinc-500 font-bold text-lg leading-relaxed">
-              We operate dedicated production lines for healthcare providers, ensuring zero cross-contamination and 100% batch traceability.
+              We operate dedicated production lines for healthcare providers, with batch traceability.
             </p>
           </div>
           <div className="bg-white/5 backdrop-blur-3xl p-12 rounded-[60px] border border-white/10 space-y-6">

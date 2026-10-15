@@ -48,46 +48,6 @@ export function ExportPage() {
               </button>
             </div>
 
-            {/* Insights Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-4 md:pt-8 border-t border-white/10" style={{ perspective: "1500px" }}>
-              {[
-                { label: t('high_demand_region'), value: "GCC & Middle East", trend: "+24%" },
-                { label: t('preferred_pack_size'), value: "1000 Units / Bulk", trend: "Optimal" },
-                { label: t('compliance_index'), value: "EU/US Compliant", trend: "100%" },
-                { label: t('shipping_efficiency'), value: "3.2 Days Savings", trend: "AI Route" }
-              ].map((stat, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 20, rotateX: -20, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-                  transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
-                  whileHover={{ 
-                    scale: 1.08, 
-                    rotateY: 8,
-                    rotateX: -5,
-                    z: 60
-                  }}
-                  className="bg-white p-6 rounded-[30px] border border-black/5 space-y-2"
-                  style={{ 
-                    transformStyle: "preserve-3d",
-                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)"
-                  }}
-                >
-                  <p 
-                    className="text-[10px] font-black uppercase tracking-widest text-zinc-500"
-                    style={{ transform: "translateZ(20px)" }}
-                  >
-                    {stat.label}
-                  </p>
-                  <div className="space-y-1" style={{ transform: "translateZ(30px)" }}>
-                    <h4 className="font-black uppercase tracking-tight text-[#fabf37] text-[14px]">{stat.value}</h4>
-                    <p className="text-[9px] font-black text-emerald-500 uppercase tracking-widest flex items-center gap-2">
-                      <TrendingUp className="size-3" /> {stat.trend} {t('status')}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -95,74 +55,7 @@ export function ExportPage() {
       {/* World Map & Export Intelligence Suite */}
       <ExportIntelligence />
 
-      {/* Certifications Grid */}
-      <section className="container mx-auto px-4 mt-40 mb-40">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: "FSC® Certified", desc: "Our paper suppliers maintain Chain of Custody certification - 100% traced sustainable fibers", Icon: PackageIcon },
-            { title: "PEFC Certified", desc: "Paper sourced from PEFC certified forest management mills", Icon: Globe },
-            { title: "ISO 9001:2015", desc: "Our paper manufacturers are Quality Management System certified", Icon: ShieldCheck },
-            { title: "ISO 14001:2015", desc: "Paper mills maintain Environmental Management certification", Icon: Globe },
-            { title: "FDA Approved", desc: "We use FDA compliant paper - Food contact safe (21 CFR 176.170)", Icon: CircleCheck },
-            { title: "EU Compliant", desc: "Our paper meets EC 1935/2004 food contact material standards", Icon: ShieldCheck },
-            { title: "BRC Packaging", desc: "Paper suppliers certified to Global Standard for Packaging Materials", Icon: PackageIcon },
-            { title: "Sedex Member", desc: "Our paper manufacturers uphold ethical trade & supply chain transparency", Icon: CircleCheck }
-          ].map((cert, i) => (
-            <CertCard key={i} cert={cert} index={i} />
-          ))}
-        </div>
-      </section>
 
-      {/* AI Cost Optimization Panel */}
-      <section className="container mx-auto px-4">
-        <div className="bg-zinc-900 rounded-[40px] md:rounded-[60px] p-6 md:p-12 lg:p-24 text-white relative overflow-hidden" style={{ perspective: "2000px" }}>
-           {/* Animated Background Gradient */}
-           <motion.div 
-             animate={{ 
-               background: [
-                 "radial-gradient(circle at 0% 0%, rgba(250, 191, 55, 0.1) 0%, transparent 50%)",
-                 "radial-gradient(circle at 100% 100%, rgba(250, 191, 55, 0.1) 0%, transparent 50%)",
-                 "radial-gradient(circle at 0% 0%, rgba(250, 191, 55, 0.1) 0%, transparent 50%)"
-               ]
-             }}
-             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-             className="absolute inset-0 pointer-events-none"
-           />
-
-           <div className="grid lg:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center relative z-10">
-              <div className="lg:col-span-7 space-y-8 md:space-y-12">
-                 <motion.div 
-                   initial={{ opacity: 0, x: -30 }}
-                   whileInView={{ opacity: 1, x: 0 }}
-                   className="space-y-4 md:space-y-6"
-                   style={{ transform: "translateZ(40px)" }}
-                 >
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tighter leading-none">{t('cost_optimization_engine')}</h2>
-                    <p className="text-zinc-400 font-bold text-sm md:text-base leading-relaxed">{t('cost_optimization_desc')}</p>
-                 </motion.div>
-                 
-                 <div className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
-                    <OptimizationCard 
-                      icon={PackageIcon} 
-                      label={t('cbm_utilization')} 
-                      value="98.2%" 
-                      delay={0.1}
-                    />
-                    <OptimizationCard 
-                      icon={Anchor} 
-                      label={t('port_lead_time')} 
-                      value="-14%" 
-                      delay={0.2}
-                    />
-                 </div>
-              </div>
-
-              <div className="lg:col-span-5 mt-8 lg:mt-0">
-                 <CTACard onClick={() => setIsFormOpen(true)} t={t} />
-              </div>
-           </div>
-        </div>
-      </section>
 
       <ExportRequestForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
     </div>

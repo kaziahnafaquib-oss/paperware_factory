@@ -86,10 +86,10 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
     { name: "Technical Manifesto", id: "technical-manifesto", icon: <Code className="size-6" />, desc: "The engineering philosophy and technical standards of Paperware." },
     { name: "Future Plan", id: "future-plan", icon: <Zap className="size-6" />, desc: "Our roadmap for sustainable packaging innovation." },
     { name: "Product Feedback", id: "product-feedback", icon: <MessageSquare className="size-6" />, desc: "Share your experience and help us improve." },
-    { name: "ERP Smart Factory", id: "erp", icon: <Settings className="size-6" />, desc: "Digital twin and real-time factory management." },
+    { name: "ERP Smart Factory", id: "erp", icon: <Settings className="size-6" />, desc: "How we plan and run production." },
     { name: "Export Intelligence", id: "export", icon: <Globe className="size-6" />, desc: "Global trade compliance and logistics data." },
     { name: "Bulk Orders Quotes", id: "bulk-quotes", icon: <ShoppingBag className="size-6" />, desc: "Special pricing for high-volume enterprise orders." },
-    { name: "Track Order", id: "tracking", icon: <Truck className="size-6" />, desc: "Real-time visibility into your delivery pipeline." },
+    { name: "Track Order", id: "tracking", icon: <Truck className="size-6" />, desc: "Ask us for your order status." },
     { name: "Brand Visualizer", id: "studio", icon: <Palette className="size-6" />, desc: "Visualize your brand on our premium products." },
     { name: "Manufacturing", id: "manufacturing", icon: <Factory className="size-6" />, desc: "Inside our state-of-the-art production facility." },
     { name: "Product Gallery", id: "gallery", icon: <ImageIcon className="size-6" />, desc: "Curated collection of our finest packaging solutions." },
@@ -264,133 +264,8 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
           ))}
         </motion.div>
 
-        {/* 3. LIVE PRODUCTION STATISTICS (New Suggestion) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mt-32 grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          <div className="bg-zinc-50 border border-black/5 rounded-[40px] p-10 flex flex-col justify-between group hover:bg-black transition-colors duration-500">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="size-12 rounded-2xl bg-[#fabf37] flex items-center justify-center text-black">
-                <Cpu className="size-6" />
-              </div>
-              <h4 className="text-sm font-black uppercase tracking-widest text-zinc-400 group-hover:text-zinc-500">Real-time Efficiency</h4>
-            </div>
-            <div className="space-y-2">
-              <span className="text-6xl font-black text-black group-hover:text-white tracking-tighter">98.4%</span>
-              <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Global Manufacturing Throughput</p>
-            </div>
-          </div>
 
-          <div className="bg-[#fabf37] rounded-[40px] p-10 flex flex-col justify-between group hover:shadow-2xl transition-all duration-500">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="size-12 rounded-2xl bg-black flex items-center justify-center text-[#fabf37]">
-                <TrendingUp className="size-6" />
-              </div>
-              <h4 className="text-sm font-black uppercase tracking-widest text-black/40">Market Growth</h4>
-            </div>
-            <div className="space-y-2">
-              <span className="text-6xl font-black text-black tracking-tighter">+245%</span>
-              <p className="text-xs font-bold text-black/60 uppercase tracking-widest">Year-over-Year Enterprise Scale</p>
-            </div>
-          </div>
-        </motion.div>
 
-        {/* System Status Footer (Platform Status) */}
-        <motion.div 
-          style={{ 
-            y: footerY,
-            opacity: footerOpacity,
-            transformStyle: "preserve-3d"
-          }}
-          className="mt-20 md:mt-40 bg-zinc-900 rounded-[32px] md:rounded-[48px] p-8 md:p-12 border border-white/5 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative overflow-hidden"
-        >
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,#fabf3720,transparent)]" />
-           
-           <div className="flex items-center gap-6 relative z-10">
-             <div className="size-14 rounded-2xl bg-[#fabf37]/10 flex items-center justify-center text-[#fabf37] border border-[#fabf37]/20">
-               <Activity className="size-7" />
-             </div>
-             <div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">Platform Status</p>
-               <p className="text-sm font-black uppercase text-emerald-400 flex items-center gap-2">
-                 <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                 Fully Operational
-               </p>
-             </div>
-           </div>
-
-           <div className="flex items-center gap-6 relative z-10">
-             <div className="size-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20">
-               <Globe className="size-7" />
-             </div>
-             <div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">Global Reach</p>
-               <p className="text-sm font-black uppercase text-white">46 Languages Integrated</p>
-             </div>
-           </div>
-
-           <div className="flex items-center gap-6 relative z-10">
-             <div className="size-14 rounded-2xl bg-white/5 flex items-center justify-center text-white border border-white/10">
-               <Box className="size-7" />
-             </div>
-             <div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-1">Neural Engine</p>
-               <p className="text-sm font-black uppercase text-white">v2.0 Factory Core</p>
-             </div>
-           </div>
-        </motion.div>
-
-        {/* 4. DIGITAL FOOTPRINT LIVE FEED (Added after Platform Status) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mt-32 overflow-hidden"
-        >
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
-                <div className="h-[1px] w-12 bg-[#fabf37]" />
-                Digital Footprint
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black">
-                Live <span className="text-zinc-500 italic">Transmission</span>
-              </h2>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Instagram className="size-5 text-zinc-300" />
-              <Facebook className="size-5 text-zinc-300" />
-              <Linkedin className="size-5 text-zinc-300" />
-            </div>
-          </div>
-
-          <div className="relative">
-            <motion.div 
-              animate={{ x: [0, -1000] }}
-              transition={{ 
-                duration: 30, 
-                repeat: Infinity, 
-                ease: "linear" 
-              }}
-              className="flex gap-6 whitespace-nowrap"
-            >
-              {[...socialFeed, ...socialFeed, ...socialFeed].map((post, i) => (
-                <div key={i} className="w-[300px] shrink-0 bg-zinc-50 rounded-[32px] overflow-hidden border border-black/5 group">
-                  <div className="h-48 overflow-hidden">
-                    <img loading="lazy" decoding="async" src={post.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  </div>
-                  <div className="p-6 space-y-3">
-                    <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">{post.date}</p>
-                    <p className="text-xs font-bold text-zinc-500 whitespace-normal line-clamp-2 leading-relaxed">
-                      {post.cap}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
 
       {/* Spacer for bottom */}
