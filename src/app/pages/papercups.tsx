@@ -170,6 +170,13 @@ export function PaperCupsPage({
     }
     return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: ends in the Blueprint card and stays there
   });
+  // "Rim compression" label fades in only as the cup settles into the Blueprint card
+  const rimLabelOpacity = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
+    const { A } = pathRef.current;
+    if (A <= 1) return 0;
+    return Math.min(1, Math.max(0, (sy - 0.9 * A) / (0.1 * A)));
+  });
+  const rimLabelX = useTransform(rimLabelOpacity, (v) => 20 * (1 - v));
   const blueprintCupX = useTransform(cupOffset, (o) => o.x);
   const blueprintCupY = useTransform(cupOffset, (o) => o.y);
   const blueprintCupScale = useTransform(cupOffset, (o) => o.scale);
@@ -383,9 +390,7 @@ export function PaperCupsPage({
                    
                    {/* Blueprint Labels - Rim Compression exactly as per screenshot */}
                    <motion.div 
-                     initial={{ opacity: 0, x: 20 }}
-                     whileInView={{ opacity: 1, x: 0 }}
-                     transition={{ delay: 0.5 }}
+                     style={{ opacity: rimLabelOpacity, x: rimLabelX }}
                      className="absolute top-[5%] right-[10%] flex flex-col items-start gap-0"
                    >
                       <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-sm whitespace-nowrap shadow-lg rotate-[-5deg]">RIM COMPRESSION</div>
