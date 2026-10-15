@@ -203,9 +203,24 @@ export function PaperCupsPage({
       pathVersion.set(pathVersion.get() + 1);
     };
     measure();
-    window.addEventListener("resize", measure);
-    const t = setTimeout(measure, 800); // after images/fonts settle
-    return () => { window.removeEventListener("resize", measure); clearTimeout(t); };
+    // re-measure whenever layout settles or shifts (fonts, lazy images, resize)
+    let raf = 0;
+    const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
+    window.addEventListener("resize", schedule);
+    window.addEventListener("load", schedule);
+    document.fonts?.ready.then(schedule);
+    const ro = new ResizeObserver(schedule);
+    ro.observe(document.body);
+    [heroSlotRef.current, heroCircleRef.current, cupSlotRef.current].forEach((el) => el && ro.observe(el));
+    const imgs = [heroSlotRef.current, cupSlotRef.current].flatMap((el) => (el ? [...el.querySelectorAll("img")] : []));
+    imgs.forEach((img) => img.addEventListener("load", schedule));
+    const t = setTimeout(schedule, 800);
+    return () => {
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("load", schedule);
+      imgs.forEach((img) => img.removeEventListener("load", schedule));
+      ro.disconnect(); cancelAnimationFrame(raf); clearTimeout(t);
+    };
   }, []);
   const blueprintCupOpacity = 1;
 
@@ -254,7 +269,7 @@ export function PaperCupsPage({
              {/* Invisible start marker for the travelling cup (see cup journey above) */}
              <div ref={heroSlotRef} aria-hidden="true" style={{ opacity: 0 }} className="relative z-20">
                {/* Floating effect handled by animate if needed, but keeping it simple for scroll sync */}
-               <img loading="lazy" decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
+               <img decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
              </div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
              <div ref={heroCircleRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
@@ -366,7 +381,7 @@ export function PaperCupsPage({
                    }}
                    className="relative z-20 w-full flex items-center justify-center will-change-transform"
                  >
-                   <img loading="lazy" decoding="async" 
+                   <img decoding="async" 
                      src={imgErasebg} 
                      className="w-full max-w-[400px] h-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.9)] brightness-110 contrast-110" 
                      alt="Blueprint Cup" 
