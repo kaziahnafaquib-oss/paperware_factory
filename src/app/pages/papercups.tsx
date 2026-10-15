@@ -148,32 +148,27 @@ export function PaperCupsPage({
   // One continuous cup, locked 1:1 to the page scroll (no spring, so no lag):
   //   A) starts in the "Purely Engineered" hero circle and comes down with the scroll,
   //      drifting across into the Blueprint card;
-  //   B) rests in the card for a short stretch;
-  //   C) continues down and lands beside the "Product Tiers" heading.
+  //   B) ends in the Blueprint card and stays there.
   // The hero keeps an invisible cup purely as the measured start point. All positions
   // are measured on screen, so desktop and mobile layouts both work.
   const heroSlotRef = React.useRef<HTMLDivElement>(null);
   const heroCircleRef = React.useRef<HTMLDivElement>(null);
   const cupSlotRef = React.useRef<HTMLDivElement>(null);
-  const tiersRef = React.useRef<HTMLElement>(null);
   const { scrollY: rawScrollY } = useScroll();
   // light smoothing so wheel steps glide, without noticeable lag
   const pageScrollY = useSpring(rawScrollY, { stiffness: 400, damping: 50, mass: 0.4 });
-  type Path = { A: number; H: number; land: number; dx: number; dy0: number; s0: number };
-  const pathRef = React.useRef<Path>({ A: 0, H: 300, land: 0, dx: 0, dy0: 0, s0: 1.12 });
+  type Path = { A: number; dx: number; dy0: number; s0: number };
+  const pathRef = React.useRef<Path>({ A: 0, dx: 0, dy0: 0, s0: 1.12 });
   const pathVersion = useMotionValue(0); // bumped after each measure to recompute
   const cupOffset = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
-    const { A, H, land, dx, dy0, s0 } = pathRef.current;
+    const { A, dx, dy0, s0 } = pathRef.current;
     if (A > 0 && sy < A) {
       const k = sy / A;                       // A: hero -> card, cup comes straight down,
       const u = Math.min(1, Math.max(0, (k - 0.45) / 0.55)); // then eases sideways into the card
       const e = u * u * (3 - 2 * u);
       return { x: dx * (1 - e), y: dy0 + sy, scale: s0 + (1 - s0) * e, rotate: 0 };
     }
-    if (sy < A + H) return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: rests in the card
-    const t = Math.min(sy - A - H, land);     // C: card -> Product Tiers
-    const k = land > 0 ? t / land : 1;
-    return { x: 0, y: t, scale: 1 - 0.45 * k, rotate: 10 * k };
+    return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: ends in the Blueprint card and stays there
   });
   const blueprintCupX = useTransform(cupOffset, (o) => o.x);
   const blueprintCupY = useTransform(cupOffset, (o) => o.y);
@@ -182,8 +177,8 @@ export function PaperCupsPage({
 
   React.useLayoutEffect(() => {
     const measure = () => {
-      const hero = heroSlotRef.current, circle = heroCircleRef.current, cup = cupSlotRef.current, tiers = tiersRef.current;
-      if (!hero || !circle || !cup || !tiers) return;
+      const hero = heroSlotRef.current, circle = heroCircleRef.current, cup = cupSlotRef.current;
+      if (!hero || !circle || !cup) return;
       const sy = window.scrollY;
       const h = hero.getBoundingClientRect();
       const c = cup.getBoundingClientRect();
@@ -195,11 +190,10 @@ export function PaperCupsPage({
       const hw = heroImgEl?.clientWidth ?? h.width, hh = heroImgEl?.clientHeight ?? h.height;
       const hx = o.left + o.width / 2 + 0.015 * hw, /* nudged slightly right of centre */ hy = o.top + o.height / 2 + sy + 0.029 * hh;
       const cx = c.left + c.width / 2 - blueprintCupX.get(), cy = c.top + c.height / 2 + sy - blueprintCupY.get();
-      const landTarget = tiers.getBoundingClientRect().top + sy + 140; // beside the heading
       const A = Math.max(1, cy - hy);         // scroll distance from hero to card
       const heroImg = hero.querySelector("img"), cardImg = cup.querySelector("img");
       const s0 = heroImg && cardImg && cardImg.clientWidth ? heroImg.clientWidth / cardImg.clientWidth : 1;
-      pathRef.current = { A, H: 300, land: Math.max(0, landTarget - cy), dx: hx - cx, dy0: hy - cy, s0 };
+      pathRef.current = { A, dx: hx - cx, dy0: hy - cy, s0 };
       pathVersion.set(pathVersion.get() + 1);
     };
     measure();
@@ -423,7 +417,7 @@ export function PaperCupsPage({
       </section>
 
       {/* Product Tiers / Variants */}
-      <section ref={tiersRef} className="container mx-auto px-4 py-32 relative">
+      <section className="container mx-auto px-4 py-32 relative">
         <div className="flex justify-between items-end mb-16">
           <div className="max-w-2xl">
             <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-4 inline-block">The Portfolio</span>
