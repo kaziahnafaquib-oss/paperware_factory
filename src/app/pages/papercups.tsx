@@ -153,17 +153,22 @@ export function PaperCupsPage({
   // The hero keeps an invisible cup purely as the measured start point. All positions
   // are measured on screen, so desktop and mobile layouts both work.
   const heroSlotRef = React.useRef<HTMLDivElement>(null);
+  const heroCircleRef = React.useRef<HTMLDivElement>(null);
   const cupSlotRef = React.useRef<HTMLDivElement>(null);
   const tiersRef = React.useRef<HTMLElement>(null);
-  const { scrollY: pageScrollY } = useScroll();
+  const { scrollY: rawScrollY } = useScroll();
+  // light smoothing so wheel steps glide, without noticeable lag
+  const pageScrollY = useSpring(rawScrollY, { stiffness: 400, damping: 50, mass: 0.4 });
   type Path = { A: number; H: number; land: number; dx: number; dy0: number; s0: number };
   const pathRef = React.useRef<Path>({ A: 0, H: 300, land: 0, dx: 0, dy0: 0, s0: 1.12 });
   const pathVersion = useMotionValue(0); // bumped after each measure to recompute
   const cupOffset = useTransform([pageScrollY, pathVersion], ([sy]: number[]) => {
     const { A, H, land, dx, dy0, s0 } = pathRef.current;
     if (A > 0 && sy < A) {
-      const k = sy / A;                       // A: hero -> card, cup holds its screen position
-      return { x: dx * (1 - k), y: dy0 + sy, scale: s0 + (1 - s0) * k, rotate: 0 };
+      const k = sy / A;                       // A: hero -> card, cup comes straight down,
+      const u = Math.min(1, Math.max(0, (k - 0.45) / 0.55)); // then eases sideways into the card
+      const e = u * u * (3 - 2 * u);
+      return { x: dx * (1 - e), y: dy0 + sy, scale: s0 + (1 - s0) * e, rotate: 0 };
     }
     if (sy < A + H) return { x: 0, y: 0, scale: 1, rotate: 0 }; // B: rests in the card
     const t = Math.min(sy - A - H, land);     // C: card -> Product Tiers
@@ -177,13 +182,18 @@ export function PaperCupsPage({
 
   React.useLayoutEffect(() => {
     const measure = () => {
-      const hero = heroSlotRef.current, cup = cupSlotRef.current, tiers = tiersRef.current;
-      if (!hero || !cup || !tiers) return;
+      const hero = heroSlotRef.current, circle = heroCircleRef.current, cup = cupSlotRef.current, tiers = tiersRef.current;
+      if (!hero || !circle || !cup || !tiers) return;
       const sy = window.scrollY;
       const h = hero.getBoundingClientRect();
       const c = cup.getBoundingClientRect();
       // untransformed centres in document coordinates (scale/rotate keep the centre)
-      const hx = h.left + h.width / 2, hy = h.top + h.height / 2 + sy;
+      // start: the cup's visible body centred in the hero circle
+      // (the artwork's body sits ~3.5% right / 2.9% above the image centre)
+      const o = circle.getBoundingClientRect();
+      const heroImgEl = hero.querySelector("img");
+      const hw = heroImgEl?.clientWidth ?? h.width, hh = heroImgEl?.clientHeight ?? h.height;
+      const hx = o.left + o.width / 2 - 0.035 * hw, hy = o.top + o.height / 2 + sy + 0.029 * hh;
       const cx = c.left + c.width / 2 - blueprintCupX.get(), cy = c.top + c.height / 2 + sy - blueprintCupY.get();
       const landTarget = tiers.getBoundingClientRect().top + sy + 140; // beside the heading
       const A = Math.max(1, cy - hy);         // scroll distance from hero to card
@@ -247,7 +257,7 @@ export function PaperCupsPage({
                <img loading="lazy" decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
              </div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
+             <div ref={heroCircleRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
           </div>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mt-4 md:mt-8 flex flex-wrap justify-center gap-4">
             <button 
