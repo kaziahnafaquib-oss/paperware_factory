@@ -1,4 +1,5 @@
 import React from "react";
+import { useReducedMotionPreference } from "../../lib/reducedMotion";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 import { Radio, ArrowRight, Activity, Globe as Globe2, ShieldCheck, Zap, Volume2, VolumeX, Loader2, Leaf, MapPin, AlertCircle, ExternalLink, Mouse } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
@@ -12,6 +13,8 @@ interface ImmersiveHeroProps {
 }
 
 export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, posterImage }: ImmersiveHeroProps) => {
+  // Reduced motion: show the still poster instead of an autoplaying background video (WCAG 2.2.2).
+  const reducedMotion = useReducedMotionPreference();
   const { t } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const videoRef1 = React.useRef<HTMLVideoElement>(null);
@@ -239,8 +242,13 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
         style={{ opacity: videoOpacity }}
         className="absolute inset-0 z-0"
       >
-        {(videoId || fullEmbedUrl) && !youtubeError ? (
-          <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+        {reducedMotion && posterImage ? (
+          <img src={posterImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        ) : (videoId || fullEmbedUrl) && !youtubeError ? (
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-black bg-cover bg-center"
+            style={posterImage ? { backgroundImage: `url(${posterImage})` } : undefined}
+          >
             <div className="absolute inset-0 w-full h-full scale-100">
               <iframe
                 ref={iframeRef}
@@ -264,6 +272,8 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
               />
             </div>
           </div>
+        ) : (videoId || fullEmbedUrl) && youtubeError && posterImage ? (
+          <img src={posterImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
         ) : (videoId || fullEmbedUrl) && youtubeError ? (
           // YouTube Error Fallback UI
           <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-zinc-800 to-black flex items-center justify-center">

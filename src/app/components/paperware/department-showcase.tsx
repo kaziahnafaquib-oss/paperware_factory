@@ -74,7 +74,7 @@ const departments = [
     stats: [
       { label: "Daily Output", value: "25K Pcs" },
       { label: "Coating", value: "PE/PLA" },
-      { label: "Material", value: "FSC Paper" }
+      { label: "Material", value: "Paperboard" }
     ],
     features: ["Heat resistant", "Food-grade certified", "Aqueous coating"]
   },
