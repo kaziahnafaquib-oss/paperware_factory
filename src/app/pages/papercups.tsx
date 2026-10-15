@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "motion/react";
 import { 
   ArrowRight, Sparkles, ShieldCheck, Thermometer, Leaf, Zap, 
   Settings, Box, Truck, CheckCircle2, Recycle, Globe, MapPin,
@@ -145,12 +145,40 @@ export function PaperCupsPage({
   // Hero cup vanishes exactly when the blueprint section begins its core animation
   const heroCupOpacity = useTransform(blueprintScroll, [0, 0.005], [1, 0]); 
 
-  // Blueprint cup starts BELOW the section and rises UP into the target circle
-  // Cup is visible in the card as soon as the section is on screen (was an 800px rise that hid it).
-  const blueprintCupY = useTransform(smoothBlueprint, [0, 0.5], [80, 0]); 
-  const blueprintCupScale = useTransform(smoothBlueprint, [0, 0.5], [0.92, 1]);
-  const blueprintCupOpacity = useTransform(blueprintScroll, [0, 0.005], [0, 1]); 
-  const blueprintCupRotate = useTransform(smoothBlueprint, [0, 0.5], [-8, 0]);
+  // Blueprint cup journey (scroll-linked, whole blueprint section from entering to leaving):
+  //   0.00 -> 0.30  drops in from above into the card
+  //   0.30 -> 0.50  rests in the card
+  //   0.50 -> 1.00  travels down out of the card and lands at "Product Tiers"
+  // The landing distance is measured on screen (it differs between desktop and mobile).
+  const cupSlotRef = React.useRef<HTMLDivElement>(null);
+  const tiersRef = React.useRef<HTMLElement>(null);
+  const landingY = useMotionValue(600);
+  const { scrollYProgress: journeyScroll } = useScroll({ target: blueprintRef, offset: ["start end", "end center"] });
+  const journey = useSpring(journeyScroll, { stiffness: 90, damping: 26, restDelta: 0.001 });
+  const blueprintCupY = useTransform<number, number>([journey, landingY], ([p, land]) => {
+    if (p <= 0.3) return -450 + (p / 0.3) * 450;
+    if (p <= 0.5) return 0;
+    return ((p - 0.5) / 0.5) * land;
+  });
+  const blueprintCupScale = useTransform(journey, [0, 0.3, 0.5, 1], [0.85, 1, 1, 0.55]);
+  const blueprintCupOpacity = useTransform(blueprintScroll, [0, 0.005], [0, 1]);
+  const blueprintCupRotate = useTransform(journey, [0, 0.3, 0.5, 1], [-12, 0, 0, 10]);
+
+  React.useLayoutEffect(() => {
+    const measure = () => {
+      const cup = cupSlotRef.current, tiers = tiersRef.current;
+      if (!cup || !tiers) return;
+      const r = cup.getBoundingClientRect();
+      // untransformed centre of the cup in document coordinates
+      const cupCentre = r.top + r.height / 2 + window.scrollY - blueprintCupY.get();
+      const target = tiers.getBoundingClientRect().top + window.scrollY + 140; // beside the "Product Tiers" heading
+      landingY.set(Math.max(0, target - cupCentre));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const t = setTimeout(measure, 800); // after images/fonts settle
+    return () => { window.removeEventListener("resize", measure); clearTimeout(t); };
+  }, []);
   const boxShadowOpacity = useTransform(smoothBlueprint, [0.8, 1], [0, 0.6]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -265,7 +293,7 @@ export function PaperCupsPage({
       </div>
 
       {/* Technical Blueprint Section */}
-      <section ref={blueprintRef} className="py-40 bg-[#1a1a1a] text-white relative overflow-visible">
+      <section ref={blueprintRef} className="py-40 bg-[#1a1a1a] text-white relative z-20 overflow-visible [content-visibility:visible]">
         <div className="absolute inset-0" style={{ opacity: 0.05, backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-24">
@@ -289,7 +317,7 @@ export function PaperCupsPage({
             </div>
             <div className="lg:w-1/2 relative group">
               {/* Box container - Overflow visible to allow the cup to "enter" from the top curve */}
-              <div className="relative border border-[#fabf37]/10 rounded-[60px] p-12 bg-[#0c0c0c] backdrop-blur-2xl min-h-[550px] flex items-center justify-center overflow-visible shadow-2xl z-10">
+              <div className="relative border border-[#fabf37]/10 rounded-[60px] p-12 bg-[#0c0c0c] min-h-[550px] flex items-center justify-center overflow-visible shadow-2xl z-10">
                  {/* Grid Overlay */}
                  <div className="absolute inset-0 opacity-20 pointer-events-none rounded-[60px] overflow-hidden" style={{ backgroundImage: 'radial-gradient(#fabf37 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }} />
                  
@@ -306,6 +334,7 @@ export function PaperCupsPage({
 
                  {/* Blueprint Cup Landing Animation - Sync'd with Scroll View */}
                  <motion.div 
+                   ref={cupSlotRef}
                    style={{ 
                      opacity: blueprintCupOpacity,
                      y: blueprintCupY,
@@ -357,7 +386,7 @@ export function PaperCupsPage({
       </section>
 
       {/* Product Tiers / Variants */}
-      <section className="container mx-auto px-4 py-32 relative">
+      <section ref={tiersRef} className="container mx-auto px-4 py-32 relative">
         <div className="flex justify-between items-end mb-16">
           <div className="max-w-2xl">
             <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-4 inline-block">The Portfolio</span>
