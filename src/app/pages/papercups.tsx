@@ -193,7 +193,7 @@ export function PaperCupsPage({
       const o = circle.getBoundingClientRect();
       const heroImgEl = hero.querySelector("img");
       const hw = heroImgEl?.clientWidth ?? h.width, hh = heroImgEl?.clientHeight ?? h.height;
-      const hx = o.left + o.width / 2 - 0.035 * hw, hy = o.top + o.height / 2 + sy + 0.029 * hh;
+      const hx = o.left + o.width / 2 + 0.015 * hw, /* nudged slightly right of centre */ hy = o.top + o.height / 2 + sy + 0.029 * hh;
       const cx = c.left + c.width / 2 - blueprintCupX.get(), cy = c.top + c.height / 2 + sy - blueprintCupY.get();
       const landTarget = tiers.getBoundingClientRect().top + sy + 140; // beside the heading
       const A = Math.max(1, cy - hy);         // scroll distance from hero to card
