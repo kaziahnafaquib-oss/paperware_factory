@@ -287,7 +287,7 @@ export function CSRPage() {
                    {[
                      { icon: ShieldCheck, text: "Safety Kits Distribution" },
                      { icon: HandHeart, text: "Food Support for Families" },
-                     { icon: Users, text: "100% Staff Retention" }
+                     { icon: Users, text: "Staff Wellbeing" }
                    ].map((item, i) => (
                      <motion.li 
                        key={i}

@@ -173,7 +173,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       subtitle: "Global Trust",
       desc: "Powering the brands you love. We are the silent engine behind their success.",
       image: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      stats: "500+ Partners",
+      stats: "Partners",
       icon: Users,
       colSpan: "md:col-span-1"
     },
@@ -184,18 +184,18 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       desc: "Defaulting to green. Environmental responsibility meets industrial scale.",
       image: "https://images.unsplash.com/photo-1584022438855-930ac64c51be?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMHBhcGVyJTIwdGV4dHVyZSUyMGVjbyUyMGZyaWVuZGx5JTIwYnJvd24lMjBjcmFmdCUyMG1pbmltYWxpc3R8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "100% Eco",
+      stats: "Eco Focus",
       icon: Leaf,
       colSpan: "md:col-span-1"
     },
     {
       id: "compliance",
       title: "Compliance",
-      subtitle: "Certified",
-      desc: "Excellence without compromise. Adhering to the strictest international standards.",
+      subtitle: "Licensed",
+      desc: "Licensed operations and quality checks on every batch.",
       image: "https://images.unsplash.com/photo-1735448213858-6bdfdf78967a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaGFybWFjZXV0aWNhbCUyMGxhYiUyMGNsZWFuJTIwcm9vbSUyMHdoaXRlJTIwbWluaW1hbGlzdHxlbnwxfHx8fDE3NjcxMTQwNDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
-      stats: "ISO 9001",
+      stats: "Licensed",
       icon: ShieldCheck,
       colSpan: "md:col-span-1"
     },

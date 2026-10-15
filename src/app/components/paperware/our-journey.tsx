@@ -332,7 +332,7 @@ export function OurJourney() {
         id: "2",
         year: "2020",
         title: "Growing Trust",
-        stat: "50+ Partners",
+        stat: "Partnerships",
         videoUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=800&q=80",
         videoType: "image"
       },
@@ -340,7 +340,7 @@ export function OurJourney() {
         id: "3",
         year: "2021",
         title: "Scale Up",
-        stat: "10K+ Customers",
+        stat: "Customers",
         videoUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&w=800&q=80",
         videoType: "image"
       },
@@ -348,7 +348,7 @@ export function OurJourney() {
         id: "4",
         year: "2022",
         title: "Mass Production",
-        stat: "5M+ Products",
+        stat: "Production",
         videoUrl: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&w=800&q=80",
         videoType: "image"
       },
@@ -356,7 +356,7 @@ export function OurJourney() {
         id: "5",
         year: "2024",
         title: "Premium Status",
-        stat: "150+ Clients",
+        stat: "Clients",
         videoUrl: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&w=800&q=80",
         videoType: "image"
       },
@@ -461,7 +461,7 @@ export function OurJourney() {
                   <span className="text-[#fabf37]">Our Story</span>
                 </h3>
                 <p className="text-sm md:text-base font-bold text-zinc-400 max-w-md">
-                  Join 150+ premium brands who trust us for exceptional packaging solutions
+                  Join the brands that trust us for their packaging
                 </p>
               </div>
 

@@ -42,7 +42,7 @@ const DEFAULT_PARTNERS: Partner[] = [
     name: "ChemSafe Solutions",
     category: "Chemical Partner",
     logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Certified food-grade coatings."
+    description: "Food-grade coatings."
   },
   {
     id: "3",
@@ -169,9 +169,9 @@ export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAU
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
              {[
-               { icon: ShieldCheck, title: "Verified Partners", text: "100% Compliance Check" },
-               { icon: Globe, title: "Global Network", text: "Connecting 5+ Countries" },
-               { icon: Award, title: "Premium Quality", text: "Certified Suppliers Only" }
+               { icon: ShieldCheck, title: "Verified Partners", text: "Every partner reviewed" },
+               { icon: Globe, title: "Global Network", text: "Local and international" },
+               { icon: Award, title: "Premium Quality", text: "Trusted suppliers" }
              ].map((item, i) => (
                <motion.div 
                  key={i}
