@@ -1,7 +1,6 @@
 import React from "react";
-import { useReducedMotionPreference } from "../../lib/reducedMotion";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { Radio, ArrowRight, Activity, Globe as Globe2, ShieldCheck, Zap, Volume2, VolumeX, Loader2, Leaf, MapPin, AlertCircle, ExternalLink, Mouse } from "lucide-react";
+import { Radio, ArrowRight, Activity, Globe as Globe2, ShieldCheck, Zap, Volume2, VolumeX, Loader2, Pause, Play, Leaf, MapPin, AlertCircle, ExternalLink, Mouse } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
 interface ImmersiveHeroProps {
@@ -13,8 +12,9 @@ interface ImmersiveHeroProps {
 }
 
 export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, posterImage }: ImmersiveHeroProps) => {
-  // Reduced motion: show the still poster instead of an autoplaying background video (WCAG 2.2.2).
-  const reducedMotion = useReducedMotionPreference();
+  // The background video always plays; a visible Pause/Play control lets anyone stop it
+  // (WCAG 2.2.2). When paused, the still poster is shown instead.
+  const [videoPaused, setVideoPaused] = React.useState(false);
   const { t } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const videoRef1 = React.useRef<HTMLVideoElement>(null);
@@ -242,7 +242,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
         style={{ opacity: videoOpacity }}
         className="absolute inset-0 z-0"
       >
-        {reducedMotion && posterImage ? (
+        {videoPaused && posterImage ? (
           <img src={posterImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
         ) : (videoId || fullEmbedUrl) && !youtubeError ? (
           <div
@@ -477,6 +477,19 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
       {/* HUD Corner Accents */}
       <div className="absolute top-12 left-12 size-12 border-t-2 border-l-2 border-white/10 rounded-tl-2xl" />
       <div className="absolute top-12 right-12 size-12 border-t-2 border-r-2 border-white/10 rounded-tr-2xl" />
+
+      {/* Video Pause/Play */}
+      {posterImage && (
+        <button
+          type="button"
+          onClick={() => setVideoPaused((v) => !v)}
+          aria-pressed={videoPaused}
+          aria-label={videoPaused ? "Play background video" : "Pause background video"}
+          className="absolute bottom-28 left-4 lg:left-auto lg:bottom-12 lg:right-[14rem] z-30 size-10 rounded-full border border-white/10 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-[#fabf37] hover:text-black hover:border-[#fabf37] transition-all"
+        >
+          {videoPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+        </button>
+      )}
 
       {/* Sound Toggle */}
       <button
