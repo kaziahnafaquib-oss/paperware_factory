@@ -146,10 +146,11 @@ export function PaperCupsPage({
   const heroCupOpacity = useTransform(blueprintScroll, [0, 0.005], [1, 0]); 
 
   // Blueprint cup starts BELOW the section and rises UP into the target circle
-  const blueprintCupY = useTransform(smoothBlueprint, [0, 1], [800, 0]); 
-  const blueprintCupScale = useTransform(smoothBlueprint, [0, 1], [0.8, 1]);
+  // Cup is visible in the card as soon as the section is on screen (was an 800px rise that hid it).
+  const blueprintCupY = useTransform(smoothBlueprint, [0, 0.5], [80, 0]); 
+  const blueprintCupScale = useTransform(smoothBlueprint, [0, 0.5], [0.92, 1]);
   const blueprintCupOpacity = useTransform(blueprintScroll, [0, 0.005], [0, 1]); 
-  const blueprintCupRotate = useTransform(smoothBlueprint, [0, 1], [-15, 0]);
+  const blueprintCupRotate = useTransform(smoothBlueprint, [0, 0.5], [-8, 0]);
   const boxShadowOpacity = useTransform(smoothBlueprint, [0.8, 1], [0, 0.6]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -256,7 +257,7 @@ export function PaperCupsPage({
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>24/7 PRODUCTION CYCLE</span>
+                <span>CUSTOM PRINTED CUPS</span>
               </div>
             </div>
           ))}
@@ -339,7 +340,7 @@ export function PaperCupsPage({
 
               {/* Origin badge */}
               <motion.div 
-                style={{ y: useTransform(smoothBlueprint, [0.8, 1], [50, 0]), opacity: useTransform(smoothBlueprint, [0.8, 1], [0, 1]) }}
+                style={{ y: useTransform(smoothBlueprint, [0.3, 0.6], [30, 0]), opacity: useTransform(smoothBlueprint, [0.3, 0.6], [0, 1]) }}
                 className="absolute bottom-[-5%] right-[-5%] bg-[#fabf37] text-black px-10 py-8 rounded-[50px] shadow-[0_40px_100px_rgba(250,191,55,0.4)] flex items-center gap-6 z-20"
               >
                  <div className="size-14 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
