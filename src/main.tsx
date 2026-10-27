@@ -35,7 +35,8 @@ if (import.meta.env.DEV) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
-      <BrowserRouter>
+      {/* basename follows Vite `base`, so the same build works at / and under a sub-path (e.g. GitHub Pages) */}
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <App />
       </BrowserRouter>
       {import.meta.env.DEV && <PerformanceMonitor />}

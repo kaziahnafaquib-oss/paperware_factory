@@ -1,347 +1,295 @@
 import React from "react";
-import { Utensils, Coffee, Hospital, Pill, Briefcase, Hotel, ArrowRight, MoveRight } from "lucide-react";
-import { motion } from "motion/react";
+import { Utensils, Coffee, Hospital, Pill, Briefcase, Hotel, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, type MotionValue } from "motion/react";
 import { useLanguage } from "../../context/LanguageContext";
-import { Card3D } from "./3d-card";
+import imgCup from "figma:asset/49b7c1ac36cc61c1c728abd7230eab96c50bea6c.webp";
+import pFoodBox from "figma:asset/products/takeaway-food-box.webp";
+import pPrescription from "figma:asset/products/prescription-pad.webp";
+import pMedicine from "figma:asset/products/medicine-boxes.webp";
+import pCalendars from "figma:asset/products/desk-calendars.webp";
+import pTissue from "figma:asset/products/tissue-box-floral.webp";
 
-const getIndustries = (t: (key: string) => string) => [
-  {
-    title: t('restaurants'),
-    desc: t('restaurant_desc'),
-    icon: <Utensils className="size-5 md:size-6" />,
-  },
-  {
-    title: t('cafes'),
-    desc: t('cafe_desc'),
-    icon: <Coffee className="size-5 md:size-6" />,
-  },
-  {
-    title: t('hospitals'),
-    desc: t('hospital_desc'),
-    icon: <Hospital className="size-5 md:size-6" />,
-  },
-  {
-    title: t('pharmaceutical'),
-    desc: t('pharma_desc'),
-    icon: <Pill className="size-5 md:size-6" />,
-  },
-  {
-    title: t('corporate_clients'),
-    desc: t('corporate_desc'),
-    icon: <Briefcase className="size-5 md:size-6" />,
-  },
-  {
-    title: t('hotels'),
-    desc: t('hotel_desc'),
-    icon: <Hotel className="size-5 md:size-6" />,
-  },
+// Real product shot that fits each sector (order matches getIndustries).
+const PHOTOS = [pFoodBox, imgCup, pPrescription, pMedicine, pCalendars, pTissue] as const;
+
+type Industry = { title: string; desc: string; icon: React.ComponentType<{ className?: string }>; photo: string };
+
+const getIndustries = (t: (key: string) => string): Industry[] => [
+  { title: t("restaurants"), desc: t("restaurant_desc"), icon: Utensils, photo: PHOTOS[0] },
+  { title: t("cafes"), desc: t("cafe_desc"), icon: Coffee, photo: PHOTOS[1] },
+  { title: t("hospitals"), desc: t("hospital_desc"), icon: Hospital, photo: PHOTOS[2] },
+  { title: t("pharmaceutical"), desc: t("pharma_desc"), icon: Pill, photo: PHOTOS[3] },
+  { title: t("corporate_clients"), desc: t("corporate_desc"), icon: Briefcase, photo: PHOTOS[4] },
+  { title: t("hotels"), desc: t("hotel_desc"), icon: Hotel, photo: PHOTOS[5] },
 ];
+
+// Alternating surfaces so the track reads as a run of printed sheets, not six identical boxes.
+const SURFACES = [
+  "bg-[#f6f1e7] text-[#111] border-[#e3d1ae]",
+  "bg-[#111] text-[#f6f1e7] border-[#111]",
+  "bg-[#fabf37] text-[#111] border-[#fabf37]",
+] as const;
+const INDEX_COLOR = ["text-[#e3d1ae]", "text-[#f6f1e7]/15", "text-[#111]/15"] as const;
+const DESC_COLOR = ["text-zinc-700", "text-[#f6f1e7]/70", "text-[#111]/75"] as const;
+const ICON_SURFACE = ["bg-[#111] text-[#fabf37]", "bg-[#fabf37] text-[#111]", "bg-[#111] text-[#fabf37]"] as const;
+const RING = ["focus-visible:ring-[#111]", "focus-visible:ring-[#fabf37]", "focus-visible:ring-[#111]"] as const;
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = React.useState(() => (typeof window === "undefined" ? false : window.matchMedia(query).matches));
+  React.useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = () => setMatches(mq.matches);
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [query]);
+  return matches;
+}
+
+const SPRING = { stiffness: 220, damping: 18, mass: 0.6 };
+
+/** A sector card. On a pointer device it tilts toward the cursor and the icon pops. */
+function SectorCard({
+  item,
+  index,
+  onExplore,
+  tilt,
+  className = "",
+  progress,
+}: {
+  item: Industry;
+  index: number;
+  onExplore: () => void;
+  tilt: boolean;
+  className?: string;
+  progress?: MotionValue<number>;
+}) {
+  // Photo parallax: each card's photo drifts against the track, a little faster the further right the card sits.
+  const fallback = useMotionValue(0.5);
+  const photoX = useTransform(progress ?? fallback, [0, 1], [40 + index * 10, -40 - index * 10]);
+  const photoRotate = useTransform(progress ?? fallback, [0, 1], [-6, 6]);
+  const Icon = item.icon;
+  const v = index % SURFACES.length;
+
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const rotateX = useSpring(rx, SPRING);
+  const rotateY = useSpring(ry, SPRING);
+
+  const onMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!tilt || e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    ry.set(px * 16);
+    rx.set(-py * 16);
+  };
+  const reset = () => {
+    rx.set(0);
+    ry.set(0);
+  };
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onExplore}
+      onPointerMove={onMove}
+      onPointerLeave={reset}
+      whileHover={tilt ? { scale: 1.03 } : undefined}
+      whileTap={tilt ? { scale: 0.98 } : undefined}
+      style={tilt ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
+      className={`group relative text-left rounded-[26px] border p-6 md:p-8 flex flex-col overflow-hidden shadow-[0_30px_60px_-30px_rgba(17,17,17,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${SURFACES[v]} ${RING[v]} ${className}`}
+    >
+      {/* Giant index */}
+      <span
+        aria-hidden="true"
+        className={`absolute -right-3 -top-6 font-black leading-none tracking-[-0.06em] text-[clamp(120px,11vw,190px)] select-none ${INDEX_COLOR[v]}`}
+      >
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      <motion.span
+        aria-hidden="true"
+        whileHover={tilt ? { scale: 1.25, rotate: -10 } : undefined}
+        transition={{ type: "spring", stiffness: 400, damping: 12 }}
+        className={`relative size-14 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${ICON_SURFACE[v]}`}
+        style={tilt ? { translateZ: 30 } : undefined}
+      >
+        <Icon className="size-6" />
+      </motion.span>
+
+      {/* Product photo */}
+      <motion.div
+        aria-hidden="true"
+        style={progress ? { x: photoX, rotate: photoRotate } : undefined}
+        className="absolute right-[2%] top-[17%] w-[44%] will-change-transform transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6"
+      >
+        <img src={item.photo} alt="" draggable={false} loading="lazy" decoding="async" className="w-full h-auto rounded-[16px] shadow-[0_24px_40px_-20px_rgba(17,17,17,0.5)]" />
+      </motion.div>
+
+      <div className="relative mt-auto pt-16" style={tilt ? { transform: "translateZ(20px)" } : undefined}>
+        <h3 className="text-[28px] md:text-[34px] font-black uppercase tracking-tight leading-[0.95]">{item.title}</h3>
+        <p className={`mt-3 text-sm md:text-[15px] leading-snug ${DESC_COLOR[v]}`}>{item.desc}</p>
+        <span className="mt-6 inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.2em]">
+          View solutions
+          <ArrowRight className="size-3.5 -rotate-45 group-hover:rotate-0 transition-transform" aria-hidden="true" />
+        </span>
+      </div>
+    </motion.button>
+  );
+}
+
+function EndCard({ onExplore, label }: { onExplore: () => void; label: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onExplore}
+      className="group relative text-left rounded-[26px] border border-dashed border-[#111]/30 bg-white p-6 md:p-8 flex flex-col justify-between hover:bg-[#111] hover:text-[#f6f1e7] hover:border-[#111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111] focus-visible:ring-offset-2 w-[260px] md:w-[300px] shrink-0 snap-start min-h-[320px] md:min-h-0"
+    >
+      <span className="text-[11px] font-black uppercase tracking-[0.3em] text-[#a16207] group-hover:text-[#fabf37]">All sectors</span>
+      <span>
+        <span className="block text-[26px] md:text-[32px] font-black uppercase tracking-tight leading-[0.95]">{label}</span>
+        <span className="mt-6 inline-flex items-center justify-center size-12 rounded-full bg-[#fabf37] text-[#111]">
+          <ArrowRight className="size-5 -rotate-45 group-hover:rotate-0 transition-transform" aria-hidden="true" />
+        </span>
+      </span>
+    </button>
+  );
+}
 
 export const Industries = React.memo(function Industries({ onExplore }: { onExplore: () => void }) {
   const { t } = useLanguage();
-
+  const reduced = useReducedMotion() ?? false;
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const pinned = isDesktop && !reduced;
   const industries = React.useMemo(() => getIndustries(t), [t]);
 
-  return (
-    <section className="py-20 md:py-32 bg-white relative overflow-hidden perspective-1000">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-soft-light" />
-        <motion.div
-          animate={{
-            background: [
-              'radial-gradient(circle at 0% 0%, rgba(250,191,55,0.08) 0%, transparent 50%)',
-              'radial-gradient(circle at 100% 100%, rgba(250,191,55,0.08) 0%, transparent 50%)',
-              'radial-gradient(circle at 0% 0%, rgba(250,191,55,0.08) 0%, transparent 50%)',
-            ]
-          }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute inset-0"
-        />
-      </div>
+  const sectionRef = React.useRef<HTMLElement>(null);
+  const trackRef = React.useRef<HTMLDivElement>(null);
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+  const [travel, setTravel] = React.useState(0);
 
-      {/* Dots Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(250,191,55,0.4)_1px,transparent_1px)] bg-[size:30px_30px]" />
-      </div>
+  // How far the track must move so its last card ends flush with the right edge.
+  React.useLayoutEffect(() => {
+    if (!pinned) return;
+    const measure = () => {
+      const track = trackRef.current;
+      const vp = viewportRef.current;
+      if (!track || !vp) return;
+      setTravel(Math.max(0, track.scrollWidth - vp.clientWidth));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (trackRef.current) ro.observe(trackRef.current);
+    if (viewportRef.current) ro.observe(viewportRef.current);
+    return () => ro.disconnect();
+  }, [pinned, industries]);
 
-      {/* Floating Cubes 3D - Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         {[...Array(5)].map((_, i) => (
-            <motion.div 
-               key={`cube-${i}`}
-               animate={{ 
-                  y: [0, -40, 0],
-                  rotateX: [0, 360],
-                  rotateY: [0, 360]
-               }}
-               transition={{ 
-                  duration: 20 + i * 5,
-                  repeat: Infinity,
-                  ease: "linear"
-               }}
-               className="absolute opacity-[0.03] border border-black/20"
-               style={{
-                  width: 50 + i * 20,
-                  height: 50 + i * 20,
-                  left: `${10 + i * 20}%`,
-                  top: `${20 + i * 15}%`,
-               }}
-            />
-         ))}
-      </div>
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, [0.06, 0.94], [0, -travel]);
+  const barScale = useTransform(scrollYProgress, [0.06, 0.94], [0, 1]);
+  const counter = useTransform(scrollYProgress, [0.06, 0.94], [1, industries.length]);
+  const counterText = useTransform(counter, (v) => String(Math.round(v)).padStart(2, "0"));
 
-
-      {/* Floating Particles - Adjusted for light background */}
-      <div className="absolute inset-0">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={{
-              y: [0, -100, 0],
-              x: [0, Math.sin(i) * 50, 0],
-              opacity: [0.1, 0.3, 0.1],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 8 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.3,
-            }}
-            className="absolute size-1 bg-zinc-400 rounded-full blur-sm"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-      
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Compact 3D Header */}
-        <motion.div 
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl mb-16 md:mb-24"
+  const header = (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-end">
+      <div className="lg:col-span-8">
+        <p className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-[#a16207] mb-4 md:mb-5">
+          <span aria-hidden="true" className="h-px w-8 bg-[#a16207]" />
+          {t("sectors_tag")}
+        </p>
+        <h2
+          id="industries-heading"
+          className="font-black uppercase tracking-tight leading-[0.92] text-[36px] sm:text-5xl lg:text-[56px] xl:text-[68px]"
         >
-          <span className="inline-block text-[#a16207] font-bold uppercase tracking-[0.25em] text-[8px] md:text-[9px] mb-4 md:mb-6 px-3 py-1 bg-[#fabf37]/10 border border-[#fabf37]/30 rounded backdrop-blur-sm">
-            {t('sectors_tag')}
-          </span>
-          
-          <h2 className="text-[28px] md:text-[42px] lg:text-[52px] font-black text-black leading-[0.95] tracking-tight mb-6 md:mb-8">
-            {t('industries_subtitle')}
-          </h2>
+          {t("industries_subtitle")}
+        </h2>
+      </div>
+      <p className="lg:col-span-4 text-sm md:text-base text-zinc-700 leading-relaxed lg:pb-2">{t("industries_desc")}</p>
+    </div>
+  );
 
-          <div className="flex items-start gap-6 md:gap-8">
-            <motion.div 
-              animate={{ scaleY: [1, 1.2, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="w-0.5 h-16 bg-gradient-to-b from-[#fabf37] to-transparent" 
-            />
-            <p className="text-zinc-600 text-sm md:text-base leading-relaxed max-w-xl font-medium">
-              {t('industries_desc')}
-            </p>
-          </div>
-        </motion.div>
+  /* --------------------------- pinned (desktop) --------------------------- */
+  if (pinned) {
+    return (
+      <section
+        ref={sectionRef}
+        aria-labelledby="industries-heading"
+        className="relative bg-white text-[#111] h-[320svh] [content-visibility:visible]"
+      >
+        <div className="sticky top-0 h-svh overflow-hidden flex flex-col">
+          <div className="max-w-7xl w-full mx-auto px-4 md:px-12 pt-[15vh] shrink-0">{header}</div>
 
-        {/* 3D Card List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 md:mb-24 perspective-1000">
-          {industries.map((item, i) => (
-            <Card3D key={i} intensity={20}>
-              <motion.div
-                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
-                onClick={onExplore}
-                className="group h-full cursor-pointer relative"
-                style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
-              >
-                {/* Stacked Paper Layers - Back to Front */}
-                <div className="absolute inset-0 bg-white rounded-[32px] border border-zinc-200 shadow-md group-hover:translate-x-[-12px] group-hover:translate-y-[-12px] group-hover:rotate-[-4deg] transition-all duration-500 ease-out" 
-                     style={{ transform: 'translateZ(-30px) translateX(8px) translateY(8px)', transformStyle: 'preserve-3d' }} />
-                
-                <div className="absolute inset-0 bg-white rounded-[32px] border border-zinc-150 shadow-lg group-hover:translate-x-[-6px] group-hover:translate-y-[-6px] group-hover:rotate-[-2deg] transition-all duration-500 ease-out delay-75" 
-                     style={{ transform: 'translateZ(-15px) translateX(4px) translateY(4px)', transformStyle: 'preserve-3d' }} />
-
-                {/* Main Card Content */}
-                <div 
-                  className="relative bg-white p-8 rounded-[32px] border border-zinc-100 group-hover:border-[#fabf37]/50 shadow-xl group-hover:shadow-2xl transition-all duration-500 flex flex-col group-hover:translate-x-[6px] group-hover:translate-y-[6px] group-hover:rotate-[2deg]"
-                  style={{ transformStyle: 'preserve-3d', transform: 'translateZ(0px)' }}
-                >
-                  {/* Hover Gradient Background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#fabf37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px]" />
-
-                  <div className="relative z-10 flex justify-between items-start mb-8" style={{ transform: 'translateZ(30px)' }}>
-                    <motion.div 
-                      className="size-14 rounded-2xl bg-zinc-50 border border-zinc-100 flex items-center justify-center group-hover:bg-[#fabf37] group-hover:border-[#fabf37] transition-all duration-300 shadow-xl group-hover:shadow-[#fabf37]/30"
-                      style={{ transformStyle: 'preserve-3d' }}
-                      animate={{
-                        rotateY: [0, 360],
-                        rotateX: [0, 15, 0, -15, 0],
-                        z: [0, 20, 0],
-                      }}
-                      transition={{
-                        duration: 8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.3
-                      }}
-                      whileHover={{
-                        scale: 1.1,
-                        rotateZ: 360,
-                        transition: { duration: 0.5 }
-                      }}
-                    >
-                      <motion.div 
-                        className="text-zinc-600 group-hover:text-black transition-colors"
-                        animate={{
-                          scale: [1, 1.1, 1],
-                          rotateZ: [0, 5, 0, -5, 0],
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: i * 0.2
-                        }}
-                        style={{ transformStyle: 'preserve-3d' }}
-                      >
-                        {item.icon}
-                      </motion.div>
-                    </motion.div>
-                    <span aria-hidden="true" className="text-5xl font-black text-zinc-100 group-hover:text-zinc-900/5 transition-colors duration-300 select-none" style={{ transform: 'translateZ(10px)' }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-                  
-                  <div className="relative z-10 space-y-3 flex-grow" style={{ transform: 'translateZ(20px)' }}>
-                    <h3 className="text-xl font-black text-zinc-900 group-hover:text-[#fabf37] transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm font-medium text-zinc-500 leading-relaxed group-hover:text-zinc-600 transition-colors">
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  <div className="relative z-10 mt-8 pt-6 border-t border-zinc-100 group-hover:border-[#fabf37]/20 flex items-center justify-between transition-colors" style={{ transform: 'translateZ(25px)' }}>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-zinc-900 transition-colors">
-                      View Solutions
-                    </span>
-                    <div className="size-8 rounded-full bg-zinc-50 group-hover:bg-zinc-900 flex items-center justify-center transition-colors duration-300 shadow-md">
-                      <ArrowRight className="size-3 text-zinc-400 group-hover:text-white -rotate-45 group-hover:rotate-0 transition-all duration-300" />
-                    </div>
-                  </div>
+          {/* Track */}
+          <div ref={viewportRef} className="relative flex-1 min-h-0 flex items-center [perspective:1400px]">
+            <motion.div
+              ref={trackRef}
+              style={{ x }}
+              role="list"
+              aria-label={t("sectors_tag")}
+              className="flex items-stretch gap-6 pl-[max(16px,calc((100vw-80rem)/2+48px))] pr-12 will-change-transform h-[min(54vh,440px)]"
+            >
+              {industries.map((item, i) => (
+                <div key={item.title} role="listitem" className="shrink-0 w-[min(34vw,380px)] flex">
+                  <SectorCard item={item} index={i} onExplore={onExplore} tilt className="w-full h-full" progress={scrollYProgress} />
                 </div>
-              </motion.div>
-            </Card3D>
-          ))}
-        </div>
-
-        {/* 3D CTA */}
-        <motion.div 
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          whileHover={{ 
-            rotateX: -2,
-            rotateY: 2,
-            z: 50,
-            transition: { duration: 0.3 }
-          }}
-          className="relative bg-zinc-900 rounded-[3rem] p-8 md:p-16 overflow-hidden group shadow-2xl"
-          style={{ 
-            transformStyle: 'preserve-3d',
-            perspective: '1000px'
-          }}
-        >
-          {/* Background Effects */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-soft-light pointer-events-none" />
-          <div className="absolute -right-20 -top-20 w-96 h-96 bg-[#fabf37] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
-          
-          {/* 3D Depth Layers */}
-          <div 
-            className="absolute inset-0 border-2 border-[#fabf37]/20 rounded-[3rem] group-hover:border-[#fabf37]/40 transition-colors duration-500"
-            style={{ transform: 'translateZ(10px)' }}
-          />
-          <div 
-            className="absolute inset-2 border border-white/5 rounded-[2.5rem] group-hover:border-white/10 transition-colors duration-500"
-            style={{ transform: 'translateZ(20px)' }}
-          />
-          
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-12" style={{ transform: 'translateZ(30px)' }}>
-            
-            <motion.div 
-              className="space-y-6 max-w-xl"
-              style={{ transform: 'translateZ(40px)' }}
-              whileHover={{ x: 10, transition: { duration: 0.3 } }}
-            >
-               <motion.div 
-                 className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm"
-                 animate={{
-                   boxShadow: [
-                     '0 0 20px rgba(250,191,55,0.1)',
-                     '0 0 30px rgba(250,191,55,0.2)',
-                     '0 0 20px rgba(250,191,55,0.1)',
-                   ],
-                 }}
-                 transition={{
-                   duration: 3,
-                   repeat: Infinity,
-                   ease: "easeInOut"
-                 }}
-                 style={{ transform: 'translateZ(10px)' }}
-               >
-                  <motion.div 
-                    className="size-1.5 rounded-full bg-[#fabf37]"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.7, 1, 0.7],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  <span className="text-[#fabf37] text-[10px] font-mono uppercase tracking-widest">
-                    Industry Wide Impact
-                  </span>
-               </motion.div>
-               
-               <motion.h3 
-                 className="text-3xl md:text-5xl font-black text-white leading-[0.95] tracking-tight"
-                 style={{ transform: 'translateZ(20px)' }}
-               >
-                  {t('explore_all_sectors')}
-               </motion.h3>
-               
-               <motion.p 
-                 className="text-zinc-400 font-medium text-sm leading-relaxed max-w-sm"
-                 style={{ transform: 'translateZ(15px)' }}
-               >
-                  Discover how we serve diverse industries with tailored packaging solutions that prioritize sustainability.
-               </motion.p>
+              ))}
+              <div role="listitem" className="flex">
+                <EndCard onExplore={onExplore} label={t("explore_all_sectors")} />
+              </div>
             </motion.div>
-
-            <motion.button 
-               onClick={onExplore}
-               className="group/btn relative h-16 px-8 rounded-full bg-white text-zinc-900 flex items-center gap-4 font-black uppercase text-xs tracking-widest hover:bg-[#fabf37] transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-[#fabf37]/30"
-            >
-               <span className="relative z-10">View All Industries</span>
-               <div 
-                 className="relative z-10 size-8 rounded-full bg-zinc-900 text-white flex items-center justify-center group-hover/btn:rotate-45 transition-transform duration-300"
-               >
-                  <ArrowRight className="size-4" />
-               </div>
-            </motion.button>
           </div>
-        </motion.div>
-      </div>
+
+          {/* Progress */}
+          <div className="max-w-7xl w-full mx-auto px-4 md:px-12 pb-[5vh] shrink-0 flex items-center gap-5" aria-hidden="true">
+            <span className="text-[11px] font-black tracking-[0.25em] tabular-nums text-[#a16207] flex items-center gap-1">
+              <motion.span>{counterText}</motion.span>
+              <span>/ {String(industries.length).padStart(2, "0")}</span>
+            </span>
+            <div className="relative flex-1 h-[3px] bg-[#e3d1ae] rounded-full overflow-hidden">
+              <motion.div style={{ scaleX: barScale, transformOrigin: "0 50%" }} className="absolute inset-0 bg-[#111] rounded-full" />
+            </div>
+            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-500">Scroll</span>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ----------------- mobile snap row / reduced-motion grid ----------------- */
+  return (
+    <section
+      aria-labelledby="industries-heading"
+      className="relative bg-white text-[#111] py-20 md:py-28 [content-visibility:visible]"
+    >
+      <div className="max-w-7xl mx-auto px-4 md:px-12">{header}</div>
+
+      {reduced ? (
+        <ul className="max-w-7xl mx-auto px-4 md:px-12 mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5" aria-label={t("sectors_tag")}>
+          {industries.map((item, i) => (
+            <li key={item.title} className="flex">
+              <SectorCard item={item} index={i} onExplore={onExplore} tilt={false} className="w-full min-h-[300px]" />
+            </li>
+          ))}
+          <li className="flex">
+            <EndCard onExplore={onExplore} label={t("explore_all_sectors")} />
+          </li>
+        </ul>
+      ) : (
+        <ul
+          className="mt-10 flex gap-4 overflow-x-auto snap-x snap-mandatory px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          aria-label={t("sectors_tag")}
+        >
+          {industries.map((item, i) => (
+            <li key={item.title} className="snap-start shrink-0 w-[78vw] max-w-[360px] flex">
+              <SectorCard item={item} index={i} onExplore={onExplore} tilt={false} className="w-full min-h-[340px]" />
+            </li>
+          ))}
+          <li className="snap-start shrink-0 flex pr-4">
+            <EndCard onExplore={onExplore} label={t("explore_all_sectors")} />
+          </li>
+        </ul>
+      )}
     </section>
   );
 });

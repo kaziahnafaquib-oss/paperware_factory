@@ -73,8 +73,9 @@ const DeferredSection = React.memo(({ children, threshold = 0.1, className = "" 
   return (
     <div
       ref={ref}
+      // Phase D: no content-visibility here. Its paint containment clips descendants and stops
+      // position:sticky from pinning (Industries / Who we are scrollytelling).
       className={`${className} transition-opacity duration-1000 ${hasEntered ? 'opacity-100' : 'opacity-0'}`}
-      style={{ contentVisibility: 'auto' } as any}
     >
       {hasEntered ? (
         <React.Suspense fallback={<div className="h-64 animate-pulse bg-zinc-50 rounded-[40px] m-4" />}>
@@ -589,7 +590,9 @@ export function MainContent() {
       case "not-found": return <NotFoundPage onPageChange={handlePageChange} />;
       case "home":
         return (
-          <div id="main-content" className="bg-white relative overflow-hidden font-['Poppins',sans-serif]">
+          // Phase D: overflow-x-clip, not overflow-hidden. overflow:hidden makes this div the scrollport
+          // for every position:sticky descendant, so the pinned sections never pin.
+          <div id="main-content" className="bg-white relative overflow-x-clip font-['Poppins',sans-serif]">
             {/* Phase B a11y: the page had no <h1>. Visually hidden until the hero gets a real headline (Phase A-3). */}
             <h1 className="sr-only">Paperware Factory: custom-printed paper cups and paper packaging, made in Dhaka, Bangladesh</h1>
 
@@ -639,11 +642,8 @@ export function MainContent() {
             {/* 6. PREMIUM CLIENTS SHOWCASE */}
             <DeferredSection>
               <PremiumClients
-                clients={
-                  uploadedLogos.length > 0
-                    ? uploadedLogos.map(logo => ({ id: logo.id, name: logo.name, image: logo.url }))
-                    : partnersData.map(p => ({ id: p.id, name: p.name, image: p.logo }))
-                }
+                // Only real uploaded logos. The partner fallback uses stock photos, not client logos.
+                clients={uploadedLogos.map(logo => ({ id: logo.id, name: logo.name, image: logo.url }))}
                 onPageChange={handlePageChange}
               />
             </DeferredSection>
@@ -767,8 +767,10 @@ export function MainContent() {
     }
   }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideos, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
 
+    // Phase D: overflow-x-clip (not overflow-x-hidden). overflow-x:hidden turns this wrapper into a scroll
+    // container, which stops every position:sticky descendant (pinned homepage sections) from pinning.
   return (
-    <div className={`relative min-h-screen ${surfaceFor(currentPage) === 'light' ? 'bg-zinc-50 text-zinc-900' : 'bg-zinc-950 text-white'} font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden transition-colors duration-500`}>
+    <div className={`relative min-h-screen ${surfaceFor(currentPage) === 'light' ? 'bg-zinc-50 text-zinc-900' : 'bg-zinc-950 text-white'} font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-clip transition-colors duration-500`}>
       <HUDOverlay />
       <AnimatePresence mode="wait">
         <ToneTransitionOverlay tone={currentTone} />
