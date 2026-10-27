@@ -1,0 +1,1 @@
+import{a as f}from"./ui-vendor-CaZ9so2f.js";import{a6 as p}from"./motion-vendor-BUsB7NQB.js";function V(e,{root:t,margin:r,amount:s,once:n=!1,initial:a=!1}={}){const[u,i]=f.useState(a);return f.useEffect(()=>{if(!e.current||n&&u)return;const o=()=>(i(!0),n?void 0:()=>i(!1)),c={root:t&&t.current||void 0,margin:r,amount:s};return p(e.current,o,c)},[t,e,r,n,s]),u}export{V as u};
