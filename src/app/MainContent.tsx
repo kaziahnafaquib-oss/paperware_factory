@@ -613,7 +613,7 @@ export function MainContent() {
 
             {/* 3. ABOUT US */}
             <React.Suspense fallback={<div className="h-96 bg-white" />}>
-              <WhoWeAreSection onReadMore={() => handlePageChange("about")} />
+              <WhoWeAreSection onQuote={() => handlePageChange("quote")} onProducts={() => handlePageChange("products")} />
             </React.Suspense>
 
             {/* 4. INDUSTRIES WE SERVE */}

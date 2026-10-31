@@ -1,0 +1,7 @@
+# Who We Are scrollytelling cutouts (new name <- original file in src/assets).
+# Cutouts trimmed to alpha bbox, resized <=900px wide, WebP q82 via PIL.
+cup.webp <- 49b7c1ac36cc61c1c728abd7230eab96c50bea6c.webp  (unchanged copy; plain branded cup)
+cup-wave-yellow.webp <- 508ac66920d6bf79d8403965309bcc52fac5e5e7.png  (658x768 alpha)
+cup-ripple-orange.webp <- bfe95f6268f355771c65cb6e1751781aaebe3d05.png  (575x761 alpha)
+cup-stripe-orange.webp <- b41403eedb4af19ba356d74c80558118d542f4cd.png  (650x773 alpha)
+carry-bag-kraft.webp <- 26c3dd878dc6b8092048a743d91266cdd41f2a79.png  (618x885 alpha)

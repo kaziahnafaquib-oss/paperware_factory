@@ -1,300 +1,308 @@
 import React from "react";
-import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "motion/react";
-import { ArrowRight, ArrowDown } from "lucide-react";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
-import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
-import imgCup from "figma:asset/49b7c1ac36cc61c1c728abd7230eab96c50bea6c.webp";
-import pFoodBox from "figma:asset/products/takeaway-food-box.webp";
-import pGiftBags from "figma:asset/products/gift-bags.webp";
-import pTissue from "figma:asset/products/tissue-box-floral.webp";
-import pCookie from "figma:asset/products/cookie-boxes.webp";
+import "./who-we-are.css";
+import imgCup from "../../../assets/cutouts/cup.webp";
+import imgWave from "../../../assets/cutouts/cup-wave-yellow.webp";
+import imgRipple from "../../../assets/cutouts/cup-ripple-orange.webp";
+import imgStripe from "../../../assets/cutouts/cup-stripe-orange.webp";
+import imgBag from "../../../assets/cutouts/carry-bag-kraft.webp";
 
-// Real product shots that drift past at their own speeds while the stage is pinned (parallax layers).
-const FLOATERS = [
-  { src: pFoodBox, cls: "left-[4vw] md:left-[9vw] top-[30vh] w-[26vw] md:w-[13vw] max-w-[220px]", from: 70, to: -40, rot: [-14, 6], speed: 1 },
-  { src: pGiftBags, cls: "right-[2vw] md:right-[30vw] top-[36vh] md:top-[26vh] w-[22vw] md:w-[11vw] max-w-[190px]", from: 110, to: -70, rot: [12, -8], speed: 1.4 },
-  { src: pTissue, cls: "hidden md:block left-[46vw] md:left-[38vw] top-[48vh] md:top-[52vh] w-[20vw] md:w-[10vw] max-w-[170px]", from: 90, to: -30, rot: [8, -16], speed: 0.8 },
-  { src: pCookie, cls: "hidden md:block right-[8vw] md:right-[4vw] top-[60vh] md:top-[58vh] w-[22vw] md:w-[12vw] max-w-[200px]", from: 130, to: -60, rot: [-6, 14], speed: 1.2 },
-] as const;
-
-/** A product photo on its own parallax track, scrubbed by the section progress. */
-function Floater({ progress, f }: { progress: MotionValue<number>; f: (typeof FLOATERS)[number] }) {
-  const y = useTransform(progress, [0.08, 0.5 + 0.4 / f.speed], [`${f.from}vh`, `${f.to}vh`]);
-  const rotate = useTransform(progress, [0.08, 0.9], [f.rot[0], f.rot[1]]);
-  const opacity = useTransform(progress, [0.08, 0.2, 0.9, 1], [0, 1, 1, 0.85]);
-  return (
-    <motion.div aria-hidden="true" style={{ y, rotate, opacity }} className={`absolute will-change-transform ${f.cls}`}>
-      <img src={f.src} alt="" draggable={false} loading="lazy" decoding="async" className="w-full h-auto rounded-[18px] shadow-[0_30px_50px_-20px_rgba(17,17,17,0.45)]" />
-    </motion.div>
-  );
-}
+/**
+ * "Who we are" as an Apple-style product story (ported from the approved demo).
+ * One tall section, a sticky 100svh stage, and five chapters rendered directly from scroll
+ * progress: transforms and opacity only, written straight to the DOM on each scroll frame so
+ * the scrub has zero lag. There is no idle loop, and it is user-driven motion, so it runs
+ * regardless of prefers-reduced-motion (the owner asked for that explicitly).
+ *
+ * Chapters (progress 0..1 over the section):
+ *   1 Intro      0.00 – 0.17   cup emerges from darkness
+ *   2 Close-up   0.17 – 0.40   cup fills the frame, "Every band, your colours."
+ *   3 Variants   0.40 – 0.67   wave / ripple / stripe, one at a time
+ *   4 Bag        0.67 – 0.84   stage warms to off-white, the carry bag drops in
+ *   5 Finale     0.84 – 1.00   line-up + "Your brand, on our paper." + actions
+ */
 
 interface WhoWeAreProps {
-  onReadMore: () => void;
+  /** Kept for call-site compatibility; the finale no longer links to the story page. */
+  onReadMore?: () => void;
+  onQuote?: () => void;
+  onProducts?: () => void;
 }
 
-interface TeamMember {
-  id: string | number;
-  name: string;
-  role: string;
-  image: string;
+/* ---------- easing helpers ---------- */
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const smooth = (t: number) => { t = clamp01(t); return t * t * (3 - 2 * t); };
+const easeOut = (t: number) => { t = clamp01(t); return 1 - Math.pow(1 - t, 3); };
+/** 0→1 between a..b */
+const win = (p: number, a: number, b: number) => smooth((p - a) / (b - a));
+/** in a..b, hold, out c..d */
+const hold = (p: number, a: number, b: number, c: number, d: number) => win(p, a, b) * (1 - win(p, c, d));
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+type RGB = [number, number, number];
+const mix = (c1: RGB, c2: RGB, t: number) =>
+  `rgb(${Math.round(lerp(c1[0], c2[0], t))},${Math.round(lerp(c1[1], c2[1], t))},${Math.round(lerp(c1[2], c2[2], t))})`;
+
+const DARK: RGB = [11, 11, 11];
+const LIGHT: RGB = [245, 242, 236];
+const WHITE: RGB = [255, 255, 255];
+const FG_D: RGB = [255, 255, 255];
+const FG_L: RGB = [20, 18, 14];
+
+interface ObjState { x?: number; y?: number; s?: number; rx?: number; ry?: number; rz?: number; o?: number; sh?: number }
+
+function setObj(el: HTMLElement, { x = 0, y = 0, s = 1, rx = 0, ry = 0, rz = 0, o = 1, sh = 0 }: ObjState) {
+  el.style.opacity = o.toFixed(3);
+  el.style.transform =
+    `translate3d(calc(-50% + ${x.toFixed(1)}px), calc(-50% + ${y.toFixed(1)}px), 0) ` +
+    `scale(${s.toFixed(4)}) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
+  (el.firstElementChild as HTMLElement).style.opacity = sh.toFixed(3);
+  el.style.visibility = o <= 0.001 ? "hidden" : "visible";
 }
 
-const STATEMENT =
-  "We form, print and finish paper cups, food boxes and bags in Dhaka — with your brand on every one.";
-const WORDS = STATEMENT.split(" ");
-
-// Scroll timeline (0..1 of the pinned section)
-type Range = [number, number];
-const T: Record<"titleIn" | "ink" | "cup" | "words" | "bg" | "cta", Range> = {
-  titleIn: [0, 0.38],
-  ink: [0.1, 0.42],
-  cup: [0.16, 0.56],
-  words: [0.5, 0.86],
-  bg: [0.58, 1],
-  cta: [0.86, 0.96],
-};
-
-/** One word of the statement: dim until the scrollbar reaches it. */
-function ScrubWord({ progress, start, end, children }: { progress: MotionValue<number>; start: number; end: number; children: string }) {
-  const opacity = useTransform(progress, [start, end], [0.15, 1]);
-  const y = useTransform(progress, [start, end], [6, 0]);
-  return (
-    <motion.span style={{ opacity, y }} className="inline-block will-change-transform mr-[0.26em] last:mr-0">
-      {children}
-    </motion.span>
-  );
+function setLines(arr: HTMLElement[], p: number, a: number, b: number, c: number, d: number, stagger = 0.025, rise = 28) {
+  arr.forEach((el, i) => {
+    const i0 = a + i * stagger, i1 = b + i * stagger;
+    const vin = easeOut((p - i0) / (i1 - i0));
+    const vout = win(p, c, d);
+    const o = vin * (1 - vout);
+    el.style.opacity = o.toFixed(3);
+    el.style.transform = `translate3d(0, ${((1 - vin) * rise - vout * rise * 0.6).toFixed(1)}px, 0)`;
+    el.style.visibility = o <= 0.001 ? "hidden" : "visible";
+  });
 }
 
-function useTeam() {
-  const [team, setTeam] = React.useState<TeamMember[]>([]);
+const ACTIONS_SELECTOR = "[data-line]";
+
+/* ---------- component ---------- */
+export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
+  const sectionRef = React.useRef<HTMLElement>(null);
+  const stageRef = React.useRef<HTMLDivElement>(null);
+  const bgRef = React.useRef<HTMLDivElement>(null);
+  const glowRef = React.useRef<HTMLDivElement>(null);
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const waveRef = React.useRef<HTMLDivElement>(null);
+  const rippleRef = React.useRef<HTMLDivElement>(null);
+  const stripeRef = React.useRef<HTMLDivElement>(null);
+  const bagRef = React.useRef<HTMLDivElement>(null);
+  const copyIntroRef = React.useRef<HTMLDivElement>(null);
+  const copyCloseRef = React.useRef<HTMLDivElement>(null);
+  const capWaveRef = React.useRef<HTMLDivElement>(null);
+  const capRippleRef = React.useRef<HTMLDivElement>(null);
+  const capStripeRef = React.useRef<HTMLDivElement>(null);
+  const copyBagRef = React.useRef<HTMLDivElement>(null);
+  const copyFinaleRef = React.useRef<HTMLDivElement>(null);
+
   React.useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5/images/team`, {
-          headers: { Authorization: `Bearer ${publicAnonKey}` },
-        });
-        const data = await res.json();
-        if (!cancelled && data?.success && Array.isArray(data.images) && data.images.length > 0) {
-          setTeam(data.images.map((img: any) => ({ id: img.id, name: img.name, role: img.role || "Team member", image: img.url })));
+    const section = sectionRef.current, stage = stageRef.current, bgLight = bgRef.current, glow = glowRef.current;
+    const hero = heroRef.current, wave = waveRef.current, ripple = rippleRef.current, stripe = stripeRef.current, bag = bagRef.current;
+    const copies = {
+      intro: copyIntroRef.current, close: copyCloseRef.current,
+      capWave: capWaveRef.current, capRipple: capRippleRef.current, capStripe: capStripeRef.current,
+      bag: copyBagRef.current, finale: copyFinaleRef.current,
+    };
+    if (!section || !stage || !bgLight || !glow || !hero || !wave || !ripple || !stripe || !bag) return;
+    if (Object.values(copies).some((c) => !c)) return;
+    const lines = Object.fromEntries(
+      Object.entries(copies).map(([k, el]) => [k, Array.from((el as HTMLElement).querySelectorAll<HTMLElement>(ACTIONS_SELECTOR))]),
+    ) as Record<keyof typeof copies, HTMLElement[]>;
+
+    // ---------- viewport metrics ----------
+    let vw = 0, vh = 0, heroH = 440, mobile = false, cyOff = 0;
+    function measure() {
+      vw = window.innerWidth;
+      vh = window.innerHeight;
+      mobile = vw < 721;
+      // The fixed site header (ticker + floating nav) overlays the top of the stage: ~108px desktop, ~96px mobile.
+      // Centre the story in the visible area below it and size the hero from that usable height.
+      const header = mobile ? 96 : 108;
+      cyOff = Math.round(header / 2);
+      heroH = Math.round(Math.min((vh - header) * 0.56, vw * 0.62, 620));
+      stage!.style.setProperty("--hero-h", heroH + "px");
+      stage!.style.setProperty("--cy", `calc(50% + ${cyOff}px)`);
+    }
+
+    function render(p: number) {
+      // ----- stage colour -----
+      const warm = win(p, 0.655, 0.72);
+      // Hand off into the next (white) section: the off-white eases to white over the last stretch.
+      const toWhite = win(p, 0.965, 1.0);
+      bgLight.style.opacity = warm.toFixed(3);
+      bgLight.style.backgroundColor = mix(LIGHT, WHITE, toWhite);
+      const fg = mix(FG_D, FG_L, warm);
+      stage!.style.setProperty("--fg", fg);
+      stage!.style.setProperty("--fg-muted", warm < 0.5 ? "rgba(255,255,255,.62)" : "rgba(20,18,14,.58)");
+      // soft light behind product
+      glow.style.opacity = (hold(p, 0.03, 0.14, 0.6, 0.68) * 0.9 * (1 - warm)).toFixed(3);
+
+      const lineS = mobile ? 0.62 : 0.78;
+      const gap = mobile ? vw * 0.3 : Math.min(vw * 0.26, 360);
+      const lineUpY = -heroH * 0.2; // line-up sits a little above centre so the finale copy fits below it
+
+      // ----- hero cup -----
+      {
+        let x = 0, y = 0, s = 1, rx = 0, ry = 0, rz = 0, o = 0, sh = 0;
+        // Chapter 1: emerge from darkness (resting slightly above centre so the intro copy fits below)
+        const a = win(p, 0.0, 0.12);
+        o = easeOut(a / 0.9);
+        s = lerp(0.32, 1.0, a);
+        y = lerp(heroH * 0.08, -heroH * 0.12, a);
+        sh = a * 0.5;
+        // Chapter 2: close-up, scale up + gentle tilt
+        const c = win(p, 0.17, 0.36);
+        const bigS = Math.max((vh * 1.25) / heroH, 1.6);
+        s = lerp(s, bigS, c);
+        x = lerp(0, mobile ? vw * 0.16 : vw * 0.14, c);
+        y = lerp(y, mobile ? -vh * 0.1 : vh * 0.02, c);
+        rz = lerp(0, 10, c);
+        ry = lerp(0, -16, c);
+        rx = lerp(0, 7, c);
+        sh = lerp(sh, 0, c);
+        // Chapter 3 start: hero slides off and fades
+        const out = win(p, 0.4, 0.46);
+        o *= 1 - out;
+        x = lerp(x, x + vw * 0.35, out);
+        s = lerp(s, bigS * 1.08, out);
+        // Chapter 5: returns into the line-up
+        if (p > 0.84) {
+          const f = win(p, 0.86, 0.95);
+          o = f; s = lerp(0.6, lineS, f); x = lerp(-gap - 60, -gap, f); y = lerp(30, lineUpY, f);
+          rx = 0; ry = 0; rz = 0; sh = f * 0.6;
         }
-      } catch {
-        /* no uploaded photos: the section is complete without them */
+        setObj(hero, { x, y, s, rx, ry, rz, o, sh });
       }
-    })();
+
+      // ----- variants, one at a time -----
+      const variant = (el: HTMLElement, a: number, b: number, c: number, d: number) => {
+        const vin = win(p, a, b), vout = win(p, c, d);
+        const o = vin * (1 - vout);
+        const s = lerp(0.72, 1.0, easeOut(vin)) * lerp(1, 1.06, vout);
+        const y = lerp(heroH * 0.12, 0, easeOut(vin)) - vout * heroH * 0.1;
+        const ry = lerp(14, 0, easeOut(vin)) - vout * 10;
+        setObj(el, { y, s, ry, o, sh: o * 0.55 });
+      };
+      variant(wave, 0.43, 0.49, 0.515, 0.545);
+      variant(ripple, 0.515, 0.57, 0.595, 0.625);
+      // stripe: in during variants, then rides into the line-up in the finale
+      {
+        const vin = win(p, 0.595, 0.65), vout = win(p, 0.675, 0.71);
+        let o = vin * (1 - vout);
+        let s = lerp(0.72, 1.0, easeOut(vin)) * lerp(1, 1.06, vout);
+        let y = lerp(heroH * 0.12, 0, easeOut(vin)) - vout * heroH * 0.1;
+        let ry = lerp(14, 0, easeOut(vin)) - vout * 10;
+        let x = 0, sh = o * 0.55;
+        if (p > 0.84) {
+          const f = win(p, 0.88, 0.97);
+          o = f; s = lerp(0.6, lineS, f); x = lerp(gap + 60, gap, f); y = lerp(30, lineUpY, f); ry = 0; sh = f * 0.6;
+        }
+        setObj(stripe, { x, y, s, ry, o, sh });
+      }
+
+      // ----- bag -----
+      {
+        const vin = win(p, 0.67, 0.75);
+        const o = easeOut(vin);
+        let s = lerp(0.9, 1.0, easeOut(vin));
+        let y = lerp(vh * 0.55, 0, easeOut(vin));
+        const rx = lerp(8, 0, easeOut(vin));
+        let sh = easeOut(vin) * 0.5;
+        // finale: settle to centre of line-up, slightly smaller
+        const f = win(p, 0.84, 0.93);
+        const bagLineS = mobile ? 0.66 : 0.8;
+        s = lerp(s, bagLineS, f);
+        y = lerp(y, lineUpY, f);
+        sh = lerp(sh, 0.6, f);
+        setObj(bag, { y, s, rx, o, sh });
+      }
+
+      // ----- copy -----
+      setLines(lines.intro, p, 0.035, 0.095, 0.145, 0.175, 0.03);
+      setLines(lines.close, p, 0.24, 0.3, 0.365, 0.395, 0.0, 36);
+      setLines(lines.capWave, p, 0.455, 0.49, 0.515, 0.535, 0, 18);
+      setLines(lines.capRipple, p, 0.535, 0.57, 0.595, 0.615, 0, 18);
+      setLines(lines.capStripe, p, 0.615, 0.65, 0.675, 0.7, 0, 18);
+      setLines(lines.bag, p, 0.72, 0.78, 0.815, 0.845, 0, 36);
+      setLines(lines.finale, p, 0.9, 0.95, 1.5, 1.6, 0.03, 28);
+    }
+
+    // ---------- scroll driver (no idle loop; one frame per scroll/resize) ----------
+    let queued = false, lastP = -1, raf = 0;
+    function progress() {
+      const r = section!.getBoundingClientRect();
+      const total = r.height - vh;
+      return total > 0 ? clamp01(-r.top / total) : 0;
+    }
+    function frame() {
+      queued = false;
+      const p = progress();
+      if (p !== lastP) { lastP = p; render(p); }
+    }
+    function schedule() { if (!queued) { queued = true; raf = requestAnimationFrame(frame); } }
+    function onResize() { measure(); lastP = -1; schedule(); }
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", onResize);
+    measure();
+    render(progress());
     return () => {
-      cancelled = true;
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
     };
   }, []);
-  return team;
-}
 
-function TeamStrip({ team }: { team: TeamMember[] }) {
-  if (team.length === 0) return null;
   return (
-    <div className="bg-[#fabf37] text-[#111] px-4 md:px-12 pb-16">
-      <ul className="max-w-7xl mx-auto flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory [scrollbar-width:thin]" aria-label="Our team">
-        {team.map((m) => (
-          <li key={m.id} className="snap-start shrink-0 w-[200px] md:w-[240px]">
-            <div className="aspect-[4/5] rounded-[20px] overflow-hidden bg-[#e3d1ae]">
-              <ImageWithFallback src={m.image} alt={m.name} className="w-full h-full object-cover" />
-            </div>
-            <p className="mt-3 text-sm font-black">{m.name}</p>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#111]/70">{m.role}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+    <section ref={sectionRef} aria-labelledby="who-we-are-heading" className="wwa">
+      <div ref={stageRef} className="wwa__stage">
+        <div ref={bgRef} className="wwa__bg" aria-hidden="true" />
+        <div ref={glowRef} className="wwa__glow" aria-hidden="true" />
 
-const ctaClass =
-  "group inline-flex items-center gap-4 min-h-[48px] pl-6 pr-2 py-2 rounded-full bg-[#111] text-[#f6f1e7] text-xs font-black uppercase tracking-[0.2em] hover:bg-[#f6f1e7] hover:text-[#111] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#111] focus-visible:ring-offset-2 focus-visible:ring-offset-[#fabf37]";
-
-function ReadStory({ onReadMore }: { onReadMore: () => void }) {
-  return (
-    <button type="button" onClick={onReadMore} className={ctaClass}>
-      Read our story
-      <span className="size-9 rounded-full bg-[#fabf37] text-[#111] flex items-center justify-center group-hover:bg-[#111] group-hover:text-[#fabf37]">
-        <ArrowRight className="size-4 -rotate-45 group-hover:rotate-0 transition-transform" aria-hidden="true" />
-      </span>
-    </button>
-  );
-}
-
-const Grain = () => (
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle,rgba(17,17,17,0.6)_0.6px,transparent_0.6px)] bg-[size:22px_22px]"
-  />
-);
-
-const titleClass = "font-black uppercase tracking-[-0.04em] leading-[0.85] whitespace-nowrap text-[clamp(44px,10.5vw,150px)]";
-
-/* ------------------------------------------------------------------ */
-/* Reduced motion: the same content, static and in normal flow.        */
-/* ------------------------------------------------------------------ */
-function StaticWhoWeAre({ onReadMore, team }: { onReadMore: () => void; team: TeamMember[] }) {
-  return (
-    <section aria-labelledby="who-we-are-heading" className="relative bg-[#f6f1e7] text-[#111] [content-visibility:visible]">
-      <Grain />
-      <div className="relative max-w-7xl mx-auto px-4 md:px-12 py-20 md:py-28">
-        <h2 id="who-we-are-heading" className={titleClass}>
-          Who we are
-        </h2>
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
-          <p className="md:col-span-7 text-[clamp(22px,2.6vw,38px)] font-bold leading-[1.15]">{STATEMENT}</p>
-          <div className="md:col-span-5 flex justify-center">
-            <img src={imgCup} alt="A plain white Paperware Factory paper cup" className="w-[52vw] max-w-[360px] h-auto" />
-          </div>
+        {/* objects */}
+        <div ref={heroRef} className="wwa__obj">
+          <div className="wwa__shadow" />
+          <img src={imgCup} alt="Paperware Factory branded paper cup" draggable={false} decoding="async" />
         </div>
-        <ul className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4" aria-label="Some of what we make">
-          {FLOATERS.map((f, i) => (
-            <li key={i} className="rounded-[18px] overflow-hidden bg-[#fabf37]">
-              <img src={f.src} alt="" loading="lazy" decoding="async" className="w-full h-auto" />
-            </li>
-          ))}
-        </ul>
-        <div className="mt-12">
-          <ReadStory onReadMore={onReadMore} />
+        <div ref={waveRef} className="wwa__obj">
+          <div className="wwa__shadow" />
+          <img src={imgWave} alt="Paper cup with yellow wave print" draggable={false} loading="lazy" decoding="async" />
+        </div>
+        <div ref={rippleRef} className="wwa__obj">
+          <div className="wwa__shadow" />
+          <img src={imgRipple} alt="Orange ripple-wall paper cup" draggable={false} loading="lazy" decoding="async" />
+        </div>
+        <div ref={stripeRef} className="wwa__obj">
+          <div className="wwa__shadow" />
+          <img src={imgStripe} alt="Paper cup with orange stripe print" draggable={false} loading="lazy" decoding="async" />
+        </div>
+        <div ref={bagRef} className="wwa__obj wwa__obj--bag">
+          <div className="wwa__shadow" />
+          <img src={imgBag} alt="Kraft paper carry bag with wave print" draggable={false} loading="lazy" decoding="async" />
+        </div>
+
+        {/* copy */}
+        <div ref={copyIntroRef} className="wwa__copy wwa__copy--center">
+          <h2 id="who-we-are-heading" className="wwa__line wwa__h1" data-line>Paper cups.</h2>
+          <p className="wwa__line wwa__sub" data-line>Made in Dhaka. Printed with your brand.</p>
+        </div>
+
+        <div ref={copyCloseRef} className="wwa__copy wwa__copy--left">
+          <h3 className="wwa__line wwa__h2" data-line>Every band,<br />your colours.</h3>
+        </div>
+
+        <div ref={capWaveRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Wave</p></div>
+        <div ref={capRippleRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Ripple</p></div>
+        <div ref={capStripeRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Stripe</p></div>
+
+        <div ref={copyBagRef} className="wwa__copy wwa__copy--top">
+          <h3 className="wwa__line wwa__h2" data-line>And the bag<br />it goes home in.</h3>
+        </div>
+
+        <div ref={copyFinaleRef} className="wwa__copy wwa__copy--finale">
+          <h3 className="wwa__line wwa__h2" data-line>Your brand,<br />on our paper.</h3>
+          <div className="wwa__line wwa__actions" data-line>
+            <button type="button" className="wwa__btn wwa__btn--primary" onClick={onQuote}>Request a quote</button>
+            <button type="button" className="wwa__btn wwa__btn--ghost" onClick={onProducts}>See products</button>
+          </div>
         </div>
       </div>
-      <TeamStrip team={team} />
     </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Pinned scrollytelling                                               */
-/* ------------------------------------------------------------------ */
-export function WhoWeAreSection({ onReadMore }: WhoWeAreProps) {
-  const reduced = useReducedMotion() ?? false;
-  const team = useTeam();
-
-  const sectionRef = React.useRef<HTMLElement>(null);
-  const { scrollYProgress: p } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-
-  // Title: arrives huge, settles to its resting size and position at the top of the stage.
-  const titleScale = useTransform(p, T.titleIn, [1.9, 1]);
-  const titleY = useTransform(p, T.titleIn, ["34vh", "0vh"]);
-  const inkClip = useTransform(p, T.ink, ["inset(100% 0 0 0)", "inset(0% 0 0 0)"]);
-
-  // Cup: rises from below the fold, turning in 3D, then lands.
-  const cupY = useTransform(p, T.cup, ["115vh", "0vh"]);
-  const cupRotateY = useTransform(p, [T.cup[0], T.cup[1] + 0.06], [80, 0]);
-  const cupRotateZ = useTransform(p, [T.cup[0], 0.4, T.cup[1]], [-32, 12, 0]);
-  const cupScale = useTransform(p, T.cup, [0.55, 1]);
-  const cupShadow = useTransform(p, T.cup, [0, 0.35]);
-
-  // Background warms from cream to brand yellow at the end.
-  const bg = useTransform(p, T.bg, ["#f6f1e7", "#fabf37"]);
-
-  const ctaOpacity = useTransform(p, T.cta, [0, 1]);
-  const ctaY = useTransform(p, T.cta, [24, 0]);
-  const ctaPointer = useTransform(p, (v) => (v > T.cta[0] + 0.02 ? "auto" : "none"));
-
-  const hintOpacity = useTransform(p, [0, 0.08], [1, 0]);
-
-  if (reduced) return <StaticWhoWeAre onReadMore={onReadMore} team={team} />;
-
-  const wordStep = (T.words[1] - T.words[0]) / WORDS.length;
-
-  return (
-    <>
-    <section
-      ref={sectionRef}
-      aria-labelledby="who-we-are-heading"
-      className="relative bg-[#f6f1e7] text-[#111] h-[230svh] md:h-[290svh] [content-visibility:visible]"
-    >
-      <motion.div style={{ backgroundColor: bg }} className="sticky top-0 h-svh overflow-hidden">
-        <Grain />
-
-        {/* Scroll hint */}
-        <motion.p
-          aria-hidden="true"
-          style={{ opacity: hintOpacity }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.3em] text-[#a16207]"
-        >
-          Keep scrolling
-          <motion.span
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex"
-          >
-            <ArrowDown className="size-3.5" />
-          </motion.span>
-        </motion.p>
-
-        {/* Parallax product photos (behind the title and cup) */}
-        {FLOATERS.map((f, i) => (
-          <Floater key={i} progress={p} f={f} />
-        ))}
-
-        {/* Title: outline underneath, ink-filled copy clipped on top */}
-        <motion.div
-          style={{ scale: titleScale, y: titleY, transformOrigin: "50% 50%" }}
-          className="absolute inset-x-0 top-[14vh] md:top-[16vh] flex justify-center will-change-transform z-10"
-        >
-          <div className="relative">
-            <span
-              aria-hidden="true"
-              className={`${titleClass} block text-transparent [-webkit-text-stroke:1.5px_#111] md:[-webkit-text-stroke:2px_#111]`}
-            >
-              Who we are
-            </span>
-            <motion.h2
-              id="who-we-are-heading"
-              style={{ clipPath: inkClip }}
-              className={`${titleClass} absolute inset-0 text-[#111]`}
-            >
-              Who we are
-            </motion.h2>
-          </div>
-        </motion.div>
-
-        {/* Cup */}
-        <div
-          aria-hidden="true"
-          className="absolute left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-[7vw] top-[27vh] md:top-[27vh] z-20 w-[54vw] max-w-[300px] md:w-[32vw] md:max-w-[440px] [perspective:1200px]"
-        >
-          <motion.div
-            style={{ y: cupY, rotateY: cupRotateY, rotateZ: cupRotateZ, scale: cupScale, transformOrigin: "50% 80%" }}
-            className="will-change-transform [transform-style:preserve-3d]"
-          >
-            <img src={imgCup} alt="" className="w-full h-auto drop-shadow-[0_40px_50px_rgba(17,17,17,0.35)]" draggable={false} />
-          </motion.div>
-          <motion.div
-            style={{ opacity: cupShadow, scaleX: cupScale }}
-            className="mx-auto -mt-4 h-5 w-[70%] rounded-[50%] bg-[#111] blur-md"
-          />
-        </div>
-
-        {/* Statement, scrubbed word by word */}
-        <p
-          aria-label={STATEMENT}
-          className="absolute z-20 left-4 right-4 md:left-[8vw] md:right-auto bottom-[28vh] md:bottom-[18vh] md:max-w-[44vw] text-[clamp(21px,2.5vw,38px)] font-bold leading-[1.15]"
-        >
-          <span aria-hidden="true">
-            {WORDS.map((w, i) => (
-              <ScrubWord key={`${w}-${i}`} progress={p} start={T.words[0] + i * wordStep} end={T.words[0] + (i + 1.4) * wordStep}>
-                {w}
-              </ScrubWord>
-            ))}
-          </span>
-        </p>
-
-        {/* CTA */}
-        <motion.div
-          style={{ opacity: ctaOpacity, y: ctaY, pointerEvents: ctaPointer }}
-          className="absolute z-20 left-4 md:left-[8vw] bottom-[17vh] md:bottom-[8vh]"
-        >
-          <ReadStory onReadMore={onReadMore} />
-        </motion.div>
-      </motion.div>
-    </section>
-    {/* Admin-uploaded team photos follow the pinned stage, in normal flow */}
-    <TeamStrip team={team} />
-    </>
   );
 }
