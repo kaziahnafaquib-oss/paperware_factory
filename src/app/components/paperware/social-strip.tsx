@@ -76,6 +76,15 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
                   className="absolute inset-0 z-10 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fabf37]"
                   tabIndex={copy === 1 ? -1 : undefined}
                 />
+                {/* Owner (1 Nov 2026): platform badge in the bottom corner of every card. */}
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute bottom-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full text-white shadow-lg ring-2 ring-white ${
+                    it.kind === "fb" ? "bg-[#1877F2]" : "bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]"
+                  }`}
+                >
+                  {it.kind === "fb" ? <Facebook size={16} strokeWidth={2.5} /> : <Instagram size={16} strokeWidth={2.5} />}
+                </span>
                 {near && (
                   <iframe
                     title={copy === 1 ? `${it.title} (repeat)` : it.title}
