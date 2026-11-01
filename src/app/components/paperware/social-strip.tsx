@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Facebook, Instagram, ArrowRight } from "lucide-react";
 import { useSocialFeedSettings, instagramEmbedUrl, facebookPostEmbedUrl } from "../../lib/social-feeds";
 import "./social-strip.css";
@@ -51,32 +51,8 @@ const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: 
 
 function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; reverse?: boolean }) {
   const duration = Math.max(30, items.length * 5);
-  const viewportRef = useRef<HTMLDivElement>(null);
-  // Hover pauses via CSS. A click inside an embed moves focus into its iframe (window blur),
-  // which pauses too; clicking or tapping anywhere outside the strip resumes.
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    const onBlur = () => {
-      const el = document.activeElement;
-      const vp = viewportRef.current;
-      // Embeds can grab focus while loading; only a click made with the cursor over the strip counts.
-      if (el instanceof HTMLIFrameElement && vp?.contains(el) && vp.matches(":hover")) setPaused(true);
-    };
-    const onPointerDown = (e: PointerEvent) => {
-      if (!viewportRef.current?.contains(e.target as Node)) setPaused(false);
-    };
-    window.addEventListener("blur", onBlur);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      window.removeEventListener("blur", onBlur);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, []);
   return (
-    <div
-      ref={viewportRef}
-      className={`pwf-marquee-viewport${paused ? " pwf-marquee-paused" : ""}`}
-    >
+    <div className="pwf-marquee-viewport">
       <div
         className={`pwf-marquee-track${reverse ? " pwf-marquee-reverse" : ""}`}
         style={{ ["--pwf-marquee-dur" as string]: `${duration}s` }}
