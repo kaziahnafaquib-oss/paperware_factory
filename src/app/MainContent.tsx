@@ -15,6 +15,7 @@ const Industries = React.lazy(() => import("./components/paperware/industries").
 // AboutUs is not used in home render, but referenced in imports. We can remove it or lazy load if used elsewhere.
 // const AboutUs = React.lazy(() => import("./components/paperware/about-us").then(module => ({ default: module.AboutUs })));
 const ProductionTimeline = React.lazy(() => import("./components/paperware/production-timeline").then(m => ({ default: m.ProductionTimeline }))); // Manufacturing page only
+const MachineryGrid = React.lazy(() => import("./components/paperware/machinery-grid").then(m => ({ default: m.MachineryGrid }))); // Manufacturing page only
 import { Hero } from "./components/paperware/hero"; // Used as default
 import { ImmersiveHero } from "./components/paperware/immersive-hero";
 import { Navbar } from "./components/paperware/navbar";
@@ -654,7 +655,7 @@ export function MainContent() {
       case "tracking": return <OrderTrackingPage onViewJourney={() => handlePageChange("product-journey")} onFeedbackClick={() => handlePageChange("product-feedback")} />;
       case "product-journey": return <ProductJourneyPage onBack={() => handlePageChange("tracking")} />;
       case "gallery": return <GalleryPage />;
-      case "manufacturing": return <><ManufacturingPage /><ProductionTimeline /></>;
+      case "manufacturing": return <><ManufacturingPage /><MachineryGrid /><ProductionTimeline /></>;
       case "studio": return <StudioPage />;
       case "socials": return <SocialsPage />;
       case "catalog-3d": return <Catalog3DPage />;

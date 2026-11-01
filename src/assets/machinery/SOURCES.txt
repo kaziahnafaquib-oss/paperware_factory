@@ -1,0 +1,13 @@
+# Machine catalogue shots from the owner's brochure "~/Downloads/Machinery Portion 2.pdf" (2 pages, Dec 2024),
+# supplied 2026-11-02 ("মেশিনারিজ পিকচার্স ... আপডেট করেন"). Extracted with pypdf, CMYK->RGB, padded to 4:3
+# on white, WebP q82. Used by components/paperware/machinery-grid.tsx (Manufacturing page) and the
+# About page Cutting Unit card.
+heidelberg-2color-dd.webp <- p1 Im2  PRINTING MACHINE (2 COLOR DD)
+heidelberg-moe.webp       <- p1 Im1  PRINTING MACHINE (MOE)
+polar-cutting.webp        <- p1 Im0  POLAR CUTTING MACHINE
+die-cutting.webp          <- p2 Im0  DIECUTTING MACHINE
+hot-foil.webp             <- p2 Im1  HOT FOIL MACHINE
+uv-coating.webp           <- p2 Im2  UV COATING MACHINE
+pasting.webp              <- p2 Im3  PASTING MACHINE
+cup-forming-1.webp        <- p2 Im4  PAPERCUP FOAMING MACHINE (orange)
+cup-forming-2.webp        <- p2 Im5  PAPERCUP FOAMING MACHINE (teal), unused

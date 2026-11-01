@@ -17,13 +17,13 @@ import fQcLeakTest from "../../assets/factory/qc-leak-test.webp";
 import fQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
 import fFormingCloseup from "../../assets/factory/forming-closeup.webp";
 import fCupsStacking from "../../assets/factory/cups-stacking.webp";
-import fFormingTurret from "../../assets/factory/forming-turret.webp";
 import fPressOperator from "../../assets/factory/press-operator.webp";
 import fOffsetPress from "../../assets/factory/offset-press.webp";
 import fTeam from "../../assets/factory/team.webp";
 import fOperatorInspecting from "../../assets/factory/operator-inspecting.webp";
 import fOperatorsCupMachines from "../../assets/factory/operators-cup-machines.webp";
 import fOperatorFormingLine from "../../assets/factory/operator-forming-line.webp";
+import mDieCutting from "../../assets/machinery/die-cutting.webp"; // owner brochure, src/assets/machinery/SOURCES.txt
 import { useGo } from "../lib/useGo";
 
 const imgInnovation = fOperatorFormingLine;
@@ -123,8 +123,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         unit: "PCS/DAY",
         label: "CUTTING UNIT",
         icon: Cpu,
-        photo: fFormingTurret,
-        photoAlt: "Cup forming turret",
+        photo: mDieCutting,
+        photoAlt: "Die cutting machine",
         machineName: "DIE-CUT PRECISION",
         detail: "PRECISION DIE-CUTTING WITH MINIMAL WASTE & LASER ACCURACY.",
         specs: ["LASER GUIDED CALIBRATION", "ZERO-WASTE TRIMMING", "CUSTOM SHAPE SUPPORT"]
