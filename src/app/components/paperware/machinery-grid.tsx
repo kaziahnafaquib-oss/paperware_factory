@@ -4,7 +4,6 @@ import React from "react";
 import imgHeidelbergDemy from "../../../assets/machinery/heidelberg-single-demy.webp";
 import imgPolar from "../../../assets/machinery/polar-cutting.webp";
 import imgHeidelbergMOE from "../../../assets/machinery/heidelberg-moe.webp";
-import imgDieCutting from "../../../assets/machinery/die-cutting.webp";
 import imgDieCuttingTiger from "../../../assets/machinery/die-cutting-tiger.webp";
 import imgCupFormingDW from "../../../assets/machinery/cup-forming-double-wall.webp";
 import imgUvCoating from "../../../assets/machinery/uv-coating.webp";
@@ -15,7 +14,6 @@ const MACHINES = [
   { name: "Printing Machine (Heidelberg 23×36, Demy)", unit: "Printing", image: imgHeidelbergDemy, desc: "Heidelberg single-colour Demy-size offset press for sharp text, fine detail and consistent colour on every run." },
   { name: "Printing Machine (MOE)", unit: "Printing", image: imgHeidelbergMOE, desc: "Original Heidelberg MO-E offset unit for single-colour and spot-colour work on board." },
   { name: "Polar Cutting Machine", unit: "Cutting", image: imgPolar, desc: "Programmable guillotine for square, repeatable sheet cutting before and after print." },
-  { name: "Die Cutting Machine", unit: "Cutting", image: imgDieCutting, desc: "Creasing and die-cutting press for precise shapes, clean edges and minimal waste." },
   { name: "Die Cutting Machine (Tiger)", unit: "Cutting", image: imgDieCuttingTiger, desc: "Tiger-brand platen die cutter for high-volume creasing and cutting of boxes and sleeves." },
   { name: "UV Coating Machine", unit: "Finishing", image: imgUvCoating, desc: "Gloss and matte UV coating for scuff resistance and a finished retail look." },
   { name: "Pasting Machine", unit: "Converting", image: imgPasting, desc: "Automatic folder-gluer that pastes boxes and sleeves at line speed." },
@@ -37,7 +35,7 @@ export function MachineryGrid() {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {MACHINES.map((m) => (
             <li key={m.name} className="group rounded-[28px] border border-zinc-200 bg-white overflow-hidden hover:border-[#fabf37] transition-colors">
               <div className="aspect-[4/3] bg-zinc-50 overflow-hidden">
