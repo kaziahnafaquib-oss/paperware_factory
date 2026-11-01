@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import pBrochures from "figma:asset/products/brochures.webp";
@@ -16,6 +17,7 @@ import pGiftBags from "figma:asset/products/gift-bags.webp";
 import pMagazines from "figma:asset/products/magazines.webp";
 import pStickers from "figma:asset/products/stickers.webp";
 import pTissueBoxRose from "figma:asset/products/tissue-box-rose.webp";
+import { useGo } from "../lib/useGo";
 
 const products = [
   { name: "Paper Bag", desc: "Luxury branded carry bags with premium handles.", category: "Packaging", image: pGiftBags, price: "45.00", icon: ShoppingBag },
@@ -28,13 +30,40 @@ const products = [
 ];
 
 export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p: any) => void }) {
+  const go = useGo();
   const { t } = useLanguage();
+
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed (1:1 with scroll position; runs under reduced motion because the user drives it):
+  // the hero copy eases back and fades as it leaves, the product tiles rise in with a per-column stagger.
+  useScrollScrub(() => {
+    const vh = window.innerHeight || 1;
+    const hero = heroRef.current;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      const p = clamp01(-r.top / Math.max(r.height, 1));
+      hero.style.transform = `translateY(${(p * 40).toFixed(1)}px) scale(${(1 - p * 0.06).toFixed(4)})`;
+      hero.style.opacity = (1 - p * 0.7).toFixed(3);
+    }
+    const grid = gridRef.current;
+    if (grid) {
+      const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length || 1;
+      Array.from(grid.children).forEach((c, i) => {
+        const el = c as HTMLElement;
+        const r = el.getBoundingClientRect();
+        const t = easeOut3((vh - r.top) / (vh * 0.5) - (i % cols) * 0.12);
+        el.style.transform = `translateY(${((1 - t) * 48).toFixed(1)}px)`;
+        el.style.opacity = t.toFixed(3);
+      });
+    }
+  });
 
   return (
     <div className="bg-[#fdfaf3] min-h-screen pt-32 pb-24 font-['Poppins',sans-serif]">
       {/* Hero */}
       <section className="container mx-auto px-4 mb-24">
-        <div className="max-w-4xl">
+        <div ref={heroRef} className="max-w-4xl origin-top-left">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -83,18 +112,21 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
 
       {/* Product List */}
       <section className="container mx-auto px-4 mb-32">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" ref={gridRef}>
           {products.map((p, i) => (
-            <motion.div 
+            <div
               key={p.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
               onClick={() => onProductClick(p)}
-              className="group bg-white rounded-[40px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-all cursor-pointer overflow-hidden"
+              className="group bg-white rounded-[40px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-[border-color,box-shadow] cursor-pointer overflow-hidden"
             >
               <div className="aspect-square overflow-hidden">
-                <ImageWithFallback src={p.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                {p.image ? (
+                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                ) : (
+                  <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
+                    <p.icon className="size-20" strokeWidth={1} />
+                  </div>
+                )}
               </div>
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
@@ -112,7 +144,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
                   <Zap className="size-4 text-[#fabf37]" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -124,7 +156,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
         <div className="bg-[#fabf37] p-20 rounded-[80px] text-center space-y-8 shadow-2xl">
           <Megaphone className="size-20 mx-auto text-black" />
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Broadcast Your <span className="underline">Excellence</span></h2>
-          <button className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all">
+          <button onClick={() => go("quote")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all">
             Get A Custom Quote
           </button>
         </div>

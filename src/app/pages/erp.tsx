@@ -7,8 +7,10 @@ import {
   Activity, CircleCheck, Zap
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 export function ERPPage() {
+  const go = useGo();
   const { t } = useLanguage();
 
   const workflow = [
@@ -37,7 +39,7 @@ export function ERPPage() {
               Our factory operates on an advanced ERPNext-based intelligence system, integrating every step of production into a seamless, data-driven workflow.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl flex items-center gap-4">
+              <button onClick={() => go("contact")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl flex items-center gap-4">
                 Request ERP Demo <ArrowRight className="size-5" />
               </button>
             </div>
@@ -172,7 +174,7 @@ export function ERPPage() {
                       </div>
                    </div>
 
-                   <button className="w-full py-5 rounded-full border border-white/10 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all">
+                   <button onClick={() => go("contact")} className="w-full py-5 rounded-full border border-white/10 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all">
                       Access Enterprise Portal
                    </button>
                 </div>

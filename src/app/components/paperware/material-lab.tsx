@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Beaker, Droplets, Wind, ShieldCheck, Box, Fingerprint, Layers, Cpu } from "lucide-react";
 import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
+import imgQcLeakTest from "../../../assets/factory/qc-leak-test.webp";
+import imgKraftBag from "../../../assets/cutouts/carry-bag-kraft.webp";
+import { useScrollScrub, clamp01, easeOut3 } from "../../lib/useScrollScrub";
 
 export const MaterialLab = React.memo(function MaterialLab() {
   const [activeMaterial, setActiveMaterial] = useState(0);
@@ -33,7 +36,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 100
       },
       description: "100% plastic-free aqueous barrier coating that provides superior moisture protection without compromising recyclability.",
-      image: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&q=80&w=1000"
+      image: imgQcLeakTest
     },
     {
       id: 2,
@@ -47,18 +50,40 @@ export const MaterialLab = React.memo(function MaterialLab() {
         ecoRating: 100
       },
       description: "Raw, unbleached long-fiber pulp from sustainable Nordic forests. Extreme structural integrity for heavy industrial use.",
-      image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&q=80&w=1000"
+      image: imgKraftBag
     }
   ];
 
+  const visualRef = React.useRef<HTMLDivElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: the scan panel rises and settles; the material list follows with a short lag.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const vis = visualRef.current;
+    if (vis) {
+      const r = vis.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)));
+      vis.style.transform = `translate3d(0,${((1 - u) * 72).toFixed(1)}px,0) scale(${(0.96 + 0.04 * u).toFixed(4)})`;
+      vis.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+    }
+    const list = listRef.current;
+    if (list) {
+      const r = list.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)) - 0.1);
+      list.style.transform = `translate3d(0,${((1 - u) * 56).toFixed(1)}px,0)`;
+      list.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+    }
+  });
+
   return (
-    <section className="py-24 bg-[#0a0a0a] text-white overflow-hidden border-y border-white/5 relative">
+    <section className="py-24 bg-[#0a0a0a] text-white overflow-x-clip border-y border-white/5 relative">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(250,191,55,0.05)_0%,_transparent_50%)]" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row gap-20 items-center">
           
           {/* Left: Material Visualization */}
-          <div className="w-full lg:w-1/2 relative group">
+          <div ref={visualRef} className="w-full lg:w-1/2 relative group will-change-transform">
              <div className="absolute -inset-10 bg-[#fabf37]/20 blur-[120px] rounded-full opacity-60" />
              
              <div className="relative aspect-square md:aspect-video rounded-[40px] md:rounded-[60px] overflow-hidden border border-white/10 bg-zinc-900/80 shadow-2xl backdrop-blur-3xl">
@@ -124,7 +149,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
           </div>
 
           {/* Right: Technical Specs */}
-          <div className="w-full lg:w-1/2 space-y-12">
+          <div ref={listRef} className="w-full lg:w-1/2 space-y-12 will-change-transform">
              <div className="space-y-6">
                 <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
                   <div className="h-[1px] w-12 bg-[#fabf37]" />

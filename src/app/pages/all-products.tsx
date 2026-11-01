@@ -6,6 +6,15 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Hero3DBox } from "../components/Hero3DBox";
 import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
 import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
+import pTakeawayFoodBox from "figma:asset/products/takeaway-food-box.webp";
+import pGiftBags from "figma:asset/products/gift-bags.webp";
+import pBrochures from "figma:asset/products/brochures.webp";
+import pMedicineBoxes from "figma:asset/products/medicine-boxes.webp";
+import pCookieBoxes from "figma:asset/products/cookie-boxes.webp";
+import fQcCupInspection from "figma:asset/factory/qc-cup-inspection.webp";
+import fOffsetPress from "figma:asset/factory/offset-press.webp";
+import fTeam from "figma:asset/factory/team.webp";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 
 const TopSellingProducts = React.lazy(() => import("../components/TopSellingProducts").then(module => ({ default: module.TopSellingProducts })));
 // Remove Canvas and Fiber imports as they are causing environment crashes
@@ -64,11 +73,11 @@ const categoryDetails = (t: any) => [
 
 const products = (t: any) => [
   { id: 1, name: t('papercups_title') + " (SW)", category: t('papercups_title'), image: yPaperCups, desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
-  { id: 2, name: t('restaurant_supplies_title') + " Box", category: t('restaurant_supplies_title'), image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
-  { id: 3, name: t('paper_bag'), category: t('paper_bag'), image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
-  { id: 4, name: "Brochure", category: t('marketing_materials_title'), image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
-  { id: 5, name: "Medicine Box", category: t('pharma_supplies_title'), image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&q=75&w=1600", desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
-  { id: 6, name: "Snack Packaging", category: t('fmcg_supplies_title'), image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=75&w=1600", desc: "Moisture-locked retail box.", specs: [{ label: "Lock", value: "Neural Seal" }] },
+  { id: 2, name: t('restaurant_supplies_title') + " Box", category: t('restaurant_supplies_title'), image: pTakeawayFoodBox, desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
+  { id: 3, name: t('paper_bag'), category: t('paper_bag'), image: pGiftBags, desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
+  { id: 4, name: "Brochure", category: t('marketing_materials_title'), image: pBrochures, desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
+  { id: 5, name: "Medicine Box", category: t('pharma_supplies_title'), image: pMedicineBoxes, desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
+  { id: 6, name: "Snack Packaging", category: t('fmcg_supplies_title'), image: pCookieBoxes, desc: "Moisture-locked retail box.", specs: [{ label: "Lock", value: "Neural Seal" }] },
 ];
 
 const tickerItems = (t: any) => [
@@ -95,6 +104,20 @@ export function AllProductsPage({
   clientProjects?: any[]
 }) {
   const { t } = useLanguage();
+  const storyRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed: the factory photos in the story cards settle from a slight zoom as each card enters.
+  useScrollScrub(() => {
+    const grid = storyRef.current;
+    if (!grid) return;
+    const vh = window.innerHeight || 1;
+    Array.from(grid.children).forEach((c) => {
+      const img = (c as HTMLElement).querySelector("img");
+      if (!img) return;
+      const r = c.getBoundingClientRect();
+      const t = easeOut3((vh - r.top) / (vh * 0.8));
+      img.style.transform = `scale(${(1.14 - 0.14 * t).toFixed(4)})`;
+    });
+  });
   const [aiInput, setAiInput] = React.useState("");
   const [hoveredCat, setHoveredCat] = React.useState<string | null>(null);
 
@@ -262,7 +285,7 @@ export function AllProductsPage({
                   className="w-full bg-transparent border-none outline-none font-black placeholder:text-black/10 text-black tracking-tight text-[12px] font-bold"
                 />
               </div>
-              <button className="relative group/btn overflow-hidden h-16 px-8 rounded-2xl bg-black text-[#fabf37] flex items-center justify-center gap-3 transition-all active:scale-95">
+              <button onClick={() => onPageChange("contact")} className="relative group/btn overflow-hidden h-16 px-8 rounded-2xl bg-black text-[#fabf37] flex items-center justify-center gap-3 transition-all active:scale-95">
                 <div className="absolute inset-0 bg-[#fabf37] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
                 <span className="relative z-10 font-black uppercase tracking-widest text-[11px] group-hover/btn:text-black transition-colors">{t('analyze')}</span>
                 <Send className="relative z-10 size-5 group-hover/btn:text-black transition-colors" />
@@ -309,7 +332,7 @@ export function AllProductsPage({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
+        <div ref={storyRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-32">
            <motion.div 
              initial={{ opacity: 0, y: 50 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -317,7 +340,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Manufacturing" />
+              <img loading="lazy" decoding="async" src={fQcCupInspection} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Manufacturing" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -338,7 +361,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, delay: 0.1, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1744126175546-d7c5366e94f9?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Offset Printing Machine" />
+              <img loading="lazy" decoding="async" src={fOffsetPress} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Offset Printing Machine" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -359,7 +382,7 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black md:col-span-2"
            >
-              <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&q=80&w=1500" className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Design Team" />
+              <img loading="lazy" decoding="async" src={fTeam} className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Design Team" />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent p-12 flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
@@ -371,7 +394,7 @@ export function AllProductsPage({
                 <p className="text-white/60 text-lg max-w-md font-medium leading-relaxed group-hover:text-white transition-colors">
                   Work with our award-winning designers to create sustainable packaging that defines your brand's future.
                 </p>
-                <button className="mt-8 self-start px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest text-xs rounded-full hover:scale-105 transition-transform">
+                <button onClick={() => onPageChange("contact")} className="mt-8 self-start px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest text-xs rounded-full hover:scale-105 transition-transform">
                   Book A Session
                 </button>
               </div>

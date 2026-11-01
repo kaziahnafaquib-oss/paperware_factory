@@ -13,6 +13,15 @@ export const SALES_PHONE_TEL = "+8809638011101";
 export const SALES_PHONE_DISPLAY = "+880 9638-011101";
 export const SALES_EMAIL = "paperwarefactory@gmail.com";
 
+export const LOCATIONS = [
+  { id: "factory", label: "Factory", address: "7814 Trimohoni Nandipara Main Road, Dhaka" },
+  { id: "head-office", label: "Head office", address: "7813 Trimohoni Nandipara Main Road, Dhaka" },
+  { id: "display-centre", label: "Display centre", address: "65 Begum Bazar, Agrani Bank Lane, Dhaka" },
+] as const;
+
+export const mapEmbedUrl = (address: string) => `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+export const mapDirectionsUrl = (address: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+
 export type InquiryFields = Record<string, string | number | boolean | null | undefined>;
 
 /** Plain-text message: a title line followed by "Label: value" lines (empty values skipped). */
@@ -32,6 +41,9 @@ export function emailInquiryHref(title: string, fields: InquiryFields = {}): str
   const body = encodeURIComponent(buildInquiryMessage(title, fields));
   return `mailto:${SALES_EMAIL}?subject=${subject}&body=${body}`;
 }
+
+export const whatsappUrl = whatsAppInquiryUrl;
+export const mailtoUrl = emailInquiryHref;
 
 /** Opens WhatsApp in a new tab with the message prefilled. The visitor still presses Send there. */
 export function openWhatsAppInquiry(title: string, fields: InquiryFields = {}): void {
@@ -82,5 +94,5 @@ export function collectFormFields(form: HTMLElement): InquiryFields {
 /** Honest status text shown after the hand-off (never claims delivery). */
 export const INQUIRY_HANDOFF_TITLE = "Almost there: press Send in WhatsApp";
 export const INQUIRY_HANDOFF_BODY =
-  `We opened WhatsApp with your message filled in. Press Send there so it reaches our sales team. ` +
+  `Opening WhatsApp with your message filled in. Press Send there so it reaches our sales team; we reply within one business day. ` +
   `If WhatsApp didn't open, message us on ${SALES_WHATSAPP_DISPLAY}, call ${SALES_PHONE_DISPLAY} or email ${SALES_EMAIL}.`;

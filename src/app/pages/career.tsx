@@ -11,7 +11,15 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-import pkgShowcase from "figma:asset/f941795c19ecf31f77a6d084830e22f2ef6ea6c7.webp";
+import imgTeam from "@/assets/factory/team.webp";
+import imgOperators from "@/assets/factory/operators-cup-machines.webp";
+import imgPress from "@/assets/factory/press-operator.webp";
+import imgFloor from "@/assets/factory/floor-wide.webp";
+import { useGo } from "../lib/useGo";
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterFloor from "@/assets/video-posters/career-floor.webp";
+
+const FLOOR_VIDEO = mediaUrl("career-floor.mp4");
 
 const jobs = [
   { title: "Factory Supervisor", location: "Dhaka, BD", type: "Full-time" },
@@ -69,26 +77,7 @@ const steps = [
   { title: "Onboarding", desc: "Join the paperware ecosystem", icon: Rocket },
 ];
 
-const lifeImages = [
-  "https://images.unsplash.com/photo-1602318492327-0383f002fa0a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBzdXN0YWluYWJsZSUyMGZhY3RvcnklMjBpbnRlcmlvcnxlbnwxfHx8fDE3NjY1NDUyMzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "https://images.unsplash.com/photo-1646579886741-12b59840c63f?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwZW5naW5lZXJpbmclMjB0ZWFtJTIwd29ya3Nob3B8ZW58MXx8fHwxNzY2NTQ1MjM1fDA&q=75&w=1600",
-  "https://images.unsplash.com/photo-1672552226669-f6c3041972ea?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjBsb2dpc3RpY3MlMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY2NTQ1MjM3fDA&q=75&w=1600"
-];
-
-const testimonials = [
-  {
-    name: "Ayesha Rahman",
-    role: "Production Lead",
-    quote: "Working at Paperware isn't just a job; it's a mission to redefine how Bangladesh exports sustainable goods.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150"
-  },
-  {
-    name: "Tanvir Ahmed",
-    role: "Senior Engineer",
-    quote: "The level of automation here is world-class. It's a playground for engineers who love industrial tech.",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150"
-  }
-];
+const lifeImages = [imgTeam, imgOperators, imgPress];
 
 const faqs = [
   { q: "What is the typical interview process?", a: "It usually involves a screening call, a technical task, and a final interview with the leadership team." },
@@ -626,6 +615,7 @@ function DepartmentExplorer() {
 }
 
 function ReferralSection() {
+  const go = useGo();
   return (
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }}
@@ -648,7 +638,7 @@ function ReferralSection() {
         </div>
         <div className="flex flex-col gap-4 w-full md:w-auto">
           <Magnetic>
-            <button className="bg-[#fabf37] text-black px-12 py-6 rounded-[24px] font-black uppercase tracking-widest text-sm hover:scale-105 transition-all w-full shadow-[0_20px_40px_rgba(250,191,55,0.2)]">
+            <button onClick={() => go("contact")} className="bg-[#fabf37] text-black px-12 py-6 rounded-[24px] font-black uppercase tracking-widest text-sm hover:scale-105 transition-all w-full shadow-[0_20px_40px_rgba(250,191,55,0.2)]">
               Refer Now
             </button>
           </Magnetic>
@@ -660,6 +650,7 @@ function ReferralSection() {
 }
 
 export function CareerPage() {
+  const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
   const [activeDept, setActiveDept] = React.useState("All");
@@ -762,9 +753,10 @@ export function CareerPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5 }}
+              className="relative z-30"
             >
               <Magnetic>
-                <button className="bg-black text-white px-10 py-5 rounded-[20px] font-black uppercase tracking-[0.2em] text-sm hover:bg-[#fabf37] hover:text-black transition-all shadow-2xl border-b-4 border-zinc-800 active:border-b-0 active:translate-y-1">
+                <button onClick={() => document.getElementById('open-positions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="bg-black text-white px-10 py-5 rounded-[20px] font-black uppercase tracking-[0.2em] text-sm hover:bg-[#fabf37] hover:text-black transition-all shadow-2xl border-b-4 border-zinc-800 active:border-b-0 active:translate-y-1">
                   Explore Positions
                 </button>
               </Magnetic>
@@ -783,8 +775,8 @@ export function CareerPage() {
             className="w-[calc(100%+2rem)] md:w-[calc(100%+8rem)] -ml-4 md:-ml-16 -mt-16 md:-mt-32 h-[300px] md:h-[550px] rounded-[40px] md:rounded-[60px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] relative group z-20 mb-12 md:mb-20"
           >
             <ImageWithFallback 
-              src={pkgShowcase} 
-              alt="Industrial Showcase" 
+              src={imgTeam} 
+              alt="The Paperware factory team" 
               className="w-full h-full object-cover object-top md:object-[center_35%] group-hover:scale-110 transition-transform duration-[2s] ease-out"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -996,11 +988,19 @@ export function CareerPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             className="w-full h-[250px] md:h-[450px] rounded-[40px] overflow-hidden shadow-2xl relative group"
           >
-            <motion.div style={{ scale: imageScale }} className="w-full h-full">
-              <ImageWithFallback 
-                src={pkgShowcase} 
-                alt="Select Departments" 
-                className="w-full h-full object-cover object-top md:object-[center_30%]"
+            <motion.div style={{ scale: imageScale }} className="w-full h-full grid grid-cols-1 md:grid-cols-[1fr_minmax(0,320px)]">
+              <ImageWithFallback
+                src={imgFloor}
+                alt="The Paperware production floor"
+                className="w-full h-full object-cover object-top md:object-[center_30%] hidden md:block"
+              />
+              {/* Real footage: our team on the factory floor (public/media/SOURCES.txt). */}
+              <FactoryClip
+                src={FLOOR_VIDEO}
+                poster={posterFloor}
+                label="factory floor team"
+                className="w-full h-full"
+                controlPosition="top-right"
               />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
@@ -1012,7 +1012,7 @@ export function CareerPage() {
             className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 sm:px-10 py-8 sm:py-12 bg-white rounded-[40px] border border-zinc-100 shadow-2xl"
           >
             <div className="space-y-6 text-center md:text-left w-full" style={{ transform: "translateZ(40px)" }}>
-              <h2 className="text-black font-black uppercase tracking-widest text-lg sm:text-2xl">Find Your Role</h2>
+              <h2 id="open-positions" className="text-black font-black uppercase tracking-widest text-lg sm:text-2xl scroll-mt-32">Find Your Role</h2>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-4">
                 {departments.map(dept => (
                   <button

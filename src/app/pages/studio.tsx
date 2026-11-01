@@ -12,16 +12,27 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
+import imgTakeawayBox from "../../assets/products/takeaway-food-box.webp";
+import imgGiftBags from "../../assets/products/gift-bags.webp";
+import imgBrochures from "../../assets/products/brochures.webp";
+import imgMedicineBoxes from "../../assets/products/medicine-boxes.webp";
+import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
+import { useGo } from "../lib/useGo";
+
+// CSS-only paper grain (replaces former external texture PNGs).
+const GRAIN_FINE = "repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 3px)";
+const GRAIN_BOARD = "repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0 2px, transparent 2px 7px)";
 
 const PRODUCTS_LIST = [
   { id: 'cup', name: "Single Wall Cup", category: "Paper Cups", image: yPaperCups, icon: '🥤' },
-  { id: 'box', name: "Burger Box", category: "Food Boxes", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&q=75&w=1600", icon: '🍔' },
-  { id: 'bag', name: "Luxury Paper Bag", category: "Paper Bags", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&q=75&w=1600", icon: '🛍️' },
-  { id: 'brochure', name: "Brand Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&q=75&w=1600", icon: '📄' },
-  { id: 'pharm', name: "Medicine Box", category: "Pharma", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&q=75&w=1600", icon: '💊' },
+  { id: 'box', name: "Burger Box", category: "Food Boxes", image: imgTakeawayBox, icon: '🍔' },
+  { id: 'bag', name: "Luxury Paper Bag", category: "Paper Bags", image: imgGiftBags, icon: '🛍️' },
+  { id: 'brochure', name: "Brand Brochure", category: "Marketing", image: imgBrochures, icon: '📄' },
+  { id: 'pharm', name: "Medicine Box", category: "Pharma", image: imgMedicineBoxes, icon: '💊' },
 ];
 
 export function StudioPage() {
+  const go = useGo();
   const { t } = useLanguage();
   const [logo, setLogo] = React.useState<string | null>(null);
   const [color, setColor] = React.useState("#ffffff");
@@ -70,6 +81,30 @@ export function StudioPage() {
   const sustainabilityScore = material === "Bamboo" ? 98 : material === "Recycled" ? 92 : material === "Kraft" ? 85 : 78;
   const estimatedCost = (itemType === "cup" ? 0.12 : itemType === "bag" ? 0.45 : itemType === 'brochure' ? 0.30 : 0.85) + (finish !== "none" ? 0.05 : 0);
 
+  const headRef = React.useRef<HTMLDivElement>(null);
+  const panelsRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: command bar drifts up and fades; the two work panels rise and settle.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const head = headRef.current;
+    if (head) {
+      const p = clamp01(window.scrollY / (h * 0.5));
+      head.style.transform = `translate3d(0,${(p * 50).toFixed(1)}px,0)`;
+      head.style.opacity = (1 - 0.6 * p).toFixed(3);
+    }
+    const panels = panelsRef.current;
+    if (panels) {
+      const r = panels.getBoundingClientRect();
+      const tp = clamp01((h - r.top) / (h * 0.6));
+      panels.querySelectorAll<HTMLElement>("[data-panel]").forEach((el, i) => {
+        const u = easeOut3((tp - i * 0.12) / 0.6);
+        el.style.transform = `translate3d(0,${((1 - u) * 56).toFixed(1)}px,0)`;
+        el.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+      });
+    }
+  });
+
   return (
     <div className="pt-24 pb-12 bg-[#f8f9fa] min-h-screen font-sans selection:bg-[#fabf37] selection:text-black overflow-hidden">
       {/* Cinematic Grid & HUD Elements */}
@@ -80,7 +115,7 @@ export function StudioPage() {
 
       <div className="container mx-auto px-4 max-w-[1800px] relative z-10">
         {/* Top Command Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
+        <div ref={headRef} className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6 will-change-transform">
           <div className="flex items-center gap-8">
              <div className="space-y-1">
                 <h1 className="text-4xl font-black uppercase tracking-tighter leading-none text-black flex items-center gap-3">
@@ -100,19 +135,19 @@ export function StudioPage() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-black/60">Cloud Sync: Enabled</span>
              </div>
              <div className="flex gap-2">
-                <button className="px-5 py-2.5 bg-zinc-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center gap-2 group">
+                <button onClick={() => { try { localStorage.setItem('paperware_studio_draft', JSON.stringify({ color, itemType, size, text, texture, fontFamily, finish, material })); toast.success('Draft saved on this device'); } catch { toast.error('Could not save the draft'); } }} className="px-5 py-2.5 bg-zinc-900 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all flex items-center gap-2 group">
                    <Save className="size-3 group-hover:scale-110 transition-transform" /> {t('save_draft') || "Save"}
                 </button>
-                <button className="px-5 py-2.5 bg-[#fabf37] text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2 group">
+                <button onClick={() => { toast.info("Send us your spec through the quote form"); go("quote"); }} className="px-5 py-2.5 bg-[#fabf37] text-black rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all flex items-center gap-2 group">
                    <Download className="size-3 group-hover:translate-y-0.5 transition-transform" /> {t('export_spec') || "Export"}
                 </button>
              </div>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div ref={panelsRef} className="grid lg:grid-cols-12 gap-10">
           {/* Left Panel: Configuration */}
-          <div className="lg:col-span-3 space-y-6">
+          <div data-panel className="lg:col-span-3 space-y-6 will-change-transform">
             {/* HUD Status Monitor */}
             <div className="bg-black text-white rounded-3xl p-6 space-y-4 shadow-2xl relative overflow-hidden group">
                <div className="absolute top-0 right-0 p-4 opacity-10">
@@ -279,7 +314,7 @@ export function StudioPage() {
           </div>
 
           {/* Right Panel: Immersive Preview */}
-          <div className="lg:col-span-9 flex flex-col gap-8 h-full">
+          <div data-panel className="lg:col-span-9 flex flex-col gap-8 h-full will-change-transform">
             <div className="bg-white rounded-[48px] border border-black/5 shadow-2xl relative overflow-hidden flex items-center justify-center p-12 min-h-[700px] group">
                {/* Glassmorphic Background Decor */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-[#fabf37]/5 rounded-full blur-[100px] -z-10" />
@@ -435,7 +470,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
             }}
           >
             {/* Paper Texture Overlay */}
-            <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
+            <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: GRAIN_FINE }} />
             <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-white/20" />
             
             <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center mt-10">
@@ -473,7 +508,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10" />
-            <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/cardboard.png')]" />
+            <div className="absolute inset-0 opacity-30 mix-blend-overlay" style={{ backgroundImage: GRAIN_BOARD }} />
             
             <div className="flex flex-col items-center p-12 text-center relative z-10">
                {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[200px] mb-8 drop-shadow-2xl" />}
@@ -493,7 +528,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
            </div>
            
            <div className="relative w-full h-full shadow-[0_70px_140px_-30px_rgba(0,0,0,0.4)] flex flex-col items-center overflow-hidden rounded-t-[10px]" style={{ backgroundColor: color }}>
-              <div className="absolute inset-0 opacity-15 mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/cardboard-flat.png')]" />
+              <div className="absolute inset-0 opacity-15 mix-blend-multiply" style={{ backgroundImage: GRAIN_BOARD }} />
               <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30" />
               
               <div className="mt-32 w-full flex flex-col items-center p-10 text-center relative z-10">
@@ -519,7 +554,7 @@ function MockupRenderer({ itemType, color, logo, text, fontFamily, finish, mater
               transformStyle: 'preserve-3d'
             }}
           >
-             <div className="absolute inset-0 opacity-15 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]" />
+             <div className="absolute inset-0 opacity-15" style={{ backgroundImage: GRAIN_FINE }} />
              <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center">
                 {logo && <img loading="lazy" decoding="async" src={logo} className="max-w-[140px] mb-8 drop-shadow-xl" />}
                 <p className={`text-2xl font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-black'}`} style={{ fontFamily }}>{text}</p>

@@ -256,7 +256,7 @@ export function PaperCupsPage({
   return (
     <div ref={containerRef} className="relative bg-[#e3d1ae] min-h-screen overflow-x-hidden selection:bg-black selection:text-[#fabf37]">
       {/* 3D Immersive Hero Section */}
-      <section ref={heroRef} className="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden px-4 pt-32" onMouseMove={handleHeroMouseMove} onMouseLeave={handleHeroMouseLeave}>
+      <section ref={heroRef} className="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-20" onMouseMove={handleHeroMouseMove} onMouseLeave={handleHeroMouseLeave}>
         <motion.div animate={{ y: [0, -40, 0], rotate: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="absolute top-20 left-[10%] opacity-20 hidden lg:block"><img loading="lazy" decoding="async" src={imgErasebg} className="w-40 h-auto blur-sm" alt="" /></motion.div>
         <motion.div animate={{ y: [0, 40, 0], rotate: [0, -15, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }} className="absolute bottom-20 right-[15%] opacity-20 hidden lg:block"><img loading="lazy" decoding="async" src={imgErasebg} className="w-60 h-auto blur-[2px]" alt="" /></motion.div>
 
@@ -382,7 +382,7 @@ export function PaperCupsPage({
                      rotate: blueprintCupRotate,
                      perspective: 1000
                    }}
-                   className="relative z-20 w-full flex items-center justify-center will-change-transform"
+                   className="relative z-20 w-full flex items-center justify-center will-change-transform pointer-events-none"
                  >
                    <img decoding="async" 
                      src={imgErasebg} 

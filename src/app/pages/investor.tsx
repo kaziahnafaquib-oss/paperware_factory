@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { TrendingUp, Database, ChartBar, CircleCheck as CheckCircle2 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-white">
@@ -40,6 +41,7 @@ const ContentBlock = ({ children, className = "" }: { children: React.ReactNode;
 );
 
 export function InvestorPage() {
+  const go = useGo();
   const { t } = useLanguage();
 
   return (
@@ -108,7 +110,7 @@ export function InvestorPage() {
                   Investors are encouraged to engage with us for detailed business plans, forecasts, and growth strategies.
                 </p>
               </div>
-              <button className="w-full py-6 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-2xl">
+              <button onClick={() => go("contact")} className="w-full py-6 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-2xl">
                 Request Prospectus
               </button>
             </div>

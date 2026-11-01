@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { X, Send, Paperclip, Phone, MessageCircle, Star, Mail, Info } from "lucide-react";
 import { toast } from "sonner";
 
@@ -9,7 +8,7 @@ export function ManagerCard() {
   const [showDetails, setShowDetails] = useState(false);
   const [rating, setRating] = useState(0);
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hello! I'm Sarah, your dedicated account manager.", sender: "agent", time: "09:00 AM" },
+    { id: 1, text: "Hello! I'm your dedicated account manager.", sender: "agent", time: "09:00 AM" },
     { id: 2, text: "How can I help you with your supply chain today?", sender: "agent", time: "09:01 AM" }
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -37,7 +36,7 @@ export function ManagerCard() {
          <div className="absolute top-0 right-0 w-32 h-32 bg-[#fabf37]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="size-16 rounded-full overflow-hidden border-2 border-[#fabf37] relative z-10">
-          <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
+          <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
           <div className="absolute bottom-0 right-0 size-3 bg-emerald-500 border-2 border-white rounded-full" />
         </div>
         
@@ -45,7 +44,7 @@ export function ManagerCard() {
           <div className="flex justify-between items-start">
             <div>
                 <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">Your Manager</p>
-                <p className="text-sm font-black text-black">Sarah Jenkins</p>
+                <p className="text-sm font-black text-black">Account Manager</p>
             </div>
             <Info className="size-4 text-zinc-400 group-hover:text-[#fabf37] transition-colors" />
           </div>
@@ -59,7 +58,7 @@ export function ManagerCard() {
             </button>
            <span className="text-[9px] text-zinc-300">|</span>
            <button 
-                onClick={(e) => { e.stopPropagation(); toast.success("Calling Sarah Jenkins..."); }} 
+                onClick={(e) => { e.stopPropagation(); toast.success("Calling your account manager..."); }} 
                 className="text-[9px] font-bold text-zinc-500 hover:text-black transition-colors flex items-center gap-1"
             >
                 <Phone className="size-3" />
@@ -67,7 +66,7 @@ export function ManagerCard() {
             </button>
              <span className="text-[9px] text-zinc-300">|</span>
              <button 
-                onClick={(e) => { e.stopPropagation(); window.open('https://wa.me/1234567890', '_blank'); }} 
+                onClick={(e) => { e.stopPropagation(); window.open('https://wa.me/8801901459110', '_blank'); }} 
                 className="text-[9px] font-bold text-green-600 hover:text-green-700 transition-colors flex items-center gap-1"
             >
                 <MessageCircle className="size-3" />
@@ -99,11 +98,11 @@ export function ManagerCard() {
 
                     <div className="flex flex-col items-center text-center space-y-4 mb-8">
                          <div className="size-24 rounded-full overflow-hidden border-4 border-[#fabf37] relative shadow-lg">
-                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
+                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
                         </div>
                         <div>
-                             <h3 className="text-2xl font-black uppercase tracking-tight">Sarah Jenkins</h3>
-                             <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Senior Account Manager</p>
+                             <h3 className="text-2xl font-black uppercase tracking-tight">Account Manager</h3>
+                             <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Your Paperware Contact</p>
                         </div>
                         <div className="flex gap-2">
                              <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[9px] font-black uppercase">Online</span>
@@ -117,14 +116,14 @@ export function ManagerCard() {
                                 <MessageCircle className="size-4" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">Chat</span>
                             </button>
-                             <button onClick={() => window.open('https://wa.me/1234567890', '_blank')} className="flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white rounded-2xl hover:bg-[#128C7E] transition-colors">
+                             <button onClick={() => window.open('https://wa.me/8801901459110', '_blank')} className="flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white rounded-2xl hover:bg-[#128C7E] transition-colors">
                                 <MessageCircle className="size-4" />
                                 <span className="text-[10px] font-black uppercase tracking-widest">WhatsApp</span>
                             </button>
                         </div>
                          <button className="w-full flex items-center justify-center gap-2 py-4 bg-zinc-50 text-black border border-black/5 rounded-2xl hover:bg-black hover:text-white transition-colors">
                             <Mail className="size-4" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Email Sarah</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">Email Manager</span>
                         </button>
                     </div>
 
@@ -164,10 +163,10 @@ export function ManagerCard() {
                 <div className="p-4 bg-black text-white flex items-center justify-between">
                     <div className="flex items-center gap-3">
                          <div className="size-8 rounded-full overflow-hidden border border-white/20">
-                            <ImageWithFallback src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=200" alt="Manager" />
+                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
                         </div>
                         <div>
-                             <p className="text-xs font-black uppercase tracking-wide">Sarah Jenkins</p>
+                             <p className="text-xs font-black uppercase tracking-wide">Account Manager</p>
                              <div className="flex items-center gap-1.5">
                                 <div className="size-1.5 bg-emerald-500 rounded-full animate-pulse" />
                                 <p className="text-[8px] text-zinc-400 uppercase tracking-widest">Online</p>

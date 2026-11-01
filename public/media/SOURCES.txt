@@ -1,0 +1,14 @@
+# Real Paperware footage used on the public site. All clips: H.264 540x960 (~420 kbps), video only (muted autoplay).
+# Transcoded with AVFoundation from the owner's own reels (no third-party brands/logos in the chosen ranges).
+# Format: <mp4> | duration | source file(s) @ trimmed range(s) (seconds)
+
+factory-tour.mp4            | 48.9s | (pre-existing) ~/Downloads/PAPERWARE BRANDING 2 factory tour reel
+home-cup-render.mp4         | 15.9s | ~/Downloads/PAPERWARE BRANDING 2/mobile view cup.mp4 @ 0-15.9 (source 1014x1856, 16s)
+manufacturing-press.mp4     | 20.5s | ~/Downloads/PAPERWARE BRANDING 2/Paperware social post /snapsave-app_1235598708017185_hd.mp4 @ 4-17 + 31-38.5 (source 1280x720 pillarboxed portrait, 49s)
+journey-print-laminate.mp4  | 30.0s | ~/Downloads/PAPERWARE BRANDING 2/Paperware social post /snapsave-app_695460840143192_hd.mp4 @ 15-45 (source 1280x720 pillarboxed portrait, 47s)
+career-floor.mp4            | 25.0s | ~/Downloads/PAPERWARE BRANDING 2/Paperware social post /snapsave-app_718836800648088_hd.mp4 @ 3-16 + snapsave-app_695460840143192_hd.mp4 @ 7-13 + snapsave-app_1235598708017185_hd.mp4 @ 28-34
+company-team.mp4            | 18.5s | ~/Downloads/PAPERWARE BRANDING 2/WhatsApp Video 2025-06-04 at 19.10.34.mp4 @ 19-30 + 39-46.5 (source 1280x720 pillarboxed portrait, 50s)
+gallery-printed-cups.mp4    | 19.5s | ~/Downloads/PAPERWARE BRANDING 2/Paperware social post /snapsave-app_1206289567513734_hd.mp4 @ 1-20.5 (source 1280x720 pillarboxed portrait, 26s)
+
+# Posters: src/assets/video-posters/<name>.webp (frame grabs, 960px tall).
+# Pages: home (MainContent -> home-factory-clip), manufacturing, product-journey, career, company, gallery (printed cups + press).

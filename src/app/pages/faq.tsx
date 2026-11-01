@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence, useSpring, useScroll, useTransform } from "motion/react";
+import { useGo } from "../lib/useGo";
 import { 
   Plus, Minus, Search, CircleHelp, 
   Settings, ShieldCheck, Truck, 
@@ -56,6 +57,7 @@ const faqs = [
 ];
 
 export function FAQPage() {
+  const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   
   // State for interactivity
@@ -232,7 +234,7 @@ export function FAQPage() {
                   placeholder="SCAN KNOWLEDGE BASE FOR PROTOCOLS..." 
                   className="bg-transparent border-none outline-none text-white font-black w-full py-6 placeholder:text-zinc-700 text-sm tracking-widest uppercase relative"
                 />
-                <button className="bg-[#fabf37] text-black px-12 py-6 rounded-[32px] font-black text-xs uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl relative overflow-hidden group/btn">
+                <button onClick={() => document.getElementById('faq-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="bg-[#fabf37] text-black px-12 py-6 rounded-[32px] font-black text-xs uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl relative overflow-hidden group/btn">
                   <span className="relative z-10">Run Query</span>
                   <motion.div 
                     className="absolute inset-0 bg-white translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"
@@ -248,7 +250,7 @@ export function FAQPage() {
       </section>
 
       {/* Main Content Area */}
-      <section className="container mx-auto px-4 -mt-12 relative z-20 pb-32">
+      <section id="faq-results" className="container mx-auto px-4 -mt-12 relative z-20 pb-32 scroll-mt-24">
         <div className="grid lg:grid-cols-12 gap-12">
           
           {/* Navigation Sidebar */}
@@ -283,7 +285,7 @@ export function FAQPage() {
                  <div className="bg-zinc-900 p-6 rounded-[30px] space-y-4">
                     <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">AI Assistant Beta</p>
                     <p className="text-white font-bold text-xs">Can't find a specific protocol? Ask our AI core.</p>
-                    <button className="w-full py-4 bg-[#fabf37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                    <button onClick={() => go("contact")} className="w-full py-4 bg-[#fabf37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
                        Launch Assistant <MessageCircle className="size-3" />
                     </button>
                  </div>
@@ -343,11 +345,11 @@ export function FAQPage() {
                               {faq.a}
                             </p>
                             <div className="mt-10 flex gap-4">
-                               <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
+                               <button onClick={() => go("contact")} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
                                   Request Full Specs <ArrowUpRight className="size-3" />
                                </button>
                                <div className="w-[1px] h-4 bg-zinc-200" />
-                               <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
+                               <button onClick={() => window.print()} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
                                   Print Data <Zap className="size-3" />
                                </button>
                             </div>

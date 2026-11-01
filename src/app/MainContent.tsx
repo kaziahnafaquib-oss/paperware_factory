@@ -24,12 +24,12 @@ import { ContactMenu } from "./components/paperware/contact-menu";
 import { BottomNav } from "./components/paperware/bottom-nav";
 import { HUDOverlay as SharedHUDOverlay } from "./components/paperware/hud-overlay";
 const WhoWeAreSection = React.lazy(() => import("./components/paperware/who-we-are").then(module => ({ default: module.WhoWeAreSection })));
-const PageDiscovery = React.lazy(() => import("./components/paperware/page-discovery").then(module => ({ default: module.PageDiscovery })));
 import { ImageWithFallback } from "./components/figma/ImageWithFallback";
 const FeaturedProductsSlider = React.lazy(() => import("./components/paperware/featured-products-slider").then(module => ({ default: module.FeaturedProductsSlider })));
-const PremiumContact = React.lazy(() => import("./components/paperware/premium-contact").then(module => ({ default: module.PremiumContact })));
+const HomeBottom = React.lazy(() => import("./components/paperware/home-bottom").then(module => ({ default: module.HomeBottom })));
 const PremiumClients = React.lazy(() => import("./components/paperware/premium-clients").then(module => ({ default: module.PremiumClients })));
 const NationwideExportSection = React.lazy(() => import("./components/paperware/nationwide-export").then(module => ({ default: module.NationwideExportSection })));
+const HomeFactoryClip = React.lazy(() => import("./components/paperware/home-factory-clip").then(module => ({ default: module.HomeFactoryClip })));
 
 // Advanced Performance Hook
 const usePerformanceOptimization = () => {
@@ -213,28 +213,30 @@ const AuthModal = __PORTALS_ENABLED__ ? React.lazy(() => import("./components/pa
 // Assets from Figma Import
 import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
 import imgShoppingBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.webp";
+import dp_takeaway_food_box from "figma:asset/products/takeaway-food-box.webp";
+import dp_chowmein_boxes from "figma:asset/products/chowmein-boxes.webp";
+import dp_cookie_boxes from "figma:asset/products/cookie-boxes.webp";
+import dp_confectionery_boxes from "figma:asset/products/confectionery-boxes.webp";
+import dp_medicine_boxes from "figma:asset/products/medicine-boxes.webp";
+import dp_prescription_pad from "figma:asset/products/prescription-pad.webp";
+import dp_gift_bags from "figma:asset/products/gift-bags.webp";
+import dp_carry_bag_pink from "figma:asset/products/carry-bag-pink.webp";
+import dp_carry_bag_kraft from "figma:asset/cutouts/carry-bag-kraft.webp";
+import dp_brochures from "figma:asset/products/brochures.webp";
+import dp_flyers from "figma:asset/products/flyers.webp";
+import dp_magazines from "figma:asset/products/magazines.webp";
+import dp_desk_calendars from "figma:asset/products/desk-calendars.webp";
+import dp_stickers from "figma:asset/products/stickers.webp";
+import dp_tissue_boxes from "figma:asset/products/tissue-boxes.webp";
+import dp_cup from "figma:asset/cutouts/cup.webp";
+import dpTeam from "figma:asset/factory/team.webp";
 import imgMap from "figma:asset/7707e2384f799b3aeb1bc03a9a49cb7ef91b6772.webp";
 // Partner logos - Using placeholder images for reliability
-const imgAlArabian = "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75";
-const imgBengalClassicTea = "https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?auto=format&w=400&h=200&fit=crop&q=75";
-const imgCafeZ = "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&w=400&h=200&fit=crop&q=75";
-const imgCoffeeAvenue = "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&w=400&h=200&fit=crop&q=75";
-const imgCrimsoncup = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&w=400&h=200&fit=crop&q=75";
-const imgDhakaiKhana = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&w=400&h=200&fit=crop&q=75";
-const imgAbdulMonemLtd = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=400&h=200&fit=crop&q=75";
-const imgWalton = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=400&h=200&fit=crop&q=75";
-const imgNovatek = "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&w=400&h=200&fit=crop&q=75";
-const imgMgi = "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=400&h=200&fit=crop&q=75";
-const imgIcddrb = "https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?auto=format&w=400&h=200&fit=crop&q=75";
-const imgFresh = "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&w=400&h=200&fit=crop&q=75";
 import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
 import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.webp";
 import imgCardBg3 from "figma:asset/ecae8d654e0ece711f117e96df44a7742af71120.webp";
 import imgFactoryIllustration from "figma:asset/f509e99bb4cc15f45dbb0d895480da5f9027b46c.webp";
 import imgHeroMobile from "figma:asset/7355363d5bbe4910fbf181181e9702179c6c7d50.webp";
-import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
-import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
-import yCupStack from "figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.webp";
 
 // Neural Language Transition Effect
 function NeuralTransition({ isVisible, language }: { isVisible: boolean, language: string }) {
@@ -329,76 +331,42 @@ function PageLoader() {
 const DEFAULT_HERO_VIDEO = "https://www.youtube.com/watch?v=_AvASsD4tQY"; // Paperware Factory channel: "3d video with Text & logo"
 const DEFAULT_HERO_POSTER = "https://i.ytimg.com/vi/_AvASsD4tQY/maxresdefault.jpg";
 // Backup: https://www.youtube-nocookie.com/embed/lyFix6BpGNI?autoplay=1&mute=1&loop=1&playlist=lyFix6BpGNI&controls=0
-const DEFAULT_CLIENTS_VIDEO = "https://player.vimeo.com/external/370338531.sd.mp4?s=70d1d511efd500148283471491bb0ad8&profile_id=164&oauth2_token_id=57447761";
+const DEFAULT_CLIENTS_VIDEO = "";
 const DEFAULT_HERO_CONTENT = {
   title: "PREMIUM PAPER SOLUTIONS",
   subtitle1: "Global Standard. Sustainable Impact. Industrial Precision.",
   subtitle2: "YOUR PARTNER IN SUSTAINABLE MANUFACTURING EXCELLENCE."
 };
-const DEFAULT_PRODUCTS = [
-  { id: 1, name: "Eco-Liner Food Box", category: "Food Packaging", image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=800&auto=format", status: "Active" },
-  { id: 2, name: "Double Wall Coffee Cup", category: "Beverage", image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?q=80&w=800&auto=format", status: "Active" },
-  { id: 3, name: "Industrial Kraft Bag", category: "Logistics", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
-  { id: 4, name: "Single Wall Cup (SW)", category: "Paper Cups", image: yPaperCups, status: "Active" },
-  { id: 5, name: "Marketing Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
-  { id: 6, name: "Sterile Medicine Box", category: "Pharmaceutical", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?q=80&w=800&auto=format", status: "Active" },
-  { id: 7, name: "Snack Retail Packaging", category: "FMCG", image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=800&auto=format", status: "Active" },
-  { id: 8, name: "Burger Ventilation Box", category: "Restaurant", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=800&auto=format", status: "Active" },
-  { id: 9, name: "Premium Gift Bag", category: "Luxury", image: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800&auto=format", status: "Active" },
-  { id: 10, name: "Eco Tea Sleeves", category: "Beverage", image: yCupStack, status: "Active" },
-  { id: 11, name: "Industrial Tote", category: "Logistics", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800&auto=format", status: "Active" },
-  { id: 12, name: "Sustainable Mailer", category: "Logistics", image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?q=80&w=800&auto=format", status: "Active" },
+const DEFAULT_PRODUCTS: any[] = [
+  { id: 1, name: "Takeaway Food Box", category: "Food Packaging", image: dp_takeaway_food_box, status: "Active" },
+  { id: 2, name: "Chowmein Box", category: "Food Packaging", image: dp_chowmein_boxes, status: "Active" },
+  { id: 3, name: "Cookie Box", category: "Food Packaging", image: dp_cookie_boxes, status: "Active" },
+  { id: 4, name: "Confectionery Box", category: "Food Packaging", image: dp_confectionery_boxes, status: "Active" },
+  { id: 5, name: "Medicine Box", category: "Pharmaceutical", image: dp_medicine_boxes, status: "Active" },
+  { id: 6, name: "Prescription Pad", category: "Pharmaceutical", image: dp_prescription_pad, status: "Active" },
+  { id: 7, name: "Gift Bag", category: "Bags", image: dp_gift_bags, status: "Active" },
+  { id: 8, name: "Carry Bag", category: "Bags", image: dp_carry_bag_pink, status: "Active" },
+  { id: 9, name: "Kraft Carry Bag", category: "Bags", image: dp_carry_bag_kraft, status: "Active" },
+  { id: 10, name: "Brochure", category: "Marketing Materials", image: dp_brochures, status: "Active" },
+  { id: 11, name: "Flyer", category: "Marketing Materials", image: dp_flyers, status: "Active" },
+  { id: 12, name: "Magazine", category: "Marketing Materials", image: dp_magazines, status: "Active" },
+  { id: 13, name: "Desk Calendar", category: "Marketing Materials", image: dp_desk_calendars, status: "Active" },
+  { id: 14, name: "Sticker", category: "Marketing Materials", image: dp_stickers, status: "Active" },
+  { id: 15, name: "Tissue Box", category: "Tissue", image: dp_tissue_boxes, status: "Active" },
+  { id: 16, name: "Paper Cup", category: "Paper Cups", image: dp_cup, status: "Active" },
 ];
 
-const DEFAULT_CLIENT_PROJECTS = [
-  {
-    company: "TechFlow Systems",
-    project: "Neural Hardware Packaging",
-    desc: "Anti-static, high-density foam inserts for next-gen processors.",
-    image: yProductBoxes
-  },
-  {
-    company: "GreenLeaf Organics",
-    project: "Biodegradable Food Containers",
-    desc: "100% plant-based fiber composition with zero-plastic coating.",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&q=80&w=1000"
-  },
-  {
-    company: "Urban Brew Co.",
-    project: "Thermal Insulation Cups",
-    desc: "Double-wall patented construction maintaining heat for 4+ hours.",
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&q=80&w=1000"
-  },
-  {
-    company: "MediSafe Pharma",
-    project: "Secure Sterility Boxes",
-    desc: "ISO certified medical grade cardstock with tamper-evident seals.",
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&q=80&w=1000"
-  },
-  {
-    company: "Velocity Logistics",
-    project: "Heavy-Duty Corrugated Units",
-    desc: "Reinforced structural integrity for international freight.",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
-  }
-];
+const DEFAULT_CLIENT_PROJECTS: any[] = [];
 
-const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
+const DEFAULT_SIGNING_IMAGE: string = dpTeam;
 
-const DEFAULT_PARTNERS = [
-  { id: "1", name: "Al Arabian", category: "Client", logo: imgAlArabian, description: "Strategic Partner" },
-  { id: "2", name: "Fresh", category: "FMCG", logo: imgFresh, description: "Major Supplier" },
-  { id: "3", name: "Bengal Classic Tea", category: "Beverage", logo: imgBengalClassicTea, description: "Packaging Partner" },
-  { id: "4", name: "Cafe Z", category: "Restaurant", logo: imgCafeZ, description: "Food Service" },
-  { id: "5", name: "Coffee Avenue", category: "Cafe", logo: imgCoffeeAvenue, description: "Premium Cups" },
-  { id: "6", name: "Crimson Cup", category: "Global Chain", logo: imgCrimsoncup, description: "International Partner" },
-  { id: "7", name: "Dhakai Khana", category: "Catering", logo: imgDhakaiKhana, description: "Food Packaging" },
-  { id: "8", name: "Abdul Monem Ltd", category: "Conglomerate", logo: imgAbdulMonemLtd, description: "Industrial Partner" },
-  { id: "9", name: "Walton", category: "Electronics", logo: imgWalton, description: "Packaging Solutions" },
-  { id: "10", name: "Novatek", category: "Pharmaceuticals", logo: imgNovatek, description: "Medical Grade" },
-  { id: "11", name: "MGI", category: "Industrial", logo: imgMgi, description: "Large Scale Partner" },
-  { id: "12", name: "ICDDR,B", category: "Research", logo: imgIcddrb, description: "Sterile Supplies" }
-];
+const DEFAULT_PARTNERS: any[] = [];
+
+// Ignore saved values from older builds that still reference stock photos.
+const readStored = (key: string): string | null => {
+  const v = localStorage.getItem(key);
+  return v && !v.includes("unsplash.com") ? v : null;
+};
 
 export function MainContent() {
   const { tier, isLowEnd } = usePerformanceOptimization();
@@ -479,17 +447,17 @@ export function MainContent() {
       if (brochure) setBrochureUrl(brochure);
       const heroVideoMobile = localStorage.getItem('paperware_hero_video_mobile');
       if (heroVideoMobile) setHeroVideoMobileUrl(heroVideoMobile);
-      const clientsVideo = localStorage.getItem('paperware_clients_video');
+      const clientsVideo = readStored('paperware_clients_video');
       if (clientsVideo) setClientsVideoUrl(clientsVideo);
       const heroContentStr = localStorage.getItem('paperware_hero_content');
       if (heroContentStr) setHeroContent(JSON.parse(heroContentStr));
-      const productsStr = localStorage.getItem('paperware_products');
+      const productsStr = readStored('paperware_products');
       if (productsStr) setProductsData(JSON.parse(productsStr));
-      const clientProjectsStr = localStorage.getItem('paperware_client_projects');
+      const clientProjectsStr = readStored('paperware_client_projects');
       if (clientProjectsStr) setClientProjects(JSON.parse(clientProjectsStr));
-      const partnersStr = localStorage.getItem('paperware_partners');
+      const partnersStr = readStored('paperware_partners');
       if (partnersStr) setPartnersData(JSON.parse(partnersStr));
-      const signingImageStr = localStorage.getItem('paperware_signing_image');
+      const signingImageStr = readStored('paperware_signing_image');
       if (signingImageStr) setSigningImage(signingImageStr);
       const aboutUsVideosStr = localStorage.getItem('paperware_about_us_videos');
       if (aboutUsVideosStr) setAboutUsVideos(JSON.parse(aboutUsVideosStr));
@@ -624,20 +592,16 @@ export function MainContent() {
             {/* 5. FEATURED PRODUCTS - PREMIUM SLIDER */}
             <DeferredSection>
               <FeaturedProductsSlider
-                products={productsData.map(p => ({
-                  ...p,
-                  id: String(p.id),
-                  description: "Premium eco-friendly packaging solution designed for modern businesses",
-                  badge: p.status === "Active" ? "New Arrival" : undefined
-                  // Phase A0: removed placeholder price ("From $29.99") and synthetic 5-star rating.
-                }))}
-                onViewProduct={(id) => {
-                  const product = productsData.find(p => String(p.id) === id);
-                  if (product) handleProductClick(product);
-                }}
+                onProducts={() => handlePageChange("products")}
+                onQuote={() => handlePageChange("quote")}
               />
             </DeferredSection>
 
+
+            {/* 5b. FACTORY CLIP - one real Paperware clip (public/media/SOURCES.txt) */}
+            <DeferredSection>
+              <HomeFactoryClip />
+            </DeferredSection>
 
             {/* 6. PREMIUM CLIENTS SHOWCASE */}
             <DeferredSection>
@@ -653,14 +617,9 @@ export function MainContent() {
               <NationwideExportSection />
             </DeferredSection>
 
-            {/* 7. PREMIUM CONTACT SECTION */}
+            {/* 7. YELLOW CTA + CONTACT CARDS + DISCOVER MORE (the site footer follows) */}
             <DeferredSection>
-              <PremiumContact onContact={() => handlePageChange("contact")} />
-            </DeferredSection>
-
-            {/* PAGE DISCOVERY - AUTO SCROLL */}
-            <DeferredSection>
-              <PageDiscovery onNavigate={handlePageChange} />
+              <HomeBottom onNavigate={handlePageChange} />
             </DeferredSection>
 
           </div>

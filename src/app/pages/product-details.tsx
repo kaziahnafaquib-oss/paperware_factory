@@ -1,6 +1,14 @@
 import imgBoxGroup from 'figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp';
 import imgBoxBeige from 'figma:asset/44417efdbf939eba86a583d08d358bb76989e3cd.webp';
 import imgBoxRed from 'figma:asset/ee1e96d0bd347161979763a2b2031584e134c4d4.webp';
+import pTakeawayFoodBox from "figma:asset/products/takeaway-food-box.webp";
+import iCafeCup from "figma:asset/industries/cafe-cup.webp";
+import pMedicineBoxes from "figma:asset/products/medicine-boxes.webp";
+import pGiftBags from "figma:asset/products/gift-bags.webp";
+import pCarryBagPink from "figma:asset/products/carry-bag-pink.webp";
+import pChowmeinBoxes from "figma:asset/products/chowmein-boxes.webp";
+import pStickers from "figma:asset/products/stickers.webp";
+import pConfectioneryBoxes from "figma:asset/products/confectionery-boxes.webp";
 import React from "react";
 import { motion, AnimatePresence } from "motion/react"; 
 import { 
@@ -16,7 +24,9 @@ import {
   Facebook, Instagram, Linkedin, MessageCircle, PlayCircle
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 const FloatingDataBits = () => {
   const [bits, setBits] = React.useState<any[]>([]);
@@ -74,6 +84,7 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactClick }: ProductDetailsProps) {
+  const go = useGo();
   const [quantity, setQuantity] = React.useState(1000); 
   const [activeTab, setActiveTab] = React.useState<string>("description");
   const [show360, setShow360] = React.useState(false);
@@ -83,6 +94,20 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
   const [selectedFinish, setSelectedFinish] = React.useState("Matte UV");
   const [activeImageIdx, setActiveImageIdx] = React.useState(0);
   const { t } = useLanguage();
+  const suggestedRef = React.useRef<HTMLDivElement>(null);
+  const clientsRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed horizontal strips: each track slides left 1:1 with the page as its section crosses the viewport.
+  useScrollScrub(() => {
+    const vh = window.innerHeight || 1;
+    [suggestedRef.current, clientsRef.current].forEach((track) => {
+      if (!track) return;
+      const wrap = track.parentElement as HTMLElement;
+      const r = wrap.getBoundingClientRect();
+      const p = clamp01((vh - r.top) / (vh + r.height));
+      const travel = Math.max(track.scrollWidth - wrap.clientWidth, 0);
+      track.style.transform = `translateX(${(-p * travel).toFixed(1)}px)`;
+    });
+  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -113,10 +138,10 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
   ];
 
   const clientVideos = [
-    { client: "Global Foods Ltd", location: "Singapore", thumb: "https://images.unsplash.com/photo-1631010231931-d2c396b444ec?auto=format&q=80&w=600" },
-    { client: "EcoBrews Co", location: "UK", thumb: "https://images.unsplash.com/photo-1661260518150-184aa3f44186?auto=format&q=80&w=600" },
-    { client: "PharmaCore", location: "Germany", thumb: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=600" },
-    { client: "Urban Retail", location: "Dubai", thumb: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&q=80&w=600" }
+    { client: "Global Foods Ltd", location: "Singapore", thumb: pTakeawayFoodBox },
+    { client: "EcoBrews Co", location: "UK", thumb: iCafeCup },
+    { client: "PharmaCore", location: "Germany", thumb: pMedicineBoxes },
+    { client: "Urban Retail", location: "Dubai", thumb: pGiftBags }
   ];
 
   const handleShare = (platform: string) => {
@@ -508,7 +533,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">Phase 1</p>
                      <p className="text-sm font-black uppercase text-[rgb(34,34,34)]">Physical Prototypes</p>
                   </div>
-                  <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#fabf37] hover:underline">
+                  <button onClick={() => go("contact")} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#fabf37] hover:underline">
                      Sample Policy <ArrowRight className="size-3" />
                   </button>
                </div>
@@ -823,22 +848,14 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
            </div>
            
            <div className="relative mb-20 md:mb-32">
-              <motion.div 
-                className="flex gap-6 md:gap-8 w-max px-4"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ 
-                  duration: 25, 
-                  ease: "linear", 
-                  repeat: Infinity 
-                }}
-              >
-                 {[...Array(2)].map((_, i) => (
+              <div ref={suggestedRef} className="flex gap-6 md:gap-8 w-max px-4 will-change-transform">
+                 {[...Array(1)].map((_, i) => (
                    <div key={i} className="flex gap-6 md:gap-8">
                       {[
-                        { name: "Eco-Pack V2", cat: "Sustainable", img: "https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?auto=format&q=80&w=400" },
-                        { name: "Industrial Wrap", cat: "Heavy Duty", img: "https://images.unsplash.com/photo-1631010231888-777b6285ef84?auto=format&q=80&w=400" },
-                        { name: "Digital Die-cut", cat: "Precision", img: "https://images.unsplash.com/photo-1746227638992-50b1e1e0d96b?auto=format&q=80&w=400" },
-                        { name: "Premium Board", cat: "Luxury", img: "https://images.unsplash.com/photo-1611423475613-e6bca6bde7bb?auto=format&q=80&w=400" }
+                        { name: "Eco-Pack V2", cat: "Sustainable", img: pCarryBagPink },
+                        { name: "Industrial Wrap", cat: "Heavy Duty", img: pChowmeinBoxes },
+                        { name: "Digital Die-cut", cat: "Precision", img: pStickers },
+                        { name: "Premium Board", cat: "Luxury", img: pConfectioneryBoxes }
                       ].map((item, idx) => (
                         <div 
                           key={idx} 
@@ -873,79 +890,11 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       ))}
                    </div>
                  ))}
-              </motion.div>
+              </div>
               <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
               <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
            </div>
 
-           {/* Quick Navigation Banners - Removed as per user request */}
-           {/* <div className="container mx-auto px-4 grid md:grid-cols-2 gap-6 md:gap-8 mb-24 md:mb-40">
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative h-[300px] md:h-[400px] rounded-[48px] overflow-hidden group cursor-pointer shadow-2xl transition-all duration-500"
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'instant' });
-                  onBack();
-                }}
-              >
-                 <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="All Products" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                 <div className="absolute inset-0 p-10 flex flex-col justify-end">
-                    <div className="flex items-center gap-3 mb-4">
-                       <div className="h-px w-8 bg-[#fabf37]" />
-                       <span className="text-[#fabf37] text-[10px] font-black uppercase tracking-[0.3em]">Full Catalog</span>
-                    </div>
-                    <h3 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter leading-tight mb-8">
-                       Explore <br /> All Products.
-                    </h3>
-                    <div className="flex items-center gap-4">
-                       <div className="size-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-[#fabf37] group-hover:text-black transition-all">
-                          <ArrowRight className="size-6" />
-                       </div>
-                       <span className="text-white/40 text-[10px] font-black uppercase tracking-widest group-hover:text-white transition-colors">Jump to Inventory</span>
-                    </div>
-                 </div>
-                 <div className="absolute top-8 right-8 text-white/10 font-black text-6xl tracking-tighter italic">01</div>
-              </motion.div>
-
-              <motion.div 
-                whileHover={{ y: -15, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative h-[300px] md:h-[400px] rounded-[48px] overflow-hidden group cursor-pointer shadow-2xl transition-all duration-500"
-                onClick={() => {
-                   if (onContactClick) {
-                     onContactClick();
-                   } else {
-                     const footer = document.querySelector('footer');
-                     if (footer) {
-                       footer.scrollIntoView({ behavior: 'smooth' });
-                     } else {
-                       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                     }
-                   }
-                }}
-              >
-                 <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1758448511255-ac2a24a135d7?auto=format&q=80&w=1000" className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" alt="Contact Us" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                 <div className="absolute inset-0 p-10 flex flex-col justify-end">
-                    <div className="flex items-center gap-3 mb-4">
-                       <div className="h-px w-8 bg-[#fabf37]" />
-                       <span className="text-[#fabf37] text-[10px] font-black uppercase tracking-[0.3em]">Direct Connect</span>
-                    </div>
-                    <h3 className="text-white text-3xl md:text-5xl font-black uppercase tracking-tighter leading-tight mb-8">
-                       Contact <br /> Headquarters.
-                    </h3>
-                    <div className="flex items-center gap-4">
-                       <div className="size-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white group-hover:text-black transition-all">
-                          <MessageCircle className="size-6" />
-                       </div>
-                       <span className="text-white/40 text-[10px] font-black uppercase tracking-widest group-hover:text-white transition-colors">Start Conversation</span>
-                    </div>
-                 </div>
-                 <div className="absolute top-8 right-8 text-white/10 font-black text-6xl tracking-tighter italic">02</div>
-              </motion.div>
-           </div> */}
         </div>
 
         {/* Client Success Showcases - MOVED BELOW TECHNICAL TAGS */}
@@ -967,16 +916,8 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
 
            <div className="relative">
               <div className="overflow-hidden pb-8 md:pb-12 relative no-scrollbar">
-                <motion.div 
-                  className="flex gap-6 md:gap-8 w-max"
-                  animate={{ x: ["0%", "-50%"] }}
-                  transition={{ 
-                    duration: 40, 
-                    ease: "linear", 
-                    repeat: Infinity 
-                  }}
-                >
-                   {[...clientVideos, ...clientVideos].map((video, idx) => (
+                <div ref={clientsRef} className="flex gap-6 md:gap-8 w-max will-change-transform">
+                   {clientVideos.map((video, idx) => (
                      <motion.div 
                        key={idx}
                        whileHover={{ y: -10 }}
@@ -999,7 +940,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                         </div>
                      </motion.div>
                    ))}
-                </motion.div>
+                </div>
               </div>
               {/* Scroll Indicator Overlay */}
               <div className="absolute right-0 top-0 bottom-12 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none" />

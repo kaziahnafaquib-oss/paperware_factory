@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Factory, ShieldCheck, Truck, Anchor, Zap, Box, CircleCheck } from "lucide-react";
+import { useGo } from "../../lib/useGo";
 
 export function ProductionTimeline() {
+  const go = useGo();
   const steps = [
     {
       id: "01",
@@ -106,7 +108,7 @@ export function ProductionTimeline() {
               )}
               
               <div className="mt-8 pt-8 border-t border-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="text-[10px] font-black uppercase tracking-widest text-[#fabf37] flex items-center gap-2 hover:gap-4 transition-all">
+                <button onClick={() => go("compliance")} className="text-[10px] font-black uppercase tracking-widest text-[#fabf37] flex items-center gap-2 hover:gap-4 transition-all">
                   View Protocol <div className="h-[1px] w-4 bg-[#fabf37]" />
                 </button>
               </div>

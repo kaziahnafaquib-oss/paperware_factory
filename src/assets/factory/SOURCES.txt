@@ -1,0 +1,19 @@
+# About page factory photos (file <- origin). All WebP, max 1600px long edge, quality 82 (sharp; sips on this Mac cannot write WebP).
+# Origin: approved brand-memory library ~/paperware-data/marketing-media/library/<hash>.jpg (copied, originals untouched).
+floor-wide.webp             <- 453a89ad2eee9e67674c.jpg   production floor, wide            Hero background
+floor-cup-machines.webp     <- 34400d645d2a51a8024c.jpg   floor with cup machines           Factory Floor strip
+cup-forming-machines.webp   <- 9f6e7e5c51b542e11269.jpg   cup forming machines              Lamination Unit thumb, Factory Floor strip
+qc-technician.webp          <- abc3add3833d6576a2d9.jpg   QC lab technician testing cups    Mandate: Hygiene
+qc-cup-inspection.webp      <- ca81d7a06f03a5383697.jpg   QC cup inspection                 Mandate: Precision, Journey video poster
+qc-weighing.webp            <- 66c78da63c7d42dabd16.jpg   QC weighing/inspection            Factory Floor strip
+qc-leak-test.webp           <- aa45ce41118f4ec7903f.jpg   QC hot-water leak test            Factory Floor strip
+cups-stacking.webp          <- 064c002b822178b2ca2e.jpg   formed cups stacking              Mandate: Biodegradable
+forming-closeup.webp        <- ca297b82f6212799930a.jpg   cup forming machine close-up      Forming Unit thumb
+forming-turret.webp         <- 3f47dddb6873f35c8efa.jpg   cup forming turret                Cutting Unit thumb
+press-operator.webp         <- 9cae9cf04ba8bf6e98f6.jpg   printing press operator           Factory Floor strip
+offset-press.webp           <- d5460f6ccb1c8b375d83.jpg   offset printing press             Printing Unit thumb
+team.webp                   <- 5a23f44eadc2a14db3ec.jpg   factory team group photo          Mandate: Global Logistics, Factory Floor strip
+operator-inspecting.webp    <- 39429626237f92313512.jpg   operator inspecting a cup         Factory Floor strip
+operators-cup-machines.webp <- cecd2bfe80e95cea7f76.jpg   operators at cup machines         Factory Floor strip
+operator-forming-line.webp  <- da3bdffe8fc39173518b.jpg   operator at forming line          Smart Manufacturing image
+# public/media/factory-tour.mp4 <- "PAPERWARE BRANDING 2/Paperware social post /snapsave-app_1235598708017185_hd.mp4" (720x1280, 49 s, 9.1 MB) re-encoded with AVFoundation (AVAssetWriter): H.264 High 540x960 @ 420 kbps + AAC mono 40 kbps, 2.8 MB. avconvert presets were either too small (LowQuality 124x224, Cellular 168x300) or too large (M4V480pSD 7.6 MB).

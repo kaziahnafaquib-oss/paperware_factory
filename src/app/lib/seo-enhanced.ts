@@ -53,8 +53,8 @@ export const pageSEOConfig: Record<string, PageSEO> = {
         availableLanguage: ['en', 'bn', 'ar']
       },
       sameAs: [
-        'https://facebook.com/paperware',
-        'https://instagram.com/paperware',
+        'https://www.facebook.com/paperwarefactory',
+        'https://www.instagram.com/paperware_factory/',
         'https://linkedin.com/company/paperware'
       ],
       aggregateRating: {

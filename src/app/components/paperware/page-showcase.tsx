@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
+import { useScrollScrub, clamp01 } from "../../lib/useScrollScrub";
 import { 
   Users, ShoppingBag, Coffee, FileText, Utensils, Megaphone, Pill, 
   ShoppingBasket, Shirt, Leaf, Lightbulb, Phone, FileQuestion, Briefcase, 
@@ -44,10 +45,19 @@ const pages = [
 ];
 
 export function PageShowcase({ onNavigate }: PageShowcaseProps) {
+  const stripRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed: the whole marquee strip drifts left with the page on top of its own loop.
+  useScrollScrub(() => {
+    const strip = stripRef.current;
+    if (!strip) return;
+    const vh = window.innerHeight || 1;
+    const r = strip.getBoundingClientRect();
+    const p = clamp01((vh - r.top) / (vh + r.height));
+    strip.style.transform = `translateX(${(-p * 240).toFixed(1)}px)`;
+  });
   return (
     <section className="py-24 bg-zinc-950 relative overflow-hidden border-t border-zinc-900">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#fabf37]/50 to-transparent" />
       
       <div className="container mx-auto px-4 mb-16 text-center relative z-10">
@@ -81,6 +91,7 @@ export function PageShowcase({ onNavigate }: PageShowcaseProps) {
         <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
 
         {/* Row 1 - Moving Left */}
+        <div ref={stripRef} className="will-change-transform">
         <motion.div 
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
@@ -113,6 +124,7 @@ export function PageShowcase({ onNavigate }: PageShowcaseProps) {
             </div>
           ))}
         </motion.div>
+        </div>
       </div>
     </section>
   );

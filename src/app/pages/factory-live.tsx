@@ -1,58 +1,88 @@
 import React from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Activity, Factory, Zap, Users, Thermometer, Box, TrendingUp, AlertCircle, Play, Pause, Camera, Radio, Globe } from "lucide-react";
+import { Play, Pause } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
+import imgFloorCupMachines from "../../assets/factory/floor-cup-machines.webp";
+import imgQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
+import imgCupsStacking from "../../assets/factory/cups-stacking.webp";
+import imgOperatorForming from "../../assets/factory/operator-forming-line.webp";
 
-const data = [
-  { time: "08:00", output: 1200, energy: 450 },
-  { time: "10:00", output: 1800, energy: 520 },
-  { time: "12:00", output: 1600, energy: 480 },
-  { time: "14:00", output: 2400, energy: 610 },
-  { time: "16:00", output: 2100, energy: 580 },
-  { time: "18:00", output: 2800, energy: 650 },
-  { time: "20:00", output: 2600, energy: 630 },
-];
+const TOUR_VIDEO = `${import.meta.env.BASE_URL}media/factory-tour.mp4`;
 
 export function FactoryLivePage() {
-  const { t, isRTL } = useLanguage();
+  const { isRTL } = useLanguage();
   const [activeCam, setActiveCam] = React.useState(0);
-  const [isLive, setIsLive] = React.useState(true);
+  const [isPlaying, setIsPlaying] = React.useState(true);
+  const [tourPaused, setTourPaused] = React.useState(false);
+  const tourRef = React.useRef<HTMLVideoElement>(null);
 
+  const toggleTour = () => {
+    const v = tourRef.current;
+    if (!v) return;
+    if (v.paused) { void v.play(); setTourPaused(false); } else { v.pause(); setTourPaused(true); }
+  };
+
+  // Real photos from the Paperware floor (see src/assets/factory/SOURCES.txt).
   const cams = [
-    { id: "CAM-01", name: "Main Assembly Line", location: "Sector A", img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" },
-    { id: "CAM-02", name: "Quality Control", location: "Sector B", img: "https://images.unsplash.com/photo-1565106430482-8f6e74349ca1?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" },
-    { id: "CAM-03", name: "Warehouse Logistics", location: "Loading Dock", img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1200" }
+    { id: "Floor 01", name: "Cup forming line", location: "Production Floor", img: imgFloorCupMachines },
+    { id: "Floor 02", name: "Quality control", location: "QC Bench", img: imgQcCupInspection },
+    { id: "Floor 03", name: "Stacking & packing", location: "Finishing", img: imgCupsStacking }
   ];
 
+  const headRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: header drifts up and fades; the two media frames rise and settle in sequence.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const head = headRef.current;
+    if (head) {
+      const p = clamp01(window.scrollY / (h * 0.6));
+      head.style.transform = `translate3d(0,${(p * 80).toFixed(1)}px,0)`;
+      head.style.opacity = (1 - 0.7 * p).toFixed(3);
+    }
+    const grid = gridRef.current;
+    if (grid) {
+      const r = grid.getBoundingClientRect();
+      const tp = clamp01((h - r.top) / (h * 0.7));
+      grid.querySelectorAll<HTMLElement>("[data-frame]").forEach((el, i) => {
+        const u = easeOut3((tp - i * 0.15) / 0.6);
+        el.style.transform = `translate3d(0,${((1 - u) * 72).toFixed(1)}px,0) scale(${(0.96 + 0.04 * u).toFixed(4)})`;
+        el.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+      });
+    }
+  });
+
   return (
-    <div className={`min-h-screen bg-[#0a0a0a] text-white pt-32 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
-      
+    <div className={`min-h-screen bg-[#0a0a0a] text-white pt-32 pb-20 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
+
       {/* Industrial Top Header */}
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-16">
+        <div ref={headRef} className="flex flex-col md:flex-row items-center justify-between gap-8 mb-16 will-change-transform">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="size-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500">Factory Floor</span>
+              <div className="size-2 rounded-full bg-[#fabf37]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">From the floor</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
               Factory <span className="text-zinc-500">Ops</span> <br /> <span className="text-[#fabf37]">Floor</span>
             </h1>
           </div>
-
+          <p className="max-w-xs text-xs font-bold text-zinc-500 uppercase tracking-widest leading-relaxed md:text-right">
+            Photos and a short clip from our Dhaka production floor.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          
-          {/* Live Feed Section */}
-          <div className="lg:col-span-12 space-y-6">
-            <div className="relative aspect-video bg-black rounded-[48px] overflow-hidden border border-white/10 shadow-2xl group">
-              {/* Camera Metadata Overlay */}
-              <div className="absolute top-8 left-8 z-20 flex items-center gap-4">
+        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+
+          {/* Floor Photos */}
+          <div data-frame className="lg:col-span-8 will-change-transform">
+            <div className="relative aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[640px] bg-black rounded-[48px] overflow-hidden border border-white/10 shadow-2xl group">
+              {/* Frame Metadata Overlay */}
+              <div className="absolute top-8 left-8 z-20 flex flex-wrap items-center gap-4">
                 <div className="px-4 py-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3">
-                  <div className="size-1.5 rounded-full bg-red-600 animate-ping" />
+                  <div className="size-1.5 rounded-full bg-[#fabf37]" />
                   <span className="text-[9px] font-black uppercase tracking-widest">{cams[activeCam].id}</span>
                 </div>
                 <div className="px-4 py-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full">
@@ -61,43 +91,79 @@ export function FactoryLivePage() {
               </div>
 
               <div className="absolute top-8 right-8 z-20">
-                <button 
-                  onClick={() => setIsLive(!isLive)}
-                  aria-label={isLive ? "Pause live feed" : "Play live feed"}
+                <button
+                  type="button"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  aria-pressed={!isPlaying}
+                  aria-label={isPlaying ? "Pause slow zoom" : "Play slow zoom"}
                   className="size-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-colors"
                 >
-                  {isLive ? <Pause className="size-5" /> : <Play className="size-5" />}
+                  {isPlaying ? <Pause className="size-5" /> : <Play className="size-5" />}
                 </button>
               </div>
 
-              {/* Static Grain Overlay */}
-              <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay z-10 bg-[url('https://www.transparenttextures.com/patterns/black-linen.png')]" />
-
-              <ImageWithFallback 
-                src={cams[activeCam].img} 
-                alt="Factory Feed" 
-                className={`size-full object-cover transition-transform duration-[10s] ease-linear ${isLive ? 'scale-110' : 'scale-100'}`} 
+              <ImageWithFallback
+                key={activeCam}
+                src={cams[activeCam].img}
+                alt={cams[activeCam].name}
+                loading="eager"
+                className={`size-full object-cover transition-transform duration-[10s] ease-linear ${isPlaying ? 'scale-110' : 'scale-100'}`}
               />
 
-              {/* Camera Switcher Bar */}
+              {/* Frame Switcher Bar */}
               <div className="absolute bottom-8 left-8 right-8 z-20 flex items-center gap-4">
+                <p className="text-[10px] font-black uppercase tracking-widest text-white/80">{cams[activeCam].name}</p>
                 <div className="flex-1 h-px bg-white/10" />
                 <div className="flex gap-2">
-                  {cams.map((_, i) => (
-                    <button 
+                  {cams.map((cam, i) => (
+                    <button
                       key={i}
+                      type="button"
                       onClick={() => setActiveCam(i)}
-                      aria-label={`Camera ${i + 1}`}
+                      aria-label={cam.name}
                       aria-pressed={activeCam === i}
-                      className={`size-3 rounded-full transition-all ${activeCam === i ? 'bg-[#fabf37] w-12' : 'bg-white/20'}`}
+                      className={`h-3 rounded-full transition-all ${activeCam === i ? 'bg-[#fabf37] w-12' : 'bg-white/20 w-3'}`}
                     />
                   ))}
                 </div>
               </div>
             </div>
-
           </div>
 
+          {/* Portrait clip from the floor */}
+          <div data-frame className="lg:col-span-4 will-change-transform">
+            <div className="relative mx-auto max-w-[360px] lg:max-w-none aspect-[9/16] bg-zinc-900 rounded-[48px] overflow-hidden border border-white/10 shadow-2xl">
+              <video
+                ref={tourRef}
+                className="absolute inset-0 size-full object-cover"
+                poster={imgOperatorForming}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              >
+                <source src={TOUR_VIDEO} type="video/mp4" />
+              </video>
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+              <div className="absolute top-6 left-6 px-4 py-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full">
+                <span className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">Floor clip</span>
+              </div>
+              <button
+                type="button"
+                onClick={toggleTour}
+                aria-pressed={tourPaused}
+                aria-label={tourPaused ? "Play factory clip" : "Pause factory clip"}
+                className="absolute top-6 right-6 size-11 rounded-full bg-black/70 text-white border border-white/10 flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37]"
+              >
+                {tourPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+              </button>
+              <p className="absolute bottom-6 left-6 right-6 text-[10px] font-black uppercase tracking-widest text-white/80">
+                Factory tour, Dhaka
+              </p>
+            </div>
+          </div>
 
         </div>
       </div>

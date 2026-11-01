@@ -1,11 +1,16 @@
 import React from "react";
 import { motion } from "motion/react";
-import { MapPin, Truck, Box } from "lucide-react";
-import { useReducedMotionPreference } from "../../lib/reducedMotion";
+import { MapPin, Truck, Box, Pause, Play } from "lucide-react";
 
 export function NationwideExportSection() {
-  // Phase A: don't autoplay the looping map video for visitors who prefer reduced motion; offer controls instead.
-  const reducedMotion = useReducedMotionPreference();
+  // The map video plays for everyone (owner request) and has its own pause button (WCAG 2.2.2).
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [mapPaused, setMapPaused] = React.useState(false);
+  const toggleMap = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { void v.play(); setMapPaused(false); } else { v.pause(); setMapPaused(true); }
+  };
   return (
     <section className="py-40 bg-white relative overflow-hidden">
       {/* Animated Background */}
@@ -87,16 +92,16 @@ export function NationwideExportSection() {
                 {/* Video Map - Larger Size */}
                 <div className="absolute inset-0 flex items-center justify-center pl-8 pr-2 z-10">
                   <video 
+                    ref={videoRef}
                     className="w-full h-full object-contain scale-95"
                     style={{ filter: 'contrast(1.3) brightness(1.1)' }}
                     width="720" 
                     height="720" 
-                    autoPlay={!reducedMotion}
-                    controls={reducedMotion}
+                    autoPlay
                     loop 
                     muted 
                     playsInline
-                    preload={reducedMotion ? "none" : "auto"}
+                    preload="auto"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
@@ -105,6 +110,15 @@ export function NationwideExportSection() {
                     <source src="https://paperware.definedsolution.com/wp-content/uploads/2025/06/map0001-0300.webm" type="video/webm" />
                   </video>
                 </div>
+                <button
+                  type="button"
+                  onClick={toggleMap}
+                  aria-pressed={mapPaused}
+                  aria-label={mapPaused ? "Play map animation" : "Pause map animation"}
+                  className="absolute top-8 right-8 z-20 size-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37] focus-visible:ring-offset-2"
+                >
+                  {mapPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+                </button>
                 
                 <motion.div 
                   animate={{ opacity: [1, 0.3, 1] }}

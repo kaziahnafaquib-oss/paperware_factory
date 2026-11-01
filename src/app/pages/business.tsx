@@ -10,6 +10,14 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
+import fFloorCupMachines from "figma:asset/factory/floor-cup-machines.webp";
+import fQcCupInspection from "figma:asset/factory/qc-cup-inspection.webp";
+import fFormingTurret from "figma:asset/factory/forming-turret.webp";
+import iCafeCup from "figma:asset/industries/cafe-cup.webp";
+import fFloorWide from "figma:asset/factory/floor-wide.webp";
+import fTeam from "figma:asset/factory/team.webp";
+import { useGo } from "../lib/useGo";
 
 const HUDDecor = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
@@ -71,7 +79,21 @@ const ServiceCard = ({ icon: Icon, title, desc, tags }: { icon: any; title: stri
 );
 
 export function BusinessPage() {
+  const go = useGo();
   const { t } = useLanguage();
+  const bannersRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed: each ecosystem banner's photo parallaxes inside its frame as it crosses the viewport.
+  useScrollScrub(() => {
+    const root = bannersRef.current;
+    if (!root) return;
+    const vh = window.innerHeight || 1;
+    root.querySelectorAll<HTMLElement>("[data-parallax]").forEach((layer) => {
+      const frame = layer.parentElement as HTMLElement;
+      const r = frame.getBoundingClientRect();
+      const p = clamp01((vh - r.top) / (vh + r.height));
+      layer.style.transform = `translateY(${((p - 0.5) * 0.24 * r.height).toFixed(1)}px)`;
+    });
+  });
 
   return (
     <div className="bg-[#fcfcfc] min-h-screen font-['Poppins',sans-serif] overflow-hidden">
@@ -104,10 +126,10 @@ export function BusinessPage() {
             </p>
 
             <div className="flex flex-wrap justify-center gap-6 pt-8">
-              <button className="px-12 py-6 bg-black text-white rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-[#fabf37] hover:text-black transition-all shadow-2xl">
+              <button onClick={() => go("contact")} className="px-12 py-6 bg-black text-white rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-[#fabf37] hover:text-black transition-all shadow-2xl">
                 Technical Consultation
               </button>
-              <button className="px-12 py-6 bg-white border border-black/10 text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-zinc-50 transition-all">
+              <button onClick={() => go("factory-live")} className="px-12 py-6 bg-white border border-black/10 text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-zinc-50 transition-all">
                 Factory Tour (Virtual)
               </button>
             </div>
@@ -132,7 +154,7 @@ export function BusinessPage() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="relative group">
                <div className="absolute inset-0 rounded-[48px] overflow-hidden opacity-0 group-hover:opacity-10 transition-opacity duration-700">
-                  <ImageWithFallback src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&q=80&w=1200" alt="Mass Production" className="size-full object-cover" />
+                  <ImageWithFallback src={fFloorCupMachines} alt="Mass Production" className="size-full object-cover" />
                </div>
                <ServiceCard 
                  icon={Factory}
@@ -143,7 +165,7 @@ export function BusinessPage() {
             </div>
             <div className="relative group">
                <div className="absolute inset-0 rounded-[48px] overflow-hidden opacity-0 group-hover:opacity-10 transition-opacity duration-700">
-                  <ImageWithFallback src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1200" alt="Precision" className="size-full object-cover" />
+                  <ImageWithFallback src={fQcCupInspection} alt="Precision" className="size-full object-cover" />
                </div>
                <ServiceCard 
                  icon={Settings}
@@ -154,7 +176,7 @@ export function BusinessPage() {
             </div>
             <div className="relative group">
                <div className="absolute inset-0 rounded-[48px] overflow-hidden opacity-0 group-hover:opacity-10 transition-opacity duration-700">
-                  <ImageWithFallback src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=1200" alt="Automation" className="size-full object-cover" />
+                  <ImageWithFallback src={fFormingTurret} alt="Automation" className="size-full object-cover" />
                </div>
                <ServiceCard 
                  icon={Cpu}
@@ -175,19 +197,19 @@ export function BusinessPage() {
             <p className="text-zinc-400 text-[10px] font-black uppercase tracking-[0.4em] mt-2">Scale with the Paperware Node</p>
           </div>
 
-          <div className="grid gap-8">
+          <div ref={bannersRef} className="grid gap-8">
             {/* Franchise Banner */}
             <motion.div 
               whileHover={{ scale: 1.01 }}
               className="relative h-[350px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
             >
-              <ImageWithFallback src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200" alt="Franchise" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+              <div data-parallax className="absolute inset-x-0 -top-[12%] -bottom-[12%] will-change-transform"><ImageWithFallback src={iCafeCup} alt="Franchise" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" /></div>
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
               <div className="absolute inset-0 p-12 flex flex-col justify-center max-w-xl text-white">
                 <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Expansion Protocol</div>
                 <h3 className="text-5xl font-black uppercase tracking-tighter mb-4">Franchise<br />Opportunities</h3>
                 <p className="text-white/60 mb-8 font-medium">Own a piece of the manufacturing revolution. Deploy a localized Paperware node in your region.</p>
-                <button className="w-fit px-8 py-4 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all">
+                <button onClick={() => go("franchise")} className="w-fit px-8 py-4 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-white transition-all">
                   Launch Franchise Page
                 </button>
               </div>
@@ -199,13 +221,13 @@ export function BusinessPage() {
                 whileHover={{ scale: 1.01 }}
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
-                <ImageWithFallback src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80&w=1200" alt="Investor" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div data-parallax className="absolute inset-x-0 -top-[12%] -bottom-[12%] will-change-transform"><ImageWithFallback src={fFloorWide} alt="Investor" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" /></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Capital Growth</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Investor<br />Relations</h3>
                   <p className="text-white/60 mb-8 font-medium text-sm">Join us in financing the future of sustainable industrial manufacturing.</p>
-                  <button className="w-fit px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
+                  <button onClick={() => go("investor")} className="w-fit px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
                     Investor Portal
                   </button>
                 </div>
@@ -216,13 +238,13 @@ export function BusinessPage() {
                 whileHover={{ scale: 1.01 }}
                 className="relative h-[450px] rounded-[64px] overflow-hidden border border-black/5 group cursor-pointer"
               >
-                <ImageWithFallback src="https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&fit=crop&q=80&w=1200" alt="Partners" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+                <div data-parallax className="absolute inset-x-0 -top-[12%] -bottom-[12%] will-change-transform"><ImageWithFallback src={fTeam} alt="Partners" className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" /></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
                 <div className="absolute inset-0 p-12 flex flex-col justify-end text-white">
                   <div className="text-[10px] font-black text-[#fabf37] uppercase tracking-[0.4em] mb-4">Global Network</div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">Partner<br />Program</h3>
                   <p className="text-white/60 mb-8 font-medium text-sm">Strategic alliances for logistics, raw materials, and digital infrastructure.</p>
-                  <button className="w-fit px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
+                  <button onClick={() => go("partners")} className="w-fit px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all">
                     Partner Network
                   </button>
                 </div>
@@ -284,10 +306,10 @@ export function BusinessPage() {
                 Book a technical consultation with our engineering team to discuss your manufacturing specifications and ERP integration.
               </p>
               <div className="flex flex-wrap justify-center gap-6">
-                <button className="px-16 py-8 bg-black text-white rounded-full font-black text-[12px] uppercase tracking-[0.4em] hover:bg-[#fabf37] hover:text-black transition-all shadow-xl">
+                <button onClick={() => go("contact")} className="px-16 py-8 bg-black text-white rounded-full font-black text-[12px] uppercase tracking-[0.4em] hover:bg-[#fabf37] hover:text-black transition-all shadow-xl">
                   Contact Sales Node
                 </button>
-                <button className="px-16 py-8 bg-zinc-100 text-black rounded-full font-black text-[12px] uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all">
+                <button onClick={() => go("quote")} className="px-16 py-8 bg-zinc-100 text-black rounded-full font-black text-[12px] uppercase tracking-[0.4em] hover:bg-black hover:text-white transition-all">
                   Request RFQ
                 </button>
               </div>

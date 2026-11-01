@@ -3,16 +3,23 @@ import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import imgPaperBag from "figma:asset/26c3dd878dc6b8092048a743d91266cdd41f2a79.webp";
 import { useLanguage } from "../../context/LanguageContext";
+import { useScrollScrub, easeOut3 } from "../../lib/useScrollScrub";
 
 export function FeaturedProducts() {
   const { t } = useLanguage();
+  const bagRef = React.useRef<HTMLImageElement>(null);
+  // Scroll-scrubbed: the bag rises and settles to full size as the section enters.
+  useScrollScrub(() => {
+    const img = bagRef.current;
+    if (!img) return;
+    const vh = window.innerHeight || 1;
+    const r = img.getBoundingClientRect();
+    const t = easeOut3((vh - r.top) / (vh * 0.7));
+    img.style.transform = `translateY(${((1 - t) * 60).toFixed(1)}px) scale(${(0.9 + 0.1 * t).toFixed(4)})`;
+  });
 
   return (
     <section className="relative py-48 bg-[#fabf37] overflow-hidden">
-      {/* Texture */}
-      <div className="absolute inset-0 opacity-5 mix-blend-overlay" 
-        style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/paper-fibers.png')" }} 
-      />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-20 md:mb-32 space-y-4">
@@ -60,19 +67,14 @@ export function FeaturedProducts() {
               </motion.button>
             </div>
 
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
-              whileInView={{ scale: 1, opacity: 1, rotate: 0 }}
-              transition={{ duration: 1, type: "spring", bounce: 0.4 }}
-              className="relative group w-full flex flex-col items-center"
-            >
+            <div className="relative group w-full flex flex-col items-center">
               {/* Glow effect behind image */}
               <div className="absolute inset-0 bg-white/20 blur-[60px] md:blur-[100px] rounded-full scale-110 md:scale-150 -z-10" />
               
-              <img loading="lazy" decoding="async" 
+              <img ref={bagRef} loading="lazy" decoding="async" 
                 src={imgPaperBag} 
                 alt="Paper Bag" 
-                className="h-[300px] md:h-[450px] w-auto drop-shadow-[0_30px_50px_rgba(0,0,0,0.4)] transition-transform duration-700 group-hover:scale-105" 
+                className="h-[300px] md:h-[450px] w-auto drop-shadow-[0_30px_50px_rgba(0,0,0,0.4)] will-change-transform" 
               />
               
               <div className="text-center mt-12 md:mt-16 space-y-6 md:space-y-8">
@@ -89,7 +91,7 @@ export function FeaturedProducts() {
                   {t('view_details')}
                 </motion.button>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Detail */}

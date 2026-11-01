@@ -4,44 +4,34 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "mot
 import { Facebook, Instagram, Linkedin, Globe, ArrowRight, Music2, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
 import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.webp";
 import { useLanguage } from "../context/LanguageContext";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import imgTakeaway from "@/assets/products/takeaway-food-box.webp";
+import imgGiftBags from "@/assets/products/gift-bags.webp";
+import imgCookie from "@/assets/products/cookie-boxes.webp";
+import imgTissue from "@/assets/products/tissue-boxes.webp";
+import { LiveSocialFeeds } from "../components/paperware/live-social-feeds";
 
-// Optimized sub-component to reduce re-renders
-const SocialCard = React.memo(({ post, i }: { post: any, i: number }) => {
-  const { t } = useLanguage();
-  return (
-    <motion.div 
-      whileHover={{ y: -8 }}
-      className="inline-block w-[280px] sm:w-[360px] md:w-[420px] shrink-0 bg-white border border-black/5 rounded-[32px] md:rounded-[48px] overflow-hidden shadow-sm group hover:border-[#fabf37] hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 cursor-pointer will-change-transform"
-    >
-      <div className="h-48 sm:h-64 md:h-72 relative overflow-hidden bg-zinc-100">
-        <ImageWithFallback 
-          src={`${post.image}&auto=format&fit=crop&w=600&q=75`} 
-          alt={post.platform} 
-          className="size-full object-cover group-hover:scale-105 transition-transform duration-1000" 
-        />
-        <div className="absolute top-4 left-4 md:top-6 md:left-6 p-2 bg-black/80 backdrop-blur-md rounded-xl border border-white/10">
-          <post.icon className="size-3.5 md:size-4 text-[#fabf37]" />
-        </div>
+// Real profile cards: product photo + link to the real profile only. No posts are shown.
+const ProfileCard = React.memo(({ link, img }: { link: { url: string; handle: string; icon: any }; img: string }) => (
+  <motion.a
+    href={link.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ y: -8 }}
+    className="group block bg-white border border-black/5 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
+  >
+    <div className="aspect-[4/3] relative overflow-hidden bg-zinc-100">
+      <img loading="lazy" src={img} alt="" className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <div className="absolute top-4 left-4 p-2 bg-black/80 rounded-xl border border-white/10">
+        <link.icon className="size-4 text-[#fabf37]" />
       </div>
-      <div className="p-6 md:p-10 space-y-4 md:space-y-6 whitespace-normal">
-        <div className="flex items-center justify-between">
-          <p className="text-[9px] md:text-[11px] font-black uppercase tracking-widest text-[#fabf37]">{post.platform}</p>
-          <p className="text-[8px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{post.date}</p>
-        </div>
-        <p className="text-sm sm:text-lg md:text-xl font-bold text-zinc-800 leading-tight min-h-[40px] md:min-h-[56px]">
-          {post.caption}
-        </p>
-        <div className="flex items-center gap-2 md:gap-3 pt-1 md:pt-2">
-          <div className="size-1.5 md:size-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-          <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400">{t('view_on_platform')}</span>
-        </div>
-      </div>
-    </motion.div>
-  );
-});
-
-SocialCard.displayName = "SocialCard";
+    </div>
+    <div className="p-6 flex items-center justify-between gap-3 bg-[#fabf37]">
+      <p className="text-xs font-black uppercase tracking-tight text-black truncate">{link.handle}</p>
+      <ArrowRight className="size-4 text-black shrink-0" />
+    </div>
+  </motion.a>
+));
+ProfileCard.displayName = "ProfileCard";
 
 export function SocialsPage() {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -69,9 +59,6 @@ export function SocialsPage() {
   const phoneOpacity = useTransform(scrollYProgress, [0.14, 0.22], [0, 1]); 
   const phoneY = useTransform(scrollYProgress, [0.14, 0.3], [100, 0]);
 
-  // Background Parallax
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
 
   // 3D Phone Transforms based on scroll
   const phoneRotateX = useTransform(scrollYProgress, [0.4, 1], [15, -15]);
@@ -130,59 +117,9 @@ export function SocialsPage() {
     }
   ];
 
-  const locations = [
-    { city: "Dhaka", count: "12k" },
-    { city: "Berlin", count: "8k" },
-    { city: "Dubai", count: "15k" },
-    { city: "Tokyo", count: "5k" }
-  ];
-
-  const recentPosts = [
-    {
-      platform: "Instagram",
-      icon: Instagram,
-      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
-      caption: "Our new automated paper rolling system is live! Efficiency increased by 40%.",
-      date: "2 HOURS AGO"
-    },
-    {
-      platform: "Facebook",
-      icon: Facebook,
-      image: "https://images.unsplash.com/photo-1761034278174-bf8d69530182?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
-      caption: "Sunrise at the Trimohoni plant. Sustainable packaging starts with a vision.",
-      date: "5 HOURS AGO"
-    },
-    {
-      platform: "LinkedIn",
-      icon: Linkedin,
-      image: "https://images.unsplash.com/photo-1753758541974-e9e1d66cfbd9?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
-      caption: "Honored to be recognized for our eco-friendly packaging designs 2024.",
-      date: "1 DAY AGO"
-    },
-    {
-      platform: "TikTok",
-      icon: Music2,
-      image: "https://images.unsplash.com/photo-1721937127582-ed331de95a04?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=600",
-      caption: "Unboxing our new premium matte finish boxes. The texture is everything! ✨",
-      date: "3 HOURS AGO"
-    }
-  ];
-
   return (
     <div ref={containerRef} className="relative bg-zinc-50 min-h-screen font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black overflow-x-hidden pt-32 md:pt-40">
       
-      {/* Background Decor */}
-      <motion.div 
-        style={{ y: bgY, scale: bgScale }}
-        className="fixed inset-0 pointer-events-none opacity-[0.04] grayscale -z-20"
-      >
-        <ImageWithFallback 
-          src="https://images.unsplash.com/photo-1758440519640-7234ba375d2e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=1600"
-          alt="texture"
-          className="w-full h-full object-cover"
-        />
-      </motion.div>
-
       {/* NEW HERO SECTION: High Visibility Stay Connected */}
       <div className="relative w-full overflow-x-hidden">
         {/* Initial Hero - Visible on load */}
@@ -397,8 +334,13 @@ export function SocialsPage() {
 
             </motion.div>
 
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+              {[imgTakeaway, imgGiftBags, imgCookie, imgTissue].map((img, i) => (
+                <ProfileCard key={i} link={socialLinks[i]} img={img} />
+              ))}
+            </div>
 
-
+            <LiveSocialFeeds />
 
           </div>
         </div>

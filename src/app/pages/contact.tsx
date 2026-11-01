@@ -1,5 +1,5 @@
 import React from "react";
-import { openWhatsAppInquiry, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY, SALES_EMAIL } from "../lib/inquiry";
+import { openWhatsAppInquiry, mailtoUrl, LOCATIONS, mapEmbedUrl, mapDirectionsUrl, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Mail, Phone, MapPin, ChevronDown,
@@ -82,6 +82,9 @@ interface ContactPageProps {
 
 export function ContactPage({ onFeedbackClick }: ContactPageProps) {
   const [submitted, setSubmitted] = React.useState(false);
+  const [mailHref, setMailHref] = React.useState("");
+  const [locId, setLocId] = React.useState<string>(LOCATIONS[0].id);
+  const loc = LOCATIONS.find((l) => l.id === locId) ?? LOCATIONS[0];
   const { t, isRTL } = useLanguage();
   const { openChat } = useChat();
   const { socialLinks, posts: contextPosts } = useSocialMedia();
@@ -117,7 +120,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const get = (key: string) => String(data.get(key) ?? "");
-    openWhatsAppInquiry("Contact inquiry", {
+    const fields = {
       Name: get("name"),
       Designation: get("designation"),
       Company: get("company"),
@@ -127,7 +130,10 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
       Country: get("country"),
       Requirement: get("requirement"),
       Message: get("message"),
-    });
+    };
+    if (!fields.Name.trim() || !(fields["Phone/WhatsApp"].trim() || fields.Email.trim()) || !fields.Message.trim()) return;
+    openWhatsAppInquiry("Contact inquiry", fields);
+    setMailHref(mailtoUrl("Contact inquiry", fields));
     setSubmitted(true);
   };
 
@@ -272,15 +278,22 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     <div>
                       <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">{t('head_office')}</h4>
                       <p className="font-bold text-[9px] lg:text-[10px] leading-tight text-black">
-                        7813, Main Road, <br />
-                        Trimohoni, Nandipara, Dhaka
+                        7813 Trimohoni Nandipara <br />
+                        Main Road, Dhaka
                       </p>
                     </div>
                     <div>
                       <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">{t('factory_address')}</h4>
                       <p className="font-bold text-[9px] lg:text-[10px] leading-tight text-black">
-                        7814, Main Road, <br />
-                        Trimohoni, Nandipara, Dhaka
+                        7814 Trimohoni Nandipara <br />
+                        Main Road, Dhaka
+                      </p>
+                    </div>
+                    <div>
+                      <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">Display centre</h4>
+                      <p className="font-bold text-[9px] lg:text-[10px] leading-tight text-black">
+                        65 Begum Bazar, <br />
+                        Agrani Bank Lane, Dhaka
                       </p>
                     </div>
                     <a
@@ -300,7 +313,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   </div>
                   <div>
                     <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-2">{t('exec_support')}</h4>
-                    <p className="font-black text-[12px] lg:text-[13px] tracking-tight text-black">+09638-011101</p>
+                    <p className="font-black text-[12px] lg:text-[13px] tracking-tight text-black">09638011101</p>
                     <div className="flex items-center gap-2 mt-1 lg:mt-2">
                       <span className="size-1 rounded-full bg-emerald-500" />
                       <span className="text-[5px] lg:text-[6px] font-black uppercase text-emerald-600 tracking-widest">Available Now</span>
@@ -574,7 +587,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     <div role="status" aria-live="polite" className="rounded-[20px] border-2 border-[#fabf37] bg-[#fabf37]/10 p-6 space-y-2">
                       <p className="text-sm font-black text-black">{INQUIRY_HANDOFF_TITLE}</p>
                       <p className="text-sm font-medium text-zinc-700 leading-relaxed">{INQUIRY_HANDOFF_BODY}</p>
-                      <a href={`mailto:${SALES_EMAIL}`} className="inline-block text-sm font-bold text-black underline underline-offset-4">Email us instead</a>
+                      <a href={mailHref} className="inline-block text-sm font-bold text-black underline underline-offset-4">Send by email instead</a>
                     </div>
                   )}
 
@@ -586,6 +599,46 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </form>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* LOCATION MAP */}
+      <section className="container mx-auto px-4 py-16 lg:py-24">
+        <div className="bg-black rounded-[48px] lg:rounded-[60px] p-6 md:p-10 space-y-6 border border-[#fabf37]/20 shadow-2xl">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Choose location">
+              {LOCATIONS.map((l) => (
+                <button
+                  key={l.id}
+                  type="button"
+                  aria-pressed={l.id === locId}
+                  onClick={() => setLocId(l.id)}
+                  className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${l.id === locId ? "bg-[#fabf37] text-black" : "bg-white/10 text-white hover:bg-white/20"}`}
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
+            <a
+              href={mapDirectionsUrl(loc.address)}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#fabf37] transition-colors"
+            >
+              Get directions <ArrowRight className="size-3" />
+            </a>
+          </div>
+          <p className="text-white/70 text-xs font-bold">{loc.address}</p>
+          <div className="rounded-[32px] overflow-hidden bg-zinc-900 aspect-[4/3] md:aspect-[16/7]">
+            <iframe
+              src={mapEmbedUrl(loc.address)}
+              title="Paperware Factory location"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full h-full border-0"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

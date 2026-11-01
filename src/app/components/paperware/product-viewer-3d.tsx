@@ -3,6 +3,10 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { Rotate3d, Maximize2, MousePointer2, ChevronLeft, ChevronRight, Share2, Info, ArrowRight } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { useLanguage } from "../../context/LanguageContext";
+import { useScrollScrub, clamp01, easeOut3 } from "../../lib/useScrollScrub";
+import imgCupPlain from "../../../assets/cutouts/cup.webp";
+import imgCupWave from "../../../assets/cutouts/cup-wave-yellow.webp";
+import imgCupStripe from "../../../assets/cutouts/cup-stripe-orange.webp";
 
 export function ProductViewer3D() {
   const { t } = useLanguage();
@@ -36,17 +40,40 @@ export function ProductViewer3D() {
   };
 
   const views = [
-    { id: "exterior", name: "Exterior Design", img: "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&q=80&w=1080" },
-    { id: "interior", name: "Internal Coating", img: "https://images.unsplash.com/photo-1714013709645-267311b9b045?auto=format&q=80&w=1080" },
-    { id: "base", name: "Base Seal", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&q=80&w=1080" }
+    // Real Paperware cup cutouts (src/assets/cutouts): three print variants of the same cup.
+    { id: "exterior", name: "Plain", img: imgCupPlain },
+    { id: "interior", name: "Wave Print", img: imgCupWave },
+    { id: "base", name: "Stripe Print", img: imgCupStripe }
   ];
 
+  const viewerRef = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: viewer rises and settles; the text column follows with a short lag.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const viewer = viewerRef.current;
+    if (viewer) {
+      const r = viewer.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)));
+      viewer.style.transform = `translate3d(0,${((1 - u) * 72).toFixed(1)}px,0) scale(${(0.96 + 0.04 * u).toFixed(4)})`;
+      viewer.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+    }
+    const details = detailsRef.current;
+    if (details) {
+      const r = details.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)) - 0.1);
+      details.style.transform = `translate3d(0,${((1 - u) * 56).toFixed(1)}px,0)`;
+      details.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+    }
+  });
+
   return (
-    <section className="py-24 bg-white/5 text-black overflow-hidden relative backdrop-blur-sm border-y border-black/5">
+    <section className="py-24 bg-white/5 text-black overflow-x-clip relative backdrop-blur-sm border-y border-black/5">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Viewer Side */}
-          <div className="relative group">
+          <div ref={viewerRef} className="relative group will-change-transform">
             <div className="absolute -inset-10 bg-[#fabf37]/10 blur-[100px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             
             <motion.div 
@@ -111,16 +138,14 @@ export function ProductViewer3D() {
           </div>
 
           {/* Details Side */}
-          <div className="space-y-12">
+          <div ref={detailsRef} className="space-y-12 will-change-transform">
             <div className="space-y-6">
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+              <div
                 className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]"
               >
                 <div className="h-[1px] w-12 bg-[#fabf37]" />
                 {t('studio_interactive')}
-              </motion.div>
+              </div>
               <h2 className="text-4xl md:text-[80px] font-black uppercase tracking-tighter leading-none text-black">
                 360° <br /> {t('precision')} <br /> <span className="text-zinc-400 italic">{t('stable_render')}.</span>
               </h2>

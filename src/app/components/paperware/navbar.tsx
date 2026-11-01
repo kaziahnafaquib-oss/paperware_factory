@@ -3,7 +3,7 @@ import { useEscapeKey } from "../../hooks/useEscapeKey";
 import image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2 from 'figma:asset/2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2.webp';
 import { Button } from "../ui/button";
 import { Search, Phone, Send, ChevronDown, ShoppingBasket, Globe, Menu, X, Zap, Activity, Cpu, Facebook, Instagram, Linkedin, MapPin, Youtube } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, MotionConfig } from "motion/react";
 import { toast } from "sonner";
 import { useLanguage } from "../../context/LanguageContext";
 import { useSocialMedia } from "../../context/SocialMediaContext";
@@ -237,6 +237,8 @@ export const Navbar = React.memo(({
   }, [onPageChange]);
 
   return (
+    // Header animations run even with OS reduce motion (owner request); they are pointer-driven or small.
+    <MotionConfig reducedMotion="never">
     <Tooltip.Provider>
       <nav
         className={`${isMobileMenuOpen ? 'top-0 left-0 w-full h-full z-[99999]' : 'top-0 left-0 w-full z-[1001]'} font-['Poppins',sans-serif]`}
@@ -1080,6 +1082,7 @@ export const Navbar = React.memo(({
         </AnimatePresence>
       </nav>
     </Tooltip.Provider>
+    </MotionConfig>
   );
 });
 

@@ -1,0 +1,16 @@
+@keyframes pw-logo-marquee {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.pw-logo-row {
+  animation-name: pw-logo-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.pw-logo-track:hover .pw-logo-row,
+.pw-logo-track:focus-within .pw-logo-row {
+  animation-play-state: paused;
+}
+/* Owner wants continuous motion; keep it running but slower when the OS asks for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .pw-logo-row { animation-duration: 90s !important; }
+}

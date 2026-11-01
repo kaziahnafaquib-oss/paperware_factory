@@ -21,8 +21,6 @@ import {
   Cpu,
   TrendingUp,
   Clock,
-  Instagram,
-  Facebook,
   Linkedin,
   Youtube,
   Store,
@@ -55,29 +53,6 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
 
   const footerY = useTransform(smoothProgress, [0.7, 1], [100, 0]);
   const footerOpacity = useTransform(smoothProgress, [0.7, 0.9], [0, 1]);
-
-  const socialFeed = [
-    { 
-      img: "https://images.unsplash.com/photo-1759157403273-2423c0f5718b?auto=format&fit=crop&q=80&w=800",
-      cap: "Precision manufacturing at our Dhaka Core Site. Tier-1 sustainability standards in action.",
-      date: "2 HOURS AGO"
-    },
-    { 
-      img: "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?auto=format&fit=crop&q=80&w=800",
-      cap: "New luxury paper bag prototypes for our Nordic partners. Minimalist. Sustainable. Impactful.",
-      date: "1 DAY AGO"
-    },
-    { 
-      img: "https://images.unsplash.com/photo-1549382534-f304b390c268?auto=format&fit=crop&q=80&w=800",
-      cap: "Raw material audit. Only the finest High-Density Nordic fiber makes it to our production line.",
-      date: "3 DAYS AGO"
-    },
-    { 
-      img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800",
-      cap: "Engineering the future of packaging. Smart compliance is integrated into every step.",
-      date: "5 DAYS AGO"
-    }
-  ];
 
   const menuItems = [
     { name: "Franchise Opportunities", id: "franchise", icon: <Store className="size-6" />, desc: "Join our global franchise network and build your empire." },

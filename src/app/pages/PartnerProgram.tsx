@@ -38,10 +38,16 @@ import {
   Bell,
   Menu
 } from 'lucide-react';
-import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import takeawayBox from '@/assets/products/takeaway-food-box.webp';
+import chowmeinBoxes from '@/assets/products/chowmein-boxes.webp';
+import giftBags from '@/assets/products/gift-bags.webp';
+import cookieBoxes from '@/assets/products/cookie-boxes.webp';
+import tissueBoxes from '@/assets/products/tissue-boxes.webp';
 import partnerBanner from 'figma:asset/b075043713f864ee3b46a98de066b431d81fde8c.webp';
+import { useGo } from "../lib/useGo";
 
 export function PartnerProgramPage() {
+  const go = useGo();
   const { scrollY, scrollYProgress } = useScroll();
   const heroTitleY = useTransform(scrollY, [0, 500], [0, 150]);
   const heroTextY = useTransform(scrollY, [0, 500], [0, 100]);
@@ -267,45 +273,10 @@ export function PartnerProgramPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="container mx-auto px-4 mb-8"
         >
-            <p className="text-center text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] mb-8">Trusted by Global Partners</p>
-            <div className="flex overflow-hidden relative">
-                <motion.div 
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-                    className="flex gap-16 whitespace-nowrap w-max items-center"
-                >
-                    {/* Partner Logos (To be managed via Admin Portal) */}
-                    {[...Array(2)].map((_, i) => (
-                        <div key={i} className="flex gap-16 items-center shrink-0">
-                            {[
-                                { name: 'Al Arabian', src: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Fresh', src: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Bengal Classic Tea', src: 'https://images.unsplash.com/photo-1597318130878-5a2c275eb9e6?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Cafe Z', src: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Coffee Avenue', src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Crimson Cup', src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Dhakai Khana', src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Abdul Monem Ltd', src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Walton', src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'Novatek', src: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'MGI', src: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&w=400&h=200&fit=crop&q=75' },
-                                { name: 'ICDDR,B', src: 'https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?auto=format&w=400&h=200&fit=crop&q=75' }
-                            ].map((partner, idx) => (
-                                <div 
-                                    key={idx}
-                                    className="h-8 md:h-10 w-auto opacity-30 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-                                    title={partner.name}
-                                >
-                                    <ImageWithFallback 
-                                        src={partner.src}
-                                        alt={`${partner.name} Logo`}
-                                        className="h-full w-auto object-contain"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </motion.div>
+            <div className="max-w-5xl mx-auto bg-[#fabf37] text-black rounded-[32px] px-8 py-12 md:px-16 text-center">
+              <p className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-[1.1]">
+                Trusted by cafés, restaurants, hospitals and brands across Bangladesh
+              </p>
             </div>
         </motion.div>
 
@@ -728,7 +699,7 @@ export function PartnerProgramPage() {
             <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-black mb-4">Top Selling <span className="text-[#fabf37]">Products</span></h2>
             <p className="text-zinc-500 max-w-xl">High-demand packaging solutions ready for immediate wholesale distribution.</p>
           </div>
-          <button className="hidden md:flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#fabf37] hover:text-black transition-colors">
+          <button onClick={() => go("products")} className="hidden md:flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#fabf37] hover:text-black transition-colors">
             View Catalog <ArrowRight className="size-4" />
           </button>
         </div>
@@ -743,21 +714,18 @@ export function PartnerProgramPage() {
              {[...Array(2)].map((_, listIndex) => (
                <div key={listIndex} className="flex gap-6">
                  {[
-                   { name: "Double Wall Coffee Cup", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1648587456176-4969b0124b12?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMGNvZmZlZSUyMGN1cCUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3Njc2NzE4Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Best Seller" },
-                   { name: "Eco Burger Box", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1652862730730-26712af6bcac?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBib3glMjBwYWNrYWdpbmd8ZW58MXx8fHwxNzY3Nzc1NDM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Trending" },
-                   { name: "Kraft Shopping Bag", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1654160225308-9ccb4d1b38e3?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrcmFmdCUyMHBhcGVyJTIwc2hvcHBpbmclMjBiYWd8ZW58MXx8fHwxNzY3Nzc1NDQzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", tag: "Eco Friendly" },
-                   { name: "Bio-Plastic Cutlery", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1711885417467-6eac5cb81607?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "New" },
-                   { name: "Corrugated Pizza Box", price: "Price on request", min: "Flexible", img: "https://images.unsplash.com/photo-1689793600363-31a3eb87b462?auto=format&ixlib=rb-4.1.0&q=80&crop=entropy&cs=tinysrgb&w=1080&fit=max", tag: "Hot" }
+                   { name: "Takeaway Food Box", price: "Price on request", min: "Flexible", img: takeawayBox },
+                   { name: "Chowmein Boxes", price: "Price on request", min: "Flexible", img: chowmeinBoxes },
+                   { name: "Gift Bags", price: "Price on request", min: "Flexible", img: giftBags },
+                   { name: "Cookie Boxes", price: "Price on request", min: "Flexible", img: cookieBoxes },
+                   { name: "Tissue Boxes", price: "Price on request", min: "Flexible", img: tissueBoxes }
                  ].map((product, i) => (
                    <div 
                      key={i}
                      className="min-w-[280px] md:min-w-[320px] bg-white rounded-3xl p-4 border border-zinc-100 hover:border-[#fabf37] transition-all group shadow-sm hover:shadow-xl hover:-translate-y-2 whitespace-normal"
                    >
                      <div className="relative h-64 rounded-2xl overflow-hidden mb-4 bg-zinc-100">
-                       <ImageWithFallback src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                       <div className="absolute top-3 left-3 bg-black text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full">
-                         {product.tag}
-                       </div>
+                       <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                      </div>
                      <div className="px-2">
                        <h3 className="font-bold text-lg text-black mb-2">{product.name}</h3>
@@ -771,7 +739,7 @@ export function PartnerProgramPage() {
                            <span className="text-zinc-900 font-bold">{product.min}</span>
                          </div>
                        </div>
-                       <button className="w-full py-3 rounded-xl bg-zinc-100 text-black font-bold text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
+                       <button onClick={() => go("quote")} className="w-full py-3 rounded-xl bg-zinc-100 text-black font-bold text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
                          <ShoppingBag className="size-4" /> Add to Inquiry
                        </button>
                      </div>

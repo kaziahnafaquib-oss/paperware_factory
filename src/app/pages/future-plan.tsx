@@ -7,8 +7,10 @@ import {
   Calendar, Layers, ShieldCheck
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string) => void }) {
+  const go = useGo();
   const { t } = useLanguage();
 
   const roadmap = [
@@ -68,8 +70,8 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
               Where Paperware is heading: more capacity, cleaner energy and less plastic.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="bg-[#fabf37] text-black px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl flex items-center gap-3">
-                <Download className="size-5" /> Download Vision PDF
+              <button onClick={() => go("contact")} className="bg-[#fabf37] text-black px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl flex items-center gap-3">
+                <Download className="size-5" /> Request Vision PDF
               </button>
             </div>
           </div>

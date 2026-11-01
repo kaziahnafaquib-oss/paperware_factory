@@ -458,7 +458,6 @@ export function initPerformanceOptimizations() {
   try {
     // Resource hints
     const hints = new ResourceHintsManager();
-    hints.preconnect('https://images.unsplash.com');
     hints.preconnect('https://cdnjs.cloudflare.com');
     hints.dnsPrefetch('https://www.googletagmanager.com');
     hints.dnsPrefetch('https://www.google-analytics.com');

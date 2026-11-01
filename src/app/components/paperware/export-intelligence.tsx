@@ -7,6 +7,7 @@ import {
   Leaf, Search, Check, Box, Plane, Truck
 } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
+import kraftBagCutout from "@/assets/cutouts/carry-bag-kraft.webp";
 import bangladeshFlagImage from 'figma:asset/ce6bea61e31dd50e8cbf06060db17726c1c41f3a.webp';
 import paperwareShippingImage from 'figma:asset/19e5679ad58f7a50390ebe911dd3186e6a891ce7.webp';
 
@@ -140,8 +141,8 @@ export function ExportIntelligence() {
           className="absolute top-32 right-[-5%] md:right-10 w-64 md:w-96 pointer-events-none z-10 opacity-80"
        >
           <img loading="lazy" decoding="async" 
-            src="https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?q=80&w=1080&auto=format&fit=crop" 
-            alt="Cargo Ship Logistics" 
+            src={kraftBagCutout} 
+            alt="Paperware kraft carry bag" 
             className="w-full h-auto object-contain drop-shadow-2xl mix-blend-multiply"
           />
        </motion.div>

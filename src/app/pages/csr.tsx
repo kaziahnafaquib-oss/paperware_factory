@@ -316,7 +316,6 @@ export function CSRPage() {
              }}
              className="bg-[#fabf37] rounded-[40px] p-10 flex flex-col justify-between group relative overflow-hidden"
            >
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay" />
               
               <div className="relative z-10">
                 <h3 className="text-3xl font-black uppercase tracking-tight text-black mb-6">Ongoing Impact</h3>

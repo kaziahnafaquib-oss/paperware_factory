@@ -6,11 +6,37 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { openWhatsAppInquiry } from "../lib/inquiry";
 // Phase A0: replaced an unsafe stock photo (a gun silhouette) with a real packaging render from the project assets.
 import imgPrintedBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
+import imgTakeawayBox from "../../assets/products/takeaway-food-box.webp";
+import imgRippleCup from "../../assets/cutouts/cup-ripple-orange.webp";
+import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
 
 export function Catalog3DPage() {
   const { t, isRTL } = useLanguage();
   const [selectedProduct, setSelectedProduct] = React.useState(0);
   const [rotation, setRotation] = React.useState(0);
+  const headRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: header drifts up and fades; the three columns rise and settle in sequence.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const head = headRef.current;
+    if (head) {
+      const p = clamp01(window.scrollY / (h * 0.6));
+      head.style.transform = `translate3d(0,${(p * 70).toFixed(1)}px,0)`;
+      head.style.opacity = (1 - 0.7 * p).toFixed(3);
+    }
+    const grid = gridRef.current;
+    if (grid) {
+      const r = grid.getBoundingClientRect();
+      const tp = clamp01((h - r.top) / (h * 0.7));
+      grid.querySelectorAll<HTMLElement>("[data-col]").forEach((el, i) => {
+        const u = easeOut3((tp - i * 0.12) / 0.6);
+        el.style.transform = `translate3d(0,${((1 - u) * 64).toFixed(1)}px,0)`;
+        el.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+      });
+    }
+  });
 
   const products = [
     {
@@ -24,30 +50,30 @@ export function Catalog3DPage() {
     },
     {
       id: "PW-002",
-      name: "Industrial Shipping Carton",
-      description: "Triple-walled corrugated cardboard for heavy-duty global shipping.",
-      specs: ["300kg Crush Test", "Water-resistant Layer", "Stackable Design"],
-      image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
+      name: "Takeaway Food Box",
+      description: "Printed paperboard box for takeaway meals, supplied flat and folded on site.",
+      specs: ["Custom Printing", "Paperboard", "Flat-Packed"],
+      image: imgTakeawayBox,
       colors: ["#78350F", "#451A03"],
       rating: 4.8
     },
     {
       id: "PW-003",
-      name: "Eco-Coffee Carrier",
-      description: "Multi-cup high-grip carriers made from molded pulp fibers.",
-      specs: ["Spill-proof Geometry", "Paper Pulp", "Space Saving"],
-      image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&crop=entropy&cs=tinysrgb&fit=max&q=80&w=800",
+      name: "Ripple Paper Cup",
+      description: "Ripple-sleeve paper cup for hot drinks, printed to your brand.",
+      specs: ["Ripple Sleeve", "Custom Printing", "Hot Drinks"],
+      image: imgRippleCup,
       colors: ["#D1D5DB", "#9CA3AF"],
       rating: 5.0
     }
   ];
 
   return (
-    <div className={`min-h-screen bg-black text-white pt-32 pb-20 ${isRTL ? 'rtl' : 'ltr'}`}>
+    <div className={`min-h-screen bg-black text-white pt-32 pb-20 overflow-x-clip ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="container mx-auto px-4 max-w-7xl">
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+        <div ref={headRef} className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16 will-change-transform">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-[#fabf37]" />
@@ -64,10 +90,10 @@ export function Catalog3DPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
           {/* Sidebar Navigation */}
-          <div className="lg:col-span-3 space-y-4">
+          <div data-col className="lg:col-span-3 space-y-4 will-change-transform">
             <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-6 px-4">Catalog Selection</p>
             {products.map((p, idx) => (
               <button
@@ -90,7 +116,7 @@ export function Catalog3DPage() {
           </div>
 
           {/* 360 Viewer Area */}
-          <div className="lg:col-span-6 relative aspect-square bg-zinc-900 rounded-[60px] border border-white/5 flex items-center justify-center overflow-hidden group">
+          <div data-col className="lg:col-span-6 relative aspect-square bg-zinc-900 rounded-[60px] border border-white/5 flex items-center justify-center overflow-hidden group">
             {/* Background Decorations */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(250,191,55,0.05),transparent_70%)]" />
             <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
@@ -112,12 +138,12 @@ export function Catalog3DPage() {
             </motion.div>
 
             {/* Interaction UI */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-2 rounded-full border border-white/10">
+            <div className="absolute z-20 bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-2 rounded-full border border-white/10">
               <button onClick={() => setRotation(prev => prev - 45)} aria-label="Rotate left" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <RefreshCw className="size-5 text-zinc-400" />
               </button>
               <div className="h-4 w-px bg-white/10" />
-              <button className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">360 Mode</button>
+              <button onClick={() => setRotation(prev => prev + 360)} className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">360 Mode</button>
               <div className="h-4 w-px bg-white/10" />
               <button onClick={() => setRotation(prev => prev + 45)} aria-label="Rotate right" className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <Expand className="size-5 text-zinc-400" />
@@ -127,7 +153,7 @@ export function Catalog3DPage() {
           </div>
 
           {/* Details Sidebar */}
-          <div className="lg:col-span-3 space-y-8">
+          <div data-col className="lg:col-span-3 space-y-8 will-change-transform">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-black uppercase tracking-tighter">{products[selectedProduct].name}</h2>

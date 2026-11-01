@@ -1,20 +1,49 @@
 import React from "react";
-import { motion } from "motion/react";
-import { Play, ShieldCheck, Zap, Leaf, Globe, Factory, Cpu, Target, Award, ArrowRight, ChevronRight, Activity, Box } from "lucide-react";
+import { Play, ShieldCheck, Zap, Leaf, Globe, Factory, Cpu, ArrowRight, Box } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { MediaPlayer } from "../components/paperware/media-player";
 import { OurJourney } from "@/app/components/paperware/our-journey";
+import { useScrollScrub, clamp01, smooth, easeOut3 } from "../lib/useScrollScrub";
 
-// Image Assets (Replaced broken figma:asset imports with reliable Unsplash URLs)
-const imgProcess = "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?q=80&w=1080&auto=format";
-const imgHeidelberg = "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?q=80&w=1080&auto=format";
-const imgQuality = "https://images.unsplash.com/photo-1766325693346-6279a63b1fba?q=80&w=1080&auto=format";
-const imgCutting = "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?q=80&w=1080&auto=format";
-const imgFactory1 = "https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1080&auto=format";
-const imgFactory2 = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1080&auto=format";
-const imgFactory3 = "https://images.unsplash.com/photo-1730705788367-dbd288c40ee7?q=80&w=1080&auto=format";
-const imgInnovation = "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?q=80&w=1080&auto=format";
+// Real Paperware factory photos (approved brand-memory library, see src/assets/factory/SOURCES.txt).
+import fFloorWide from "../../assets/factory/floor-wide.webp";
+import fFloorCupMachines from "../../assets/factory/floor-cup-machines.webp";
+import fCupFormingMachines from "../../assets/factory/cup-forming-machines.webp";
+import fQcTechnician from "../../assets/factory/qc-technician.webp";
+import fQcWeighing from "../../assets/factory/qc-weighing.webp";
+import fQcLeakTest from "../../assets/factory/qc-leak-test.webp";
+import fQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
+import fFormingCloseup from "../../assets/factory/forming-closeup.webp";
+import fCupsStacking from "../../assets/factory/cups-stacking.webp";
+import fFormingTurret from "../../assets/factory/forming-turret.webp";
+import fPressOperator from "../../assets/factory/press-operator.webp";
+import fOffsetPress from "../../assets/factory/offset-press.webp";
+import fTeam from "../../assets/factory/team.webp";
+import fOperatorInspecting from "../../assets/factory/operator-inspecting.webp";
+import fOperatorsCupMachines from "../../assets/factory/operators-cup-machines.webp";
+import fOperatorFormingLine from "../../assets/factory/operator-forming-line.webp";
+import { useGo } from "../lib/useGo";
+
+const imgHero = fFloorWide;
+const imgInnovation = fOperatorFormingLine;
+
+const FACTORY_FLOOR = [
+  { src: fFloorCupMachines, alt: "Production floor with cup machines" },
+  { src: fCupFormingMachines, alt: "Cup forming machines" },
+  { src: fPressOperator, alt: "Printing press operator" },
+  { src: fOperatorInspecting, alt: "Operator inspecting a cup" },
+  { src: fOperatorsCupMachines, alt: "Operators at the cup machines" },
+  { src: fQcWeighing, alt: "Quality control weighing and inspection" },
+  { src: fQcLeakTest, alt: "Quality control hot-water leak test" },
+  { src: fTeam, alt: "Paperware factory team" },
+];
+
+const MANDATE = [
+  { icon: ShieldCheck, title: "Uncompromising Hygiene", desc: "Every cup is produced in a sanitized, medical-grade environment.", photo: fQcTechnician, photoAlt: "Quality control technician testing cups" },
+  { icon: Zap, title: "Precision", desc: "Automated quality checks on every production run.", photo: fQcCupInspection, photoAlt: "Quality control cup inspection" },
+  { icon: Leaf, title: "Biodegradable", desc: "Paper-based packaging and eco-friendly inks.", photo: fCupsStacking, photoAlt: "Formed paper cups stacking" },
+  { icon: Globe, title: "Global Logistics", desc: "From Dhaka to the world.", photo: fTeam, photoAlt: "Paperware factory team" }
+];
 
 interface AboutPageProps {
   aboutUsVideos?: {
@@ -30,83 +59,226 @@ interface AboutPageProps {
   };
 }
 
+/** "140K" -> { num: 140, suffix: "K" } so the number can count up while the suffix stays put. */
+function splitStat(val: string): { num: number; suffix: string } {
+  const m = /^([\d.]+)(.*)$/.exec(val);
+  return m ? { num: parseFloat(m[1]), suffix: m[2] } : { num: 0, suffix: val };
+}
+
 export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
+  const go = useGo();
   const { t } = useLanguage();
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  const heroRef = React.useRef<HTMLElement>(null);
+  const heroBgRef = React.useRef<HTMLDivElement>(null);
+  const heroHeadRef = React.useRef<HTMLHeadingElement>(null);
+  const mandateGridRef = React.useRef<HTMLDivElement>(null);
+  const statsGridRef = React.useRef<HTMLDivElement>(null);
+  const floorRef = React.useRef<HTMLElement>(null);
+  const floorTrackRef = React.useRef<HTMLDivElement>(null);
+  const smartImgRef = React.useRef<HTMLDivElement>(null);
+  const smartTextRef = React.useRef<HTMLParagraphElement>(null);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
+  const stats = React.useMemo(
+    () => [
+      {
+        val: "140K",
+        unit: "PCS/DAY",
+        label: "PRINTING UNIT",
+        icon: Factory,
+        photo: fOffsetPress,
+        photoAlt: "Offset printing press",
+        machineName: "HEIDELBERG MO-V-P",
+        detail: "HIGH-PRECISION 4-COLOR OFFSET PRINTING FOR PREMIUM BRANDING.",
+        specs: [
+          "HEIDELBERG MO-V-P (19x25.5\")",
+          "ORIGINAL HEIDELBERG (25.25x36\")",
+          "DOUBLE DEMY PLATE TECHNOLOGY"
+        ]
+      },
+      {
+        val: "350K",
+        unit: "PCS/DAY",
+        label: "FORMING UNIT",
+        icon: Box,
+        photo: fFormingCloseup,
+        photoAlt: "Cup forming machine close-up",
+        machineName: "ULTRASONIC FORMER",
+        detail: "AUTOMATED ULTRASONIC FORMING ENSURING LEAK-PROOF PRECISION.",
+        specs: ["MEDICAL GRADE HYGIENE", "AUTOMATED QUALITY CONTROL", "HIGH-SPEED PRODUCTION"]
+      },
+      {
+        val: "12K",
+        unit: "PCS/DAY",
+        label: "CUTTING UNIT",
+        icon: Cpu,
+        photo: fFormingTurret,
+        photoAlt: "Cup forming turret",
+        machineName: "DIE-CUT PRECISION",
+        detail: "PRECISION DIE-CUTTING WITH MINIMAL WASTE & LASER ACCURACY.",
+        specs: ["LASER GUIDED CALIBRATION", "ZERO-WASTE TRIMMING", "CUSTOM SHAPE SUPPORT"]
+      },
+      {
+        val: "25K",
+        unit: "PCS/DAY",
+        label: "LAMINATION UNIT",
+        icon: Zap,
+        photo: fCupFormingMachines,
+        photoAlt: "Cup forming machines",
+        machineName: "THERMAL LAMINATOR",
+        detail: "PE/PLA LAMINATION FOR SUPERIOR LIQUID & HEAT RESISTANCE.",
+        specs: ["ECO-FRIENDLY PLA SUPPORT", "HEAT-SEAL OPTIMIZATION", "GLOSS & MATTE FINISH"]
+      }
+    ],
+    []
+  );
+
+  const smartText = `${t('about_text_2')} At Paperware, we believe growth thrives on responsibility. Delivering safe, hygienic, and eco-friendly packaging you can trust.`;
+  const smartSentences = React.useMemo(
+    () => smartText.split(/(?<=[.!?।])\s+/).filter(Boolean),
+    [smartText]
+  );
+
+  // All scroll-driven motion on this page. Every value is a pure function of the scroll
+  // position (read via getBoundingClientRect), written straight to transform/opacity.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+
+    // 1. Hero: lines drift up at different rates and fade; background settles 1.08 -> 1 and dims (0.35 -> 0.1).
+    const hero = heroRef.current;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      const p = clamp01(-r.top / Math.max(1, r.height * 0.8));
+      const bg = heroBgRef.current;
+      if (bg) {
+        const s = 1.08 - 0.08 * easeOut3(p);
+        bg.style.transform = `scale(${s.toFixed(4)})`;
+        bg.style.opacity = (0.35 - 0.25 * p).toFixed(3);
+      }
+      const lines = heroHeadRef.current?.querySelectorAll<HTMLElement>("[data-hero-line]");
+      lines?.forEach((el, i) => {
+        const y = -p * (90 + i * 70);
+        const o = 1 - smooth((p - i * 0.06) / 0.6);
+        el.style.transform = `translate3d(0,${y.toFixed(1)}px,0)`;
+        el.style.opacity = o.toFixed(3);
+      });
+    }
+
+    // 2. Core Mandate: cards rise and settle, staggered left to right.
+    const mandate = mandateGridRef.current;
+    if (mandate) {
+      const r = mandate.getBoundingClientRect();
+      const tp = clamp01((h - r.top) / (h * 0.75));
+      const cards = mandate.querySelectorAll<HTMLElement>("[data-mandate-card]");
+      const n = cards.length || 1;
+      cards.forEach((el, i) => {
+        const start = (i / n) * 0.45;
+        const u = easeOut3((tp - start) / 0.55);
+        el.style.transform = `translate3d(0,${((1 - u) * 96).toFixed(1)}px,0)`;
+        el.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+      });
+    }
+
+    // 3. Scaling Excellence: numbers count up with scroll; cards fan in from slight offsets.
+    const statsGrid = statsGridRef.current;
+    if (statsGrid) {
+      const r = statsGrid.getBoundingClientRect();
+      const sp = clamp01((h - r.top) / (h * 0.8));
+      const cards = statsGrid.querySelectorAll<HTMLElement>("[data-stat-card]");
+      const n = cards.length || 1;
+      cards.forEach((el, i) => {
+        const u = easeOut3((sp - i * 0.08) / 0.7);
+        const fan = (i - (n - 1) / 2) * 28 * (1 - u);
+        el.style.transform = `translate3d(${fan.toFixed(1)}px,${((1 - u) * 56).toFixed(1)}px,0)`;
+        el.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+        const num = el.querySelector<HTMLElement>("[data-count]");
+        if (num) {
+          const target = parseFloat(num.dataset.count || "0");
+          const suffix = num.dataset.suffix || "";
+          const shown = Math.round(target * easeOut3(sp / 0.9));
+          const text = `${shown}${suffix}`;
+          if (num.textContent !== text) num.textContent = text;
+        }
+      });
+    }
+
+    // 4. Factory Floor: horizontal strip scrubbed by scroll (0 as the section enters, 1 as it leaves).
+    const floor = floorRef.current;
+    const track = floorTrackRef.current;
+    if (floor && track) {
+      const r = floor.getBoundingClientRect();
+      const p = clamp01((h - r.top) / (h + r.height));
+      const max = Math.max(0, track.scrollWidth - window.innerWidth);
+      track.style.transform = `translate3d(${(-smooth(p) * max).toFixed(1)}px,0,0)`;
+    }
+
+    // 5. Smart Manufacturing: image parallax (+-30px), paragraph reveals sentence by sentence.
+    const smartImg = smartImgRef.current;
+    if (smartImg) {
+      const r = smartImg.getBoundingClientRect();
+      const rel = clamp01((r.top + r.height / 2) / h) - 0.5; // -0.5..0.5
+      smartImg.style.transform = `translate3d(0,${(rel * 60).toFixed(1)}px,0) scale(1.08)`;
+    }
+    const smartTextEl = smartTextRef.current;
+    if (smartTextEl) {
+      const r = smartTextEl.getBoundingClientRect();
+      const sp = clamp01((h * 0.9 - r.top) / (h * 0.55));
+      const spans = smartTextEl.querySelectorAll<HTMLElement>("[data-sentence]");
+      const n = spans.length || 1;
+      spans.forEach((el, i) => {
+        const start = (i / n) * 0.6;
+        const u = smooth((sp - start) / 0.4);
+        el.style.opacity = (0.25 + 0.75 * u).toFixed(3);
+      });
+    }
+  });
 
   return (
     <div className="relative bg-white selection:bg-[#fabf37] selection:text-black">
       {/* 1. HERO SECTION - INDUSTRIAL MAXIMALISM */}
-      <section className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white z-10" />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            transition={{ duration: 1 }}
-            className="w-full h-full"
-          >
+          {/* Dark wash at the bottom-left (behind the headline) fading to white at the edges so the page still reads as white. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-white z-10" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-black/10 to-transparent z-10" />
+          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.35, transform: "scale(1.08)" }}>
             <MediaPlayer
               type={aboutUsVideos?.heroBackgroundType || "image"}
-              src={aboutUsVideos?.heroBackground || imgProcess}
-              alt="Factory Background"
-              className="w-full h-full grayscale"
+              src={aboutUsVideos?.heroBackground || imgHero}
+              alt="Paperware production floor"
+              className="w-full h-full"
               autoPlay={true}
               muted={true}
               loop={true}
             />
-          </motion.div>
+          </div>
         </div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-20">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="max-w-5xl"
-          >
-            <motion.div variants={itemVariants} className="flex items-center gap-2 mb-4 md:mb-8">
+          <div className="max-w-5xl">
+            <div className="flex items-center gap-2 mb-4 md:mb-8">
               <div className="size-1.5 md:size-2 rounded-full bg-[#fabf37] animate-pulse" />
               <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Established 2021 • Dhaka</span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              variants={itemVariants}
+            <h1
+              ref={heroHeadRef}
               className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12"
             >
-              The <span className="text-[#fabf37]">Engine</span> <br />
-              Behind the <br />
-              <span className="text-zinc-500">Package.</span>
-            </motion.h1>
+              <span data-hero-line className="block will-change-transform">The <span className="text-[#fabf37]">Engine</span></span>
+              <span data-hero-line className="block will-change-transform">Behind the</span>
+              <span data-hero-line className="block will-change-transform text-zinc-500">Package.</span>
+            </h1>
 
-            <motion.div variants={itemVariants} className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
               <p className="text-base md:text-2xl font-bold text-zinc-600 leading-tight max-w-2xl uppercase italic">
                 {t('about_text_1')} We are not just manufacturers; we are supply chain architects.
               </p>
               <button type="button" tabIndex={-1} aria-hidden="true" className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
                 <Play className="size-6 md:size-8 fill-current group-hover:translate-x-1 transition-transform" />
               </button>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
       </section>
@@ -126,21 +298,22 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               </p>
             </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-              {[
-                { icon: ShieldCheck, title: "Uncompromising Hygiene", desc: "Every cup is produced in a sanitized, medical-grade environment." },
-                { icon: Zap, title: "Precision", desc: "Automated quality checks on every production run." },
-                { icon: Leaf, title: "Biodegradable", desc: "Paper-based packaging and eco-friendly inks." },
-                { icon: Globe, title: "Global Logistics", desc: "From Dhaka to the world." }
-              ].map((value, i) => (
-                <motion.div
+            <div ref={mandateGridRef} className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+              {MANDATE.map((value, i) => (
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="p-6 md:p-10 bg-white/5 border border-white/10 rounded-[24px] md:rounded-[48px] space-y-4 md:space-y-6 group hover:bg-[#fabf37] hover:border-[#fabf37] transition-all"
+                  data-mandate-card
+                  className="p-6 md:p-10 bg-white/5 border border-white/10 rounded-[24px] md:rounded-[48px] space-y-4 md:space-y-6 group hover:bg-[#fabf37] hover:border-[#fabf37] transition-colors will-change-transform"
                 >
+                  <div className="aspect-video rounded-2xl md:rounded-3xl overflow-hidden bg-zinc-900">
+                    <img
+                      src={value.photo}
+                      alt={value.photoAlt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <div className="size-10 md:size-14 rounded-xl md:rounded-2xl bg-white/10 flex items-center justify-center text-[#fabf37] group-hover:bg-black group-hover:text-[#fabf37] transition-colors">
                     <value.icon className="size-5 md:size-7" />
                   </div>
@@ -150,7 +323,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                   <p className="text-[11px] md:text-sm font-bold text-zinc-500 leading-relaxed group-hover:text-black/80 transition-colors">
                     {value.desc}
                   </p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -158,7 +331,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       </section>
 
       {/* 3. PRODUCTION METRICS - THE NUMBERS */}
-      <section className="py-16 md:py-32 bg-white">
+      <section className="py-16 md:py-32 bg-white overflow-x-clip">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center text-center mb-10 md:mb-24 space-y-2 md:space-y-4">
             <h2 className="text-3xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
@@ -166,65 +339,31 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                val: "140K",
-                unit: "PCS/DAY",
-                label: "PRINTING UNIT",
-                icon: Factory,
-                img: imgHeidelberg,
-                machineName: "HEIDELBERG MO-V-P",
-                detail: "HIGH-PRECISION 4-COLOR OFFSET PRINTING FOR PREMIUM BRANDING.",
-                specs: [
-                  "HEIDELBERG MO-V-P (19x25.5\")",
-                  "ORIGINAL HEIDELBERG (25.25x36\")",
-                  "DOUBLE DEMY PLATE TECHNOLOGY"
-                ]
-              },
-              {
-                val: "350K",
-                unit: "PCS/DAY",
-                label: "FORMING UNIT",
-                icon: Box,
-                img: imgFactory1,
-                machineName: "ULTRASONIC FORMER",
-                detail: "AUTOMATED ULTRASONIC FORMING ENSURING LEAK-PROOF PRECISION.",
-                specs: ["MEDICAL GRADE HYGIENE", "AUTOMATED QUALITY CONTROL", "HIGH-SPEED PRODUCTION"]
-              },
-              {
-                val: "12K",
-                unit: "PCS/DAY",
-                label: "CUTTING UNIT",
-                icon: Cpu,
-                img: imgCutting,
-                machineName: "DIE-CUT PRECISION",
-                detail: "PRECISION DIE-CUTTING WITH MINIMAL WASTE & LASER ACCURACY.",
-                specs: ["LASER GUIDED CALIBRATION", "ZERO-WASTE TRIMMING", "CUSTOM SHAPE SUPPORT"]
-              },
-              {
-                val: "25K",
-                unit: "PCS/DAY",
-                label: "LAMINATION UNIT",
-                icon: Zap,
-                img: imgProcess,
-                machineName: "THERMAL LAMINATOR",
-                detail: "PE/PLA LAMINATION FOR SUPERIOR LIQUID & HEAT RESISTANCE.",
-                specs: ["ECO-FRIENDLY PLA SUPPORT", "HEAT-SEAL OPTIMIZATION", "GLOSS & MATTE FINISH"]
-              }
-            ].map((stat, i) => (
-              <motion.div
+          <div ref={statsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, i) => {
+              const { num, suffix } = splitStat(stat.val);
+              return (
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`bg-white rounded-[32px] p-6 md:p-8 flex flex-col border-2 transition-all duration-300 ${i === 0 ? 'border-[#fabf37]' : 'border-zinc-200 hover:border-[#fabf37]'
+                data-stat-card
+                className={`bg-white rounded-[32px] p-6 md:p-8 flex flex-col border-2 transition-colors duration-300 will-change-transform ${i === 0 ? 'border-[#fabf37]' : 'border-zinc-200 hover:border-[#fabf37]'
                   }`}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
-                  <div className={`${i === 0 ? 'text-[#fabf37]' : 'text-zinc-400'}`}>
-                    <stat.icon className="size-6" />
+                  <div className="flex items-center gap-3">
+                    <div className="h-14 w-20 rounded-2xl overflow-hidden bg-zinc-100 shrink-0">
+                      <img
+                        src={stat.photo}
+                        alt={stat.photoAlt}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className={`${i === 0 ? 'text-[#fabf37]' : 'text-zinc-400'}`}>
+                      <stat.icon className="size-6" />
+                    </div>
                   </div>
                   <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400">
                     UNIT {i + 1}
@@ -233,7 +372,11 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
 
                 {/* Value */}
                 <div className="mb-6">
-                  <div className="text-6xl md:text-7xl font-black italic tracking-tighter leading-none text-black">
+                  <div
+                    data-count={num}
+                    data-suffix={suffix}
+                    className="text-6xl md:text-7xl font-black italic tracking-tighter leading-none text-black tabular-nums"
+                  >
                     {stat.val}
                   </div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 mt-2">
@@ -269,39 +412,33 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                     </div>
                   ))}
                 </div>
-              </motion.div>
-            ))}
+              </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 4. VISUAL JOURNEY - THE GALLERY */}
-      <section className="py-16 md:py-32 bg-zinc-50 overflow-hidden">
+      <section ref={floorRef} className="py-16 md:py-32 bg-zinc-50 overflow-x-clip">
         <div className="container mx-auto px-4 md:px-6 mb-8 md:mb-16 flex items-end justify-between">
           <div className="space-y-1 md:space-y-4">
             <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter">Factory Floor</h2>
             <p className="text-[8px] md:text-sm font-bold text-zinc-500 uppercase tracking-widest">A glimpse into our manufacturing hub.</p>
           </div>
-          <button className="flex items-center gap-2 text-[8px] md:text-xs font-black uppercase tracking-widest hover:text-[#fabf37] transition-colors">
+          <button onClick={() => go("gallery")} className="flex items-center gap-2 text-[8px] md:text-xs font-black uppercase tracking-widest hover:text-[#fabf37] transition-colors">
             Full Gallery <ArrowRight className="size-3 md:size-4" />
           </button>
         </div>
 
-        <div className="flex gap-4 md:gap-8 px-4 md:px-6 overflow-x-auto pb-8 md:pb-12 scrollbar-hide snap-x">
-          {[
-            { type: 'image' as const, src: imgFactory1, alt: 'Production Line' },
-            { type: 'image' as const, src: imgFactory2, alt: 'Quality Control' },
-            { type: 'image' as const, src: imgFactory3, alt: 'Assembly Section' },
-            { type: 'image' as const, src: imgQuality, alt: 'Testing Facility' },
-            { type: 'image' as const, src: imgCutting, alt: 'Cutting Process' },
-            { type: 'image' as const, src: imgHeidelberg, alt: 'Heidelberg Machine' }
-          ].map((media, i) => (
+        <div ref={floorTrackRef} className="flex gap-4 md:gap-8 px-4 md:px-6 pb-8 md:pb-12 w-max will-change-transform">
+          {FACTORY_FLOOR.map((media, i) => (
             <div
               key={i}
-              className="min-w-[240px] md:min-w-[400px] h-[300px] md:h-[500px] rounded-[24px] md:rounded-[60px] overflow-hidden snap-center relative group"
+              className="w-[240px] md:w-[400px] h-[300px] md:h-[500px] rounded-[24px] md:rounded-[60px] overflow-hidden relative group shrink-0"
             >
               <MediaPlayer
-                type={media.type}
+                type="image"
                 src={media.src}
                 alt={media.alt}
                 className="w-full h-full"
@@ -328,21 +465,28 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               </div>
 
               <div className="space-y-6 md:space-y-8">
-                <p className="text-xs md:text-lg font-bold text-zinc-400 leading-relaxed uppercase">
-                  {t('about_text_2')} At Paperware, we believe growth thrives on responsibility. Delivering safe, hygienic, and eco-friendly packaging you can trust.
+                <p ref={smartTextRef} className="text-xs md:text-lg font-bold text-zinc-400 leading-relaxed uppercase">
+                  {smartSentences.map((s, i) => (
+                    <React.Fragment key={i}>
+                      <span data-sentence style={{ opacity: 0.25 }}>{s}</span>
+                      {i < smartSentences.length - 1 ? " " : null}
+                    </React.Fragment>
+                  ))}
                 </p>
               </div>
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-10 bg-[#fabf37]/5 blur-3xl rounded-full animate-pulse" />
+              <div className="absolute -inset-10 bg-[#fabf37]/5 blur-3xl rounded-full" />
               <div className="relative rounded-[32px] md:rounded-[60px] overflow-hidden border border-white/10 shadow-2xl aspect-[4/5]">
-                <MediaPlayer
-                  type={aboutUsVideos?.smartManufacturingType || "image"}
-                  src={aboutUsVideos?.smartManufacturing || imgInnovation}
-                  alt="Innovation"
-                  className="w-full h-full object-cover"
-                />
+                <div ref={smartImgRef} className="w-full h-full will-change-transform" style={{ transform: "scale(1.08)" }}>
+                  <MediaPlayer
+                    type={aboutUsVideos?.smartManufacturingType || "image"}
+                    src={aboutUsVideos?.smartManufacturing || imgInnovation}
+                    alt="Operator at the cup forming line"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>

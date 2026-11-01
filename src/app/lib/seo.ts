@@ -141,7 +141,7 @@ export function initializeSEO() {
     url: 'https://paperware.com',
     logo: 'https://paperwarefactory.com/logo.png',
     sameAs: [
-      'https://facebook.com/paperware',
+      'https://www.facebook.com/paperwarefactory',
       'https://twitter.com/paperware',
       'https://linkedin.com/company/paperware',
     ],

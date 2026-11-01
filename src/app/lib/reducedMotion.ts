@@ -8,23 +8,17 @@ export function prefersReducedMotion(): boolean {
 }
 
 /**
- * Honour the OS "reduce motion" setting for every motion/react animation (audit PF-026).
+ * OS "reduce motion" handling (audit PF-026, revised at the owner's request).
  *
- * `MotionConfig reducedMotion="user"` only disables transform/layout animations; opacity,
- * colour and the ~250 `repeat: Infinity` loops keep running. `skipAnimations` makes every
- * motion animation jump straight to its final state instead, so marquees, pulsing dots
- * and entrance reveals all become static. Must run before the first render, because the
- * flag is read when an animation starts. Changing the OS setting applies to animations
- * started afterwards (e.g. after navigating or reloading).
+ * `MotionConfig reducedMotion="user"` in App.tsx turns transform/layout animations off for
+ * visitors with the setting on. We no longer set `MotionGlobalConfig.skipAnimations`, because
+ * it froze everything, including the header and ticker the owner wants to keep moving
+ * (each has a pause control or only reacts to the pointer). Components that must move
+ * anyway opt out locally with `<MotionConfig reducedMotion="never">`.
  */
 export function applyReducedMotionPreference(): void {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
-  const media = window.matchMedia(QUERY);
-  const apply = () => {
-    MotionGlobalConfig.skipAnimations = media.matches;
-  };
-  apply();
-  media.addEventListener?.("change", apply);
+  if (typeof window === "undefined") return;
+  MotionGlobalConfig.skipAnimations = false;
 }
 
 /** React hook for components that need to branch (e.g. don't autoplay video). */

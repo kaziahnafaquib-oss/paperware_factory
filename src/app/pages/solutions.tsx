@@ -6,6 +6,13 @@ import imgPaperCups from 'figma:asset/aeed94788eb16edccd466a19c50e38006db16bf5.w
 import imgColorfulCups from 'figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp';
 import imgPharmaceuticals from 'figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp';
 import yPharmaBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
+import pTakeawayFoodBox from "figma:asset/products/takeaway-food-box.webp";
+import pCookieBoxes from "figma:asset/products/cookie-boxes.webp";
+import fCupsStacking from "figma:asset/factory/cups-stacking.webp";
+import fFloorWide from "figma:asset/factory/floor-wide.webp";
+import fQcCupInspection from "figma:asset/factory/qc-cup-inspection.webp";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
+import { useGo } from "../lib/useGo";
 
 const solutions = [
   {
@@ -14,7 +21,7 @@ const solutions = [
     icon: <ShoppingBag className="size-10" />,
     description: "Premium biodegradable packaging for the food industry, focusing on temperature retention and moisture resistance.",
     features: ["Oil-resistant coating", "Compostable materials", "Custom branding"],
-    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&q=80&w=1000"
+    image: pTakeawayFoodBox
   },
   {
     id: "pharmaceutical",
@@ -30,7 +37,7 @@ const solutions = [
     icon: <Package className="size-10" />,
     description: "Scalable packaging systems for fast-moving consumer goods, optimized for high-speed automated production lines.",
     features: ["Multi-color offset", "Space-efficient design", "Eco-friendly inks"],
-    image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&q=80&w=1000"
+    image: pCookieBoxes
   },
   {
     id: "industrial-bulk",
@@ -38,19 +45,38 @@ const solutions = [
     icon: <Factory className="size-10" />,
     description: "Heavy-duty paperware designed for industrial transport and storage, capable of handling high stress and weight.",
     features: ["Double-wall strength", "Moisture barrier", "Stackable geometry"],
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&q=80&w=1000"
+    image: fCupsStacking
   }
 ];
 
 export function SolutionsPage() {
+  const go = useGo();
+  const heroImgRef = React.useRef<HTMLImageElement>(null);
+  const processImgRef = React.useRef<HTMLImageElement>(null);
+  // Scroll-scrubbed: hero factory photo zooms out and drifts as the hero scrolls away; the process photo parallaxes inside its frame.
+  useScrollScrub(() => {
+    const vh = window.innerHeight || 1;
+    const hero = heroImgRef.current;
+    if (hero) {
+      const r = (hero.parentElement as HTMLElement).getBoundingClientRect();
+      const p = clamp01(-r.top / Math.max(r.height, 1));
+      hero.style.transform = `translateY(${(p * 60).toFixed(1)}px) scale(${(1.12 - 0.12 * p).toFixed(4)})`;
+    }
+    const proc = processImgRef.current;
+    if (proc) {
+      const r = (proc.parentElement as HTMLElement).getBoundingClientRect();
+      const p = clamp01((vh - r.top) / (vh + r.height));
+      proc.style.transform = `translateY(${((p - 0.5) * 0.2 * r.height).toFixed(1)}px)`;
+    }
+  });
   return (
     <div className="bg-white min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-48 pb-32 overflow-hidden bg-black text-white">
         <div className="absolute inset-0 opacity-20">
-          <img loading="lazy" decoding="async" 
-            src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&q=80&w=1600" 
-            className="w-full h-full object-cover grayscale" 
+          <img ref={heroImgRef} loading="eager" decoding="async" 
+            src={fFloorWide} 
+            className="w-full h-full object-cover grayscale origin-center will-change-transform" 
             alt="Industrial Background"
           />
         </div>
@@ -82,8 +108,8 @@ export function SolutionsPage() {
             const paperImages: Record<string, string> = {
               "food-beverage": imgColorfulCups,
               "pharmaceutical": imgPharmaceuticals,
-              "retail-fmcg": "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?auto=format&q=80&w=1000",
-              "industrial-bulk": "https://images.unsplash.com/photo-1549030927-006822377380?auto=format&q=80&w=1000"
+              "retail-fmcg": pCookieBoxes,
+              "industrial-bulk": fCupsStacking
             };
 
             return (
@@ -120,7 +146,7 @@ export function SolutionsPage() {
                       </span>
                     ))}
                   </div>
-                  <button className="mt-auto flex items-center gap-4 text-black font-black uppercase tracking-widest text-xs group-hover:text-[#fabf37] transition-colors">
+                  <button onClick={() => go("contact")} className="mt-auto flex items-center gap-4 text-black font-black uppercase tracking-widest text-xs group-hover:text-[#fabf37] transition-colors">
                     Explore Integration <ArrowRight className="size-5" />
                   </button>
                 </div>
@@ -163,9 +189,9 @@ export function SolutionsPage() {
             </div>
             <div className="relative">
               <div className="aspect-square rounded-[60px] overflow-hidden bg-black rotate-3">
-                <img loading="lazy" decoding="async" 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&q=80&w=1000" 
-                  className="w-full h-full object-cover opacity-60 grayscale" 
+                <img ref={processImgRef} loading="lazy" decoding="async" 
+                  src={fQcCupInspection} 
+                  className="w-full h-[120%] -mt-[10%] object-cover opacity-60 grayscale will-change-transform" 
                   alt="Process" 
                 />
               </div>
@@ -181,10 +207,10 @@ export function SolutionsPage() {
             Ready to <span className="text-black italic">Integrate?</span>
           </h2>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <button className="px-12 py-6 bg-black text-[#fabf37] rounded-full text-sm font-black uppercase tracking-widest hover:scale-105 transition-transform">
+            <button onClick={() => go("quote")} className="px-12 py-6 bg-black text-[#fabf37] rounded-full text-sm font-black uppercase tracking-widest hover:scale-105 transition-transform">
               Initiate RFQ Sequence
             </button>
-            <button className="px-12 py-6 border-2 border-black text-black rounded-full text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
+            <button onClick={() => go("contact")} className="px-12 py-6 border-2 border-black text-black rounded-full text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
               Consult With Engineering
             </button>
           </div>

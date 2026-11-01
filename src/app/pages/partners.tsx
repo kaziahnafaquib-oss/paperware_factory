@@ -1,13 +1,15 @@
 import React from "react";
 import { motion } from "motion/react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import teamPhoto from "@/assets/factory/team.webp";
+import { useScrollScrub, clamp01 } from "../lib/useScrollScrub";
 import { Handshake, Award, ShieldCheck, Globe } from "lucide-react";
+import { useGo } from "../lib/useGo";
 
 export interface Partner {
   id: string;
   name: string;
   category: string;
-  logo: string;
+  logo?: string;
   description: string;
 }
 
@@ -27,70 +29,27 @@ const CATEGORIES = [
   "Website Partner"
 ];
 
-const DEFAULT_SIGNING_IMAGE = "https://images.unsplash.com/photo-1758599543152-a73184816eba?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoYW5kc2hha2UlMjBidXNpbmVzcyUyMGRlYWwlMjBwYXJ0bmVyc2hpcHxlbnwxfHx8fDE3Njc2OTM3ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral";
+// Partner identities are only shown when real, verified partners are passed in.
+const DEFAULT_PARTNERS: Partner[] = [];
 
-const DEFAULT_PARTNERS: Partner[] = [
-  {
-    id: "1",
-    name: "EcoPulp Industries",
-    category: "Raw Material Supplier",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Premium sustainable paper pulp provider."
-  },
-  {
-    id: "2",
-    name: "ChemSafe Solutions",
-    category: "Chemical Partner",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Food-grade coatings."
-  },
-  {
-    id: "3",
-    name: "FastTrack Logistics",
-    category: "Delivery Partner",
-    logo: "https://images.unsplash.com/photo-1626863905121-3b0c0ed5b92c?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Nationwide secure distribution network."
-  },
-  {
-    id: "4",
-    name: "ConnectTel",
-    category: "Telco Partner",
-    logo: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Enterprise communication infrastructure."
-  },
-  {
-    id: "5",
-    name: "NetStream",
-    category: "Internet Partner",
-    logo: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "High-speed fiber connectivity."
-  },
-  {
-    id: "6",
-    name: "DigitalCore",
-    category: "Digital Partner",
-    logo: "https://images.unsplash.com/photo-1572044162444-ad6021194360?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Digital transformation solutions."
-  },
-  {
-    id: "7",
-    name: "SysMaster ERP",
-    category: "ERP Partner",
-    logo: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Integrated resource planning systems."
-  },
-  {
-    id: "8",
-    name: "WebCrafters",
-    category: "Website Partner",
-    logo: "https://images.unsplash.com/photo-1496200186974-4293800e2c20?auto=format&w=300&h=300&fit=crop&q=75",
-    description: "Web presence and e-commerce."
-  }
-];
+// `partners` / `signingImage` props are accepted for API compatibility but intentionally ignored:
+// the app shell seeds them with unverified placeholder partners and a stock photo.
+export function PartnersPage(_props: PartnersPageProps) {
+  const go = useGo();
+  const displayPartners = DEFAULT_PARTNERS;
+  const displayImage = teamPhoto;
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const heroImgRef = React.useRef<HTMLImageElement>(null);
 
-export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAULT_SIGNING_IMAGE }: PartnersPageProps) {
-  const displayPartners = partners && partners.length > 0 ? partners : DEFAULT_PARTNERS;
-  const displayImage = signingImage || DEFAULT_SIGNING_IMAGE;
+  // Hero photo drifts and eases in scale 1:1 with scroll (transform only).
+  useScrollScrub(() => {
+    const hero = heroRef.current;
+    const img = heroImgRef.current;
+    if (!hero || !img) return;
+    const r = hero.getBoundingClientRect();
+    const p = clamp01(-r.top / Math.max(1, r.height));
+    img.style.transform = `translate3d(0,${(p * 60).toFixed(1)}px,0) scale(${(1.04 + p * 0.06).toFixed(4)})`;
+  });
 
   const otherPartners = displayPartners.filter(p => !CATEGORIES.includes(p.category));
 
@@ -98,11 +57,12 @@ export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAU
     <div className="min-h-screen bg-zinc-50 font-['Poppins',sans-serif]">
       
       {/* Signing Ceremony Hero */}
-      <div className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
-        <ImageWithFallback
+      <div ref={heroRef} className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
+        <img
+          ref={heroImgRef}
           src={displayImage}
-          className="absolute inset-0 w-full h-full object-cover"
-          alt="Strategic Partnership Signing"
+          className="absolute inset-0 w-full h-full object-cover will-change-transform"
+          alt="The Paperware factory team"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         
@@ -150,10 +110,10 @@ export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAU
                  animate={{ opacity: 1, y: 0 }}
                  className="flex flex-wrap gap-4 pt-6"
                >
-                 <button className="px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-[#fabf37]/20">
+                 <button onClick={() => go("partner-program")} className="px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-[#fabf37]/20">
                    Join Our Network
                  </button>
-                 <button className="px-10 py-4 bg-white/10 backdrop-blur-md text-white font-bold uppercase tracking-widest rounded-full hover:bg-white/20 border border-white/20 transition-all duration-300">
+                 <button onClick={() => document.getElementById('partner-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="px-10 py-4 bg-white/10 backdrop-blur-md text-white font-bold uppercase tracking-widest rounded-full hover:bg-white/20 border border-white/20 transition-all duration-300">
                    View Partners
                  </button>
                </motion.div>
@@ -196,11 +156,36 @@ export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAU
       </div>
 
       {/* Partners Sections */}
-      <div className="py-24 container mx-auto px-4 max-w-7xl">
+      <div id="partner-list" className="py-24 container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-20">
           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4">Our Ecosystem</h2>
           <div className="w-24 h-1 bg-[#fabf37] mx-auto rounded-full" />
         </div>
+
+        {displayPartners.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-6"
+          >
+            <div className="bg-[#fabf37] text-black rounded-[32px] p-10 md:p-14 flex flex-col justify-between gap-10">
+              <p className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[1.05]">
+                Building for the future, together.
+              </p>
+              <a href="/partner-program" className="self-start px-8 py-3 bg-black text-[#fabf37] font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-transform">
+                Join Our Network
+              </a>
+            </div>
+            <div className="bg-black text-white rounded-[32px] p-10 md:p-14">
+              <ul className="flex flex-wrap gap-3">
+                {CATEGORIES.map((c) => (
+                  <li key={c} className="px-5 py-2 rounded-full border-2 border-[#fabf37] text-[#fabf37] text-xs font-black uppercase tracking-widest">{c}</li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
 
         <div className="space-y-24">
           {/* Main Categories */}
@@ -262,6 +247,7 @@ export function PartnersPage({ partners = DEFAULT_PARTNERS, signingImage = DEFAU
 }
 
 function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
+  const go = useGo();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -273,11 +259,7 @@ function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
     >
       <div className="relative size-24 md:size-32 mb-6 p-4 rounded-full bg-zinc-50 border border-zinc-100 group-hover:scale-110 transition-transform duration-500 overflow-hidden flex items-center justify-center">
          {partner.logo ? (
-           <ImageWithFallback 
-             src={partner.logo} 
-             className="w-full h-full object-contain mix-blend-multiply" 
-             alt={partner.name} 
-           />
+           <img src={partner.logo} className="w-full h-full object-contain mix-blend-multiply" alt={partner.name} />
          ) : (
            <div className="text-2xl font-black text-zinc-300">{partner.name.substring(0, 2)}</div>
          )}
@@ -293,8 +275,8 @@ function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
       </div>
 
       <div className="mt-auto pt-6 w-full">
-         <button className="w-full py-2 rounded-xl bg-zinc-100 text-xs font-bold uppercase hover:bg-black hover:text-[#fabf37] transition-colors">
-           View Profile
+         <button onClick={() => go("contact")} className="w-full py-2 rounded-xl bg-zinc-100 text-xs font-bold uppercase hover:bg-black hover:text-[#fabf37] transition-colors">
+           Enquire
          </button>
       </div>
     </motion.div>

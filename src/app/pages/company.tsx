@@ -1,10 +1,22 @@
 import React from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "motion/react";
-import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles, Instagram, Linkedin, Twitter, Facebook } from "lucide-react";
+import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles } from "lucide-react";
+import { SocialStrip } from "../components/paperware/social-strip";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
 import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
 import imgCardBg2 from "figma:asset/047a125a2726498b23eb2e792cd9129a5e35bd9f.webp";
+// Real Paperware photos (src/assets/factory + src/assets/products) replace former stock images.
+import imgFloorWide from "../../assets/factory/floor-wide.webp";
+import imgTeam from "../../assets/factory/team.webp";
+import imgCupsStacking from "../../assets/factory/cups-stacking.webp";
+import imgQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
+import imgFormingTurret from "../../assets/factory/forming-turret.webp";
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterTeam from "../../assets/video-posters/company-team.webp";
+
+// Real footage of the Paperware office team and dispatch (public/media/SOURCES.txt).
+const TEAM_VIDEO = mediaUrl("company-team.mp4");
 
 // Animation Variants
 const fadeInUp = {
@@ -161,8 +173,9 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "About Us",
       subtitle: "The Origin",
       desc: "Architects of the modern supply chain. We don't just manufacture; we engineer the future of packaging.",
-      image: "https://images.unsplash.com/photo-1554227231-54aa5db01c51?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjBwYWNrYWdpbmclMjBtYWNoaW5lcnklMjBpbmR1c3RyaWFsJTIwbWluaW1hbGlzdCUyMHdoaXRlfGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
+      image: imgFloorWide,
+      video: TEAM_VIDEO,
+      poster: posterTeam,
       stats: "Est. 2021",
       icon: Factory,
       colSpan: "md:col-span-2"
@@ -172,7 +185,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Our Clients",
       subtitle: "Global Trust",
       desc: "Powering the brands you love. We are the silent engine behind their success.",
-      image: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      image: imgTeam,
       stats: "Partners",
       icon: Users,
       colSpan: "md:col-span-1"
@@ -182,8 +195,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Sustainability",
       subtitle: "Eco Core",
       desc: "Defaulting to green. Environmental responsibility meets industrial scale.",
-      image: "https://images.unsplash.com/photo-1584022438855-930ac64c51be?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWN5Y2xlZCUyMHBhcGVyJTIwdGV4dHVyZSUyMGVjbyUyMGZyaWVuZGx5JTIwYnJvd24lMjBjcmFmdCUyMG1pbmltYWxpc3R8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
+      image: imgCupsStacking,
       stats: "Eco Focus",
       icon: Leaf,
       colSpan: "md:col-span-1"
@@ -193,8 +205,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Compliance",
       subtitle: "Licensed",
       desc: "Licensed operations and quality checks on every batch.",
-      image: "https://images.unsplash.com/photo-1735448213858-6bdfdf78967a?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwaGFybWFjZXV0aWNhbCUyMGxhYiUyMGNsZWFuJTIwcm9vbSUyMHdoaXRlJTIwbWluaW1hbGlzdHxlbnwxfHx8fDE3NjcxMTQwNDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
+      image: imgQcCupInspection,
       stats: "Licensed",
       icon: ShieldCheck,
       colSpan: "md:col-span-1"
@@ -204,8 +215,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       title: "Future Plan",
       subtitle: "Vision 2030",
       desc: "Innovating for tomorrow. Investing in next-gen automated machinery.",
-      image: "https://images.unsplash.com/photo-1590038667005-7d82ac6f864b?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdXRvbWF0ZWQlMjB3YXJlaG91c2UlMjByb2JvdGljcyUyMGxvZ2lzdGljcyUyMGZ1dHVyaXN0aWN8ZW58MXx8fHwxNzY3MTE0NDkwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      video: "https://www.youtube.com/embed/0BuwrFoXTlw?autoplay=1&mute=1&controls=0&loop=1&playlist=0BuwrFoXTlw&playsinline=1&rel=0&showinfo=0&modestbranding=1&enablejsapi=1&vq=hd1080",
+      image: imgFormingTurret,
       stats: "R&D Focused",
       icon: Zap,
       colSpan: "md:col-span-1"
@@ -432,28 +442,29 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
                 {/* Background Image / Video Decoration */}
                 <div className="absolute inset-0 z-0">
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 via-zinc-50/70 to-transparent z-10" />
-                  <motion.div
-                    className="w-full h-full"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    {(section as any).video ? (
-                      <div className="w-full h-full relative overflow-hidden">
-                        <iframe
-                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.77%] h-full pointer-events-none grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-50 transition-all duration-700"
-                          src={(section as any).video}
-                          allow="autoplay; encrypted-media"
-                        />
-                      </div>
-                    ) : (
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 via-zinc-50/70 to-transparent z-10 pointer-events-none" />
+                  {"video" in section && section.video && section.poster ? (
+                    <FactoryClip
+                      src={section.video}
+                      poster={section.poster}
+                      label="office team"
+                      className="w-full h-full bg-zinc-50"
+                      videoClassName="object-[center_30%] opacity-70 group-hover:opacity-90 transition-opacity duration-500"
+                      controlPosition="top-right"
+                    />
+                  ) : (
+                    <motion.div
+                      className="w-full h-full"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.7 }}
+                    >
                       <ImageWithFallback
-                        src={section.image}
-                        alt={section.title}
-                        className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-500"
-                      />
-                    )}
-                  </motion.div>
+                          src={section.image}
+                          alt={section.title}
+                          className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-500"
+                        />
+                    </motion.div>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -539,43 +550,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
         </div>
       </section>
 
-      {/* 4. SOCIAL LIVE FEED - INFINITE MARQUEE */}
-      <section className="py-20 bg-zinc-50 border-t border-zinc-100 overflow-hidden">
-        <div className="text-center mb-12 space-y-2">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">Social Hub</h3>
-          <h2 className="text-3xl font-black uppercase tracking-tighter text-zinc-900">#PaperwareLife</h2>
-        </div>
-
-        <div className="flex relative w-full overflow-hidden">
-          <motion.div
-            className="flex gap-6 pl-6"
-            animate={{ x: "-50%" }}
-            transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-            style={{ width: "fit-content" }}
-          >
-            {[...Array(2)].map((_, setIndex) => (
-              <div key={setIndex} className="flex gap-6">
-                {[
-                  { img: "https://images.unsplash.com/photo-1610187224249-1c5aa1841c2c?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9kdWN0JTIwc2hvd2Nhc2UlMjBwYWNrYWdpbmclMjBkZXNpZ24lMjBzdHVkaW98ZW58MXx8fHwxNzY3MTE0NzI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_co" },
-                  { img: "https://images.unsplash.com/photo-1634881091477-5ebe7ac70074?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaW5rZWRpbiUyMGNvcnBvcmF0ZSUyMHBvc3QlMjBtZWV0aW5nJTIwb2ZmaWNlfGVufDF8fHx8MTc2NzExNDcyOHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Linkedin, tag: "Paperware Industries" },
-                  { img: "https://images.unsplash.com/photo-1587470049607-de08c66f308c?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0d2l0dGVyJTIwcG9zdCUyMHVwZGF0ZSUyMHRlY2glMjBtaW5pbWFsaXN0fGVufDF8fHx8MTc2NzExNDcyOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Twitter, tag: "@paperware_tech" },
-                  { img: "https://images.unsplash.com/photo-1730971991690-f8825d74c055?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbnN0YWdyYW0lMjBwb3N0JTIwbWluaW1hbGlzdCUyMGxpZmVzdHlsZSUyMHBhY2thZ2luZ3xlbnwxfHx8fDE3NjcxMTQ3Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Instagram, tag: "@paperware_life" },
-                  { img: "https://images.unsplash.com/photo-1766945206843-eac0b1aa0343?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBsb2dpc3RpY3MlMjBzaGlwcGluZyUyMGNvbnRhaW5lcnMlMjBtaW5pbWFsaXN0JTIwbW9kZXJufGVufDF8fHx8MTc2NzExNDQ5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral", icon: Facebook, tag: "Paperware Logistics" }
-                ].map((item, i) => (
-                  <div key={i} className="relative w-[300px] h-[400px] shrink-0 group rounded-2xl overflow-hidden cursor-pointer">
-                    <ImageWithFallback src={item.img} alt="Social" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
-                    <div className="absolute bottom-6 left-6 text-white transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                      <item.icon className="size-6 mb-2 text-[#fabf37]" />
-                      <p className="text-sm font-medium">{item.tag}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      <SocialStrip />
 
     </div>
   );

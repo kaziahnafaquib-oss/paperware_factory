@@ -1,0 +1,14 @@
+{
+  "name": "paperware-social-feed",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "vars": {
+    "FACEBOOK_PAGE_ID": "paperwarefactory",
+    "ALLOWED_ORIGINS": "https://kaziahnafaquib-oss.github.io,https://paperwarefactory.com,https://www.paperwarefactory.com,http://localhost:5180",
+    "CACHE_SECONDS": "600",
+    "LIMIT": "10"
+  }
+  // Secrets — set with `npx wrangler secret put <NAME>` from this folder. Never commit values.
+  //   META_PAGE_TOKEN  long-lived Facebook Page access token (pages_show_list, pages_read_engagement, instagram_basic)
+  //   IG_USER_ID       Instagram Business account id linked to the Page (numeric)
+}

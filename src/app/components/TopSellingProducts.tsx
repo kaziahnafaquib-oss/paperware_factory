@@ -2,18 +2,22 @@ import React from "react";
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import imgSticker from "figma:asset/083092191c09807406b3ab9369303938adea8ea5.webp";
-import imgTissueBox from "figma:asset/942d624f3eeb9f40ef2152028a1d1e2e73a4d226.webp";
 import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
+import pTakeaway from "../../assets/products/takeaway-food-box.webp";
+import pCarryBag from "../../assets/cutouts/carry-bag-kraft.webp";
+import pBrochure from "../../assets/products/brochures.webp";
+import pMedicine from "../../assets/products/medicine-boxes.webp";
+import pStickers from "../../assets/products/stickers.webp";
+import pTissue from "../../assets/products/tissue-boxes.webp";
 
 const defaultProducts = [
   { id: 1, name: "8oz Paper Cup", category: "Paper Cups", image: yPaperCups, desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
-  { id: 2, name: "Burger Box", category: "Restaurant Supplies", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=500&q=80", desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
-  { id: 3, name: "Kraft Carry Bag", category: "Packaging", image: "https://images.unsplash.com/photo-1668012509229-782623ba3306?auto=format&fit=crop&w=500&q=80", desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
-  { id: 4, name: "Product Brochure", category: "Marketing", image: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=500&q=80", desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
-  { id: 5, name: "Pharma Box", category: "Pharma", image: "https://images.unsplash.com/photo-1550572017-738a8a40f286?auto=format&fit=crop&w=500&q=80", desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
-  { id: 6, name: "Custom Stickers", category: "Branding", image: imgSticker, desc: "Die-cut vinyl stickers.", specs: [{ label: "Material", value: "Vinyl" }] },
-  { id: 7, name: "Tissue Box", category: "Personal Care", image: imgTissueBox, desc: "Custom branded facial tissue packaging.", specs: [{ label: "Capacity", value: "100 Pulls" }] },
+  { id: 2, name: "Takeaway Food Box", category: "Restaurant Supplies", image: pTakeaway, desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
+  { id: 3, name: "Kraft Carry Bag", category: "Packaging", image: pCarryBag, desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
+  { id: 4, name: "Product Brochure", category: "Marketing", image: pBrochure, desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
+  { id: 5, name: "Pharma Box", category: "Pharma", image: pMedicine, desc: "Sterile grade drug packaging.", specs: [{ label: "Safety", value: "SGS Verified" }] },
+  { id: 6, name: "Custom Stickers", category: "Branding", image: pStickers, desc: "Die-cut vinyl stickers.", specs: [{ label: "Material", value: "Vinyl" }] },
+  { id: 7, name: "Tissue Box", category: "Personal Care", image: pTissue, desc: "Custom branded facial tissue packaging.", specs: [{ label: "Capacity", value: "100 Pulls" }] },
 ];
 
 export function TopSellingProducts({ 

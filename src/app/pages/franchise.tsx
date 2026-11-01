@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { CircleCheck as CheckCircle2, Building2, MapPin, ArrowRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-white">
@@ -40,6 +41,7 @@ const ContentBlock = ({ children, className = "" }: { children: React.ReactNode;
 );
 
 export function FranchisePage() {
+  const go = useGo();
   const { t } = useLanguage();
 
   return (
@@ -105,7 +107,7 @@ export function FranchisePage() {
                   Join our network of regional manufacturing nodes and lead the eco-friendly transition.
                 </p>
                 <div className="pt-4">
-                  <button className="w-full py-6 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-xl">
+                  <button onClick={() => go("contact")} className="w-full py-6 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-xl">
                     Request Franchise Kit
                   </button>
                 </div>

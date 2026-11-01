@@ -7,30 +7,59 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
+import { useGo } from "../lib/useGo";
 
 const products = [
   { name: "Business Card", desc: "Premium textured cardstock with UV spot finish.", category: "Print", image: yStationery, icon: Contact },
-  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&fit=crop&q=80&w=800", icon: Mail },
-  { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&q=75&w=1600", icon: FileText },
+  { name: "Envelope", desc: "Custom sized professional mailing solutions.", category: "Mailing", icon: Mail },
+  { name: "Invoice Pad", desc: "Duplicate/Triplicate carbonless NCR pads.", category: "Finance", icon: FileText },
   { name: "Letterhead Pad", desc: "Executive 100GSM watermarked paper.", category: "Branding", image: yBrochures, icon: FileText },
-  { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&q=75&w=1600", icon: FileText },
-  { name: "Delivery Note", desc: "Industrial strength logbooks for logistics.", category: "Logistics", image: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&q=75&w=1600", icon: Truck },
-  { name: "Note Book", desc: "Custom branded corporate notebooks.", category: "Office", image: "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&q=75&w=1600", icon: Notebook },
-  { name: "Diary", desc: "Annual premium planners and organizers.", category: "Office", image: "https://images.unsplash.com/photo-1511108690759-009324a90311?auto=format&q=75&w=1600", icon: Notebook },
-  { name: "File Folder", desc: "Heavy-duty laminated organizational folders.", category: "Organization", image: "https://images.unsplash.com/photo-1595844730298-b960ff98fee0?auto=format&q=75&w=1600", icon: FolderOpen },
+  { name: "Money Receipt", desc: "Secure serialized financial documentation.", category: "Finance", icon: FileText },
+  { name: "Delivery Note", desc: "Industrial strength logbooks for logistics.", category: "Logistics", icon: Truck },
+  { name: "Note Book", desc: "Custom branded corporate notebooks.", category: "Office", icon: Notebook },
+  { name: "Diary", desc: "Annual premium planners and organizers.", category: "Office", icon: Notebook },
+  { name: "File Folder", desc: "Heavy-duty laminated organizational folders.", category: "Organization", icon: FolderOpen },
 ];
 
 export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: any) => void }) {
+  const go = useGo();
   const { t } = useLanguage();
+
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed (1:1 with scroll position; runs under reduced motion because the user drives it):
+  // the hero copy eases back and fades as it leaves, the product tiles rise in with a per-column stagger.
+  useScrollScrub(() => {
+    const vh = window.innerHeight || 1;
+    const hero = heroRef.current;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      const p = clamp01(-r.top / Math.max(r.height, 1));
+      hero.style.transform = `translateY(${(p * 40).toFixed(1)}px) scale(${(1 - p * 0.06).toFixed(4)})`;
+      hero.style.opacity = (1 - p * 0.7).toFixed(3);
+    }
+    const grid = gridRef.current;
+    if (grid) {
+      const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length || 1;
+      Array.from(grid.children).forEach((c, i) => {
+        const el = c as HTMLElement;
+        const r = el.getBoundingClientRect();
+        const t = easeOut3((vh - r.top) / (vh * 0.5) - (i % cols) * 0.12);
+        el.style.transform = `translateY(${((1 - t) * 48).toFixed(1)}px)`;
+        el.style.opacity = t.toFixed(3);
+      });
+    }
+  });
 
   return (
     <div className="bg-[#fdfaf3] min-h-screen pt-32 pb-24 font-['Poppins',sans-serif]">
       {/* Hero */}
       <section className="container mx-auto px-4 mb-24">
-        <div className="max-w-4xl">
+        <div ref={heroRef} className="max-w-4xl origin-top-left">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -66,22 +95,25 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
 
       {/* Product Grid */}
       <section className="container mx-auto px-4 mb-32">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" ref={gridRef}>
           {products.map((p, i) => (
-            <motion.div 
+            <div
               key={p.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
               onClick={() => onProductClick(p)}
-              className="group bg-white rounded-[48px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-all overflow-hidden cursor-pointer"
+              className="group bg-white rounded-[48px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-[border-color,box-shadow] overflow-hidden cursor-pointer"
             >
               <div className="aspect-[4/3] overflow-hidden relative">
-                <ImageWithFallback 
-                  src={p.image} 
-                  alt={p.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                />
+                {p.image ? (
+                  <ImageWithFallback 
+                    src={p.image} 
+                    alt={p.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
+                    <p.icon className="size-24" strokeWidth={1} />
+                  </div>
+                )}
                 <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full">
                   <span className="text-[10px] font-black text-[#fabf37] uppercase tracking-widest">In Stock</span>
                 </div>
@@ -105,7 +137,7 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -171,8 +203,8 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
       <section className="container mx-auto px-4 py-32 text-center">
         <div className="max-w-2xl mx-auto space-y-12">
           <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter text-black">Ready to <span className="text-[#fabf37]">Modernize</span>?</h2>
-          <button className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
-            Download Catalog
+          <button onClick={() => go("contact")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">
+            Request Catalog
           </button>
         </div>
       </section>

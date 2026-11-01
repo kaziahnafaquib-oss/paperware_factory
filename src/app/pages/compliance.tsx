@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
+import { useGo } from "../lib/useGo";
 import { 
   ShieldCheck, Award, FileCheck, Globe, TrendingUp, Zap, Box, 
   Droplets, Leaf, Truck, Calendar, ArrowRight, Download, Users,
@@ -155,6 +156,7 @@ function TiltCard({ cert, i }: { cert: any, i: number }) {
 }
 
 export function CompliancePage() {
+  const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -408,12 +410,12 @@ export function CompliancePage() {
               <p className="text-zinc-400 font-bold text-lg md:text-xl max-w-md leading-relaxed">
                 By 2030, Paperware aims to set the global benchmark for zero-waste industrial manufacturing in the South Asian region.
               </p>
-              <motion.button 
+              <motion.button onClick={() => go("contact")} 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-black px-10 py-6 rounded-full font-black uppercase tracking-widest flex items-center gap-3 group/btn"
               >
-                Download Sustainability Report 2024
+                Request Sustainability Report
                 <Download className="size-5 group-hover/btn:translate-y-1 transition-transform" />
               </motion.button>
             </div>

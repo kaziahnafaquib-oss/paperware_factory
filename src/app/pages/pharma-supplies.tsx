@@ -8,30 +8,59 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { Truck } from "lucide-react";
 import { TopSellingProducts } from "../components/TopSellingProducts";
 import yStationery from "figma:asset/996fde50aac464284d2652c5f215d915bf7e1897.webp";
 import yBrochures from "figma:asset/aebcf13cb4e5ea06fcb9980128694f52cc69049a.webp";
 import pMedicineBoxes from "figma:asset/products/medicine-boxes.webp";
 import pPrescriptionPad from "figma:asset/products/prescription-pad.webp";
+import { useGo } from "../lib/useGo";
 
 const products = [
   { name: "Patient File", desc: "Durable medical record folders with antimicrobial coating.", category: "Record", image: yStationery, price: "22.00", icon: FolderOpen },
-  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", image: "https://images.unsplash.com/photo-1735050871569-4cb29aae3a30?auto=format&fit=crop&q=80&w=800", price: "35.00", icon: FileText },
+  { name: "X-Ray File", desc: "Large-format protective envelopes for diagnostic films.", category: "Record", price: "35.00", icon: FileText },
   { name: "Doctor's Prescription Pad", desc: "Secure serialized prescription pads with security features.", category: "Prescription", image: pPrescriptionPad, price: "12.00", icon: ClipboardList },
-  { name: "Report Envelope", desc: "Privacy-guaranteed clinical report packaging.", category: "Envelope", image: "https://images.unsplash.com/photo-1579642984744-4dd0fe83c38c?auto=format&fit=crop&q=80&w=800", price: "8.50", icon: FileText },
+  { name: "Report Envelope", desc: "Privacy-guaranteed clinical report packaging.", category: "Envelope", price: "8.50", icon: FileText },
   { name: "Medicine Box", desc: "Precision-molded drug packaging with braille support.", category: "Packaging", image: pMedicineBoxes, price: "14.50", icon: Pill },
   { name: "Medicine Literature", desc: "Micro-folded dosage guides and safety leaflets.", category: "Print", image: yBrochures, price: "2.50", icon: BookOpen },
 ];
 
 export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any) => void }) {
+  const go = useGo();
   const { t } = useLanguage();
+
+  const heroRef = React.useRef<HTMLDivElement>(null);
+  const gridRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed (1:1 with scroll position; runs under reduced motion because the user drives it):
+  // the hero copy eases back and fades as it leaves, the product tiles rise in with a per-column stagger.
+  useScrollScrub(() => {
+    const vh = window.innerHeight || 1;
+    const hero = heroRef.current;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      const p = clamp01(-r.top / Math.max(r.height, 1));
+      hero.style.transform = `translateY(${(p * 40).toFixed(1)}px) scale(${(1 - p * 0.06).toFixed(4)})`;
+      hero.style.opacity = (1 - p * 0.7).toFixed(3);
+    }
+    const grid = gridRef.current;
+    if (grid) {
+      const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length || 1;
+      Array.from(grid.children).forEach((c, i) => {
+        const el = c as HTMLElement;
+        const r = el.getBoundingClientRect();
+        const t = easeOut3((vh - r.top) / (vh * 0.5) - (i % cols) * 0.12);
+        el.style.transform = `translateY(${((1 - t) * 48).toFixed(1)}px)`;
+        el.style.opacity = t.toFixed(3);
+      });
+    }
+  });
 
   return (
     <div className="bg-[#fdfaf3] min-h-screen pt-32 pb-24 font-['Poppins',sans-serif]">
       {/* Hero */}
       <section className="container mx-auto px-4 mb-24">
-        <div className="max-w-4xl">
+        <div ref={heroRef} className="max-w-4xl origin-top-left">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -68,18 +97,21 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
 
       {/* Product Display */}
       <section className="container mx-auto px-4 mb-32">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" ref={gridRef}>
           {products.map((p, i) => (
-            <motion.div 
+            <div
               key={p.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
               onClick={() => onProductClick(p)}
-              className="group bg-white rounded-[40px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-all cursor-pointer overflow-hidden"
+              className="group bg-white rounded-[40px] border border-black/5 hover:border-[#fabf37] hover:shadow-2xl transition-[border-color,box-shadow] cursor-pointer overflow-hidden"
             >
               <div className="aspect-square overflow-hidden">
-                <ImageWithFallback src={p.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                {p.image ? (
+                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                ) : (
+                  <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
+                    <p.icon className="size-20" strokeWidth={1} />
+                  </div>
+                )}
               </div>
               <div className="p-8">
                 <div className="flex justify-between items-start mb-6">
@@ -97,7 +129,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
                   <Zap className="size-4 text-[#fabf37]" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -113,7 +145,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
             <p className="text-zinc-500 font-bold text-lg max-w-md">Critical medical stationary delivered within 24 hours to hospitals across the country.</p>
           </div>
           <div className="lg:w-1/2 flex justify-end">
-            <button className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">Hospital Quick-Order</button>
+            <button onClick={() => go("quote")} className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">Hospital Quick-Order</button>
           </div>
         </div>
       </section>
@@ -136,7 +168,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
                <div className="size-3 rounded-full bg-emerald-500 animate-ping" />
                <span className="text-white font-black uppercase tracking-tighter">HEPA-Filtered Active</span>
             </div>
-            <button className="w-full bg-emerald-500 text-black py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-all">
+            <button onClick={() => go("contact")} className="w-full bg-emerald-500 text-black py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-all">
               Request Compliance Audit
             </button>
           </div>

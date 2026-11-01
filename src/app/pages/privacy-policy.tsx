@@ -2,8 +2,10 @@ import React from "react";
 import { motion as Motion } from "motion/react";
 import { Shield, Lock, Eye, Database, UserCheck, FileText, AlertCircle, CheckCircle2, ArrowRight, Mail, Phone, MapPin, MessageSquare, Building2, ShieldCheck, Clock, History, ChevronDown } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 export function PrivacyPolicy() {
+  const go = useGo();
   const { t, isRTL } = useLanguage();
 
   const sections = [
@@ -279,13 +281,13 @@ export function PrivacyPolicy() {
 
               <div className="w-px h-12 bg-zinc-300 hidden md:block" />
 
-              <Motion.button
+              <Motion.button onClick={() => go("contact")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#fabf37] hover:text-black transition-colors"
               >
                 <History className="size-4" />
-                {t("language") === "BN" ? "পরিবর্তন লগ" : "Changes Log"}
+                {t("language") === "BN" ? "পরিবর্তন সম্পর্কে জিজ্ঞাসা" : "Ask About Changes"}
               </Motion.button>
             </div>
           </Motion.div>

@@ -268,7 +268,10 @@ table {
 .pw-marquee[data-paused="true"] .pw-marquee-track {
   animation-play-state: paused;
 }
+/* Ticker keeps scrolling even with OS reduce motion (owner request); the pause button stays. */
 @media (prefers-reduced-motion: reduce) {
-  .pw-marquee-track { animation: none; }
-  .pw-marquee-control { display: none; }
+  .pw-marquee-track {
+    animation-duration: 40s !important;
+    animation-iteration-count: infinite !important;
+  }
 }

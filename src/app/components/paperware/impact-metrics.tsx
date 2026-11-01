@@ -6,7 +6,7 @@ import {
   ArrowUpRight, TrendingUp,
   ArrowRight, Sparkles
 } from "lucide-react";
-import { ImageWithFallback } from "../figma/ImageWithFallback";
+import cupCutout from "@/assets/cutouts/cup.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function ImpactMetrics() {
@@ -43,8 +43,7 @@ export function ImpactMetrics() {
     <section className="py-20 md:py-32 bg-white relative overflow-hidden font-['Poppins',sans-serif]">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-soft-light" />
-        <motion.div
+                <motion.div
           animate={{
             background: [
               'radial-gradient(circle at 0% 0%, rgba(250,191,55,0.08) 0%, transparent 50%)',
@@ -145,11 +144,7 @@ export function ImpactMetrics() {
                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                        className="w-48 md:w-64 relative mb-8 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                     >
-                       <ImageWithFallback
-                          src="https://images.unsplash.com/photo-1608764796781-35e7ce805822?auto=format&fit=crop&w=600&q=80"
-                          alt="Plastic Waste"
-                          className="w-full object-cover drop-shadow-2xl rotate-[-5deg]"
-                       />
+                       <div role="img" aria-label="Plastic waste" className="w-full aspect-square rounded-[2rem] bg-black rotate-[-5deg] shadow-2xl" />
                        <div className="absolute -top-6 -right-6 bg-red-500 text-white size-16 rounded-full flex items-center justify-center font-black text-2xl shadow-xl animate-bounce">
                           ×
                        </div>
@@ -191,11 +186,7 @@ export function ImpactMetrics() {
                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                        className="w-56 md:w-72 relative mb-8"
                     >
-                       <ImageWithFallback
-                          src="https://images.unsplash.com/photo-1588015314375-150c5c0e8681?auto=format&fit=crop&w=600&q=80"
-                          alt="Paperware Solution"
-                          className="w-full object-cover drop-shadow-2xl"
-                       />
+                       <img src={cupCutout} alt="Paperware paper cup" className="w-full object-contain drop-shadow-2xl" />
                        {/* Floating Elements */}
                        <div className="absolute -top-4 -right-8 bg-white text-zinc-900 px-4 py-2 rounded-full shadow-xl flex items-center gap-2">
                           <Leaf className="size-4 text-[#FFC924] fill-current" />

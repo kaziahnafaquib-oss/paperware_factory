@@ -1,0 +1,9 @@
+# Industries "Big type" scroll section photos (file <- origin). All 4:5, ~1000x1250, WebP.
+# Copied from the approved demo (scratchpad/industries/img). Order matches the six sectors.
+takeaway-food-box.webp <- src/assets/products/takeaway-food-box.webp  (identical copy)   Restaurants
+cafe-cup.webp          <- composed for the demo: branded ripple cup cutout (src/assets/cutouts/cup-ripple-orange.webp)
+                          placed on a warm paper background, cropped 4:5.                 Cafes
+prescription-pad.webp  <- src/assets/products/prescription-pad.webp    (identical copy)   Hospitals
+medicine-boxes.webp    <- src/assets/products/medicine-boxes.webp      (identical copy)   Pharmaceutical
+desk-calendars.webp    <- src/assets/products/desk-calendars.webp      (identical copy)   Corporate clients
+tissue-box-rose.webp   <- src/assets/products/tissue-box-rose.webp     (identical copy)   Hotels

@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { Zap, ArrowRight, ShoppingBasket as BasketIcon } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+import { useScrollScrub, clamp01 } from "@/app/lib/useScrollScrub";
 
 interface Product {
   id: string;
@@ -16,6 +17,19 @@ interface FeaturedProductsMagazineProps {
 }
 
 export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedProductsMagazineProps) {
+  const heroImgRef = React.useRef<HTMLDivElement>(null);
+  // Scroll-scrubbed: the hero photo parallaxes inside its frame as the card crosses the viewport.
+  useScrollScrub(() => {
+    const layer = heroImgRef.current;
+    if (!layer) return;
+    const vh = window.innerHeight || 1;
+    const frame = layer.closest("[data-hero-frame]") as HTMLElement | null;
+    if (!frame) return;
+    const r = frame.getBoundingClientRect();
+    const p = clamp01((vh - r.top) / (vh + r.height));
+    layer.style.transform = `translateY(${((p - 0.5) * 0.2 * r.height).toFixed(1)}px)`;
+  });
+
   if (!products || products.length === 0) return null;
 
   return (
@@ -29,7 +43,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
         className="group cursor-pointer"
         onClick={() => onProductClick(products[0])}
       >
-        <div className="relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden bg-zinc-900 shadow-2xl">
+        <div data-hero-frame className="relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden bg-zinc-900 shadow-2xl">
           {/* Background Image with Parallax Effect */}
           <motion.div 
             className="absolute inset-0"
@@ -37,15 +51,16 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
             transition={{ duration: 0.6 }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent z-10" />
-            <ImageWithFallback 
-              src={products[0]?.image} 
-              className="w-full h-full object-cover opacity-40 mix-blend-lighten"
-              alt={products[0]?.name}
-            />
+            <div ref={heroImgRef} className="absolute inset-x-0 -top-[10%] -bottom-[10%] will-change-transform">
+              <ImageWithFallback 
+                src={products[0]?.image} 
+                className="w-full h-full object-cover opacity-40 mix-blend-lighten"
+                alt={products[0]?.name}
+              />
+            </div>
           </motion.div>
 
           {/* Noise & Gradient Effects */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-soft-light z-10" />
           <motion.div 
             animate={{ 
               background: [

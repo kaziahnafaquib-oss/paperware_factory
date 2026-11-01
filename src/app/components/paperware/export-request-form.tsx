@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useEscapeKey } from "../../hooks/useEscapeKey";
 import { useDialogFocus } from "../../hooks/useDialogFocus";
-import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
+import { mailtoUrl, openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Globe, Ship, Plane, Box, ArrowRight, ShieldCheck, CircleCheck, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Plus, Trash2, Upload } from "lucide-react";
 
@@ -16,6 +16,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
   useDialogFocus(dialogRef, isOpen);
   const [contactNumbers, setContactNumbers] = useState([{ number: '', apps: [] as string[] }]);
   const [emails, setEmails] = useState(['']);
+  const [mailHref, setMailHref] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [attachment, setAttachment] = useState<File | null>(null);
 
@@ -82,6 +83,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
     const fields = collectFormFields(e.currentTarget);
     if (attachment) fields["Attachment"] = `${attachment.name} (I will send this file in the chat)`;
     openWhatsAppInquiry("Export inquiry", fields);
+    setMailHref(mailtoUrl("Export inquiry", fields));
     setIsSubmitted(true);
   };
 
@@ -130,6 +132,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
               <p role="status" aria-live="polite" className="text-zinc-600 font-bold max-w-md text-sm">
                 {INQUIRY_HANDOFF_BODY}
               </p>
+              <a href={mailHref} className="text-sm font-bold text-black underline underline-offset-4">Send by email instead</a>
               <button 
                 onClick={onClose}
                 className="px-8 py-3 bg-black text-white rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-transform"

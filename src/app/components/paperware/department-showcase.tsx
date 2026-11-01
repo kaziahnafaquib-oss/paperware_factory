@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Printer, Scissors, Layers, Settings, ShieldCheck, ArrowRight, Activity, Gauge, Cpu } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { useScrollScrub, clamp01, easeOut3 } from "../../lib/useScrollScrub";
+// Real Paperware floor photos (src/assets/factory/SOURCES.txt). The die-cutting machines have no
+// photo in the library, so those cards render a graphic panel instead of a stock image.
+import imgOffsetPress from "../../../assets/factory/offset-press.webp";
+import imgPressOperator from "../../../assets/factory/press-operator.webp";
+import imgCupFormingMachines from "../../../assets/factory/cup-forming-machines.webp";
+import imgFormingCloseup from "../../../assets/factory/forming-closeup.webp";
+import imgQcTechnician from "../../../assets/factory/qc-technician.webp";
 
-// Replaced figma assets with reliable Unsplash URLs
-const imgHeidelberg = "https://images.unsplash.com/photo-1758183961426-88d64eb5f787?q=80&w=1080&auto=format";
-const imgOriginalHeidelberg = "https://images.unsplash.com/photo-1744126175546-d7c5366e94f9?q=80&w=1080&auto=format";
-const imgPYQ203C = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1080&auto=format";
-const imgPYQ401C = "https://images.unsplash.com/photo-1717386255773-a456c611dc4e?q=80&w=1080&auto=format";
+const imgHeidelberg = imgOffsetPress;
+const imgOriginalHeidelberg = imgPressOperator;
+const imgPYQ203C: string | null = null;
+const imgPYQ401C: string | null = null;
 
 const departments = [
   {
@@ -69,7 +76,7 @@ const departments = [
     name: "Lamination Unit",
     title: "Sustainable Barrier Coating",
     description: "Utilizing biodegradable PLA and water-based coatings to provide superior liquid resistance while maintaining 100% recyclability.",
-    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1080",
+    image: imgCupFormingMachines,
     icon: Layers,
     stats: [
       { label: "Daily Output", value: "25K Pcs" },
@@ -83,7 +90,7 @@ const departments = [
     name: "Forming Unit",
     title: "High-Speed Product Assembly",
     description: "State-of-the-art European forming machines that mold and seal packaging at incredible speeds with ultrasonic leak-proof technology.",
-    image: "https://images.unsplash.com/photo-1720036236694-d0a231c52563?auto=format&q=80&w=1080",
+    image: imgFormingCloseup,
     icon: Settings,
     stats: [
       { label: "Daily Output", value: "350K Pcs" },
@@ -97,7 +104,7 @@ const departments = [
     name: "Quality Check Unit",
     title: "Multi-Stage Inspection Lab",
     description: "Rigorous testing protocols in a medical-grade environment, ensuring every product meets international safety and hygiene standards.",
-    image: "https://images.unsplash.com/photo-1700727448542-50531bc60211?auto=format&q=80&w=1080",
+    image: imgQcTechnician,
     icon: ShieldCheck,
     stats: [
       { label: "Defect Rate", value: "< 0.01%" },
@@ -110,19 +117,38 @@ const departments = [
 
 export function DepartmentShowcase() {
   const [activeTab, setActiveTab] = useState(departments[0].id);
+  const headRef = React.useRef<HTMLDivElement>(null);
+  const frameRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: heading rises in; the black content frame rises and settles slightly after it.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const head = headRef.current;
+    if (head) {
+      const r = head.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.6)));
+      head.style.transform = `translate3d(0,${((1 - u) * 48).toFixed(1)}px,0)`;
+      head.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+    }
+    const frame = frameRef.current;
+    if (frame) {
+      const r = frame.getBoundingClientRect();
+      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)));
+      frame.style.transform = `translate3d(0,${((1 - u) * 80).toFixed(1)}px,0) scale(${(0.97 + 0.03 * u).toFixed(4)})`;
+      frame.style.opacity = (0.2 + 0.8 * u).toFixed(3);
+    }
+  });
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-white overflow-x-clip">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col mb-16 space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+        <div ref={headRef} className="flex flex-col mb-16 space-y-4 will-change-transform">
+          <div
             className="flex items-center gap-4 text-black font-black uppercase tracking-[0.4em] text-[10px]"
           >
             <div className="h-[2px] w-12 bg-[#fabf37]" />
             Departmental Infrastructure
-          </motion.div>
+          </div>
           <h2 className="text-[32px] md:text-[64px] font-black uppercase tracking-tighter leading-none">
             Our <span className="text-zinc-300">Operational</span> <br />
             Units.
@@ -151,7 +177,7 @@ export function DepartmentShowcase() {
         </div>
 
         {/* Content Area */}
-        <div className="relative min-h-[850px] bg-black overflow-hidden group">
+        <div ref={frameRef} className="relative min-h-[850px] bg-black overflow-hidden group will-change-transform">
           {/* Background Decorative Element */}
           <div className="absolute top-0 right-0 w-1/3 h-full bg-[#fabf37]/5 skew-x-[-20deg] translate-x-1/2 pointer-events-none" />
           
@@ -178,11 +204,18 @@ export function DepartmentShowcase() {
                             transition={{ delay: mi * 0.2 }}
                             className="relative group/machine overflow-hidden rounded-[32px] border border-white/10 bg-zinc-900"
                           >
+                            {machine.image ? (
                             <ImageWithFallback
                               src={machine.image}
                               alt={machine.name}
                               className="size-full object-cover grayscale brightness-75 group-hover/machine:grayscale-0 group-hover/machine:brightness-100 group-hover/machine:scale-105 transition-all duration-1000"
                             />
+                            ) : (
+                              <div aria-hidden="true" className="absolute inset-0 bg-zinc-900 overflow-hidden">
+                                <div className="absolute inset-y-0 right-0 w-1/2 bg-[#fabf37] skew-x-[-14deg] translate-x-1/4 opacity-90 group-hover/machine:translate-x-[18%] transition-transform duration-700" />
+                                <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: "radial-gradient(#fff 1px, transparent 1px)", backgroundSize: "22px 22px" }} />
+                              </div>
+                            )}
                             
                             {/* Slick Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/20 to-transparent p-10 flex flex-col justify-center">

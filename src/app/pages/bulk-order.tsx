@@ -10,12 +10,14 @@ import {
   ArrowRight, Landmark, Factory, Shield, Sparkles
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useGo } from "../lib/useGo";
 
 interface BulkOrderPageProps {
   basket?: any[];
 }
 
 export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
+  const go = useGo();
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [formData, setFormData] = React.useState({
     companyName: "",
@@ -54,8 +56,8 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
               <span role="status" aria-live="polite">{INQUIRY_HANDOFF_BODY}</span>
             </p>
           </div>
-          <button className="w-full bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm shadow-2xl hover:bg-[#fabf37] transition-all">
-             Back to Dashboard
+          <button onClick={() => go("home")} className="w-full bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm shadow-2xl hover:bg-[#fabf37] transition-all">
+             Back to Home
           </button>
         </motion.div>
       </div>

@@ -5,6 +5,30 @@ import { motion, AnimatePresence } from "motion/react";
 import { Instagram, Linkedin, Facebook, Youtube, Plus, Trash2, Save, X, ExternalLink, Eye, EyeOff, CheckSquare, Square, Filter, Layers, ListFilter, BarChart3, TrendingUp, Users, MessageCircle, Heart, Calendar, Share2, MapPin, Smile, MessageSquare, Globe, Users2 } from "lucide-react";
 import { toast } from "sonner";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { SocialFeedsSettings } from "./social-feeds-settings";
+import { useSocialFeedSettings, getSocialFeedsSavedAt, hasLocalSocialFeedOverride } from "../../lib/social-feeds";
+
+function FeedSummary() {
+  const s = useSocialFeedSettings();
+  const saved = getSocialFeedsSavedAt();
+  const rows: [string, string][] = [
+    ["Facebook page", s.facebookPageUrl],
+    ["Instagram profile", s.instagramProfileUrl],
+    ["Configured posts", `${s.instagramPostUrls.length} Instagram, ${s.facebookPostUrls.length} Facebook`],
+    ["Source", hasLocalSocialFeedOverride() ? "Local preview (this browser)" : "Published social-feeds.json"],
+    ["Last saved here", saved ? new Date(saved).toLocaleString() : "Not saved in this browser"],
+  ];
+  return (
+    <dl className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      {rows.map(([k, v]) => (
+        <div key={k} className="bg-black border border-white/5 rounded-[24px] p-5 min-w-0">
+          <dt className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">{k}</dt>
+          <dd className="text-xs font-bold text-white break-all">{v}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 export function SocialMediaView() {
   const { socialLinks, updateSocialLink, posts, addPost, deletePost, updatePost } = useSocialMedia();
@@ -76,64 +100,9 @@ export function SocialMediaView() {
       }
     >
       <div className="space-y-8">
-        {/* Analytics Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-           <div className="bg-black border border-white/5 rounded-[32px] p-6 relative overflow-hidden group hover:border-[#fabf37]/30 transition-colors">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Users className="size-20 text-[#fabf37]" />
-              </div>
-              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Total Audience</p>
-              <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">84.2K</h4>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-green-500/10 text-green-500 text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
-                  <TrendingUp className="size-3" /> +12.5%
-                </span>
-                <span className="text-[9px] font-bold text-zinc-600 uppercase">vs last month</span>
-              </div>
-           </div>
-           
-           <div className="bg-black border border-white/5 rounded-[32px] p-6 relative overflow-hidden group hover:border-blue-500/30 transition-colors">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <BarChart3 className="size-20 text-blue-500" />
-              </div>
-              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Engagement Rate</p>
-              <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">4.8%</h4>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-500 text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
-                  <TrendingUp className="size-3" /> +0.4%
-                </span>
-                <span className="text-[9px] font-bold text-zinc-600 uppercase">Above Avg</span>
-              </div>
-           </div>
-
-           <div className="bg-black border border-white/5 rounded-[32px] p-6 relative overflow-hidden group hover:border-pink-500/30 transition-colors">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Heart className="size-20 text-pink-500" />
-              </div>
-              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Total Interactions</p>
-              <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">12.4K</h4>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-pink-500/10 text-pink-500 text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
-                  <Heart className="size-3" /> 8.2K Likes
-                </span>
-                <span className="text-[9px] font-bold text-zinc-600 uppercase">Last 30 days</span>
-              </div>
-           </div>
-
-           <div className="bg-black border border-white/5 rounded-[32px] p-6 relative overflow-hidden group hover:border-purple-500/30 transition-colors">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Share2 className="size-20 text-purple-500" />
-              </div>
-              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Content Velocity</p>
-              <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">{posts.length}</h4>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-500 text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
-                  <Calendar className="size-3" /> {posts.filter(p => p.date === 'Just now').length} New
-                </span>
-                <span className="text-[9px] font-bold text-zinc-600 uppercase">Active Posts</span>
-              </div>
-           </div>
-        </div>
+        <SocialFeedsSettings />
+        {/* Live settings summary (no invented numbers) */}
+        <FeedSummary />
 
         {/* Profile Links Section */}
         <div className="bg-black border border-white/5 rounded-[40px] p-8">
@@ -196,113 +165,6 @@ export function SocialMediaView() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Community Pulse & Demographics */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-           {/* Recent Activity / Top Comments */}
-           <div className="xl:col-span-2 bg-black border border-white/5 rounded-[40px] p-8">
-              <div className="flex items-center justify-between mb-6">
-                 <h3 className="text-xl font-black text-white uppercase tracking-tight">Community Pulse</h3>
-                 <button className="text-[10px] font-bold text-[#fabf37] uppercase tracking-widest hover:underline">View All Activity</button>
-              </div>
-              
-              <div className="space-y-4">
-                 {[
-                    { user: "Sarah Jenkins", handle: "@sarah.j_designs", platform: "Instagram", content: "The new sustainable packaging collection is exactly what we needed! 😍 Can't wait to order.", time: "2m ago", sentiment: "positive" },
-                    { user: "EcoTech Solutions", handle: "@ecotech_ltd", platform: "LinkedIn", content: "Great to see Paperware expanding into industrial biodegradable options. Let's connect.", time: "15m ago", sentiment: "positive" },
-                    { user: "Mike Ross", handle: "@mross_88", platform: "Facebook", content: "When will the food trays be back in stock? Need them for next week.", time: "1h ago", sentiment: "neutral" },
-                    { user: "Design Daily", handle: "@designdaily", platform: "Instagram", content: "Love the minimal aesthetic. #design #packaging", time: "3h ago", sentiment: "positive" },
-                 ].map((comment, i) => (
-                    <div key={i} className="flex gap-4 p-4 rounded-2xl bg-zinc-900/30 border border-white/5 hover:border-[#fabf37]/30 transition-colors group">
-                       <div className="size-10 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-black text-zinc-500 group-hover:bg-[#fabf37] group-hover:text-black transition-colors">
-                          {comment.user.charAt(0)}
-                       </div>
-                       <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                             <div className="flex items-center gap-2">
-                                <span className="text-[11px] font-bold text-white">{comment.user}</span>
-                                <span className="text-[9px] text-zinc-500">{comment.handle}</span>
-                             </div>
-                             <div className="flex items-center gap-2">
-                                {comment.platform === 'Instagram' && <Instagram className="size-3 text-pink-500" />}
-                                {comment.platform === 'LinkedIn' && <Linkedin className="size-3 text-blue-500" />}
-                                {comment.platform === 'Facebook' && <Facebook className="size-3 text-blue-600" />}
-                                <span className="text-[9px] font-bold text-zinc-600 uppercase">{comment.time}</span>
-                             </div>
-                          </div>
-                          <p className="text-[11px] text-zinc-300 leading-relaxed">{comment.content}</p>
-                       </div>
-                    </div>
-                 ))}
-              </div>
-           </div>
-
-           {/* Audience Demographics */}
-           <div className="bg-black border border-white/5 rounded-[40px] p-8 flex flex-col">
-              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-6">Audience Data</h3>
-              
-              <div className="space-y-6 flex-1">
-                 <div>
-                    <div className="flex items-center justify-between mb-2">
-                       <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                          <Globe className="size-3" /> Top Locations
-                       </span>
-                    </div>
-                    <div className="space-y-2">
-                       <div className="flex items-center justify-between">
-                          <span className="text-[11px] text-white">United States</span>
-                          <span className="text-[10px] font-bold text-[#fabf37]">42%</span>
-                       </div>
-                       <div className="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-[#fabf37]" style={{ width: '42%' }} />
-                       </div>
-                       
-                       <div className="flex items-center justify-between mt-3">
-                          <span className="text-[11px] text-white">United Kingdom</span>
-                          <span className="text-[10px] font-bold text-zinc-500">28%</span>
-                       </div>
-                       <div className="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-zinc-700" style={{ width: '28%' }} />
-                       </div>
-
-                       <div className="flex items-center justify-between mt-3">
-                          <span className="text-[11px] text-white">Germany</span>
-                          <span className="text-[10px] font-bold text-zinc-500">15%</span>
-                       </div>
-                       <div className="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-zinc-700" style={{ width: '15%' }} />
-                       </div>
-                    </div>
-                 </div>
-
-                 <div className="pt-6 border-t border-white/5">
-                    <div className="flex items-center justify-between mb-4">
-                       <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                          <Users2 className="size-3" /> Age Distribution
-                       </span>
-                    </div>
-                    <div className="flex items-end gap-2 h-24">
-                       {[
-                          { label: '18-24', val: 15 },
-                          { label: '25-34', val: 45 },
-                          { label: '35-44', val: 25 },
-                          { label: '45+', val: 15 },
-                       ].map((d) => (
-                          <div key={d.label} className="flex-1 flex flex-col items-center gap-2 group">
-                             <div className="w-full bg-zinc-900 rounded-t-lg relative group-hover:bg-zinc-800 transition-colors overflow-hidden">
-                                <div 
-                                   className="absolute bottom-0 inset-x-0 bg-[#fabf37] opacity-80 group-hover:opacity-100 transition-opacity" 
-                                   style={{ height: `${d.val}%` }} 
-                                />
-                             </div>
-                             <span className="text-[8px] font-bold text-zinc-600 uppercase">{d.label}</span>
-                          </div>
-                       ))}
-                    </div>
-                 </div>
-              </div>
-           </div>
         </div>
 
         {/* Feed Management Section */}
@@ -501,21 +363,6 @@ export function SocialMediaView() {
                       {post.caption}
                     </p>
                     
-                    <div className="flex items-center gap-4 mb-4">
-                       <div className="flex items-center gap-1.5 text-zinc-500 group-hover:text-pink-500 transition-colors">
-                          <Heart className="size-3" />
-                          <span className="text-[9px] font-black">{Math.floor(Math.random() * 500) + 50}</span>
-                       </div>
-                       <div className="flex items-center gap-1.5 text-zinc-500 group-hover:text-blue-500 transition-colors">
-                          <MessageCircle className="size-3" />
-                          <span className="text-[9px] font-black">{Math.floor(Math.random() * 50) + 5}</span>
-                       </div>
-                       <div className="flex items-center gap-1.5 text-zinc-500 group-hover:text-white transition-colors ml-auto">
-                          <Share2 className="size-3" />
-                          <span className="text-[9px] font-black">Share</span>
-                       </div>
-                    </div>
-
                     <div className="flex items-center justify-between pt-4 border-t border-white/5">
                       <span className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">{post.date}</span>
                       <span className="text-[8px] font-black uppercase tracking-widest text-zinc-600">ID: {post.id}</span>

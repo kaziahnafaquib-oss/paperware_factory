@@ -13,9 +13,22 @@ import {
   ChevronLeft, ChevronRight
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
+// Real Paperware floor photos (src/assets/factory/SOURCES.txt) replace former stock images.
+import imgPressOperator from "../../assets/factory/press-operator.webp";
+import imgCupsStacking from "../../assets/factory/cups-stacking.webp";
+import imgQcLeakTest from "../../assets/factory/qc-leak-test.webp";
+import imgQcTechnician from "../../assets/factory/qc-technician.webp";
+import { toast } from "sonner";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterJourney from "../../assets/video-posters/journey-print-laminate.webp";
+import { useGo } from "../lib/useGo";
+
+const JOURNEY_VIDEO = mediaUrl("journey-print-laminate.mp4");
 
 export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
+  const go = useGo();
   const chartData = [
     { time: '00:00', consistency: 98.2 },
     { time: '04:00', consistency: 99.1 },
@@ -31,7 +44,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
       id: 1,
       title: "New Heidelberg Unit 4 Installation Live!",
       date: "Dec 15, 2025",
-      image: "https://images.unsplash.com/photo-1721745250213-c3e1a2f4eeeb?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmR1c3RyaWFsJTIwZmFjdG9yeSUyMHdvcmtlcnMlMjBwYXBlciUyMG1hbnVmYWN0dXJpbmclMjBtYWNoaW5lfGVufDF8fHx8MTc2NjMyMTMxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: imgPressOperator,
       category: "Infrastructure",
       likes: "1.2k",
       platform: <Youtube className="size-4" />,
@@ -41,7 +54,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
       id: 2,
       title: "Sustainability Milestone: 95% Waste Recycled",
       date: "Dec 10, 2025",
-      image: "https://images.unsplash.com/photo-1705592579405-0d59931c8e00?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXBlciUyMHBhY2thZ2luZyUyMHN1c3RhaW5hYmlsaXR5JTIwZWNvJTIwZnJpZW5kbHklMjBmYWN0b3J5fGVufDF8fHx8MTc2NjMyMTMyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      image: imgCupsStacking,
       category: "Eco-News",
       likes: "2.4k",
       platform: <Instagram className="size-4" />,
@@ -51,7 +64,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
       id: 3,
       title: "How we achieve zero-defect in Paperware",
       date: "Dec 05, 2025",
-      image: "https://images.unsplash.com/photo-1730705788367-dbd288c40ee7?auto=format&crop=entropy&cs=tinysrgb&fit=max&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoaWdoJTIwdGVjaCUyMHF1YWxpdHklMjBjb250cm9sJTIwbGFib3JhdG9yeSUyMGluZHVzdHJpYWx8ZW58MXx8fHwxNzY2MzIxMzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image: imgQcLeakTest,
       category: "Innovation",
       likes: "890",
       platform: <Linkedin className="size-4" />,
@@ -61,7 +74,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
       id: 4,
       title: "Meet our Quality Assurance Team #Paperware",
       date: "Nov 28, 2025",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
+      image: imgQcTechnician,
       category: "Culture",
       likes: "1.5k",
       platform: <Facebook className="size-4" />,
@@ -153,11 +166,34 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
     }
   };
 
+  const headRef = React.useRef<HTMLDivElement>(null);
+  const timelineRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll-scrubbed: header drifts up and fades; timeline cards slide in one after another.
+  useScrollScrub(() => {
+    const h = window.innerHeight || 1;
+    const head = headRef.current;
+    if (head) {
+      const p = clamp01(window.scrollY / (h * 0.6));
+      head.style.transform = `translate3d(0,${(p * 60).toFixed(1)}px,0)`;
+      head.style.opacity = (1 - 0.6 * p).toFixed(3);
+    }
+    const tl = timelineRef.current;
+    if (tl) {
+      tl.querySelectorAll<HTMLElement>("[data-journey]").forEach((el) => {
+        const r = el.getBoundingClientRect();
+        const u = easeOut3(clamp01((h - r.top) / (h * 0.5)));
+        el.style.transform = `translate3d(${((1 - u) * 40).toFixed(1)}px,0,0)`;
+        el.style.opacity = (0.15 + 0.85 * u).toFixed(3);
+      });
+    }
+  });
+
   return (
-    <div className="bg-[#fdfaf3] min-h-screen pt-32 pb-20 font-['Poppins',sans-serif]">
-      <section className="container mx-auto px-4">
+    <div className="bg-[#fdfaf3] min-h-screen pt-32 pb-20 font-['Poppins',sans-serif] overflow-x-clip">
+      <section className="container mx-auto px-4 [content-visibility:visible]">
         {/* Header Section */}
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-16">
+        <div ref={headRef} className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-16 will-change-transform">
           <div className="space-y-6">
             <button 
               onClick={onBack}
@@ -185,10 +221,10 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <button onClick={() => handleShare('fb')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Facebook className="size-4" /></button>
               <button onClick={() => handleShare('insta')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Instagram className="size-4" /></button>
               <button onClick={() => handleShare('li')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Linkedin className="size-4" /></button>
-              <button className="size-10 rounded-full bg-[#fabf37] text-black flex items-center justify-center hover:scale-110 transition-all"><Share2 className="size-4" /></button>
+              <button onClick={() => { navigator.clipboard?.writeText(window.location.href); toast.success('Link copied'); }} className="size-10 rounded-full bg-[#fabf37] text-black flex items-center justify-center hover:scale-110 transition-all"><Share2 className="size-4" /></button>
             </div>
-            <button className="bg-black text-[#fabf37] px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:scale-105 transition-all shadow-xl">
-              <Download className="size-4" /> PDF Report
+            <button onClick={() => go("contact")} className="bg-black text-[#fabf37] px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:scale-105 transition-all shadow-xl">
+              <Download className="size-4" /> Request Report
             </button>
           </div>
         </div>
@@ -364,6 +400,23 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
 
           {/* Timeline & Worker Log */}
           <div className="lg:col-span-8 space-y-12">
+            {/* Real footage: printing -> laminating -> drying (public/media/SOURCES.txt). */}
+            <div className="bg-white p-4 md:p-6 rounded-[40px] border border-black/5 grid grid-cols-1 md:grid-cols-[minmax(0,260px)_1fr] gap-6 items-center">
+              <FactoryClip
+                src={JOURNEY_VIDEO}
+                poster={posterJourney}
+                label="printing and laminating line"
+                className="aspect-[9/16] md:aspect-auto md:h-[420px] rounded-[32px]"
+                controlPosition="top-right"
+              />
+              <div className="space-y-4 px-2 md:px-4">
+                <p className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">From the line</p>
+                <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight">Printed, laminated, dried</h3>
+                <p className="text-sm text-zinc-500 font-medium leading-relaxed">
+                  Sheets leave the offset press, pass through the laminating unit for protection and shine, then dry on the racks until crisp.
+                </p>
+              </div>
+            </div>
             {/* Stats Overview */}
             <div className="mb-12 bg-white p-8 rounded-[40px] border border-black/5 flex flex-wrap items-center gap-8 md:gap-16">
                <div className="space-y-1 text-center md:text-left">
@@ -390,15 +443,12 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                </div>
             </div>
 
-            <div className="space-y-12 pl-4 md:pl-12 border-l-2 border-zinc-100 relative">
+            <div ref={timelineRef} className="space-y-12 pl-4 md:pl-12 border-l-2 border-zinc-100 relative">
               {journey.map((item, i) => (
-                <motion.div 
+                <div 
                   key={i}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="relative"
+                  data-journey
+                  className="relative will-change-transform"
                 >
                   {/* Timeline Dot */}
                   <div className={`absolute -left-[54px] md:-left-[70px] top-0 size-10 md:size-14 rounded-2xl flex items-center justify-center border-4 border-white shadow-lg transition-all ${item.completed ? 'bg-black text-[#fabf37]' : 'bg-zinc-100 text-zinc-400'}`}>
@@ -444,14 +494,14 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-400">
                             <Activity className="size-4" /> Real-time Node Logs Verified
                           </div>
-                          <button className="text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-black transition-colors flex items-center gap-2">
+                          <button onClick={() => go("factory-live")} className="text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-black transition-colors flex items-center gap-2">
                             View Machine Data <ChevronRight className="size-4" />
                           </button>
                         </div>
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -465,16 +515,16 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                 <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">Factory <span className="text-zinc-300">Pulse</span></h2>
               </div>
               <div className="flex gap-4">
-                 <button className="size-16 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm group">
+                 <button onClick={() => document.getElementById('factory-pulse-scroller')?.scrollBy({ left: -520, behavior: 'smooth' })} className="size-16 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm group">
                     <ChevronLeft className="size-6 group-hover:scale-110 transition-transform" />
                  </button>
-                 <button className="size-16 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm group">
+                 <button onClick={() => document.getElementById('factory-pulse-scroller')?.scrollBy({ left: 520, behavior: 'smooth' })} className="size-16 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm group">
                     <ChevronRight className="size-6 group-hover:scale-110 transition-transform" />
                  </button>
               </div>
            </div>
 
-           <div className="flex gap-8 overflow-x-auto pb-12 snap-x no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
+           <div id="factory-pulse-scroller" className="flex gap-8 overflow-x-auto pb-12 snap-x no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
               {factoryPosts.map((post) => (
                 <motion.div 
                   key={post.id}
@@ -510,7 +560,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                             </div>
                             <p className="text-[11px] font-black text-zinc-400">{post.likes} Engagements</p>
                          </div>
-                         <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all group/btn">
+                         <button onClick={() => go("socials")} className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all group/btn">
                             Read Post <ChevronRight className="size-4 text-[#fabf37]" />
                          </button>
                       </div>
@@ -544,8 +594,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                >
                  <Share2 className="size-5" /> Share This Integrity Report
                </button>
-               <button className="w-full sm:w-auto bg-white/20 backdrop-blur-md border border-black/5 text-black px-12 py-7 rounded-full font-black uppercase tracking-widest text-[12px] hover:bg-white transition-all flex items-center justify-center gap-4">
-                 <Download className="size-5" /> Detailed Compliance PDF
+               <button onClick={() => go("compliance")} className="w-full sm:w-auto bg-white/20 backdrop-blur-md border border-black/5 text-black px-12 py-7 rounded-full font-black uppercase tracking-widest text-[12px] hover:bg-white transition-all flex items-center justify-center gap-4">
+                 <Download className="size-5" /> Compliance Details
                </button>
              </div>
            </div>

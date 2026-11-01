@@ -1,5 +1,5 @@
 import React from "react";
-import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
+import { mailtoUrl, openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   MessageSquare, Star, Send, ChartBar, 
@@ -21,6 +21,7 @@ interface ProductFeedbackPageProps {
 export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps) {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = React.useState(false);
+  const [mailHref, setMailHref] = React.useState("");
   const [rating, setRating] = React.useState(0);
   const [comment, setComment] = React.useState("");
   const [isScanning, setIsScanning] = React.useState(false);
@@ -43,6 +44,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
     design: 0
   });
   const [selectedIssues, setSelectedIssues] = React.useState<string[]>([]);
+  const [recommend, setRecommend] = React.useState<'yes' | 'maybe' | null>(null);
   const [comparisonRating, setComparisonRating] = React.useState<'better' | 'same' | 'worse' | null>(null);
   const [deliveryRating, setDeliveryRating] = React.useState(0);
   const [packagingRating, setPackagingRating] = React.useState(0);
@@ -153,6 +155,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
     if (comment) fields["Comment"] = comment;
     if (uploadedImages.length) fields["Photos"] = `${uploadedImages.length} photo(s); I will send them in the chat`;
     openWhatsAppInquiry("Product feedback", fields);
+    setMailHref(mailtoUrl("Product feedback", fields));
     setSubmitted(true);
   };
 
@@ -559,10 +562,10 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                        <Sparkles className="size-3" /> Would you recommend Paperware?
                      </p>
                      <div className="flex gap-4 w-full md:w-auto">
-                        <button type="button" className="flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-[#fabf37] hover:text-black transition-all">
+                        <button type="button" onClick={() => setRecommend(prev => prev === 'yes' ? null : 'yes')} aria-pressed={recommend === 'yes'} className={`flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-[#fabf37] hover:text-black transition-all ${recommend === 'yes' ? '!border-[#fabf37] !text-black bg-[#fabf37]/20' : ''}`}>
                            Yes, Definitely
                         </button>
-                        <button type="button" className="flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-zinc-900 hover:text-black transition-all">
+                        <button type="button" onClick={() => setRecommend(prev => prev === 'maybe' ? null : 'maybe')} aria-pressed={recommend === 'maybe'} className={`flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-zinc-900 hover:text-black transition-all ${recommend === 'maybe' ? '!border-[#fabf37] !text-black bg-[#fabf37]/20' : ''}`}>
                            Maybe Later
                         </button>
                      </div>
@@ -976,7 +979,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   {submitted ? <><CircleCheck className="size-6" /> Opened in WhatsApp</> : <><Send className="size-5 md:size-6" /> Send Feedback via WhatsApp</>}
                 </motion.button>
                 {submitted && (
-                  <p role="status" aria-live="polite" className="text-sm font-medium text-zinc-700 leading-relaxed text-center">{INQUIRY_HANDOFF_BODY}</p>
+                  <p role="status" aria-live="polite" className="text-sm font-medium text-zinc-700 leading-relaxed text-center">{INQUIRY_HANDOFF_BODY} <a href={mailHref} className="font-bold text-black underline underline-offset-4">Send by email instead</a></p>
                 )}
               </form>
             </motion.div>

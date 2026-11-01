@@ -8,6 +8,7 @@ import {
   ChevronRight, Box, Hexagon, Radio
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { useGo } from "../lib/useGo";
 
 // New Component: Counting Stat for high-impact numbers
 function CountingStat({ value, suffix = "", delay = 0 }: { value: string, suffix?: string, delay?: number }) {
@@ -55,6 +56,7 @@ function StaggeredText({ text, className }: { text: string, className?: string }
 }
 
 export function TechnicalManifestoPage() {
+  const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
@@ -443,10 +445,10 @@ export function TechnicalManifestoPage() {
             Ready to integrate with a supply chain that thinks for itself? Join the Paperware ecosystem today.
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-8">
-             <button className="bg-[#fabf37] text-black px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:scale-105 transition-all shadow-2xl">
+             <button onClick={() => go("partner-program")} className="bg-[#fabf37] text-black px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:scale-105 transition-all shadow-2xl">
                 Partner Integration
              </button>
-             <button className="bg-white/5 border border-white/10 text-white px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-white/10 transition-all">
+             <button onClick={() => go("contact")} className="bg-white/5 border border-white/10 text-white px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-white/10 transition-all">
                 Contact Technical Hub
              </button>
           </div>
