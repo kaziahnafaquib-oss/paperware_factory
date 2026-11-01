@@ -38,12 +38,6 @@
   <!-- Poppins: only the upright weights the site uses (was 18 styles + 10 script families via chained @import) -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" />
 
-  <!-- External stylesheets -->
-  <link rel="stylesheet" type="text/css" charset="UTF-8"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
-
   <!-- PWA Manifest -->
   <link rel="manifest" href="/paperware_factory/manifest.json" />
   <link rel="apple-touch-icon" href="/logo192.png" />
@@ -140,10 +134,10 @@
       transition: opacity 0.3s ease-out;
     }
   </style>
-  <script type="module" crossorigin src="/paperware_factory/assets/index-0gsceA4j.js"></script>
-  <link rel="modulepreload" crossorigin href="/paperware_factory/assets/ui-vendor-CaZ9so2f.js">
+  <script type="module" crossorigin src="/paperware_factory/assets/index-Bi155tLA.js"></script>
+  <link rel="modulepreload" crossorigin href="/paperware_factory/assets/ui-vendor-Cma3GFMy.js">
   <link rel="modulepreload" crossorigin href="/paperware_factory/assets/motion-vendor-BUsB7NQB.js">
-  <link rel="stylesheet" crossorigin href="/paperware_factory/assets/index-t2MoCaBB.css">
+  <link rel="stylesheet" crossorigin href="/paperware_factory/assets/index-DuKhJPqx.css">
 </head>
 
 <body>
@@ -178,12 +172,21 @@
     </script>
     -->
   <script>
-    // Simplified loader for dev
-    window.addEventListener('load', () => {
-      setTimeout(() => {
+    // Hide the boot spinner once the page has loaded (or after 2.5s at most: third-party embeds can hold
+    // the load event open), then drop it from the DOM so its animation stops costing frames.
+    (function () {
+      var done = false;
+      function ready() {
+        if (done) return; done = true;
         document.body.classList.add('app-ready');
-      }, 200);
-    });
+        setTimeout(function () {
+          var el = document.querySelector('.loading-screen');
+          if (el && el.parentNode) el.parentNode.removeChild(el);
+        }, 400);
+      }
+      window.addEventListener('load', function () { setTimeout(ready, 200); });
+      setTimeout(ready, 2500);
+    })();
   </script>
 </body>
 

@@ -1,18 +1,18 @@
 // Service Worker for Paperware Platform
-// Handles caching strategies for optimal performance
+// Handles caching strategies for optimal performance.
+// Scope-aware: the site is served under a base path on GitHub Pages (/paperware_factory/),
+// so every URL is derived from the registration scope instead of "/".
 
-const CACHE_VERSION = 'paperware-v1.0.0';
+const CACHE_VERSION = 'paperware-v1.1.0';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const DYNAMIC_CACHE = `${CACHE_VERSION}-dynamic`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
 
-// Assets to cache on install
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/src/app/App.tsx',
-  '/src/styles/index.css',
-];
+// Base path of the app (e.g. "/" or "/paperware_factory/").
+const BASE = new URL('./', self.location.href).pathname;
+
+// Assets to cache on install (the app shell; hashed JS/CSS are cached on first use).
+const STATIC_ASSETS = [BASE, `${BASE}index.html`];
 
 // Maximum cache sizes
 const MAX_DYNAMIC_CACHE_SIZE = 50;
@@ -20,29 +20,23 @@ const MAX_IMAGE_CACHE_SIZE = 100;
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
-  console.log('[SW] Installing Service Worker...');
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      console.log('[SW] Caching static assets');
-      return cache.addAll(STATIC_ASSETS);
-    })
+    caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_ASSETS)).catch(() => undefined)
   );
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up caches from older versions (keep this version's three caches)
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating Service Worker...');
   event.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
+    caches.keys().then((keys) =>
+      Promise.all(
         keys
-          .filter((key) => key.startsWith('paperware-') && key !== CACHE_VERSION)
+          .filter((key) => key.startsWith('paperware-') && !key.startsWith(`${CACHE_VERSION}-`))
           .map((key) => caches.delete(key))
-      );
-    })
+      )
+    ).then(() => self.clients.claim())
   );
-  return self.clients.claim();
 });
 
 // Helper function to limit cache size
@@ -56,137 +50,80 @@ const limitCacheSize = (name, size) => {
   });
 };
 
+// Only full, successful, same-origin responses go into the cache (206 partials would throw in cache.put).
+const cacheable = (res) => res && res.ok && res.status === 200 && res.type === 'basic';
+
+const cacheFirst = (request, cacheName, limit) =>
+  caches.match(request).then((cacheRes) =>
+    cacheRes ||
+    fetch(request).then((fetchRes) => {
+      if (cacheable(fetchRes)) {
+        const copy = fetchRes.clone();
+        caches.open(cacheName).then((cache) => {
+          cache.put(request, copy);
+          if (limit) limitCacheSize(cacheName, limit);
+        });
+      }
+      return fetchRes;
+    })
+  );
+
 // Fetch event - implement caching strategies
 self.addEventListener('fetch', (event) => {
   const { request } = event;
-  const url = new URL(request.url);
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
-    return;
-  }
+  // Skip non-GET, cross-origin (embeds, fonts CDN, analytics) and byte-range requests (video/audio seeking).
+  if (request.method !== 'GET') return;
+  if (new URL(request.url).origin !== self.location.origin) return;
+  if (request.headers.has('range')) return;
+  if (request.destination === 'video' || request.destination === 'audio') return;
 
-  // Handle different types of requests with appropriate strategies
-  
   // Images - Cache First, then Network
   if (request.destination === 'image') {
-    event.respondWith(
-      caches.match(request).then((cacheRes) => {
-        return (
-          cacheRes ||
-          fetch(request).then((fetchRes) => {
-            return caches.open(IMAGE_CACHE).then((cache) => {
-              cache.put(request, fetchRes.clone());
-              limitCacheSize(IMAGE_CACHE, MAX_IMAGE_CACHE_SIZE);
-              return fetchRes;
-            });
-          })
-        );
-      })
-    );
+    event.respondWith(cacheFirst(request, IMAGE_CACHE, MAX_IMAGE_CACHE_SIZE));
     return;
   }
 
-  // Static assets - Cache First
+  // Static assets (hashed filenames) - Cache First
   if (
     request.destination === 'style' ||
     request.destination === 'script' ||
     request.destination === 'font'
   ) {
-    event.respondWith(
-      caches.match(request).then((cacheRes) => {
-        return (
-          cacheRes ||
-          fetch(request).then((fetchRes) => {
-            return caches.open(STATIC_CACHE).then((cache) => {
-              cache.put(request, fetchRes.clone());
-              return fetchRes;
-            });
-          })
-        );
-      })
-    );
+    event.respondWith(cacheFirst(request, STATIC_CACHE));
     return;
   }
 
-  // API calls and pages - Network First, then Cache
+  // Pages and data - Network First, then Cache, then app shell (SPA fallback)
   event.respondWith(
     fetch(request)
       .then((fetchRes) => {
-        return caches.open(DYNAMIC_CACHE).then((cache) => {
-          cache.put(request, fetchRes.clone());
-          limitCacheSize(DYNAMIC_CACHE, MAX_DYNAMIC_CACHE_SIZE);
-          return fetchRes;
-        });
+        if (cacheable(fetchRes)) {
+          const copy = fetchRes.clone();
+          caches.open(DYNAMIC_CACHE).then((cache) => {
+            cache.put(request, copy);
+            limitCacheSize(DYNAMIC_CACHE, MAX_DYNAMIC_CACHE_SIZE);
+          });
+        }
+        return fetchRes;
       })
-      .catch(() => {
-        return caches.match(request).then((cacheRes) => {
-          return (
-            cacheRes ||
-            caches.match('/').then((fallback) => {
-              return fallback;
-            })
-          );
-        });
-      })
+      .catch(() =>
+        caches.match(request).then((cacheRes) => {
+          if (cacheRes) return cacheRes;
+          if (request.mode === 'navigate') {
+            return caches.match(`${BASE}index.html`).then((shell) => shell || caches.match(BASE));
+          }
+          return Response.error();
+        })
+      )
   );
 });
 
-// Background sync for offline actions
-self.addEventListener('sync', (event) => {
-  console.log('[SW] Background sync:', event.tag);
-  if (event.tag === 'sync-data') {
-    event.waitUntil(
-      // Implement your sync logic here
-      Promise.resolve()
-    );
-  }
-});
-
-// Push notifications support
-self.addEventListener('push', (event) => {
-  console.log('[SW] Push notification received');
-  const data = event.data ? event.data.json() : {};
-  
-  const options = {
-    body: data.body || 'New update available',
-    icon: '/icon-192x192.png',
-    badge: '/icon-72x72.png',
-    vibrate: [200, 100, 200],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: data.primaryKey || 1,
-    },
-  };
-
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'Paperware', options)
-  );
-});
-
-// Notification click handler
-self.addEventListener('notificationclick', (event) => {
-  console.log('[SW] Notification clicked');
-  event.notification.close();
-  
-  event.waitUntil(
-    clients.openWindow('/')
-  );
-});
-
-// Message handler for communication with main thread
+// Let the page trigger an update (used by src/app/lib/serviceWorker.ts).
 self.addEventListener('message', (event) => {
-  console.log('[SW] Message received:', event.data);
-  
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-  
-  if (event.data && event.data.type === 'CLEAR_CACHE') {
-    event.waitUntil(
-      caches.keys().then((names) => {
-        return Promise.all(names.map((name) => caches.delete(name)));
-      })
-    );
+  if (!event.data) return;
+  if (event.data.type === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data.type === 'CLEAR_CACHE') {
+    caches.keys().then((keys) => Promise.all(keys.filter((k) => k.startsWith('paperware-')).map((k) => caches.delete(k))));
   }
 });
