@@ -16,7 +16,6 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [soundOn, setSoundOn] = React.useState(false);
-  const [ready, setReady] = React.useState(false);
 
   // YouTube IFrame API over postMessage: no SDK download, works with enablejsapi=1.
   const ytCommand = (func: string, args: unknown[] = []) => {
@@ -34,25 +33,6 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
     }
   };
 
-  // Hide the poster once the player reports PLAYING (state 1); fall back to a timer.
-  React.useEffect(() => {
-    if (!ytId) return;
-    setReady(false);
-    const onMessage = (e: MessageEvent) => {
-      if (e.origin !== YT_ORIGIN || typeof e.data !== "string") return;
-      try {
-        const d = JSON.parse(e.data);
-        if (d.event === "onReady") ytCommand("playVideo");
-        if (d.event === "onStateChange" && d.info === 1) setReady(true);
-        if (d.event === "infoDelivery" && d.info?.playerState === 1) setReady(true);
-      } catch { /* ignore non-JSON */ }
-    };
-    window.addEventListener("message", onMessage);
-    const hello = setInterval(() => iframeRef.current?.contentWindow?.postMessage(JSON.stringify({ event: "listening" }), YT_ORIGIN), 500);
-    const fallback = setTimeout(() => setReady(true), 6000);
-    return () => { window.removeEventListener("message", onMessage); clearInterval(hello); clearTimeout(fallback); };
-  }, [ytId]);
-
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   const embedSrc = ytId
     ? `${YT_ORIGIN}/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`
@@ -63,13 +43,13 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
       <div className="absolute inset-0 z-0 overflow-hidden">
         {ytId ? (
           <>
-            {/* Poster shows instantly while the player boots. */}
+            {/* Poster sits under the opaque player: visible only until the iframe paints. */}
             <img
               src={`https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`}
               alt=""
               aria-hidden="true"
               decoding="async"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-80"}`}
+              className="absolute inset-0 h-full w-full object-cover"
             />
             {/* Oversized + scaled so YouTube's corner logo and title bar sit outside the viewport. */}
             <iframe
@@ -79,7 +59,7 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
               title="Paperware Factory film"
               allow="autoplay; encrypted-media"
               referrerPolicy="strict-origin-when-cross-origin"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.28] opacity-80"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.15]"
             />
           </>
         ) : url ? (

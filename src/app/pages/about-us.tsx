@@ -75,7 +75,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
   const heroVideoRef = React.useRef<HTMLVideoElement>(null);
   const reducedMotion = useReducedMotionPreference();
   // Hero background clip: paused under reduced motion, otherwise an ambient loop with its own Pause control (WCAG 2.2.2).
-  const [heroPaused, setHeroPaused] = React.useState(reducedMotion);
+  // Autoplays muted for everyone (also under reduced motion): the owner wants the floor footage live.
+  const [heroPaused, setHeroPaused] = React.useState(false);
   const toggleHeroVideo = () => {
     const v = heroVideoRef.current;
     if (!v) return;
@@ -249,9 +250,9 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           {/* Dark wash at the bottom-left (behind the headline) fading to white at the edges so the page still reads as white. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-white z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/85 z-10" />
           <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-black/10 to-transparent z-10" />
-          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.5, transform: "scale(1.08)" }}>
+          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.85, transform: "scale(1.08)" }}>
             {aboutUsVideos?.heroBackground ? (
               <MediaPlayer
                 type={aboutUsVideos?.heroBackgroundType || "image"}
@@ -269,11 +270,11 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 src={mediaUrl("career-floor.mp4")}
                 poster={posterFloor}
                 className="size-full object-cover"
-                autoPlay={!reducedMotion}
+                autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 aria-hidden="true"
                 onPlay={() => setHeroPaused(false)}
                 onPause={() => setHeroPaused(true)}
@@ -286,7 +287,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="max-w-5xl">
             <div className="flex items-center gap-2 mb-4 md:mb-8">
               <div className="size-1.5 md:size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Established 2021 • Dhaka</span>
+              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Established 2020 • Dhaka</span>
             </div>
 
             <h1
