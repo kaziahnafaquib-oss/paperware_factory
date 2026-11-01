@@ -9,7 +9,9 @@ import fCupFormingMachines from "../../../assets/factory/cup-forming-machines.we
 import { useGo } from "../../lib/useGo";
 
 // Factory tour (public/media, served under the deploy sub-path). Poster is a real QC photo.
-const FACTORY_TOUR_VIDEO = `${import.meta.env.BASE_URL}media/factory-tour.mp4`;
+// Owner-supplied 2026-11-02: public Facebook reel 1778452163018523 (HD 1272x720, video-only; the
+// milestone video plays muted). Download recipe in public/media/SOURCES.txt.
+const FOUNDED_2020_VIDEO = `${import.meta.env.BASE_URL}media/founded-2020.mp4`;
 
 // Helper to extract YouTube embed URL
 const getYouTubeEmbed = (url: string): string | null => {
@@ -41,7 +43,7 @@ const DEFAULT_MILESTONES: Milestone[] = [
     year: "2020",
     title: "Founded in Dhaka",
     stat: "December 2020 · Forming unit 2021",
-    videoUrl: FACTORY_TOUR_VIDEO,
+    videoUrl: FOUNDED_2020_VIDEO,
     videoType: "video",
     poster: fQcCupInspection
   },
