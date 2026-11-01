@@ -31,8 +31,11 @@ export function AdminPortal() {
 
   // Journey milestones state
   const [journeyMilestones, setJourneyMilestones] = useState(() => {
-    const saved = localStorage.getItem('journeyMilestones');
-    return saved ? JSON.parse(saved) : [
+    let saved: string | null = null;
+    try { saved = localStorage.getItem('journeyMilestones'); } catch { saved = null; }
+    let parsed: unknown = null;
+    if (saved) { try { parsed = JSON.parse(saved); } catch { parsed = null; } }
+    return Array.isArray(parsed) ? parsed : [
       {
         id: "1",
         year: "2019",
@@ -86,7 +89,7 @@ export function AdminPortal() {
 
   const handleJourneyUpdate = (milestones: any[]) => {
     setJourneyMilestones(milestones);
-    localStorage.setItem('journeyMilestones', JSON.stringify(milestones));
+    try { localStorage.setItem('journeyMilestones', JSON.stringify(milestones)); } catch { /* quota / private mode: keep in-memory state only */ }
   };
 
   const API_URL = `https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5`;
@@ -101,13 +104,11 @@ export function AdminPortal() {
 
   const fetchImages = async (type: "logo" | "team") => {
     try {
-      console.log(`Fetching ${type} images...`);
       const response = await fetch(`${API_URL}/images/${type}`, {
         headers: { Authorization: `Bearer ${publicAnonKey}` }
       });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-
-      console.log(`${type} images response:`, data);
 
       if (data.success) {
         if (type === "logo") {
@@ -148,12 +149,14 @@ export function AdminPortal() {
 
         if (type === "team") {
           const name = prompt(`Enter name for ${file.name}:`);
+          if (name === null || !name.trim()) continue; // cancelled or empty: skip this file
           const role = prompt("Enter role/position:");
-          if (name) formData.append("name", name);
-          if (role) formData.append("role", role);
+          formData.append("name", name.trim());
+          if (role) formData.append("role", role.trim());
         } else {
-          const name = prompt(`Enter company name for ${file.name}:`) || file.name;
-          formData.append("name", name);
+          const name = prompt(`Enter company name for ${file.name}:`);
+          if (name === null) continue; // cancelled: skip this file
+          formData.append("name", name.trim() || file.name);
         }
 
         const response = await fetch(`${API_URL}/images/upload`, {
@@ -162,19 +165,22 @@ export function AdminPortal() {
           body: formData
         });
 
+        if (!response.ok) throw new Error(`Upload failed (HTTP ${response.status})`);
         const data = await response.json();
 
         if (!data.success) {
-          throw new Error(data.error);
+          throw new Error(data.error || "Upload failed");
         }
       }
 
       setMessage({ type: "success", text: `${files.length} image(s) uploaded successfully!` });
-      fetchImages(type);
-      setUploadQueue([]); // Clear queue on success
+      await fetchImages(type);
     } catch (error: any) {
       setMessage({ type: "error", text: error.message || "Upload failed" });
     } finally {
+      // Drop the optimistic previews (success or failure) and release their object URLs.
+      newUploads.forEach((u) => URL.revokeObjectURL(u.url));
+      setUploadQueue((prev) => prev.filter((u) => !newUploads.some((n) => n.id === u.id)));
       setUploading(false);
       e.target.value = "";
     }

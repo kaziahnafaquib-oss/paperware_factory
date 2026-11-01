@@ -14,7 +14,7 @@ import { Ticker } from "./components/paperware/ticker";
 const Industries = React.lazy(() => import("./components/paperware/industries").then(module => ({ default: module.Industries })));
 // AboutUs is not used in home render, but referenced in imports. We can remove it or lazy load if used elsewhere.
 // const AboutUs = React.lazy(() => import("./components/paperware/about-us").then(module => ({ default: module.AboutUs })));
-import { ProductionTimeline } from "./components/paperware/production-timeline"; // Used in manufacturing page
+const ProductionTimeline = React.lazy(() => import("./components/paperware/production-timeline").then(m => ({ default: m.ProductionTimeline }))); // Manufacturing page only
 import { Hero } from "./components/paperware/hero"; // Used as default
 import { ImmersiveHero } from "./components/paperware/immersive-hero";
 import { Navbar } from "./components/paperware/navbar";
@@ -112,8 +112,7 @@ const HUDOverlay = React.memo(() => {
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(214,200,169,0.05)_100%)]" />
 
         {/* Digital Grain Texture Overlay */}
-        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"
-          style={{ backgroundImage: `url('https://grainy-gradients.vercel.app/noise.svg')` }} />
+        <div className="bg-noise absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none" />
 
         {/* HUD Frame Accents */}
         <div className="absolute inset-8 border border-[#d6c8a9]/10 rounded-[40px] pointer-events-none" />
@@ -493,7 +492,8 @@ export function MainContent() {
       }
     };
 
-    fetchUploadedContent();
+    // The CMS image endpoint currently answers HTTP 402 on every public page load; opt in with VITE_CMS_IMAGES=true once the backend is live.
+    if (import.meta.env.VITE_CMS_IMAGES === 'true') fetchUploadedContent();
   }, []);
 
   // Persistence Effects
@@ -737,7 +737,7 @@ export function MainContent() {
       <AnimatePresence mode="wait">
         <ToneTransitionOverlay tone={currentTone} />
       </AnimatePresence>
-      <div className="fixed inset-0 z-[0] pointer-events-none opacity-[0.03] mix-blend-soft-light bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="fixed inset-0 z-[0] pointer-events-none opacity-[0.03] mix-blend-soft-light bg-noise" />
 
       <Ticker />
       <Navbar

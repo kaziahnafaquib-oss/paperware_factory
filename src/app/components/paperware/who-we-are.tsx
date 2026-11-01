@@ -5,6 +5,26 @@ import imgWave from "../../../assets/cutouts/cup-wave-yellow.webp";
 import imgRipple from "../../../assets/cutouts/cup-ripple-orange.webp";
 import imgStripe from "../../../assets/cutouts/cup-stripe-orange.webp";
 import imgBag from "../../../assets/cutouts/carry-bag-kraft.webp";
+import pCarryBag from "../../../assets/products/carry-bag-pink.webp";
+import pFoodBox from "../../../assets/products/takeaway-food-box.webp";
+import pChowmein from "../../../assets/products/chowmein-boxes.webp";
+import pCookie from "../../../assets/products/cookie-boxes.webp";
+import pGiftBags from "../../../assets/products/gift-bags.webp";
+import pConfectionery from "../../../assets/products/confectionery-boxes.webp";
+import pTissue from "../../../assets/products/tissue-boxes.webp";
+import pMedicine from "../../../assets/products/medicine-boxes.webp";
+
+/** Finale strip: bags, boxes and food packaging (no cups: the cups had their own chapters). Owner request, 1 Nov 2026. */
+const FINALE_PRODUCTS = [
+  { src: pCarryBag, alt: "Printed paper carry bag" },
+  { src: pFoodBox, alt: "Takeaway food box" },
+  { src: pChowmein, alt: "Chowmein boxes" },
+  { src: pCookie, alt: "Cookie boxes" },
+  { src: pGiftBags, alt: "Gift bags" },
+  { src: pConfectionery, alt: "Confectionery boxes" },
+  { src: pTissue, alt: "Tissue boxes" },
+  { src: pMedicine, alt: "Medicine boxes" },
+];
 
 /**
  * "Who we are" as an Apple-style product story (ported from the approved demo).
@@ -18,7 +38,7 @@ import imgBag from "../../../assets/cutouts/carry-bag-kraft.webp";
  *   2 Close-up   0.17 – 0.40   cup fills the frame, "Every band, your colours."
  *   3 Variants   0.40 – 0.67   wave / ripple / stripe, one at a time
  *   4 Bag        0.67 – 0.84   stage warms to off-white, the carry bag drops in
- *   5 Finale     0.84 – 1.00   line-up + "Your brand, on our paper." + actions
+ *   5 Finale     0.84 – 1.00   auto-scrolling strip of bags/boxes + "Your brand, on our paper." + actions
  */
 
 interface WhoWeAreProps {
@@ -83,6 +103,7 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
   const rippleRef = React.useRef<HTMLDivElement>(null);
   const stripeRef = React.useRef<HTMLDivElement>(null);
   const bagRef = React.useRef<HTMLDivElement>(null);
+  const marqueeRef = React.useRef<HTMLDivElement>(null);
   const copyIntroRef = React.useRef<HTMLDivElement>(null);
   const copyCloseRef = React.useRef<HTMLDivElement>(null);
   const capWaveRef = React.useRef<HTMLDivElement>(null);
@@ -93,13 +114,13 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
 
   React.useEffect(() => {
     const section = sectionRef.current, stage = stageRef.current, bgLight = bgRef.current, glow = glowRef.current;
-    const hero = heroRef.current, wave = waveRef.current, ripple = rippleRef.current, stripe = stripeRef.current, bag = bagRef.current;
+    const hero = heroRef.current, wave = waveRef.current, ripple = rippleRef.current, stripe = stripeRef.current, bag = bagRef.current, marquee = marqueeRef.current;
     const copies = {
       intro: copyIntroRef.current, close: copyCloseRef.current,
       capWave: capWaveRef.current, capRipple: capRippleRef.current, capStripe: capStripeRef.current,
       bag: copyBagRef.current, finale: copyFinaleRef.current,
     };
-    if (!section || !stage || !bgLight || !glow || !hero || !wave || !ripple || !stripe || !bag) return;
+    if (!section || !stage || !bgLight || !glow || !hero || !wave || !ripple || !stripe || !bag || !marquee) return;
     if (Object.values(copies).some((c) => !c)) return;
     const lines = Object.fromEntries(
       Object.entries(copies).map(([k, el]) => [k, Array.from((el as HTMLElement).querySelectorAll<HTMLElement>(ACTIONS_SELECTOR))]),
@@ -133,8 +154,6 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
       // soft light behind product
       glow.style.opacity = (hold(p, 0.03, 0.14, 0.6, 0.68) * 0.9 * (1 - warm)).toFixed(3);
 
-      const lineS = mobile ? 0.62 : 0.78;
-      const gap = mobile ? vw * 0.3 : Math.min(vw * 0.26, 360);
       const lineUpY = -heroH * 0.2; // line-up sits a little above centre so the finale copy fits below it
 
       // ----- hero cup -----
@@ -161,12 +180,6 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
         o *= 1 - out;
         x = lerp(x, x + vw * 0.35, out);
         s = lerp(s, bigS * 1.08, out);
-        // Chapter 5: returns into the line-up
-        if (p > 0.84) {
-          const f = win(p, 0.86, 0.95);
-          o = f; s = lerp(0.6, lineS, f); x = lerp(-gap - 60, -gap, f); y = lerp(30, lineUpY, f);
-          rx = 0; ry = 0; rz = 0; sh = f * 0.6;
-        }
         setObj(hero, { x, y, s, rx, ry, rz, o, sh });
       }
 
@@ -181,20 +194,7 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
       };
       variant(wave, 0.43, 0.49, 0.515, 0.545);
       variant(ripple, 0.515, 0.57, 0.595, 0.625);
-      // stripe: in during variants, then rides into the line-up in the finale
-      {
-        const vin = win(p, 0.595, 0.65), vout = win(p, 0.675, 0.71);
-        let o = vin * (1 - vout);
-        let s = lerp(0.72, 1.0, easeOut(vin)) * lerp(1, 1.06, vout);
-        let y = lerp(heroH * 0.12, 0, easeOut(vin)) - vout * heroH * 0.1;
-        let ry = lerp(14, 0, easeOut(vin)) - vout * 10;
-        let x = 0, sh = o * 0.55;
-        if (p > 0.84) {
-          const f = win(p, 0.88, 0.97);
-          o = f; s = lerp(0.6, lineS, f); x = lerp(gap + 60, gap, f); y = lerp(30, lineUpY, f); ry = 0; sh = f * 0.6;
-        }
-        setObj(stripe, { x, y, s, ry, o, sh });
-      }
+      variant(stripe, 0.595, 0.65, 0.675, 0.71);
 
       // ----- bag -----
       {
@@ -204,13 +204,20 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
         let y = lerp(vh * 0.55, 0, easeOut(vin));
         const rx = lerp(8, 0, easeOut(vin));
         let sh = easeOut(vin) * 0.5;
-        // finale: settle to centre of line-up, slightly smaller
-        const f = win(p, 0.84, 0.93);
-        const bagLineS = mobile ? 0.66 : 0.8;
-        s = lerp(s, bagLineS, f);
-        y = lerp(y, lineUpY, f);
-        sh = lerp(sh, 0.6, f);
-        setObj(bag, { y, s, rx, o, sh });
+        // finale: the bag lifts out and hands over to the product strip
+        const f = win(p, 0.84, 0.9);
+        s = lerp(s, 0.92, f);
+        y = lerp(y, -heroH * 0.35, f);
+        sh = lerp(sh, 0, f);
+        setObj(bag, { y, s, rx, o: o * (1 - f), sh });
+      }
+
+      // ----- finale product strip (CSS keeps it scrolling; scroll only fades/lifts it) -----
+      {
+        const f = easeOut(win(p, 0.87, 0.95));
+        marquee.style.opacity = f.toFixed(3);
+        marquee.style.visibility = f <= 0.001 ? "hidden" : "visible";
+        marquee.style.transform = `translate3d(0, ${(lineUpY + (1 - f) * 40).toFixed(1)}px, 0)`;
       }
 
       // ----- copy -----
@@ -275,6 +282,16 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
         <div ref={bagRef} className="wwa__obj wwa__obj--bag">
           <div className="wwa__shadow" />
           <img src={imgBag} alt="Kraft paper carry bag with wave print" draggable={false} loading="lazy" decoding="async" />
+        </div>
+
+        <div ref={marqueeRef} className="wwa__marquee" aria-hidden="true">
+          <div className="wwa__marquee-track">
+            {[0, 1].map((copy) => FINALE_PRODUCTS.map((item, i) => (
+              <div key={`${copy}-${i}`} className="wwa__tile">
+                <img src={item.src} alt={copy === 0 ? item.alt : ""} draggable={false} loading="lazy" decoding="async" />
+              </div>
+            )))}
+          </div>
         </div>
 
         {/* copy */}

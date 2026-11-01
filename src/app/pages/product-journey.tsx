@@ -20,7 +20,6 @@ import imgCupsStacking from "../../assets/factory/cups-stacking.webp";
 import imgQcLeakTest from "../../assets/factory/qc-leak-test.webp";
 import imgQcTechnician from "../../assets/factory/qc-technician.webp";
 import { toast } from "sonner";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterJourney from "../../assets/video-posters/journey-print-laminate.webp";
 import { useGo } from "../lib/useGo";
@@ -337,26 +336,11 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                     <TrendingUp className="size-6 text-emerald-500" />
                  </div>
                  <div className="h-48 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={chartData}>
-                        <defs>
-                          <linearGradient id="colorCons" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#fabf37" stopOpacity={0.3}/>
-                            <stop offset="95%" stopColor="#fabf37" stopOpacity={0}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" vertical={false} />
-                        <XAxis dataKey="time" stroke="#ffffff30" fontSize={10} axisLine={false} tickLine={false} />
-                        <Tooltip 
-                          contentStyle={{ backgroundColor: '#18181b', border: 'none', borderRadius: '12px', fontSize: '10px' }}
-                          itemStyle={{ color: '#fabf37' }}
-                        />
-                        <Area type="monotone" dataKey="consistency" stroke="#fabf37" fillOpacity={1} fill="url(#colorCons)" strokeWidth={3} />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                    {/* Inline SVG area chart (no recharts: keeps this lazy chunk ~400 kB lighter). */}
+                    <ConsistencySparkline data={chartData} />
                  </div>
                  <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-zinc-500 bg-white/5 p-4 rounded-2xl">
-                    <Info className="size-3" /> Data aggregated from 14,000+ sensor nodes.
+                    <Info className="size-3" /> Illustrative trend — not live production data.
                  </div>
               </div>
             </div>
@@ -602,5 +586,35 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
         </motion.div> */}
       </section>
     </div>
+  );
+}
+/** Lightweight area chart for the batch-consistency panel: polyline + gradient fill, x labels, no chart library. */
+function ConsistencySparkline({ data }: { data: Array<{ time: string; consistency: number }> }) {
+  const W = 600, H = 192, padX = 8, padTop = 12, padBottom = 24;
+  const ys = data.map((d) => d.consistency);
+  const min = Math.min(...ys) - 0.5, max = Math.max(...ys) + 0.5;
+  const px = (i: number) => padX + (i / Math.max(1, data.length - 1)) * (W - padX * 2);
+  const py = (v: number) => padTop + (1 - (v - min) / (max - min)) * (H - padTop - padBottom);
+  const pts = data.map((d, i) => `${px(i).toFixed(1)},${py(d.consistency).toFixed(1)}`);
+  const line = pts.join(" ");
+  const area = `${pts.join(" ")} ${px(data.length - 1).toFixed(1)},${H - padBottom} ${px(0).toFixed(1)},${H - padBottom}`;
+  const title = `Batch consistency, ${data[0]?.time} to ${data[data.length - 1]?.time}: ${ys.map((y) => `${y}%`).join(", ")}`;
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="size-full" role="img" aria-label={title} preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="colorCons" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor="#fabf37" stopOpacity={0.3} />
+          <stop offset="95%" stopColor="#fabf37" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      {[0.25, 0.5, 0.75].map((f) => (
+        <line key={f} x1={padX} x2={W - padX} y1={padTop + f * (H - padTop - padBottom)} y2={padTop + f * (H - padTop - padBottom)} stroke="#ffffff10" strokeDasharray="3 3" />
+      ))}
+      <polygon points={area} fill="url(#colorCons)" />
+      <polyline points={line} fill="none" stroke="#fabf37" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      {data.map((d, i) => (
+        <text key={d.time} x={px(i)} y={H - 6} fill="#ffffff50" fontSize={10} textAnchor={i === 0 ? "start" : i === data.length - 1 ? "end" : "middle"}>{d.time}</text>
+      ))}
+    </svg>
   );
 }

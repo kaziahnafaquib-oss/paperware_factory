@@ -1,4 +1,5 @@
 import React from "react";
+import imgInspect from "@/assets/factory/operator-inspecting.webp";
 import { openWhatsAppInquiry, mailtoUrl, LOCATIONS, mapEmbedUrl, mapDirectionsUrl, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -451,6 +452,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <p className="text-[8px] font-black uppercase tracking-widest text-black border-b border-[#fabf37]">~ 2 Minutes</p>
               </motion.div>
             </motion.div>
+            <div className="aspect-[4/3] rounded-[40px] lg:rounded-[50px] overflow-hidden border border-black/5 shadow-xl">
+              <img src={imgInspect} alt="A Paperware operator inspecting a finished cup" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+            </div>
           </div>
 
           {/* Contact Form - Right */}

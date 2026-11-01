@@ -1,4 +1,5 @@
 import React from "react";
+import imgForming from "@/assets/factory/forming-closeup.webp";
 import { motion, useScroll, useTransform, useSpring, useInView } from "motion/react";
 import { 
   Cpu, Database, Zap, Activity, ShieldCheck, 
@@ -407,6 +408,12 @@ export function TechnicalManifestoPage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 relative z-10">
+        <div className="aspect-[4/3] md:aspect-[21/9] rounded-[40px] overflow-hidden border border-white/10">
+          <img src={imgForming} alt="Close-up of a cup forming machine at Paperware" loading="lazy" decoding="async" className="size-full object-cover" />
         </div>
       </section>
 

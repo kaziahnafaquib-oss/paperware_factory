@@ -1,4 +1,5 @@
 import React from "react";
+import imgOperators from "@/assets/factory/operators-cup-machines.webp";
 import { motion } from "motion/react";
 import { CircleCheck as CheckCircle2, Building2, MapPin, ArrowRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
@@ -63,6 +64,9 @@ export function FranchisePage() {
               </p>
             </div>
 
+            <div className="aspect-[4/3] md:aspect-[16/9] rounded-[48px] overflow-hidden border border-zinc-100">
+              <img src={imgOperators} alt="Operators working at the cup forming machines on the Paperware factory floor" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+            </div>
             <div className="bg-zinc-50 rounded-[48px] p-10 md:p-16 border border-zinc-100 space-y-10">
               <h3 className="text-2xl font-black uppercase tracking-tight text-black">What We Support With</h3>
               <div className="grid md:grid-cols-2 gap-8">

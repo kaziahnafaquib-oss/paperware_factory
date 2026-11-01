@@ -1,3 +1,4 @@
+import flagBd from "@/assets/flag-bd.svg";
 import React from "react";
 import { useEscapeKey } from "../../hooks/useEscapeKey";
 import image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2 from 'figma:asset/2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2.webp';
@@ -269,7 +270,7 @@ export const Navbar = React.memo(({
           <div className="w-full h-8 bg-[#fabf37]/90 backdrop-blur-sm flex items-center justify-between px-4 md:px-8 pointer-events-auto relative z-[5001] shadow-sm border-b border-white/10">
             <div className="flex items-center gap-2">
               <span className="hidden md:flex items-center gap-2 ml-4 px-2 py-0.5 bg-black/5 rounded text-[9px] font-black uppercase tracking-[0.2em] text-black">
-                Made In Bangladesh <img src="https://flagcdn.com/bd.svg" className="w-3 h-auto" alt="BD" />
+                Made In Bangladesh <img src={flagBd} className="w-3 h-auto" alt="BD" />
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -748,7 +749,7 @@ export const Navbar = React.memo(({
                           type="button"
                           onClick={(e: React.MouseEvent) => { e.stopPropagation(); item.action(); }}
                           aria-label={item.label}
-                          className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:h-11 after:w-full after:content-['']"
+                          className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:h-11 after:w-11 after:content-['']"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
@@ -775,7 +776,7 @@ export const Navbar = React.memo(({
                 }}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
-                className="p-1.5 md:p-2 text-black/60 hover:text-black transition-all ml-0.5 relative group cursor-pointer"
+                className="p-3 md:p-2 text-black/60 hover:text-black transition-all ml-0.5 relative group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 style={{ pointerEvents: 'auto' }}
@@ -822,7 +823,7 @@ export const Navbar = React.memo(({
                       {/* Clicking text navigates directly */}
                       <button
                         onClick={() => handleInternalPageChange(link.id || "home")}
-                        className="flex-1 text-left py-1.5 text-[12px] font-bold uppercase tracking-wider text-black hover:text-[#fabf37] transition-colors"
+                        className="flex-1 text-left py-3 min-h-11 text-[12px] font-bold uppercase tracking-wider text-black hover:text-[#fabf37] transition-colors"
                       >
                         {link.name}
                       </button>
@@ -854,7 +855,7 @@ export const Navbar = React.memo(({
                             ))}
                           </div>
                         )) : link.items?.map((item: any) => (
-                          <button key={item.id + item.name} onClick={() => handleInternalPageChange(item.id)} className="block w-full text-left py-1.5 text-[10px] font-bold uppercase text-black/70 hover:text-black">
+                          <button key={item.id + item.name} onClick={() => handleInternalPageChange(item.id)} className="block w-full text-left py-2.5 min-h-11 text-[10px] font-bold uppercase text-black/70 hover:text-black">
                             {item.name}
                           </button>
                         ))}

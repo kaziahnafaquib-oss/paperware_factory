@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import imgLeak from "@/assets/factory/qc-leak-test.webp";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
 import { useGo } from "../lib/useGo";
 import { 
@@ -336,6 +337,9 @@ export function CompliancePage() {
         </motion.div>
 
 
+        <div className="aspect-[4/3] md:aspect-[21/9] rounded-[48px] overflow-hidden border border-black/5 shadow-xl mb-24">
+          <img src={imgLeak} alt="Hot-water leak test on a finished cup in the Paperware quality lab" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+        </div>
         {/* Certificate Grid with Enhanced Reveal */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-40">
           {certs.map((cert, i) => (

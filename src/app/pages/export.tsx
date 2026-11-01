@@ -1,4 +1,5 @@
 import React from "react";
+import imgFloorMachines from "@/assets/factory/floor-cup-machines.webp";
 import { motion } from "motion/react";
 import { 
   Globe, ShieldCheck, Truck, ChartBar, 
@@ -19,6 +20,8 @@ export function ExportPage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-32">
         <div className="bg-black rounded-[60px] p-12 md:p-24 text-white relative overflow-hidden">
+          <img src={imgFloorMachines} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-25 pointer-events-none" />
+          <div className="absolute inset-0  pointer-events-none" />
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <Globe className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[1200px]" />
           </div>

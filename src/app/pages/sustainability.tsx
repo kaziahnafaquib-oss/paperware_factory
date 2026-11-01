@@ -39,18 +39,16 @@ export function SustainabilityPage() {
   const [videoError, setVideoError] = React.useState(false);
 
   React.useEffect(() => {
-    console.log('🎬 Fetching video URL from backend...');
+    // CMS video endpoint is not live yet; opt in with VITE_CMS_IMAGES=true.
+    if (import.meta.env.VITE_CMS_IMAGES !== 'true') return;
     fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bf34c9a5/sustainability/hero-video`, {
       headers: { Authorization: `Bearer ${publicAnonKey}` }
     })
       .then(res => {
-        console.log('📡 Backend response status:', res.status);
         return res.json();
       })
       .then(data => {
-        console.log('📦 Backend data received:', data);
         if (data.url) {
-          console.log('✅ Video URL found:', data.url);
           setVideoUrl(data.url);
         } else {
           console.warn('⚠️ No video URL in backend response');
@@ -113,7 +111,7 @@ export function SustainabilityPage() {
                       e.currentTarget.style.display = 'none';
                     }}
                     onPlay={() => { }}
-                    onPause={() => console.log('⏸️ Video paused')}
+                   
                   />
                 );
               })()

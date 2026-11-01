@@ -1,4 +1,5 @@
 import React from "react";
+import imgForming from "@/assets/factory/cup-forming-machines.webp";
 import { motion } from "motion/react";
 import { TrendingUp, Database, ChartBar, CircleCheck as CheckCircle2 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
@@ -7,6 +8,7 @@ import { useGo } from "../lib/useGo";
 const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
   <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-white">
     <div className="absolute inset-0 z-0">
+      <img src={imgForming} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-[0.14] pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-50/50 to-white z-10" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#fabf37] to-transparent opacity-20" />
     </div>

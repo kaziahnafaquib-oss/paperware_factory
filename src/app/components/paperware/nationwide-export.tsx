@@ -15,7 +15,7 @@ export function NationwideExportSection() {
     <section className="py-40 bg-white relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-noise mix-blend-soft-light" />
         <motion.div
           animate={{
             background: [

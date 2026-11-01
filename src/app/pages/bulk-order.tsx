@@ -1,4 +1,5 @@
 import React from "react";
+import imgPress from "@/assets/factory/offset-press.webp";
 import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -87,6 +88,9 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                 </p>
              </div>
              <div className="flex flex-col items-end gap-6">
+                <div className="aspect-[16/9] w-full max-w-md rounded-[40px] overflow-hidden border border-white/5">
+                  <img src={imgPress} alt="The offset printing press at the Paperware factory" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+                </div>
                 <div className="bg-zinc-900 border border-white/5 p-8 rounded-[40px] flex items-center gap-8 w-full max-w-md">
                    <div className="size-16 bg-[#fabf37]/10 rounded-2xl flex items-center justify-center">
                       <Shield className="size-8 text-[#fabf37]" />

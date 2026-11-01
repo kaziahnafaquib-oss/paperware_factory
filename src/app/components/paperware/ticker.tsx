@@ -1,3 +1,4 @@
+import flagBd from "@/assets/flag-bd.svg";
 import React from "react";
 import { Database, Globe, Leaf, Layers, PenTool, Clock, Microscope, Truck, Plane, Zap, Recycle, Pause, Play } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
@@ -43,7 +44,7 @@ export const Ticker = React.memo(() => {
             ))}
             <div className={itemClass}>
               MADE IN BANGLADESH
-              <img loading="lazy" decoding="async" src="https://flagcdn.com/bd.svg" alt="" width={20} height={12} className="h-3 w-auto rounded-sm shadow-sm" />
+              <img loading="lazy" decoding="async" src={flagBd} alt="" width={20} height={12} className="h-3 w-auto rounded-sm shadow-sm" />
             </div>
             <div className="size-1.5 rounded-full bg-black/20" aria-hidden="true" />
           </div>

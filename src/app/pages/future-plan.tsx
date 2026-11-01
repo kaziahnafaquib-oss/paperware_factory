@@ -1,4 +1,5 @@
 import React from "react";
+import imgTurret from "@/assets/factory/forming-turret.webp";
 import { motion } from "motion/react";
 import { 
   TrendingUp, Zap, Target, Globe, 
@@ -53,6 +54,8 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-32">
         <div className="bg-black rounded-[60px] p-12 md:p-24 text-white relative overflow-hidden">
+          <img src={imgTurret} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-25 pointer-events-none" />
+          <div className="absolute inset-0  pointer-events-none" />
           <div className="absolute inset-0 opacity-10 pointer-events-none">
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#fabf37] rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-zinc-800 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />

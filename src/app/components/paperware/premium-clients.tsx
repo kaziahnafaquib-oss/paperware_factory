@@ -181,6 +181,8 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
       setClients(propClients);
       return;
     }
+    // CMS logo endpoint is not live yet (answers 402); opt in with VITE_CMS_IMAGES=true.
+    if (import.meta.env.VITE_CMS_IMAGES !== 'true') return;
     let cancelled = false;
     (async () => {
       try {

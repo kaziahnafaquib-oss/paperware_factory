@@ -275,7 +275,7 @@ export function AddLeadModal({ isOpen, onClose, initialData }: AddLeadModalProps
                   </div>
                </div>
 
-               <button className="w-full py-4 bg-[#fabf37] hover:bg-[#fabf37]/90 text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_30px_rgba(250,191,55,0.2)]">
+               <button type="button" disabled title="Saving leads is not connected to a backend yet" className="w-full py-4 bg-[#fabf37] hover:bg-[#fabf37]/90 disabled:opacity-50 disabled:cursor-not-allowed text-black font-black uppercase tracking-widest rounded-xl transition-all shadow-[0_0_30px_rgba(250,191,55,0.2)]">
                   Create Lead
                </button>
             </div>

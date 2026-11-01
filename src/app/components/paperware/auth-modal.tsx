@@ -110,6 +110,8 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-pressed={showPassword}
                     className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-[#fabf37] transition-colors"
                   >
                     {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}

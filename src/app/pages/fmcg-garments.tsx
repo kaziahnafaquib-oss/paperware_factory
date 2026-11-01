@@ -118,7 +118,7 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
                 <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{p.name}</h3>
                 <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{p.desc}</p>
                 <div className="flex items-center justify-between">
-                  <button className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
+                  <button type="button" className="flex items-center gap-2 min-h-11 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
                     Buy Now <ArrowRight className="size-4" />
                   </button>
                   <div className="flex items-center gap-1">

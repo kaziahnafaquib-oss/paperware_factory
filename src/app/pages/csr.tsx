@@ -1,4 +1,5 @@
 import React from "react";
+import imgTeam from "@/assets/factory/team.webp";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 import { Heart, Users, ShieldCheck, Activity, HandHeart } from "lucide-react";
@@ -153,6 +154,9 @@ export function CSRPage() {
            </motion.div>
         </div>
 
+        <div className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-[40px] overflow-hidden shadow-xl border border-black/5 mb-16">
+          <img src={imgTeam} alt="The Paperware factory team" loading="lazy" decoding="async" className="size-full object-cover object-[center_30%]" />
+        </div>
         {/* Inclusive Employment Section */}
         <motion.div 
           initial={{ opacity: 0, y: 100 }}

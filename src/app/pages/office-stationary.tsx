@@ -1,4 +1,5 @@
 import React from "react";
+import imgCalendars from "@/assets/industries/desk-calendars.webp";
 import { motion } from "motion/react";
 import { 
   Notebook, Mail, FolderOpen, FileText, Contact, 
@@ -74,6 +75,12 @@ export function OfficeStationaryPage({ onProductClick }: { onProductClick: (p: a
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
             Elevate your corporate identity with our high-precision printed stationary. From business cards to industrial logbooks, we ensure every detail reflects your brand's excellence.
           </p>
+        </div>
+      </section>
+
+      <section className="container mx-auto px-4 mb-24">
+        <div className="aspect-[4/3] md:aspect-[21/9] rounded-[40px] overflow-hidden border border-black/5">
+          <img src={imgCalendars} alt="Printed desk calendars" loading="lazy" decoding="async" className="size-full object-cover" />
         </div>
       </section>
 

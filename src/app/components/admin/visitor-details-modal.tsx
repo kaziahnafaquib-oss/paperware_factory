@@ -31,7 +31,7 @@ export function VisitorDetailsModal({ visitor, onClose, onAddLead, onSync, onBlo
           className="bg-[#09090b] border border-[#fabf37]/20 rounded-[32px] w-full max-w-2xl overflow-hidden relative z-10 shadow-[0_0_50px_rgba(250,191,55,0.1)] max-h-[85vh] overflow-y-auto custom-scrollbar"
         >
           <div className="bg-[#fabf37] p-8 pb-12 relative overflow-hidden">
-             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
+             <div className="absolute inset-0 bg-noise opacity-20" />
              <div className="relative z-10 flex justify-between items-start">
                 <div className="flex items-center gap-4">
                    <div className="size-16 rounded-full bg-black border-4 border-black shadow-xl flex items-center justify-center text-[#fabf37] text-2xl font-black relative">

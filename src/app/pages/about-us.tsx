@@ -1,12 +1,14 @@
 import React from "react";
-import { Play, ShieldCheck, Zap, Leaf, Globe, Factory, Cpu, ArrowRight, Box } from "lucide-react";
+import { Play, Pause, ShieldCheck, Zap, Leaf, Globe, Factory, Cpu, ArrowRight, Box } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { MediaPlayer } from "../components/paperware/media-player";
+import { mediaUrl } from "../components/paperware/factory-clip";
+import { useReducedMotionPreference } from "../lib/reducedMotion";
+import posterFloor from "@/assets/video-posters/career-floor.webp";
 import { OurJourney } from "@/app/components/paperware/our-journey";
 import { useScrollScrub, clamp01, smooth, easeOut3 } from "../lib/useScrollScrub";
 
 // Real Paperware factory photos (approved brand-memory library, see src/assets/factory/SOURCES.txt).
-import fFloorWide from "../../assets/factory/floor-wide.webp";
 import fFloorCupMachines from "../../assets/factory/floor-cup-machines.webp";
 import fCupFormingMachines from "../../assets/factory/cup-forming-machines.webp";
 import fQcTechnician from "../../assets/factory/qc-technician.webp";
@@ -24,7 +26,6 @@ import fOperatorsCupMachines from "../../assets/factory/operators-cup-machines.w
 import fOperatorFormingLine from "../../assets/factory/operator-forming-line.webp";
 import { useGo } from "../lib/useGo";
 
-const imgHero = fFloorWide;
 const imgInnovation = fOperatorFormingLine;
 
 const FACTORY_FLOOR = [
@@ -71,6 +72,15 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
 
   const heroRef = React.useRef<HTMLElement>(null);
   const heroBgRef = React.useRef<HTMLDivElement>(null);
+  const heroVideoRef = React.useRef<HTMLVideoElement>(null);
+  const reducedMotion = useReducedMotionPreference();
+  // Hero background clip: paused under reduced motion, otherwise an ambient loop with its own Pause control (WCAG 2.2.2).
+  const [heroPaused, setHeroPaused] = React.useState(reducedMotion);
+  const toggleHeroVideo = () => {
+    const v = heroVideoRef.current;
+    if (!v) return;
+    if (v.paused) { void v.play(); setHeroPaused(false); } else { v.pause(); setHeroPaused(true); }
+  };
   const heroHeadRef = React.useRef<HTMLHeadingElement>(null);
   const mandateGridRef = React.useRef<HTMLDivElement>(null);
   const statsGridRef = React.useRef<HTMLDivElement>(null);
@@ -153,7 +163,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       if (bg) {
         const s = 1.08 - 0.08 * easeOut3(p);
         bg.style.transform = `scale(${s.toFixed(4)})`;
-        bg.style.opacity = (0.35 - 0.25 * p).toFixed(3);
+        bg.style.opacity = (0.5 - 0.4 * p).toFixed(3);
       }
       const lines = heroHeadRef.current?.querySelectorAll<HTMLElement>("[data-hero-line]");
       lines?.forEach((el, i) => {
@@ -241,16 +251,34 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           {/* Dark wash at the bottom-left (behind the headline) fading to white at the edges so the page still reads as white. */}
           <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-white z-10" />
           <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-black/10 to-transparent z-10" />
-          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.35, transform: "scale(1.08)" }}>
-            <MediaPlayer
-              type={aboutUsVideos?.heroBackgroundType || "image"}
-              src={aboutUsVideos?.heroBackground || imgHero}
-              alt="Paperware production floor"
-              className="w-full h-full"
-              autoPlay={true}
-              muted={true}
-              loop={true}
-            />
+          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.5, transform: "scale(1.08)" }}>
+            {aboutUsVideos?.heroBackground ? (
+              <MediaPlayer
+                type={aboutUsVideos?.heroBackgroundType || "image"}
+                src={aboutUsVideos.heroBackground}
+                alt="Paperware production floor"
+                className="w-full h-full"
+                autoPlay={true}
+                muted={true}
+                loop={true}
+              />
+            ) : (
+              /* Default: real floor footage of operators at the cup lines (public/media/SOURCES.txt), muted ambient loop. */
+              <video
+                ref={heroVideoRef}
+                src={mediaUrl("career-floor.mp4")}
+                poster={posterFloor}
+                className="size-full object-cover"
+                autoPlay={!reducedMotion}
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+                onPlay={() => setHeroPaused(false)}
+                onPause={() => setHeroPaused(true)}
+              />
+            )}
           </div>
         </div>
 
@@ -281,6 +309,17 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           </div>
         </div>
 
+        {!aboutUsVideos?.heroBackground && (
+          <button
+            type="button"
+            onClick={toggleHeroVideo}
+            aria-pressed={!heroPaused}
+            aria-label={heroPaused ? "Play factory floor video" : "Pause factory floor video"}
+            className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20 size-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37] focus-visible:ring-offset-2"
+          >
+            {heroPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+          </button>
+        )}
       </section>
 
       {/* 2. OUR PROMISE - THE CORE VALUES */}

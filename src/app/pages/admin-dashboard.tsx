@@ -423,7 +423,7 @@ export default function AdminDashboard({
               </div>
               <div className="flex gap-3">
                  <button 
-                   onClick={() => alert("ERPNext Connection Status:\n\n• API Gateway: Online\n• Webhook Latency: 14ms\n• Last Sync: Just now\n• Queue: Empty")}
+                   onClick={() => alert("ERPNext sync is not connected yet. Items you add here are stored in this browser only.")}
                    className="px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-black uppercase text-[10px] tracking-widest rounded-xl hover:bg-zinc-800 transition-all flex items-center gap-2"
                  >
                    <Activity className="size-4 text-[#fabf37] animate-pulse" />
@@ -626,7 +626,7 @@ export default function AdminDashboard({
                              }));
                              if (onUpdateProducts) {
                                onUpdateProducts([...newItems, ...products]);
-                               alert("SYNC COMPLETE\n\nSuccessfully imported items from ERPNext.");
+                               alert("Items added to the local catalog. ERPNext sync is not connected yet.");
                              }
                           }}
                           className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all"
@@ -751,7 +751,7 @@ export default function AdminDashboard({
                                                   <div className="grid grid-cols-4 gap-2 h-16">
                                                      {/* Add Button */}
                                                      <button 
-                                                       onClick={(e) => { e.stopPropagation(); alert("Upload modal placeholder"); }}
+                                                       onClick={(e) => { e.stopPropagation(); alert("Image upload is not available here yet. Use Admin → Image Manager."); }}
                                                        className="col-span-1 border border-dashed border-zinc-300 bg-zinc-50 rounded-lg flex flex-col items-center justify-center gap-1 hover:border-[#fabf37] hover:bg-[#fabf37]/10 transition-colors group/btn"
                                                      >
                                                          <div className="size-4 rounded-full border border-zinc-400 flex items-center justify-center group-hover/btn:border-[#fabf37]">
