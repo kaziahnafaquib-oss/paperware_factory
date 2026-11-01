@@ -12,3 +12,5 @@ gallery-printed-cups.mp4    | 19.5s | ~/Downloads/PAPERWARE BRANDING 2/Paperware
 
 # Posters: src/assets/video-posters/<name>.webp (frame grabs, 960px tall).
 # Pages: home (MainContent -> home-factory-clip), manufacturing, product-journey, career, company, gallery (printed cups + press).
+
+founded-2020.mp4            | reel  | https://www.facebook.com/reel/1778452163018523 (public; yt-dlp -f 1873494933838019v, HD 1272x720 video-only, no ffmpeg merge). About page -> Our Journey 2020 "Founded in Dhaka".
