@@ -15,4 +15,4 @@ cup-forming-2.webp        <- p2 Im5  PAPERCUP FOAMING MACHINE (teal), unused
 heidelberg-single-demy.webp   <- "~/Downloads/Color Grade Image Paperware All Machine 23DEC2025 copy.pdf" p3  Heidelberg single-colour 23x36 (Demy)
 die-cutting-tiger.webp        <- same PDF p8  platen die-cutting machine (Tiger brand)
 cup-forming-double-wall.webp  <- "~/Downloads/DW Tiger-50 Automatic double wall Coating Machine for paper cup.pdf" p1  TIGER double-wall former
-# hot-foil.webp and heidelberg-2color-dd.webp no longer used on the grid.
+# heidelberg-2color-dd.webp no longer used on the grid; hot-foil.webp kept (owner 2 Nov).
