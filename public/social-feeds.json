@@ -1,8 +1,30 @@
 {
   "facebookPageUrl": "https://www.facebook.com/paperwarefactory",
   "instagramProfileUrl": "https://www.instagram.com/paperware_factory/",
-  "facebookPostUrls": [],
-  "instagramPostUrls": [],
+  "facebookPostUrls": [
+    "https://www.facebook.com/paperwarefactory/videos/1923215812418655/",
+    "https://www.facebook.com/paperwarefactory/videos/1682411923551814/",
+    "https://www.facebook.com/paperwarefactory/videos/1149842460721778/",
+    "https://www.facebook.com/paperwarefactory/videos/1618277686375032/",
+    "https://www.facebook.com/paperwarefactory/videos/1718318282585369/",
+    "https://www.facebook.com/paperwarefactory/videos/1731323144676473/",
+    "https://www.facebook.com/paperwarefactory/videos/1368021351923077/",
+    "https://www.facebook.com/paperwarefactory/videos/1001138032675005/",
+    "https://www.facebook.com/paperwarefactory/videos/2515554955551709/",
+    "https://www.facebook.com/paperwarefactory/videos/1556413759441461/"
+  ],
+  "instagramPostUrls": [
+    "https://www.instagram.com/reel/DfKG92iASyy/",
+    "https://www.instagram.com/p/Devm12uFLYy/",
+    "https://www.instagram.com/reel/DerbHPqgOyB/",
+    "https://www.instagram.com/reel/Debwonkj8zF/",
+    "https://www.instagram.com/p/DeJu_HxCAMr/",
+    "https://www.instagram.com/p/DeEejp0gfXY/",
+    "https://www.instagram.com/reel/DeB58B8js5F/",
+    "https://www.instagram.com/p/Ddv-AnTvegX/",
+    "https://www.instagram.com/p/Ddq4Q82yLAI/",
+    "https://www.instagram.com/reel/DdePI9wT7RM/"
+  ],
   "autoRefreshMinutes": 10,
   "feedEndpoint": ""
 }

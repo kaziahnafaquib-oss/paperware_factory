@@ -31,16 +31,16 @@ interface Milestone {
 }
 
 /**
- * Default milestones, as given by the owner (31 Oct 2026): 2021 start with the forming unit,
+ * Default milestones, as given by the owner (31 Oct 2026, founding date from the Facebook Page: 8 Dec 2020): 2020 founded, 2021 forming unit
  * 2022 printing unit, 2022 cutting unit, 2024 lamination unit. The admin can extend this list via
  * localStorage('journeyMilestones').
  */
 const DEFAULT_MILESTONES: Milestone[] = [
   {
     id: "1",
-    year: "2021",
+    year: "2020",
     title: "Founded in Dhaka",
-    stat: "Forming unit",
+    stat: "December 2020 · Forming unit 2021",
     videoUrl: FACTORY_TOUR_VIDEO,
     videoType: "video",
     poster: fQcCupInspection

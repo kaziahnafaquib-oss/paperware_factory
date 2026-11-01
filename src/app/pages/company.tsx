@@ -176,7 +176,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
       image: imgFloorWide,
       video: TEAM_VIDEO,
       poster: posterTeam,
-      stats: "Est. 2021",
+      stats: "Est. 2020",
       icon: Factory,
       colSpan: "md:col-span-2"
     },

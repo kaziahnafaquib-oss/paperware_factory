@@ -64,7 +64,7 @@ const benefits = [
 ];
 
 const stats = [
-  { label: "Innovators", value: "250+", icon: Users },
+  { label: "Team members", value: "50–60", icon: Users },
   { label: "Tech Stack", value: "Modern", icon: Cpu },
   { label: "Growth", value: "40%", icon: Zap },
   { label: "Global Reach", value: "12+", icon: Globe },

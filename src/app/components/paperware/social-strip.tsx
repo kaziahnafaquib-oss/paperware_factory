@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Facebook, Instagram, ArrowRight } from "lucide-react";
 import { useSocialFeedSettings, instagramEmbedUrl, facebookPostEmbedUrl } from "../../lib/social-feeds";
 import "./social-strip.css";
@@ -51,8 +51,36 @@ const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: 
 
 function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; reverse?: boolean }) {
   const duration = Math.max(30, items.length * 8);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  // Hover pauses via CSS. A click inside an embed moves focus into its iframe (window blur),
+  // which pauses too; clicking or tapping anywhere outside the strip resumes.
+  const [paused, setPaused] = useState(false);
+  // JS hover mirror of the CSS :hover rule: the parent's :hover is unreliable while the pointer
+  // sits over a cross-origin iframe.
+  const [hovering, setHovering] = useState(false);
+  useEffect(() => {
+    const onBlur = () => {
+      const el = document.activeElement;
+      if (el instanceof HTMLIFrameElement && viewportRef.current?.contains(el)) setPaused(true);
+    };
+    const onPointerDown = (e: PointerEvent) => {
+      if (!viewportRef.current?.contains(e.target as Node)) setPaused(false);
+    };
+    window.addEventListener("blur", onBlur);
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => {
+      window.removeEventListener("blur", onBlur);
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, []);
   return (
-    <div className="pwf-marquee-viewport">
+    <div
+      ref={viewportRef}
+      className={`pwf-marquee-viewport${paused || hovering ? " pwf-marquee-paused" : ""}`}
+      onPointerDown={() => setPaused((v) => !v)}
+      onPointerEnter={() => setHovering(true)}
+      onPointerLeave={() => setHovering(false)}
+    >
       <div
         className={`pwf-marquee-track${reverse ? " pwf-marquee-reverse" : ""}`}
         style={{ ["--pwf-marquee-dur" as string]: `${duration}s` }}
@@ -112,7 +140,13 @@ export function SocialStrip({
     const src = instagramEmbedUrl(u);
     if (src) ig.push({ key: `ig-${i}`, src, title: `Instagram post ${i + 1}` });
   });
-  const empty = fb.length === 0 && ig.length === 0;
+  // One mixed row: Facebook, Instagram, Facebook, Instagram... leftovers follow at the end.
+  const mixed: Item[] = [];
+  for (let i = 0; i < Math.max(fb.length, ig.length); i++) {
+    if (fb[i]) mixed.push(fb[i]);
+    if (ig[i]) mixed.push(ig[i]);
+  }
+  const empty = mixed.length === 0;
   if (postsOnly && empty) return null;
 
   return (
@@ -137,10 +171,7 @@ export function SocialStrip({
           </p>
         </div>
       ) : (
-        <div className="space-y-5">
-          {fb.length > 0 && <MarqueeRow items={fb} near={near} />}
-          {ig.length > 0 && <MarqueeRow items={ig} near={near} reverse />}
-        </div>
+        <MarqueeRow items={mixed} near={near} />
       )}
     </section>
   );
