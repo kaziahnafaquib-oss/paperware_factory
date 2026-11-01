@@ -55,9 +55,6 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
   // Hover pauses via CSS. A click inside an embed moves focus into its iframe (window blur),
   // which pauses too; clicking or tapping anywhere outside the strip resumes.
   const [paused, setPaused] = useState(false);
-  // JS hover mirror of the CSS :hover rule: the parent's :hover is unreliable while the pointer
-  // sits over a cross-origin iframe.
-  const [hovering, setHovering] = useState(false);
   useEffect(() => {
     const onBlur = () => {
       const el = document.activeElement;
@@ -76,10 +73,7 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
   return (
     <div
       ref={viewportRef}
-      className={`pwf-marquee-viewport${paused || hovering ? " pwf-marquee-paused" : ""}`}
-      onPointerDown={() => setPaused((v) => !v)}
-      onPointerEnter={() => setHovering(true)}
-      onPointerLeave={() => setHovering(false)}
+      className={`pwf-marquee-viewport${paused ? " pwf-marquee-paused" : ""}`}
     >
       <div
         className={`pwf-marquee-track${reverse ? " pwf-marquee-reverse" : ""}`}
