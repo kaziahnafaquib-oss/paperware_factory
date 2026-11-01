@@ -19,8 +19,13 @@ export interface Env {
 
 const GRAPH = "https://graph.facebook.com/v21.0";
 
-type FbPost = { id: string; permalink_url?: string; is_published?: boolean };
-type IgMedia = { id: string; permalink?: string; media_type?: string };
+type FbPost = { id: string; permalink_url?: string; is_published?: boolean; message?: string };
+type IgMedia = { id: string; permalink?: string; media_type?: string; caption?: string };
+
+/** Caption fingerprint for cross-posting detection: letters and digits only, first 60 chars. */
+function captionKey(text: string | undefined): string {
+  return (text ?? "").toLowerCase().replace(/https?:\/\/\S+/g, "").replace(/[^\p{L}\p{N}]+/gu, "").slice(0, 60);
+}
 
 async function graph<T>(path: string, token: string): Promise<T> {
   const sep = path.includes("?") ? "&" : "?";
@@ -67,24 +72,28 @@ export default {
 
     const [fb, ig] = await Promise.allSettled([
       graph<{ data: FbPost[] }>(
-        `${env.FACEBOOK_PAGE_ID}/published_posts?fields=id,permalink_url,is_published&limit=${limit}`,
+        `${env.FACEBOOK_PAGE_ID}/published_posts?fields=id,permalink_url,is_published,message&limit=${limit}`,
         env.META_PAGE_TOKEN,
       ),
       env.IG_USER_ID
-        ? graph<{ data: IgMedia[] }>(`${env.IG_USER_ID}/media?fields=id,permalink,media_type&limit=${limit}`, env.META_PAGE_TOKEN)
+        ? graph<{ data: IgMedia[] }>(`${env.IG_USER_ID}/media?fields=id,permalink,media_type,caption&limit=${limit * 2}`, env.META_PAGE_TOKEN)
         : Promise.resolve({ data: [] as IgMedia[] }),
     ]);
 
-    const facebookPostUrls =
+    const fbPosts =
       fb.status === "fulfilled"
-        ? fb.value.data
-            .filter((p) => p.is_published !== false && typeof p.permalink_url === "string")
-            .map((p) => p.permalink_url as string)
-            .slice(0, limit)
+        ? fb.value.data.filter((p) => p.is_published !== false && typeof p.permalink_url === "string").slice(0, limit)
         : [];
+    const facebookPostUrls = fbPosts.map((p) => p.permalink_url as string);
+    // Owner rule: a post that is already shown from Facebook is not shown again from Instagram;
+    // the next Instagram post takes its place.
+    const fbKeys = new Set(fbPosts.map((p) => captionKey(p.message)).filter((k) => k.length >= 12));
     const instagramPostUrls =
       ig.status === "fulfilled"
-        ? ig.value.data.filter((m) => typeof m.permalink === "string").map((m) => m.permalink as string).slice(0, limit)
+        ? ig.value.data
+            .filter((m) => typeof m.permalink === "string" && !fbKeys.has(captionKey(m.caption)))
+            .map((m) => m.permalink as string)
+            .slice(0, limit)
         : [];
 
     const errors: string[] = [];

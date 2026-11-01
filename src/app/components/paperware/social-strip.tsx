@@ -50,7 +50,7 @@ const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: 
 );
 
 function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; reverse?: boolean }) {
-  const duration = Math.max(30, items.length * 8);
+  const duration = Math.max(30, items.length * 5);
   const viewportRef = useRef<HTMLDivElement>(null);
   // Hover pauses via CSS. A click inside an embed moves focus into its iframe (window blur),
   // which pauses too; clicking or tapping anywhere outside the strip resumes.
@@ -58,7 +58,9 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
   useEffect(() => {
     const onBlur = () => {
       const el = document.activeElement;
-      if (el instanceof HTMLIFrameElement && viewportRef.current?.contains(el)) setPaused(true);
+      const vp = viewportRef.current;
+      // Embeds can grab focus while loading; only a click made with the cursor over the strip counts.
+      if (el instanceof HTMLIFrameElement && vp?.contains(el) && vp.matches(":hover")) setPaused(true);
     };
     const onPointerDown = (e: PointerEvent) => {
       if (!viewportRef.current?.contains(e.target as Node)) setPaused(false);
