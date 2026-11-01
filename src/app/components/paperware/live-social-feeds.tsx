@@ -1,6 +1,5 @@
 import React from "react";
-import { Facebook, Instagram, RefreshCw, ArrowRight } from "lucide-react";
-import { SocialStrip } from "./social-strip";
+import { Facebook, Instagram, ArrowRight } from "lucide-react";
 import {
   useSocialFeedSettings,
 } from "../../lib/social-feeds";
@@ -34,15 +33,6 @@ const handleFrom = (url: string, fallback: string) => {
 
 export function LiveSocialFeeds() {
   const s = useSocialFeedSettings();
-  const [nonce, setNonce] = React.useState(0);
-  const reload = React.useCallback(() => setNonce((n) => n + 1), []);
-
-  React.useEffect(() => {
-    if (!s.autoRefreshMinutes || s.autoRefreshMinutes <= 0) return;
-    const id = window.setInterval(reload, s.autoRefreshMinutes * 60_000);
-    return () => window.clearInterval(id);
-  }, [s.autoRefreshMinutes, reload]);
-
 
   return (
     <section aria-labelledby="live-feed-heading" className="w-full mb-24">
@@ -53,13 +43,6 @@ export function LiveSocialFeeds() {
             Latest <span className="text-[#fabf37]">Posts</span>
           </h2>
         </div>
-        <button
-          type="button"
-          onClick={reload}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-black text-[#fabf37] text-[10px] font-black uppercase tracking-widest hover:opacity-90 active:scale-95 transition"
-        >
-          <RefreshCw className="size-4" aria-hidden="true" /> Reload feed
-        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -67,9 +50,6 @@ export function LiveSocialFeeds() {
         <FollowCard href={s.instagramProfileUrl} label="Follow on Instagram" handle={handleFrom(s.instagramProfileUrl, "Paperware Factory")} Icon={Instagram} />
       </div>
 
-      <div key={`strip-${nonce}`} className="-mx-4 sm:-mx-6">
-        <SocialStrip postsOnly eyebrow="Latest posts" title="From our pages" />
-      </div>
     </section>
   );
 }

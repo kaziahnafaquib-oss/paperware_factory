@@ -29,6 +29,9 @@ const FeaturedProductsSlider = React.lazy(() => import("./components/paperware/f
 const HomeBottom = React.lazy(() => import("./components/paperware/home-bottom").then(module => ({ default: module.HomeBottom })));
 const PremiumClients = React.lazy(() => import("./components/paperware/premium-clients").then(module => ({ default: module.PremiumClients })));
 const NationwideExportSection = React.lazy(() => import("./components/paperware/nationwide-export").then(module => ({ default: module.NationwideExportSection })));
+/** Internal panels that render no marketing strip. */
+const NO_SOCIAL_STRIP = new Set(["admin", "admin-portal", "client-portal"]);
+const SocialStrip = React.lazy(() => import("./components/paperware/social-strip").then(module => ({ default: module.SocialStrip })));
 const HomeFactoryClip = React.lazy(() => import("./components/paperware/home-factory-clip").then(module => ({ default: module.HomeFactoryClip })));
 
 // Advanced Performance Hook
@@ -755,6 +758,13 @@ export function MainContent() {
           </React.Suspense>
         </div>
       </main>
+
+      {/* Owner (1 Nov 2026): the Facebook/Instagram post strip sits above the footer on every page except home. */}
+      {currentPage !== "home" && !NO_SOCIAL_STRIP.has(currentPage) && (
+        <React.Suspense fallback={null}>
+          <SocialStrip />
+        </React.Suspense>
+      )}
 
       <Footer onPageChange={handlePageChange} />
 

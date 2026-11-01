@@ -8,7 +8,9 @@ const IG_URL = "https://www.instagram.com/paperware_factory/";
 const W = 320;
 const H = 420;
 
-type Item = { key: string; src: string; title: string; href: string };
+type Item = { key: string; src: string; title: string; href: string; kind: "fb" | "ig" };
+/** Facebook's post plugin draws its own square frame and padding; crop this much on every side so the card's rounded corners show. */
+const FB_CROP = 14;
 
 function useNearViewport<T extends HTMLElement>(margin = 600) {
   const ref = React.useRef<T>(null);
@@ -79,9 +81,9 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
                     title={copy === 1 ? `${it.title} (repeat)` : it.title}
                     src={it.src}
                     loading="lazy"
-                    width={W}
-                    height={H}
-                    style={{ border: 0 }}
+                    width={it.kind === "fb" ? W + FB_CROP * 2 : W}
+                    height={it.kind === "fb" ? H + FB_CROP * 2 : H}
+                    style={it.kind === "fb" ? { border: 0, margin: -FB_CROP, display: "block" } : { border: 0 }}
                     allow="encrypted-media"
                     referrerPolicy="strict-origin-when-cross-origin"
                     tabIndex={copy === 1 ? -1 : undefined}
@@ -113,13 +115,13 @@ export function SocialStrip({
 
   const fb: Item[] = [];
   s.facebookPostUrls.slice(0, 10).forEach((u, i) => {
-    const src = facebookPostEmbedUrl(u, W);
-    if (src) fb.push({ key: `fb-${i}`, src, title: `Facebook post ${i + 1}`, href: u });
+    const src = facebookPostEmbedUrl(u, W + FB_CROP * 2);
+    if (src) fb.push({ key: `fb-${i}`, src, title: `Facebook post ${i + 1}`, href: u, kind: "fb" });
   });
   const ig: Item[] = [];
   s.instagramPostUrls.slice(0, 10).forEach((u, i) => {
     const src = instagramEmbedUrl(u);
-    if (src) ig.push({ key: `ig-${i}`, src, title: `Instagram post ${i + 1}`, href: u });
+    if (src) ig.push({ key: `ig-${i}`, src, title: `Instagram post ${i + 1}`, href: u, kind: "ig" });
   });
   // One mixed row: Facebook, Instagram, Facebook, Instagram... leftovers follow at the end.
   const mixed: Item[] = [];

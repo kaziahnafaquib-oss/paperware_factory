@@ -1,7 +1,6 @@
 import React from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "motion/react";
 import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles } from "lucide-react";
-import { SocialStrip } from "../components/paperware/social-strip";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import imgWhoarewe from "figma:asset/6b92055ba5bbffc98cadd5ecc5acc306f29875e4.webp";
 import imgCardBg1 from "figma:asset/deb0797add19956888ddfd67b88ff75ecb592792.webp";
@@ -550,7 +549,6 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
         </div>
       </section>
 
-      <SocialStrip />
 
     </div>
   );
