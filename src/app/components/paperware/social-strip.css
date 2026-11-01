@@ -16,5 +16,6 @@
 }
 /* Owner wants auto-scroll kept under reduced motion: just slow it down. */
 @media (prefers-reduced-motion: reduce) {
-  .pwf-marquee-track { animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2); }
+  /* !important: the global reduced-motion reset in styles/index.css sets every animation to 0.01ms. */
+  .pwf-marquee-track { animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2) !important; }
 }
