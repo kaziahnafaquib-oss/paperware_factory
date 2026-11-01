@@ -1,24 +1,26 @@
 import React from "react";
 // Machine photos and copy from the owner's brochure "Machinery Portion 2.pdf" (Dec 2024), see
 // src/assets/machinery/SOURCES.txt. Catalogue shots supplied by the owner, not stock imagery.
-import imgHeidelbergDD from "../../../assets/machinery/heidelberg-2color-dd.webp";
+import imgHeidelbergDemy from "../../../assets/machinery/heidelberg-single-demy.webp";
 import imgPolar from "../../../assets/machinery/polar-cutting.webp";
 import imgHeidelbergMOE from "../../../assets/machinery/heidelberg-moe.webp";
 import imgDieCutting from "../../../assets/machinery/die-cutting.webp";
-import imgHotFoil from "../../../assets/machinery/hot-foil.webp";
+import imgDieCuttingTiger from "../../../assets/machinery/die-cutting-tiger.webp";
+import imgCupFormingDW from "../../../assets/machinery/cup-forming-double-wall.webp";
 import imgUvCoating from "../../../assets/machinery/uv-coating.webp";
 import imgPasting from "../../../assets/machinery/pasting.webp";
 import imgCupForming from "../../../assets/machinery/cup-forming-1.webp";
 
 const MACHINES = [
-  { name: "Printing Machine (2 Color DD)", unit: "Printing", image: imgHeidelbergDD, desc: "Heidelberg two-colour offset press for sharp text, detailed images and consistent colour on every run." },
+  { name: "Printing Machine (Heidelberg 23×36, Demy)", unit: "Printing", image: imgHeidelbergDemy, desc: "Heidelberg single-colour Demy-size offset press for sharp text, fine detail and consistent colour on every run." },
   { name: "Printing Machine (MOE)", unit: "Printing", image: imgHeidelbergMOE, desc: "Original Heidelberg MO-E offset unit for single-colour and spot-colour work on board." },
   { name: "Polar Cutting Machine", unit: "Cutting", image: imgPolar, desc: "Programmable guillotine for square, repeatable sheet cutting before and after print." },
   { name: "Die Cutting Machine", unit: "Cutting", image: imgDieCutting, desc: "Creasing and die-cutting press for precise shapes, clean edges and minimal waste." },
-  { name: "Hot Foil Machine", unit: "Finishing", image: imgHotFoil, desc: "Foil stamping for metallic logos and premium highlights on boxes and sleeves." },
+  { name: "Die Cutting Machine (Tiger)", unit: "Cutting", image: imgDieCuttingTiger, desc: "Tiger-brand platen die cutter for high-volume creasing and cutting of boxes and sleeves." },
   { name: "UV Coating Machine", unit: "Finishing", image: imgUvCoating, desc: "Gloss and matte UV coating for scuff resistance and a finished retail look." },
   { name: "Pasting Machine", unit: "Converting", image: imgPasting, desc: "Automatic folder-gluer that pastes boxes and sleeves at line speed." },
   { name: "Paper Cup Forming Machine", unit: "Forming", image: imgCupForming, desc: "High-speed cup former with ultrasonic sealing for leak-proof hot and cold cups." },
+  { name: "Paper Cup Double Wall Forming Machine", unit: "Forming", image: imgCupFormingDW, desc: "Tiger double-wall former that wraps an insulated outer sleeve for hot drinks without a separate holder." },
 ];
 
 export function MachineryGrid() {
@@ -35,7 +37,7 @@ export function MachineryGrid() {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {MACHINES.map((m) => (
             <li key={m.name} className="group rounded-[28px] border border-zinc-200 bg-white overflow-hidden hover:border-[#fabf37] transition-colors">
               <div className="aspect-[4/3] bg-zinc-50 overflow-hidden">
