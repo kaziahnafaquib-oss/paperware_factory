@@ -8,7 +8,7 @@ const IG_URL = "https://www.instagram.com/paperware_factory/";
 const W = 320;
 const H = 420;
 
-type Item = { key: string; src: string; title: string };
+type Item = { key: string; src: string; title: string; href: string };
 
 function useNearViewport<T extends HTMLElement>(margin = 600) {
   const ref = React.useRef<T>(null);
@@ -62,9 +62,18 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
             {items.map((it) => (
               <div
                 key={it.key}
-                className="shrink-0 bg-white rounded-3xl overflow-hidden shadow-md border border-black/5"
+                className="relative shrink-0 bg-white rounded-3xl overflow-hidden shadow-md border border-black/5"
                 style={{ width: W, height: H }}
               >
+                {/* Same-origin layer: hover pauses the row (iframes swallow hover), click opens the post. */}
+                <a
+                  href={it.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${it.title}`}
+                  className="absolute inset-0 z-10 rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fabf37]"
+                  tabIndex={copy === 1 ? -1 : undefined}
+                />
                 {near && (
                   <iframe
                     title={copy === 1 ? `${it.title} (repeat)` : it.title}
@@ -105,12 +114,12 @@ export function SocialStrip({
   const fb: Item[] = [];
   s.facebookPostUrls.slice(0, 10).forEach((u, i) => {
     const src = facebookPostEmbedUrl(u, W);
-    if (src) fb.push({ key: `fb-${i}`, src, title: `Facebook post ${i + 1}` });
+    if (src) fb.push({ key: `fb-${i}`, src, title: `Facebook post ${i + 1}`, href: u });
   });
   const ig: Item[] = [];
   s.instagramPostUrls.slice(0, 10).forEach((u, i) => {
     const src = instagramEmbedUrl(u);
-    if (src) ig.push({ key: `ig-${i}`, src, title: `Instagram post ${i + 1}` });
+    if (src) ig.push({ key: `ig-${i}`, src, title: `Instagram post ${i + 1}`, href: u });
   });
   // One mixed row: Facebook, Instagram, Facebook, Instagram... leftovers follow at the end.
   const mixed: Item[] = [];
