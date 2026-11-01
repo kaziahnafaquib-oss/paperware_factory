@@ -1,6 +1,5 @@
 import React from "react";
 import { Pause, Play } from "lucide-react";
-import { useReducedMotionPreference } from "../../lib/reducedMotion";
 
 /**
  * Real Paperware footage, muted and looping (public/media/*.mp4, see public/media/SOURCES.txt).
@@ -34,12 +33,12 @@ export function FactoryClip({
   controlPosition = "bottom-right",
   children,
 }: FactoryClipProps) {
-  const reduced = useReducedMotionPreference();
   const wrapRef = React.useRef<HTMLDivElement>(null);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [mounted, setMounted] = React.useState(false);
-  // Under reduced motion the clip starts paused (poster visible); otherwise it autoplays.
-  const [paused, setPaused] = React.useState(reduced);
+  // Autoplays muted for everyone, also under reduced motion (owner decision 2026-11-02); the
+  // play/pause button stays as the opt-out.
+  const [paused, setPaused] = React.useState(false);
 
   React.useEffect(() => {
     const el = wrapRef.current;
@@ -71,11 +70,11 @@ export function FactoryClip({
           src={src}
           poster={poster}
           className={`absolute inset-0 size-full object-cover ${videoClassName}`}
-          autoPlay={!reduced}
+          autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           onPlay={() => setPaused(false)}
           onPause={() => setPaused(true)}
           suppressHydrationWarning
