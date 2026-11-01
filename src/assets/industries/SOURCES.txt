@@ -7,3 +7,17 @@ prescription-pad.webp  <- src/assets/products/prescription-pad.webp    (identica
 medicine-boxes.webp    <- src/assets/products/medicine-boxes.webp      (identical copy)   Pharmaceutical
 desk-calendars.webp    <- src/assets/products/desk-calendars.webp      (identical copy)   Corporate clients
 tissue-box-rose.webp   <- src/assets/products/tissue-box-rose.webp     (identical copy)   Hotels
+
+# 2026-11-01 — owner request: industry-wise "product in use" photos with Bangladeshi people.
+# AI-generated (IMG.LY gateway, google/nano-banana-2, 4:5, text/logo-free prompts), approved by owner
+# in chat ("ok add"). Resized to 1000x1250 WebP q78. Not real factory/customer photos.
+restaurants-1.webp  waiter hands kraft box + bag to customer      Restaurants (main)
+restaurants-2.webp  chef packs biryani into paper boxes           Restaurants
+restaurants-3.webp  woman opens kraft takeaway box, paper cup     Restaurants
+cafes-1.webp        barista hands ripple cup to customer          Cafes (main)
+cafes-2.webp        students with paper cups + kraft pastry bag   Cafes
+cafes-3.webp        barista lids a ripple cup, cup stack          Cafes
+hospitals-1.webp    doctor writes on prescription pad             Hospitals (main)
+hospitals-2.webp    nurse hands paper file at reception           Hospitals
+hospitals-3.webp    pharmacist bags medicine in paper bag         Hospitals
+# Pharmaceutical / Corporate / Hotels: still the product photos above (AI set pending credits).

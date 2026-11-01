@@ -1,29 +1,37 @@
 import React from "react";
 import "./industries.css";
 import { useLanguage } from "../../context/LanguageContext";
-import pFoodBox from "../../../assets/industries/takeaway-food-box.webp";
-import pCafeCup from "../../../assets/industries/cafe-cup.webp";
-import pPrescription from "../../../assets/industries/prescription-pad.webp";
+import r1 from "../../../assets/industries/restaurants-1.webp";
+import r2 from "../../../assets/industries/restaurants-2.webp";
+import r3 from "../../../assets/industries/restaurants-3.webp";
+import c1 from "../../../assets/industries/cafes-1.webp";
+import c2 from "../../../assets/industries/cafes-2.webp";
+import c3 from "../../../assets/industries/cafes-3.webp";
+import h1 from "../../../assets/industries/hospitals-1.webp";
+import h2 from "../../../assets/industries/hospitals-2.webp";
+import h3 from "../../../assets/industries/hospitals-3.webp";
 import pMedicine from "../../../assets/industries/medicine-boxes.webp";
 import pCalendars from "../../../assets/industries/desk-calendars.webp";
 import pTissue from "../../../assets/industries/tissue-box-rose.webp";
 
-type Industry = { title: string; desc: string; photo: string; alt: string };
+type Industry = { title: string; desc: string; photos: string[]; alt: string };
 
+// photos[0] is the large shot; photos[1..2] sit as smaller overlapping cards.
 const getIndustries = (t: (key: string) => string): Industry[] => [
-  { title: t("restaurants"), desc: t("restaurant_desc"), photo: pFoodBox, alt: "Takeaway food box" },
-  { title: t("cafes"), desc: t("cafe_desc"), photo: pCafeCup, alt: "Ripple paper cup" },
-  { title: t("hospitals"), desc: t("hospital_desc"), photo: pPrescription, alt: "Prescription pad" },
-  { title: t("pharmaceutical"), desc: t("pharma_desc"), photo: pMedicine, alt: "Medicine boxes" },
-  { title: t("corporate_clients"), desc: t("corporate_desc"), photo: pCalendars, alt: "Desk calendars" },
-  { title: t("hotels"), desc: t("hotel_desc"), photo: pTissue, alt: "Tissue box" },
+  { title: t("restaurants"), desc: t("restaurant_desc"), photos: [r1, r2, r3], alt: "Takeaway boxes and bags in use at a restaurant" },
+  { title: t("cafes"), desc: t("cafe_desc"), photos: [c1, c2, c3], alt: "Paper cups in use at a cafe" },
+  { title: t("hospitals"), desc: t("hospital_desc"), photos: [h1, h2, h3], alt: "Prescription pads and paper files in a hospital" },
+  { title: t("pharmaceutical"), desc: t("pharma_desc"), photos: [pMedicine], alt: "Medicine boxes" },
+  { title: t("corporate_clients"), desc: t("corporate_desc"), photos: [pCalendars], alt: "Desk calendars" },
+  { title: t("hotels"), desc: t("hotel_desc"), photos: [pTissue], alt: "Tissue box" },
 ];
 
-const PER_STEP = 2;
+const PER_STEP = 1;
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
 /**
- * Industries: "Big type" scroll story. Two sectors per step, three steps. The stage pins for the
+ * Industries: "Big type" scroll story. One sector per step, six steps; each step shows one large
+ * photo with up to two smaller overlapping shots. The stage pins for the
  * track's height and every frame is derived from the scroll position (no timers, no easing), so it
  * also runs under prefers-reduced-motion: the user drives it. Only transform/opacity are written.
  */
@@ -148,8 +156,12 @@ export const Industries = React.memo(function Industries({ onExplore }: { onExpl
             {pairs.map((pair, i) => (
               <div key={i} className="ind__panel">
                 {pair.map((item) => (
-                  <button key={item.title} type="button" className="ind__photo" onClick={onExplore} aria-label={`${item.title}: ${item.alt}`}>
-                    <img src={item.photo} alt="" draggable={false} loading="lazy" decoding="async" />
+                  <button key={item.title} type="button" className={`ind__set ind__set--${item.photos.length}`} onClick={onExplore} aria-label={`${item.title}: ${item.alt}`}>
+                    {item.photos.map((src, k) => (
+                      <span key={src} className={`ind__photo ind__photo--${k}`}>
+                        <img src={src} alt="" draggable={false} loading="lazy" decoding="async" />
+                      </span>
+                    ))}
                   </button>
                 ))}
               </div>
