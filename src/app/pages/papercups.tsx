@@ -92,13 +92,11 @@ const faqs = [
 export function PaperCupsPage({ 
   onProductClick, 
   onPageChange,
-  videoUrl,
-  videoUrls
+  videoUrl
 }: { 
   onProductClick: (p: any) => void;
   onPageChange: (page: string) => void;
   videoUrl?: string;
-  videoUrls?: any[];
 }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [cupCount, setCupCount] = React.useState(50000);
@@ -466,7 +464,7 @@ export function PaperCupsPage({
       <TopSellingProducts onProductClick={onProductClick} />
 
       {/* Industrial Video Section - Positioned after Product Tiers */}
-      <FullScreenVideoSection videoData={videoUrls || []} />
+      <FullScreenVideoSection videoUrl={videoUrl} />
 
       {/* Material Comparison Matrix */}
       <section className="py-40 bg-black text-white relative overflow-hidden">

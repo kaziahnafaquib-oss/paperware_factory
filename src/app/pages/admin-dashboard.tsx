@@ -95,6 +95,8 @@ export default function AdminDashboard({
   onUpdateHeroVideoMobile,
   clientsVideoUrl,
   onUpdateClientsVideo,
+  factoryVideoUrl,
+  onUpdateFactoryVideo,
   heroContent,
   onUpdateHeroContent,
   products,
@@ -123,6 +125,8 @@ export default function AdminDashboard({
   onUpdateHeroVideoMobile?: (url: string) => void,
   clientsVideoUrl?: string,
   onUpdateClientsVideo?: (url: string) => void,
+  factoryVideoUrl?: string,
+  onUpdateFactoryVideo?: (url: string) => void,
   heroContent?: any,
   onUpdateHeroContent?: (content: any) => void,
   products?: any[],
@@ -349,6 +353,8 @@ export default function AdminDashboard({
           onUpdateHeroVideoMobile={onUpdateHeroVideoMobile}
           clientsVideoUrl={clientsVideoUrl}
           onUpdateClientsVideo={onUpdateClientsVideo}
+          factoryVideoUrl={factoryVideoUrl}
+          onUpdateFactoryVideo={onUpdateFactoryVideo}
           heroContent={heroContent}
           onUpdateHeroContent={onUpdateHeroContent}
           products={products}
@@ -377,6 +383,8 @@ export default function AdminDashboard({
           onUpdateHeroVideoMobile={onUpdateHeroVideoMobile}
           clientsVideoUrl={clientsVideoUrl}
           onUpdateClientsVideo={onUpdateClientsVideo}
+          factoryVideoUrl={factoryVideoUrl}
+          onUpdateFactoryVideo={onUpdateFactoryVideo}
           heroContent={heroContent}
           onUpdateHeroContent={onUpdateHeroContent}
           products={products}

@@ -31,6 +31,8 @@ interface CMSViewProps {
   onUpdateHeroVideoMobile?: (url: string) => void;
   clientsVideoUrl?: string;
   onUpdateClientsVideo?: (url: string) => void;
+  factoryVideoUrl?: string;
+  onUpdateFactoryVideo?: (url: string) => void;
   heroContent?: {
     title: string;
     subtitle1: string;
@@ -63,6 +65,8 @@ export default function CMSView({
   onUpdateHeroVideoMobile,
   clientsVideoUrl,
   onUpdateClientsVideo,
+  factoryVideoUrl,
+  onUpdateFactoryVideo,
   heroContent,
   onUpdateHeroContent,
   products = [],
@@ -101,6 +105,7 @@ export default function CMSView({
   const [loadError, setLoadError] = React.useState(false);
   const isInternalChange = React.useRef(false);
   const [pageVideoInput, setPageVideoInput] = React.useState(clientsVideoUrl || "");
+  const [factoryVideoInput, setFactoryVideoInput] = React.useState(factoryVideoUrl || "");
   const prevVideoRef = React.useRef(clientsVideoUrl || "");
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const heroDesktopRef = React.useRef<HTMLVideoElement>(null);
@@ -199,12 +204,13 @@ export default function CMSView({
     if (heroVideoMobileUrl) setVideoMobileInput(heroVideoMobileUrl);
     if (brochureUrl) setBrochureInput(brochureUrl);
     if (clientsVideoUrl) setPageVideoInput(clientsVideoUrl);
+    if (factoryVideoUrl) setFactoryVideoInput(factoryVideoUrl);
     if (heroContent) {
       setHeroTitle(heroContent.title);
       setHeroSub1(heroContent.subtitle1);
       setHeroSub2(heroContent.subtitle2);
     }
-  }, [heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent]);
+  }, [heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, factoryVideoUrl, heroContent]);
 
   const handleSaveHero = () => {
     if (onUpdateHeroVideo) onUpdateHeroVideo(videoInput);
@@ -621,6 +627,13 @@ export default function CMSView({
   }
 
   if (selectedCategory === "Product Gallery") {
+    const handleSaveFactoryVideo = () => {
+      if (onUpdateFactoryVideo) {
+        onUpdateFactoryVideo(factoryVideoInput);
+        toast.success(factoryVideoInput ? "Paper Cups Page Video Updated" : "Paper Cups Page Video Reset To Default");
+      }
+    };
+    const factoryYoutubeId = factoryVideoInput.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/)?.[1] ?? null;
     const handleAddProduct = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData(e.currentTarget);
@@ -675,6 +688,52 @@ export default function CMSView({
           </div>
         }
       >
+        {/* Section: Paper Cups Page Full-Screen Video */}
+        <div className="mb-8 bg-zinc-900/50 border border-white/5 rounded-[40px] p-8 space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="size-12 rounded-2xl bg-[#fabf37] flex items-center justify-center text-black">
+              <Monitor className="size-6" />
+            </div>
+            <div>
+              <h3 className="text-xl font-black text-white uppercase tracking-tight">Paper Cups Page Video</h3>
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Full-screen background film · YouTube link or MP4 · plays muted on loop</p>
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 flex items-center gap-3 bg-black border border-white/10 rounded-2xl px-5 py-4 focus-within:border-[#fabf37] transition-all">
+              <Link className="size-4 text-zinc-500" />
+              <input
+                type="text"
+                value={factoryVideoInput}
+                onChange={(e) => setFactoryVideoInput(e.target.value.trim())}
+                placeholder="Paste YouTube link or MP4 URL..."
+                className="w-full bg-transparent text-white text-sm outline-none"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSaveFactoryVideo}
+              className="bg-[#fabf37] text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:scale-105 active:scale-95 transition-all"
+            >
+              Sync Video
+            </button>
+          </div>
+          {factoryVideoInput && (
+            <div className="relative aspect-video w-full max-w-xl rounded-3xl overflow-hidden border border-white/10 bg-black">
+              {factoryYoutubeId ? (
+                <iframe
+                  key={factoryYoutubeId}
+                  src={`https://www.youtube-nocookie.com/embed/${factoryYoutubeId}?autoplay=1&mute=1&loop=1&playlist=${factoryYoutubeId}&controls=0&rel=0&playsinline=1`}
+                  title="Paper Cups page video preview"
+                  allow="autoplay; encrypted-media"
+                  className="absolute inset-0 h-full w-full"
+                />
+              ) : (
+                <video key={factoryVideoInput} src={factoryVideoInput} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" />
+              )}
+            </div>
+          )}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((p: any) => (
             <div key={p.id} className="bg-zinc-900/50 border border-white/5 rounded-3xl overflow-hidden group">

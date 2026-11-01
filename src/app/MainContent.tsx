@@ -334,6 +334,8 @@ const DEFAULT_HERO_VIDEO = "https://www.youtube.com/watch?v=_AvASsD4tQY"; // Pap
 const DEFAULT_HERO_POSTER = "https://i.ytimg.com/vi/_AvASsD4tQY/maxresdefault.jpg";
 // Backup: https://www.youtube-nocookie.com/embed/lyFix6BpGNI?autoplay=1&mute=1&loop=1&playlist=lyFix6BpGNI&controls=0
 const DEFAULT_CLIENTS_VIDEO = "";
+// Paper Cups page full-screen film. Owner-supplied 2026-11-01. Admin → CMS → Product Gallery can override it.
+const DEFAULT_FACTORY_VIDEO = "https://www.youtube.com/watch?v=Acbb6Qm4oCM";
 const DEFAULT_HERO_CONTENT = {
   title: "PREMIUM PAPER SOLUTIONS",
   subtitle1: "Global Standard. Sustainable Impact. Industrial Precision.",
@@ -427,7 +429,7 @@ export function MainContent() {
     lastSync: new Date().toISOString()
   });
 
-  const [factoryVideos, setFactoryVideos] = React.useState<any[]>([]);
+  const [factoryVideoUrl, setFactoryVideoUrl] = React.useState(DEFAULT_FACTORY_VIDEO);
   const [partnersData, setPartnersData] = React.useState<any[]>(DEFAULT_PARTNERS);
   const [signingImage, setSigningImage] = React.useState(DEFAULT_SIGNING_IMAGE);
   const [aboutUsVideos, setAboutUsVideos] = React.useState<any>({});
@@ -451,6 +453,8 @@ export function MainContent() {
       if (heroVideoMobile) setHeroVideoMobileUrl(heroVideoMobile);
       const clientsVideo = readStored('paperware_clients_video');
       if (clientsVideo) setClientsVideoUrl(clientsVideo);
+      const factoryVideo = readStored('paperware_factory_video');
+      if (factoryVideo) setFactoryVideoUrl(factoryVideo);
       const heroContentStr = localStorage.getItem('paperware_hero_content');
       if (heroContentStr) setHeroContent(JSON.parse(heroContentStr));
       const productsStr = readStored('paperware_products');
@@ -629,7 +633,7 @@ export function MainContent() {
         );
       case "about": return <AboutPage aboutUsVideos={aboutUsVideos} />;
       case "clients": return <ClientsPage videoUrl={clientsVideoUrl} productionStats={productionStats} onPageChange={handlePageChange} partnersData={partnersData} />;
-      case "papercups": return <PaperCupsPage videoUrls={factoryVideos} onProductClick={handleProductClick} onPageChange={handlePageChange} />;
+      case "papercups": return <PaperCupsPage videoUrl={factoryVideoUrl} onProductClick={handleProductClick} onPageChange={handlePageChange} />;
       case "products": return <AllProductsPage onProductClick={handleProductClick} onAddToQuote={addToQuoteBasket} onPageChange={handlePageChange} products={productsData} clientProjects={clientProjects} />;
       // Product details are chosen in-app; with no selection (e.g. a reload) go back to the catalogue.
       case "product-details": return quoteBasket.length === 0 ? <Navigate to={pathFor("products")} replace /> : <ProductDetailsPage product={quoteBasket[quoteBasket.length - 1]} onBack={() => handlePageChange("products")} onAddToQuote={addToQuoteBasket} onContactClick={() => handlePageChange("contact")} />;
@@ -701,6 +705,13 @@ export function MainContent() {
             setClientsVideoUrl(url);
             localStorage.setItem('paperware_clients_video', url);
           }}
+          factoryVideoUrl={factoryVideoUrl}
+          onUpdateFactoryVideo={(url) => {
+            const next = url || DEFAULT_FACTORY_VIDEO;
+            setFactoryVideoUrl(next);
+            if (url) localStorage.setItem('paperware_factory_video', url);
+            else localStorage.removeItem('paperware_factory_video');
+          }}
           heroContent={heroContent}
           onUpdateHeroContent={(content) => {
             setHeroContent(content);
@@ -727,7 +738,7 @@ export function MainContent() {
       );
       default: return <Hero onExplore={() => handlePageChange("products")} videoUrl={heroVideoUrl} title={heroContent.title} subtitle1={heroContent.subtitle1} subtitle2={heroContent.subtitle2} />;
     }
-  }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideos, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
+  }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideoUrl, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
 
     // Phase D: overflow-x-clip (not overflow-x-hidden). overflow-x:hidden turns this wrapper into a scroll
     // container, which stops every position:sticky descendant (pinned homepage sections) from pinning.
