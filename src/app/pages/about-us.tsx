@@ -166,7 +166,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       if (bg) {
         const s = 1.08 - 0.08 * easeOut3(p);
         bg.style.transform = `scale(${s.toFixed(4)})`;
-        bg.style.opacity = (0.5 - 0.4 * p).toFixed(3);
+        // Owner (2 Nov 2026): footage stays at full strength; only fade once the hero scrolls away.
+        bg.style.opacity = (1 - 0.6 * p).toFixed(3);
       }
       const lines = heroHeadRef.current?.querySelectorAll<HTMLElement>("[data-hero-line]");
       lines?.forEach((el, i) => {
@@ -251,9 +252,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       {/* 1. HERO SECTION - INDUSTRIAL MAXIMALISM */}
       <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {/* Owner (2 Nov 2026): no white flare — the footage must stay readable. Only a soft dark wash behind the headline, and a short fade into the white page at the very bottom. */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-black/55 via-black/20 to-transparent z-10" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white z-10" />
+          {/* Owner (2 Nov 2026): no overlay of any kind on the hero footage. Text readability comes from the text shadows only. */}
           <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 1, transform: "scale(1.08)" }}>
             {aboutUsVideos?.heroBackground ? (
               <MediaPlayer
@@ -294,7 +293,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
 
             <h1
               ref={heroHeadRef}
-              className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12 text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+              className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12 text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)]"
             >
               <span data-hero-line className="block will-change-transform">The <span className="text-[#fabf37]">Engine</span></span>
               <span data-hero-line className="block will-change-transform">Behind the</span>
