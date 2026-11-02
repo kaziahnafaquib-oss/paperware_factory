@@ -1,7 +1,11 @@
 import React from "react";
 import imgInspect from "@/assets/factory/operator-inspecting.webp";
+import { mediaUrl } from "../components/paperware/factory-clip";
+import "../components/paperware/social-strip.css";
+
+const TICKER_WORDS = ["Knock Us Now", "Get In Touch", "Start Project", "Let's Talk", "Global Reach", "24/7 Support", "Instant Reply", "Sustainable Tech", "Eco Friendly", "Paperware Factory", "Fast Delivery", "Premium Quality", "Bulk Orders", "Custom Design", "Export Ready"];
 import { openWhatsAppInquiry, mailtoUrl, LOCATIONS, mapEmbedUrl, mapDirectionsUrl, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../lib/inquiry";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, MotionConfig, useScroll, useTransform } from "motion/react";
 import {
   Mail, Phone, MapPin, ChevronDown,
   Facebook, Instagram, Linkedin, Youtube,
@@ -138,11 +142,20 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
     setSubmitted(true);
   };
 
+  // Owner (2 Nov 2026): the hero background and headline drift at different speeds while the page scrolls.
+  const heroRef = React.useRef<HTMLElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroBgY = useTransform(heroProgress, [0, 1], [0, 160]);
+  const heroTitleY = useTransform(heroProgress, [0, 1], [0, 60]);
+  const heroFade = useTransform(heroProgress, [0, 0.9], [1, 0]);
+
   return (
+    /* Owner (2 Nov 2026): this page keeps its motion even when the OS asks for reduced motion (every loop is decorative, nothing blocks reading). */
+    <MotionConfig reducedMotion="never">
     <div className="bg-[#fdfaf3] min-h-screen selection:bg-[#fabf37] selection:text-black">
       {/* Immersive Industrial Hero */}
-      <section className="pb-20 lg:pb-32 relative overflow-hidden bg-black">
-        <div className="absolute inset-0">
+      <section ref={heroRef} className="pb-20 lg:pb-32 relative overflow-hidden bg-black">
+        <motion.div className="absolute inset-0" style={{ y: heroBgY }}>
           {/* Technical Grid Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#fabf3710_1px,transparent_1px),linear-gradient(to_bottom,#fabf3710_1px,transparent_1px)] bg-[size:60px_60px]" />
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
@@ -168,7 +181,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
             transition={{ duration: 4, repeat: Infinity, delay: 2 }}
             className="absolute top-0 left-1/3 w-[1px] h-full bg-[#fabf37]"
           />
-        </div>
+        </motion.div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
@@ -189,7 +202,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                   Global Enterprise Hub
                 </motion.span>
               </motion.div>
-              <h1 className="mt-40 lg:mt-64 text-[32px] md:text-[48px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.9] lg:leading-[0.85] text-white flex flex-wrap gap-x-4">
+              <motion.h1 style={{ y: heroTitleY, opacity: heroFade }} className="mt-40 lg:mt-64 text-[32px] md:text-[48px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.9] lg:leading-[0.85] text-white flex flex-wrap gap-x-4">
                 {t('contact_title').split(' ').map((word, i) => (
                   <motion.span
                     key={i}
@@ -202,7 +215,7 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                     {word}
                   </motion.span>
                 ))}
-              </h1>
+              </motion.h1>
               <motion.div variants={fadeInUp} className="mt-8 lg:mt-12 flex flex-wrap gap-3 lg:gap-4">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -272,9 +285,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
 
               <div className="space-y-8 lg:space-y-10 relative z-10">
                 <motion.div variants={slideInLeft} whileHover={{ x: 10 }} className="flex items-start gap-6 lg:gap-8 group">
-                  <div className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-[#fabf37] flex items-center justify-center shrink-0 shadow-lg shadow-[#fabf37]/20 group-hover:rotate-[15deg] transition-all">
+                  <motion.div animate={{ y: [0, -7, 0], rotate: [0, -4, 4, 0] }} transition={{ duration: 4.7, repeat: Infinity, ease: "easeInOut" }} className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-[#fabf37] flex items-center justify-center shrink-0 shadow-lg shadow-[#fabf37]/20 group-hover:rotate-[15deg] transition-all">
                     <MapPin className="size-5 lg:size-7 text-black" />
-                  </div>
+                  </motion.div>
                   <div className="space-y-4 lg:space-y-6">
                     <div>
                       <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-1">{t('head_office')}</h4>
@@ -309,9 +322,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </motion.div>
 
                 <motion.div variants={slideInLeft} whileHover={{ x: 10 }} className="flex items-start gap-6 lg:gap-8 group">
-                  <div className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-black flex items-center justify-center shrink-0 group-hover:rotate-[-15deg] transition-all">
+                  <motion.div animate={{ y: [0, -7, 0], rotate: [0, -4, 4, 0] }} transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }} className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-black flex items-center justify-center shrink-0 group-hover:rotate-[-15deg] transition-all">
                     <Phone className="size-5 lg:size-7 text-[#fabf37]" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-2">{t('exec_support')}</h4>
                     <p className="font-black text-[12px] lg:text-[13px] tracking-tight text-black">09638011101</p>
@@ -323,9 +336,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </motion.div>
 
                 <motion.div variants={slideInLeft} whileHover={{ x: 10 }} className="flex items-start gap-6 lg:gap-8 group">
-                  <div className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-[#fabf37] transition-all">
+                  <motion.div animate={{ y: [0, -7, 0], rotate: [0, -4, 4, 0] }} transition={{ duration: 6.1, repeat: Infinity, ease: "easeInOut" }} className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-[#fabf37] transition-all">
                     <MessageSquare className="size-5 lg:size-7 text-black" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-2">{t('call_whatsapp')}</h4>
                     <p className="font-black text-[10px] lg:text-[11px] tracking-tight text-black">+880 1901-459110</p>
@@ -333,9 +346,9 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 </motion.div>
 
                 <motion.div variants={slideInLeft} whileHover={{ x: 10 }} className="flex items-start gap-6 lg:gap-8 group">
-                  <div className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-[#fabf37] transition-all">
+                  <motion.div animate={{ y: [0, -7, 0], rotate: [0, -4, 4, 0] }} transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }} className="size-12 lg:size-16 rounded-[18px] lg:rounded-[24px] bg-zinc-100 flex items-center justify-center shrink-0 group-hover:bg-[#fabf37] transition-all">
                     <Mail className="size-5 lg:size-7 text-black" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h4 className="text-[5px] lg:text-[6px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-2">{t('formal_channel')}</h4>
                     <p className="font-bold text-[9px] lg:text-[10px] text-black border-b border-[#fabf37]/30 truncate max-w-[200px] md:max-w-none">paperwarefactory@gmail.com</p>
@@ -452,8 +465,20 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
                 <p className="text-[8px] font-black uppercase tracking-widest text-black border-b border-[#fabf37]">~ 2 Minutes</p>
               </motion.div>
             </motion.div>
-            <div className="aspect-[4/3] rounded-[40px] lg:rounded-[50px] overflow-hidden border border-black/5 shadow-xl">
-              <img src={imgInspect} alt="A Paperware operator inspecting a finished cup" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+            <div className="aspect-[4/3] rounded-[40px] lg:rounded-[50px] overflow-hidden border border-black/5 shadow-xl relative">
+              {/* Owner (2 Nov 2026): photo + footage mix — the operator photo shows first, then the floor footage plays over it. */}
+              <img src={imgInspect} alt="A Paperware operator inspecting a finished cup" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover object-center" />
+              <video
+                src={mediaUrl("about-floor.mp4")}
+                poster={imgInspect}
+                className="relative size-full object-cover object-center"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="none"
+                aria-hidden="true"
+              />
             </div>
           </div>
 
@@ -654,34 +679,21 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
           <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#fdfaf3] to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#fdfaf3] to-transparent z-10 pointer-events-none" />
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              whileHover={{ animationPlayState: "paused" }}
-              className="flex items-center gap-16 whitespace-nowrap w-max hover:[animation-play-state:paused]"
-            >
-              {[
-                "Knock Us Now", "Get In Touch", "Start Project", "Let's Talk",
-                "Global Reach", "24/7 Support", "Instant Reply", "Sustainable Tech",
-                "Eco Friendly", "Paperware Factory", "Fast Delivery", "Premium Quality",
-                "Bulk Orders", "Custom Design", "Export Ready", "Knock Us Now",
-                "Get In Touch", "Start Project", "Let's Talk", "Global Reach",
-                "24/7 Support", "Instant Reply", "Sustainable Tech", "Eco Friendly",
-                "Paperware Factory", "Fast Delivery", "Premium Quality", "Bulk Orders",
-                "Custom Design", "Export Ready"
-              ].map((text, i) => (
-                <div key={i} className="flex items-center gap-8 group/ticker cursor-default">
-                  <span className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-[rgb(162,162,164)] group-hover/ticker:text-[#fabf37] transition-colors duration-500">
-                    {text}
-                  </span>
-                  <motion.div
-                    animate={{ opacity: [1, 0.4, 1], scale: [1, 1.3, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="size-4 bg-[#fabf37] rounded-full shadow-[0_0_15px_#fabf37]"
-                  />
-                </div>
-              ))}
-            </motion.div>
+            {/* Owner (2 Nov 2026): CSS marquee (not motion.div) so it keeps scrolling under OS "Reduce Motion"; hover pauses. Two copies for a seamless loop. */}
+            <div className="pwf-marquee-viewport">
+              <div className="pwf-marquee-track flex items-center gap-16 whitespace-nowrap w-max" style={{ "--pwf-marquee-dur": "60s" } as React.CSSProperties}>
+                {[0, 1].map((copy) =>
+                  TICKER_WORDS.map((text, i) => (
+                    <div key={`${copy}-${i}`} className="flex items-center gap-8 group/ticker cursor-default" aria-hidden={copy === 1 ? true : undefined}>
+                      <span className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-[rgb(162,162,164)] group-hover/ticker:text-[#fabf37] transition-colors duration-500">
+                        {text}
+                      </span>
+                      <motion.span animate={{ opacity: [1, 0.4, 1], scale: [1, 1.3, 1] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }} className="size-4 bg-[#fabf37] rounded-full shadow-[0_0_15px_#fabf37]" />
+                    </div>
+                  )),
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -861,5 +873,6 @@ export function ContactPage({ onFeedbackClick }: ContactPageProps) {
         </div>
       </section>
     </div>
+    </MotionConfig>
   );
 }

@@ -19,7 +19,8 @@ export const LOCATIONS = [
   { id: "display-centre", label: "Display centre", address: "65 Begum Bazar, Agrani Bank Lane, Dhaka" },
 ] as const;
 
-export const mapEmbedUrl = (address: string) => `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
+/** Owner (2 Nov 2026): satellite view (t=k) zoomed to the building. True 3D tilt needs the Maps JavaScript API with a billing-enabled key, which the site does not have. */
+export const mapEmbedUrl = (address: string) => `https://www.google.com/maps?q=${encodeURIComponent(address)}&t=k&z=18&output=embed`;
 export const mapDirectionsUrl = (address: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
 
 export type InquiryFields = Record<string, string | number | boolean | null | undefined>;

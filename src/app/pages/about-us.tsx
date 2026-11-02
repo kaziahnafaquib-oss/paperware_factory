@@ -99,6 +99,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         icon: Factory,
         photo: fOffsetPress,
         photoAlt: "Offset printing press",
+        /* Owner (2 Nov 2026): real press footage (public/media/SOURCES.txt). */
+        video: mediaUrl("manufacturing-press.mp4"),
         machineName: "HEIDELBERG MO-V-P",
         detail: "HIGH-PRECISION 4-COLOR OFFSET PRINTING FOR PREMIUM BRANDING.",
         specs: [
