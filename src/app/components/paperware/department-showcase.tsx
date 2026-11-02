@@ -10,6 +10,8 @@ import imgPressOperator from "../../../assets/factory/press-operator.webp";
 import imgCupFormingMachines from "../../../assets/factory/cup-forming-machines.webp";
 import imgFormingCloseup from "../../../assets/factory/forming-closeup.webp";
 import imgQcTechnician from "../../../assets/factory/qc-technician.webp";
+import posterLamination from "../../../assets/video-posters/lamination.webp";
+import { mediaUrl } from "./factory-clip";
 
 const imgHeidelberg = imgOffsetPress;
 const imgOriginalHeidelberg = imgPressOperator;
@@ -77,6 +79,9 @@ const departments = [
     title: "Sustainable Barrier Coating",
     description: "Utilizing biodegradable PLA and water-based coatings to provide superior liquid resistance while maintaining 100% recyclability.",
     image: imgCupFormingMachines,
+    /* Owner (2 Nov 2026): real lamination-line footage (public/media/SOURCES.txt). */
+    video: mediaUrl("lamination.mp4"),
+    poster: posterLamination,
     icon: Layers,
     stats: [
       { label: "Daily Output", value: "25K Pcs" },
@@ -250,11 +255,25 @@ export function DepartmentShowcase() {
                       </div>
                     ) : (
                       <motion.div className="h-full relative rounded-[40px] overflow-hidden border border-white/10">
-                        <ImageWithFallback
-                          src={dept.image}
-                          alt={dept.name}
-                          className="size-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-1000"
-                        />
+                        {"video" in dept && dept.video ? (
+                          <video
+                            src={dept.video}
+                            poster={dept.poster}
+                            className="size-full object-cover brightness-90"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="none"
+                            aria-label={`${dept.name} footage`}
+                          />
+                        ) : (
+                          <ImageWithFallback
+                            src={dept.image}
+                            alt={dept.name}
+                            className="size-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-1000"
+                          />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                       </motion.div>
                     )}

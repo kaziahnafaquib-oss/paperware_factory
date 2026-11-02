@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { MediaPlayer } from "../components/paperware/media-player";
 import { mediaUrl } from "../components/paperware/factory-clip";
 import { useReducedMotionPreference } from "../lib/reducedMotion";
-import posterFloor from "@/assets/video-posters/career-floor.webp";
+import posterFloor from "@/assets/video-posters/about-floor.webp";
 import { OurJourney } from "@/app/components/paperware/our-journey";
 import { useScrollScrub, clamp01, smooth, easeOut3 } from "../lib/useScrollScrub";
 
@@ -135,7 +135,9 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         label: "LAMINATION UNIT",
         icon: Zap,
         photo: fCupFormingMachines,
-        photoAlt: "Cup forming machines",
+        photoAlt: "Lamination line",
+        /* Owner (2 Nov 2026): real lamination-line footage (public/media/SOURCES.txt). */
+        video: mediaUrl("lamination.mp4"),
         machineName: "THERMAL LAMINATOR",
         detail: "PE/PLA LAMINATION FOR SUPERIOR LIQUID & HEAT RESISTANCE.",
         specs: ["ECO-FRIENDLY PLA SUPPORT", "HEAT-SEAL OPTIMIZATION", "GLOSS & MATTE FINISH"]
@@ -249,10 +251,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       {/* 1. HERO SECTION - INDUSTRIAL MAXIMALISM */}
       <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {/* Dark wash at the bottom-left (behind the headline) fading to white at the edges so the page still reads as white. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/85 z-10" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-black/10 to-transparent z-10" />
-          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.85, transform: "scale(1.08)" }}>
+          {/* Owner (2 Nov 2026): no white flare — the footage must stay readable. Only a soft dark wash behind the headline, and a short fade into the white page at the very bottom. */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/55 via-black/20 to-transparent z-10" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white z-10" />
+          <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 1, transform: "scale(1.08)" }}>
             {aboutUsVideos?.heroBackground ? (
               <MediaPlayer
                 type={aboutUsVideos?.heroBackgroundType || "image"}
@@ -264,10 +266,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 loop={true}
               />
             ) : (
-              /* Default: real floor footage of operators at the cup lines (public/media/SOURCES.txt), muted ambient loop. */
+              /* Default: real floor footage of operators at the cup lines, cut from the owner's 4K brand film (public/media/SOURCES.txt), muted ambient loop. */
               <video
                 ref={heroVideoRef}
-                src={mediaUrl("career-floor.mp4")}
+                src={mediaUrl("about-floor.mp4")}
                 poster={posterFloor}
                 className="size-full object-cover"
                 autoPlay
@@ -287,20 +289,20 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="max-w-5xl">
             <div className="flex items-center gap-2 mb-4 md:mb-8">
               <div className="size-1.5 md:size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Established 2020 • Dhaka</span>
+              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Established 2020 • Dhaka</span>
             </div>
 
             <h1
               ref={heroHeadRef}
-              className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12"
+              className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12 text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
             >
               <span data-hero-line className="block will-change-transform">The <span className="text-[#fabf37]">Engine</span></span>
               <span data-hero-line className="block will-change-transform">Behind the</span>
-              <span data-hero-line className="block will-change-transform text-zinc-500">Package.</span>
+              <span data-hero-line className="block will-change-transform text-white/70">Package.</span>
             </h1>
 
             <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
-              <p className="text-base md:text-2xl font-bold text-zinc-600 leading-tight max-w-2xl uppercase italic">
+              <p className="text-base md:text-2xl font-bold text-white/90 leading-tight max-w-2xl uppercase italic drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]">
                 {t('about_text_1')} We are not just manufacturers; we are supply chain architects.
               </p>
               <button type="button" tabIndex={-1} aria-hidden="true" className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
@@ -393,13 +395,27 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="h-14 w-20 rounded-2xl overflow-hidden bg-zinc-100 shrink-0">
-                      <img
-                        src={stat.photo}
-                        alt={stat.photoAlt}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover"
-                      />
+                      {"video" in stat && stat.video ? (
+                        <video
+                          src={stat.video}
+                          poster={stat.photo}
+                          className="w-full h-full object-cover"
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          preload="none"
+                          aria-label={stat.photoAlt}
+                        />
+                      ) : (
+                        <img
+                          src={stat.photo}
+                          alt={stat.photoAlt}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                     </div>
                     <div className={`${i === 0 ? 'text-[#fabf37]' : 'text-zinc-400'}`}>
                       <stat.icon className="size-6" />
