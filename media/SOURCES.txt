@@ -17,3 +17,10 @@ founded-2020.mp4            | reel  | https://www.facebook.com/reel/177845216301
 
 about-floor.mp4             | 31.0s | ~/Downloads/Paperware 03.mp4 (4K brand film, 3840x2160 letterboxed) @ 45-76, cropped to the picture area minus the subtitle strip (y 276-1704), encoded 1280x476 H.264 ~1.3 Mbps. About page hero background (owner, 2 Nov 2026: workers at the forming/printing lines, no white flare).
 lamination.mp4              |  8.5s | https://youtube.com/shorts/9VuGYKBXgc4 "Drying and Lamination | Paperware Factory" (owner channel, 1080x1920) @ 16-24.5 (sheets + lamination roller B-roll, no presenter/subtitles), 540x960 H.264 ~650 kbps. Journey 2024 milestone, Department showcase lamination, About lamination stat card.
+cutting.mp4                 | 15.0s | /Volumes/Client SSD/SHAKHAWAT FOOTAGE 27.APRIL.2025 SHOOT/CARD 01/CLIP/C9168.MP4 (owner shoot, 3840x2160 H.264) @ 0-15, full frame scaled to 1280x720 ~2.5 Mbps. About page CUTTING UNIT stat card (owner, 2 Nov 2026).
+printing.mp4                | 11.0s | /Volumes/Client SSD/SHAKHAWAT FOOTAGE 27.APRIL.2025 SHOOT/CARD 01/CLIP/C9183.MP4 (owner shoot, operator at the Heidelberg press) @ 0-11, 1280x720 ~2.5 Mbps. About page PRINTING UNIT stat card.
+
+factory-floor-wide.mp4      | ~15s | /Volumes/Client SSD/SHAKHAWAT FOOTAGE 27.APRIL.2025 SHOOT/CARD 02/CLIP/C9104.MP4 + C9105.MP4 (owner shoot, 4K), muted H.264 1280x720. Manufacturing page footage band. Light CSS grade (contrast 1.12, saturate 1.15, brightness 1.04) in FactoryClip `graded`.
+cup-forming-closeups.mp4    | ~12s | CARD 02 C9108 + C9109 + C9112 (owner shoot, 4K), 1280x720 muted. Manufacturing page footage band. Same CSS grade.
+delivery-dispatch.mp4       |  8.0s | CARD 02 C9064.MP4 @ 3-11 (owner shoot, Paperware boxes on delivery truck), 1280x720 muted. Order tracking page. Same CSS grade.
+quality-lab.mp4             |  8.0s | CARD 03 C9386.MP4 @ 0-8 (owner shoot, caliper check of a cup), 1280x720 muted. Compliance page under leak-test image. Same CSS grade.
