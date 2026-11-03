@@ -2,8 +2,10 @@ import React from "react";
 import { motion } from "motion/react";
 import { Factory, ShieldCheck, Truck, Anchor, Zap, Box, CircleCheck } from "lucide-react";
 import { useGo } from "../../lib/useGo";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function ProductionTimeline() {
+  const { t } = useLanguage();
   const go = useGo();
   const steps = [
     {
@@ -58,14 +60,14 @@ export function ProductionTimeline() {
           <div className="space-y-4">
             <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
               <div className="h-[1px] w-12 bg-[#fabf37]" />
-              Supply Chain Transparency
+              {t("production_timeline_supply_chain_transparency")}
             </div>
             <h2 className="text-[32px] md:text-[52px] font-black uppercase tracking-tighter leading-none text-white">
-              The Journey of <br /> <span className="text-zinc-600 italic">Precision</span>
+              {t("production_timeline_the_journey_of")} <br /> <span className="text-zinc-600 italic">{t("precision")}</span>
             </h2>
           </div>
           <p className="text-zinc-500 font-bold text-sm max-w-md leading-relaxed">
-            From raw fiber to global distribution, every Paperware product undergoes a rigorous 6-stage industrial cycle monitored by IoT sensors.
+            {t("production_timeline_from_raw_fiber_to_global")}
           </p>
         </div>
 
@@ -84,7 +86,7 @@ export function ProductionTimeline() {
                 <span aria-hidden="true" className={`text-4xl font-black italic tracking-tighter transition-colors ${
                   step.status === 'active' || step.status === 'completed' ? 'text-[#fabf37]' : 'text-zinc-800 group-hover:text-zinc-600'
                 }`}>
-                  {step.id}
+                  {t(step.id)}
                 </span>
                 <div className={`p-4 rounded-2xl transition-all duration-500 ${
                   step.status === 'active' ? 'bg-[#fabf37] text-black scale-110' : 'bg-zinc-900 text-zinc-500 group-hover:bg-white group-hover:text-black'
@@ -95,11 +97,11 @@ export function ProductionTimeline() {
 
               <div className="space-y-4">
                 <h3 className="text-xl font-black uppercase tracking-tight text-white group-hover:text-[#fabf37] transition-colors flex items-center gap-3">
-                  {step.title}
+                  {t(step.title)}
                   {step.status === 'completed' && <CircleCheck className="size-4 text-[#fabf37]" />}
                 </h3>
                 <p className="text-zinc-500 text-sm font-bold leading-relaxed">
-                  {step.desc}
+                  {t(step.desc)}
                 </p>
               </div>
 
@@ -109,7 +111,7 @@ export function ProductionTimeline() {
               
               <div className="mt-8 pt-8 border-t border-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button onClick={() => go("compliance")} className="text-[10px] font-black uppercase tracking-widest text-[#fabf37] flex items-center gap-2 hover:gap-4 transition-all">
-                  View Protocol <div className="h-[1px] w-4 bg-[#fabf37]" />
+                  {t("production_timeline_view_protocol")} <div className="h-[1px] w-4 bg-[#fabf37]" />
                 </button>
               </div>
             </motion.div>

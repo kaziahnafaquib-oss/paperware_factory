@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "motion/react";
 import { ArrowUp } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const BackToTop = () => {
+  const { t } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -109,7 +111,7 @@ export const BackToTop = () => {
             
             {/* Tooltip */}
             <span className="absolute left-full ml-3 px-2 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#fabf37]/20">
-              Scroll Top
+              {t("back_to_top_scroll_top")}
             </span>
           </motion.button>
         </motion.div>

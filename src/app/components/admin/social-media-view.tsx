@@ -154,7 +154,7 @@ export function SocialMediaView() {
                   </button>
 
                   <button 
-                    onClick={() => window.open(url, '_blank')}
+                    onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}
                     disabled={!url}
                     className="px-4 bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white rounded-xl border border-white/5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Test Link"

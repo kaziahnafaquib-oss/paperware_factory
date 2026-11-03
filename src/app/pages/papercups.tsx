@@ -263,14 +263,14 @@ export function PaperCupsPage({
             <Sparkles className="size-4" /> {t('premium_manufacturing')}
           </motion.div>
           <h1 className="text-[40px] md:text-[70px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] mb-12 relative">
-            <motion.span initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="block">{t('purely_engineered').split(' ')[0]}</motion.span>
-            <motion.span initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="block text-[#fabf37]" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{t('purely_engineered').split(' ')[1]}</motion.span>
+            <motion.span initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="block">{t(t('purely_engineered').split(' ')[0])}</motion.span>
+            <motion.span initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="block text-[#fabf37]" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>{t(t('purely_engineered').split(' ')[1])}</motion.span>
           </h1>
           <div className="relative max-w-4xl mx-auto">
              {/* Invisible start marker for the travelling cup (see cup journey above) */}
              <div ref={heroSlotRef} aria-hidden="true" style={{ opacity: 0 }} className="relative z-20">
                {/* Floating effect handled by animate if needed, but keeping it simple for scroll sync */}
-               <img decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt="Featured Cup" />
+               <img decoding="async" src={imgErasebg} className="w-full max-w-md mx-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.4)] -mt-8 md:-mt-16" alt={t("papercups_featured_cup")} />
              </div>
              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[400px] md:size-[600px] border border-black/5 rounded-full -z-10 animate-[spin_20s_linear_infinite]" />
              <div ref={heroCircleRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[300px] md:size-[450px] border-2 border-black/10 rounded-full -z-10" />
@@ -310,19 +310,19 @@ export function PaperCupsPage({
             <div key={index} className="flex items-center gap-12 text-xs font-black uppercase tracking-[0.3em]">
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>ECO-FRIENDLY MATERIALS</span>
+                <span>{t("papercups_eco_friendly_materials")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>HIGH-VOLUME CAPACITY</span>
+                <span>{t("ticker_7")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>CUSTOM BRANDING SOLUTIONS</span>
+                <span>{t("ticker_8")}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span>CUSTOM PRINTED CUPS</span>
+                <span>{t("papercups_custom_printed_cups")}</span>
               </div>
             </div>
           ))}
@@ -336,17 +336,17 @@ export function PaperCupsPage({
           <div className="flex flex-col lg:flex-row items-center gap-24">
             <div className="lg:w-1/2 space-y-12">
               <div className="space-y-4">
-                <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Technical Schematic</span>
-                <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.85]">The Digital <br /> <span className="text-[#fabf37]">Blueprint</span></h2>
+                <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("papercups_technical_schematic")}</span>
+                <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.85]">{t("papercups_the_digital")} <br /> <span className="text-[#fabf37]">{t("papercups_blueprint")}</span></h2>
                 <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-lg">{t('blueprint_desc')}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {blueprintData.map((data, i) => (
                   <div key={i} className="p-8 border border-white/10 rounded-3xl hover:border-[#fabf37] transition-all" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
-                    <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-1">{data.label}</p>
+                    <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-1">{t(data.label)}</p>
                     <div className="flex items-end gap-3">
-                      <span className="text-3xl font-black text-[#fabf37]">{data.value}</span>
-                      <span className="text-zinc-600 text-[10px] font-bold mb-1">Tol: {data.tolerance}</span>
+                      <span className="text-3xl font-black text-[#fabf37]">{t(data.value)}</span>
+                      <span className="text-zinc-600 text-[10px] font-bold mb-1">{t("papercups_tol")} {t(data.tolerance)}</span>
                     </div>
                   </div>
                 ))}
@@ -385,7 +385,7 @@ export function PaperCupsPage({
                    <img decoding="async" 
                      src={imgErasebg} 
                      className="w-full max-w-[400px] h-auto drop-shadow-[0_60px_100px_rgba(0,0,0,0.9)] brightness-110 contrast-110" 
-                     alt="Blueprint Cup" 
+                     alt={t("papercups_blueprint_cup")} 
                    />
                    
                    {/* Blueprint Labels - Rim Compression exactly as per screenshot */}
@@ -393,7 +393,7 @@ export function PaperCupsPage({
                      style={{ opacity: rimLabelOpacity, x: rimLabelX }}
                      className="absolute top-[5%] right-[10%] flex flex-col items-start gap-0"
                    >
-                      <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-sm whitespace-nowrap shadow-lg rotate-[-5deg]">RIM COMPRESSION</div>
+                      <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-sm whitespace-nowrap shadow-lg rotate-[-5deg]">{t("papercups_rim_compression")}</div>
                       <div className="w-[1px] h-16 bg-[#fabf37] ml-4 origin-top rotate-[15deg]" />
                    </motion.div>
                  </motion.div>
@@ -412,8 +412,8 @@ export function PaperCupsPage({
                     <CircleCheck className="size-8" />
                  </div>
                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">Made in Dhaka</span>
-                    <span className="text-3xl font-black tracking-tighter leading-none">Custom printed</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 leading-none mb-2">{t("catalog_3d_made_in_dhaka")}</span>
+                    <span className="text-3xl font-black tracking-tighter leading-none">{t("papercups_custom_printed")}</span>
                  </div>
               </motion.div>
             </div>
@@ -425,7 +425,7 @@ export function PaperCupsPage({
       <section className="container mx-auto px-4 py-32 relative">
         <div className="flex justify-between items-end mb-16">
           <div className="max-w-2xl">
-            <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-4 inline-block">The Portfolio</span>
+            <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-4 inline-block">{t("papercups_the_portfolio")}</span>
             <h2 className="text-[50px] md:text-[80px] font-black uppercase tracking-tighter leading-none text-black">{t('product_tiers')}</h2>
           </div>
           <div className="hidden md:flex gap-4">
@@ -449,10 +449,10 @@ export function PaperCupsPage({
                  <motion.div whileHover={{ y: -30, scale: 1.1 }} className="transition-all duration-500 cursor-pointer"><img loading="lazy" decoding="async" src={v.image} className="w-full max-w-[240px] mx-auto drop-shadow-2xl" alt="" /></motion.div>
               </div>
               <div className="relative z-10">
-                <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 group-hover:text-black">{v.name}</h3>
-                <p className="font-bold text-sm mb-6 transition-colors" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{v.description}</p>
+                <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 group-hover:text-black">{t(v.name)}</h3>
+                <p className="font-bold text-sm mb-6 transition-colors" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{t(v.description)}</p>
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>{v.sizes}</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>{t(v.sizes)}</span>
                   <div className="size-12 rounded-full bg-black text-[#fabf37] flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all"><ArrowRight className="size-6" /></div>
                 </div>
               </div>
@@ -473,10 +473,10 @@ export function PaperCupsPage({
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mb-24">
-            <span className="text-black bg-[#fabf37] px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-6 inline-block">Engineering Standards</span>
+            <span className="text-black bg-[#fabf37] px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] mb-6 inline-block">{t("papercups_engineering_standards")}</span>
             {/* Removed the small video from here */}
             <h2 className="text-[50px] md:text-[80px] font-black uppercase tracking-tighter leading-none">{t('perf_matrix')}</h2>
-            <p className="mt-8 text-zinc-500 font-bold text-lg max-w-xl">Deep-dive into the thermal and physical properties of our premium packaging variants.</p>
+            <p className="mt-8 text-zinc-500 font-bold text-lg max-w-xl">{t("papercups_deep_dive_into_the_thermal")}</p>
           </div>
 
           <div className="space-y-8">
@@ -498,7 +498,7 @@ export function PaperCupsPage({
                 <div className="lg:col-span-3">
                   <div className="flex items-center gap-4">
                     <div className="size-3 rounded-full bg-[#fabf37] group-hover:scale-150 transition-transform shadow-[0_0_15px_#fabf37]" />
-                    <p className="text-2xl lg:text-3xl font-black uppercase tracking-tighter text-white group-hover:text-[#fabf37] transition-colors">{row.feature}</p>
+                    <p className="text-2xl lg:text-3xl font-black uppercase tracking-tighter text-white group-hover:text-[#fabf37] transition-colors">{t(row.feature)}</p>
                   </div>
                 </div>
 
@@ -506,8 +506,8 @@ export function PaperCupsPage({
                 <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-8 items-center">
                   {/* Single Wall */}
                   <div className="space-y-2 px-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">Single Wall</p>
-                    <p className="text-3xl font-black text-white tracking-tighter">{row.single}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600">{t("papercups_single_wall")}</p>
+                    <p className="text-3xl font-black text-white tracking-tighter">{t(row.single)}</p>
                   </div>
                   
                   {/* Ripple Wall - The Highlighted Box from Screenshot */}
@@ -515,14 +515,14 @@ export function PaperCupsPage({
                     <div className="absolute top-0 right-0 p-6" style={{ opacity: 0.05 }}>
                        <Zap className="size-12 text-[#fabf37]" />
                     </div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">Ripple Wall</p>
-                    <p className="text-4xl lg:text-5xl font-black text-[#fabf37] leading-none tracking-tighter drop-shadow-sm">{row.ripple}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("papercups_ripple_wall")}</p>
+                    <p className="text-4xl lg:text-5xl font-black text-[#fabf37] leading-none tracking-tighter drop-shadow-sm">{t(row.ripple)}</p>
                   </div>
 
                   {/* Double Wall */}
                   <div className="space-y-2 px-4">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Double Wall</p>
-                    <p className="text-3xl font-black text-white tracking-tighter">{row.double}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("papercups_double_wall")}</p>
+                    <p className="text-3xl font-black text-white tracking-tighter">{t(row.double)}</p>
                   </div>
                 </div>
               </motion.div>
@@ -539,7 +539,7 @@ export function PaperCupsPage({
               }}
               className="w-full md:w-auto bg-[#fabf37] text-black px-12 py-8 rounded-full font-black uppercase tracking-widest flex items-center justify-center gap-4 shadow-[0_20px_50px_rgba(250,191,55,0.2)]"
             >
-              <MapPin className="size-6" /> Contact Domestic Sales
+              <MapPin className="size-6" /> {t("papercups_contact_domestic_sales")}
             </motion.button>
             
             <motion.button 
@@ -551,7 +551,7 @@ export function PaperCupsPage({
               style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}
               className="w-full md:w-auto border-2 hover:border-[#fabf37] hover:bg-[#fabf37] hover:text-black text-white px-12 py-8 rounded-full font-black uppercase tracking-widest flex items-center justify-center gap-4 transition-all"
             >
-              <Globe className="size-6" /> Contact International Sales
+              <Globe className="size-6" /> {t("papercups_contact_international_sales")}
             </motion.button>
           </div>
         </div>
@@ -563,13 +563,13 @@ export function PaperCupsPage({
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-12">
               <div className="space-y-4">
-                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">Preview</span>
+                <span className="text-[#fabf37] bg-black px-4 py-1 rounded-full font-black uppercase tracking-[0.3em] text-[10px] inline-block">{t("export_request_form_preview")}</span>
                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-zinc-900">{t('studio_interactive')}</h2>
                 <p className="text-zinc-600 font-bold text-lg max-w-md">{t('studio_desc')}</p>
               </div>
               <div className="space-y-8">
                 <div className="space-y-4">
-                  <p className="text-xs font-black uppercase tracking-widest text-zinc-900">Select Base Material</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-zinc-900">{t("papercups_select_base_material")}</p>
                   <div className="flex gap-4">
                     {["#ffffff", "#e3d1ae", "#fabf37", "#1a1a1a"].map((color) => (
                       <button 
@@ -611,7 +611,7 @@ export function PaperCupsPage({
                   />
                   <div className="flex flex-col gap-1">
                     <span>{t('upload_logo')}</span>
-                    <span className="text-[9px] font-bold normal-case tracking-normal opacity-60">Upload only PNG file</span>
+                    <span className="text-[9px] font-bold normal-case tracking-normal opacity-60">{t("papercups_upload_only_png_file")}</span>
                   </div>
                 </label>
               </div>
@@ -648,7 +648,7 @@ export function PaperCupsPage({
                       <img loading="lazy" decoding="async" 
                         src={imgErasebg} 
                         className="w-full h-auto drop-shadow-[0_60px_120px_rgba(0,0,0,0.3)] brightness-105 transform -rotate-[12deg] scale-[1.25]" 
-                        alt="Custom Cup" 
+                        alt={t("papercups_custom_cup")} 
                       />
                       
                       {/* Logo Preview Overlay - Precisely Aligned to the Cup's Center */}
@@ -668,7 +668,7 @@ export function PaperCupsPage({
                               <img loading="lazy" decoding="async" 
                                 src={logoUrl} 
                                 className="w-full h-auto object-contain mix-blend-multiply contrast-125 saturate-150 drop-shadow-sm" 
-                                alt="Uploaded Logo" 
+                                alt={t("papercups_uploaded_logo")} 
                               />
                             </motion.div>
                           ) : (
@@ -681,9 +681,9 @@ export function PaperCupsPage({
                             >
                                <div className="flex items-center gap-2">
                                   <div className="size-2.5 bg-[#fabf37] rounded-full animate-pulse shadow-[0_0_15px_#fabf37]" />
-                                  <span className="text-[#fabf37] font-black uppercase tracking-[0.3em] text-[10px]">Project Paperware</span>
+                                  <span className="text-[#fabf37] font-black uppercase tracking-[0.3em] text-[10px]">{t("papercups_project_paperware")}</span>
                                </div>
-                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>3D Preview</span>
+                               <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>{t("papercups_3d_preview")}</span>
                             </motion.div>
                           )}
                         </AnimatePresence>
@@ -698,8 +698,8 @@ export function PaperCupsPage({
                         <Maximize2 className="size-5" />
                      </div>
                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-black/40">Viewport</p>
-                        <p className="text-sm font-black text-black">Interactive 360°</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-black/40">{t("papercups_viewport")}</p>
+                        <p className="text-sm font-black text-black">{t("papercups_interactive_360")}</p>
                      </div>
                    </div>
                 </div>
@@ -712,7 +712,7 @@ export function PaperCupsPage({
                     className="backdrop-blur-xl px-8 py-4 rounded-full border shadow-2xl flex items-center gap-4"
                    >
                       <MousePointer2 className="size-5 text-[#fabf37]" />
-                      <span className="text-[11px] font-black text-white uppercase tracking-[0.2em]">Drag to Explore</span>
+                      <span className="text-[11px] font-black text-white uppercase tracking-[0.2em]">{t("papercups_drag_to_explore")}</span>
                    </motion.div>
                 </div>
               </motion.div>
@@ -728,16 +728,16 @@ export function PaperCupsPage({
             <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none"><Box className="size-80 text-[#fabf37]" /></div>
             <div className="relative z-10">
               <div className="max-w-3xl mb-16">
-                <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs mb-4 inline-block">Enterprise Solutions</span>
-                <h2 className="text-[42px] lg:text-[72px] font-black uppercase tracking-tighter leading-none text-white mb-8">Scale Your <br /> Impact With Us</h2>
-                <p className="text-zinc-400 font-bold text-lg leading-relaxed">We specialize in high-volume production for global coffee chains and fast-food giants. Our infrastructure is built to handle millions of units per month with consistent quality.</p>
+                <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs mb-4 inline-block">{t("papercups_enterprise_solutions")}</span>
+                <h2 className="text-[42px] lg:text-[72px] font-black uppercase tracking-tighter leading-none text-white mb-8">{t("papercups_scale_your")} <br /> {t("papercups_impact_with_us")}</h2>
+                <p className="text-zinc-400 font-bold text-lg leading-relaxed">{t("papercups_we_specialize_in_high_volume")}</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {bulkBenefits.map((benefit, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} className="p-8 rounded-[40px] bg-zinc-900 border hover:border-[#fabf37] transition-all group" style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }}>
                     <div className="size-12 rounded-2xl bg-[#fabf37] text-black flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform"><CheckCircle2 className="size-6" /></div>
-                    <h4 className="text-xl font-black uppercase tracking-tight text-white mb-2">{benefit.title}</h4>
-                    <p className="text-zinc-500 font-bold text-xs">{benefit.desc}</p>
+                    <h4 className="text-xl font-black uppercase tracking-tight text-white mb-2">{t(benefit.title)}</h4>
+                    <p className="text-zinc-500 font-bold text-xs">{t(benefit.desc)}</p>
                   </motion.div>
                 ))}
               </div>
@@ -748,7 +748,7 @@ export function PaperCupsPage({
                   }}
                   className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_40px_rgba(250,191,55,0.3)] active:scale-95"
                 >
-                  Contact Sales
+                  {t("immersive_hero_contact_sales")}
                 </button>
                 <button 
                   onClick={() => {
@@ -759,7 +759,7 @@ export function PaperCupsPage({
                   }}
                   className="border-2 border-white/20 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all active:scale-95"
                 >
-                  Request Samples
+                  {t("catalog_3d_request_samples")}
                 </button>
               </div>
             </div>
@@ -775,22 +775,22 @@ export function PaperCupsPage({
           <div className="grid lg:grid-cols-2 gap-24 items-center">
             <div className="space-y-12">
                <div className="space-y-6">
-                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-white italic">Eco <br /> Dynamics</h2>
-                 <p className="text-zinc-400 font-bold text-xl leading-relaxed max-lg">Every decision matters. Calculate the ecological weight of your brand and discover the impact of switching to Paperware sustainable fibers.</p>
+                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none text-white italic">{t("papercups_eco")} <br /> {t("papercups_dynamics")}</h2>
+                 <p className="text-zinc-400 font-bold text-xl leading-relaxed max-lg">{t("papercups_every_decision_matters_calculate_the")}</p>
                </div>
             </div>
             <div className="backdrop-blur-3xl p-12 lg:p-20 rounded-[80px] border border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.5)]" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
                <div className="space-y-12">
                  <div className="space-y-8">
-                   <div className="flex justify-between items-end"><p className="text-sm font-black uppercase tracking-[0.2em] text-zinc-500">Order Volume</p><p className="text-4xl font-black text-white">{cupCount.toLocaleString()} <span className="text-xs text-[#fabf37]">PCS</span></p></div>
+                   <div className="flex justify-between items-end"><p className="text-sm font-black uppercase tracking-[0.2em] text-zinc-500">{t("order_volume")}</p><p className="text-4xl font-black text-white">{cupCount.toLocaleString()} <span className="text-xs text-[#fabf37]">PCS</span></p></div>
                    <div className="relative h-4 rounded-full overflow-hidden border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
                       <motion.div initial={{ width: 0 }} animate={{ width: `${(cupCount / 1000000) * 100}%` }} className="absolute h-full bg-[#fabf37] shadow-[0_0_20px_rgba(250,191,55,0.5)]" />
-                      <input type="range" aria-label="Order volume (cups)" min="10000" max="1000000" step="10000" value={cupCount} onChange={(e) => setCupCount(parseInt(e.target.value))} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
+                      <input type="range" aria-label={t("papercups_order_volume_cups")} min="10000" max="1000000" step="10000" value={cupCount} onChange={(e) => setCupCount(parseInt(e.target.value))} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
                    </div>
                  </div>
                  <div className="grid grid-cols-2 gap-8">
-                    <div className="p-8 rounded-[40px] border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">Plastic Saved</p><p className="text-3xl font-black text-white">{(cupCount * 0.015).toFixed(0)} <span className="text-xs">KG</span></p></div>
-                    <div className="p-8 rounded-[40px] border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">CO2 Reduction</p><p className="text-3xl font-black text-white">{(cupCount * 0.005).toFixed(0)} <span className="text-xs">KG</span></p></div>
+                    <div className="p-8 rounded-[40px] border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">{t("papercups_plastic_saved")}</p><p className="text-3xl font-black text-white">{(cupCount * 0.015).toFixed(0)} <span className="text-xs">KG</span></p></div>
+                    <div className="p-8 rounded-[40px] border border-white/10" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}><p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">{t("papercups_co2_reduction")}</p><p className="text-3xl font-black text-white">{(cupCount * 0.005).toFixed(0)} <span className="text-xs">KG</span></p></div>
                  </div>
                  {/* ... button removed ... */}
                </div>
@@ -806,10 +806,10 @@ export function PaperCupsPage({
              <div className="relative order-2 lg:order-1">
                 <div className="relative z-10 bg-[#f4e6cc] rounded-[80px] p-20 border border-black/5 shadow-2xl">
                    <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="relative">
-                     <img loading="lazy" decoding="async" src={imgErasebg} className="w-full h-auto drop-shadow-2xl opacity-60 mix-blend-multiply" alt="Anatomy" />
-                     <div className="absolute top-[10%] -right-10 bg-black text-[#fabf37] px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">Reinforced Lip</span></div>
-                     <div className="absolute top-[40%] -left-10 bg-white text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">PLA Lining</span></div>
-                     <div className="absolute bottom-[20%] -right-5 bg-[#fabf37] text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">Air Pocket</span></div>
+                     <img loading="lazy" decoding="async" src={imgErasebg} className="w-full h-auto drop-shadow-2xl opacity-60 mix-blend-multiply" alt={t("papercups_anatomy")} />
+                     <div className="absolute top-[10%] -right-10 bg-black text-[#fabf37] px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">{t("papercups_reinforced_lip")}</span></div>
+                     <div className="absolute top-[40%] -left-10 bg-white text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">{t("papercups_pla_lining")}</span></div>
+                     <div className="absolute bottom-[20%] -right-5 bg-[#fabf37] text-black px-6 py-3 rounded-2xl shadow-2xl"><span className="text-[10px] font-black uppercase tracking-widest">{t("papercups_air_pocket")}</span></div>
                    </motion.div>
                 </div>
                 <div className="absolute -top-10 -right-10 size-40 bg-black rounded-full mix-blend-overlay blur-3xl" />
@@ -817,8 +817,8 @@ export function PaperCupsPage({
              </div>
              <div className="space-y-12 order-1 lg:order-2">
                <div className="space-y-6">
-                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.85]">Structural <br /> Integrity</h2>
-                 <p className="text-black/60 font-bold text-xl leading-relaxed">Beyond the aesthetic, our cups are built for high-performance thermal retention and physical resilience. Each layer serves a critical engineering purpose.</p>
+                 <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-[0.85]">{t("papercups_structural")} <br /> {t("papercups_integrity")}</h2>
+                 <p className="text-black/60 font-bold text-xl leading-relaxed">{t("papercups_beyond_the_aesthetic_our_cups")}</p>
                </div>
                <div className="grid grid-cols-1 gap-6">
                  {[
@@ -829,8 +829,8 @@ export function PaperCupsPage({
                    <div key={i} className="flex items-center gap-6 p-8 bg-white/30 backdrop-blur-md rounded-[40px] border border-black/5 group hover:bg-black transition-all duration-500">
                      <div className="size-4 bg-[#fabf37] rounded-full group-hover:scale-150 transition-transform" />
                      <div>
-                       <h4 className="font-black uppercase tracking-tight group-hover:text-white transition-colors">{item.title}</h4>
-                       <p className="text-xs font-bold text-black/50 group-hover:text-white/40 transition-colors">{item.desc}</p>
+                       <h4 className="font-black uppercase tracking-tight group-hover:text-white transition-colors">{t(item.title)}</h4>
+                       <p className="text-xs font-bold text-black/50 group-hover:text-white/40 transition-colors">{t(item.desc)}</p>
                      </div>
                    </div>
                  ))}
@@ -874,9 +874,9 @@ export function PaperCupsPage({
                </video>
              </div>
              
-             <h2 className="md:text-[60px] lg:text-[80px] font-black tracking-tighter uppercase leading-[0.75] italic text-[#fabf37] text-[160px] relative z-10">SAY NO<br />TO PLASTIC</h2>
+             <h2 className="md:text-[60px] lg:text-[80px] font-black tracking-tighter uppercase leading-[0.75] italic text-[#fabf37] text-[160px] relative z-10">{t("papercups_say_no")}<br />{t("papercups_to_plastic")}</h2>
              <div className="flex flex-col md:flex-row items-center justify-center gap-12 max-w-4xl mx-auto relative z-10">
-                <p className="text-zinc-500 font-bold leading-relaxed italic text-left flex-1 border-l-4 border-[#fabf37] pl-8 text-[15px]">"We aren't just selling paperware. We are re-engineering the relationship between enterprise production and planetary health."</p>
+                <p className="text-zinc-500 font-bold leading-relaxed italic text-left flex-1 border-l-4 border-[#fabf37] pl-8 text-[15px]">{t("papercups_we_aren_t_just_selling")}</p>
                 <div className="flex-1 flex justify-center">
                    <motion.div 
                      animate={{ rotate: 360 }}
@@ -918,7 +918,7 @@ export function PaperCupsPage({
                   src="https://paperware.definedsolution.com/wp-content/uploads/2025/05/hero512_slow.webm" 
                   type="video/webm" 
                 />
-                Your browser does not support the video tag or the .webm format.
+                {t("papercups_your_browser_does_not_support")}
               </video>
             </div>
 
@@ -929,7 +929,7 @@ export function PaperCupsPage({
                 onClick={() => onPageChange("quote")}
                 className="bg-black text-[#fabf37] px-8 py-3.5 rounded-full flex items-center gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.3)] group"
               >
-                <span className="text-xs font-black uppercase tracking-[0.2em]">Start Project</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em]">{t("start_project")}</span>
                 <ArrowRight className="size-4 group-hover:translate-x-2 transition-transform" />
               </motion.button>
 
@@ -939,7 +939,7 @@ export function PaperCupsPage({
                 onClick={() => onPageChange("products")}
                 className="bg-[#f7e4c2] text-black px-8 py-3 rounded-full shadow-lg"
               >
-                <span className="text-xs font-black uppercase tracking-[0.2em]">View Specs</span>
+                <span className="text-xs font-black uppercase tracking-[0.2em]">{t("view_specs")}</span>
               </motion.button>
             </div>
           </motion.div>

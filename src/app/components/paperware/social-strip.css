@@ -9,13 +9,18 @@
   will-change: transform;
 }
 .pwf-marquee-reverse { animation-direction: reverse; }
+/* Pause only while the pointer is over the strip. No focus-within: an embedded
+   Facebook iframe takes focus on load and would freeze the strip for good. */
 .pwf-marquee-viewport:hover .pwf-marquee-track,
-.pwf-marquee-viewport:focus-within .pwf-marquee-track,
 .pwf-marquee-paused .pwf-marquee-track {
   animation-play-state: paused;
 }
 /* Owner wants auto-scroll kept under reduced motion: just slow it down. */
 @media (prefers-reduced-motion: reduce) {
   /* !important: the global reduced-motion reset in styles/index.css sets every animation to 0.01ms. */
-  .pwf-marquee-track { animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2) !important; }
+  .pwf-marquee-track {
+    animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2) !important;
+    /* The same reset forces iteration-count 1: without this the strip scrolls one lap and stops. */
+    animation-iteration-count: infinite !important;
+  }
 }

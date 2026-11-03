@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ShieldCheck, Globe, Award, CircleCheck, Truck, FileText } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function Certifications() {
+  const { t } = useLanguage();
   const certifications = [
     { name: "ISO 9001:2015", body: "Quality Management System", icon: <Award /> },
     { name: "FSC Certified", body: "Sustainable Forest Management", icon: <CircleCheck /> },
@@ -23,13 +25,13 @@ export function Certifications() {
                 className="flex items-center gap-4 text-black font-black uppercase tracking-[0.4em] text-[10px]"
               >
                 <div className="h-[2px] w-12 bg-[#fabf37]" />
-                Trust & Compliance
+                {t("certifications_trust_compliance")}
               </motion.div>
               <h2 className="text-[32px] md:text-[52px] font-black uppercase tracking-tighter leading-[0.9]">
-                Global Standards <br /> <span className="text-[#fabf37]">Zero Compromise</span>
+                {t("certifications_global_standards")} <br /> <span className="text-[#fabf37]">{t("certifications_zero_compromise")}</span>
               </h2>
               <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-xl">
-                We adhere to the strictest international manufacturing protocols to ensure that every product leaving our factory meets the highest safety and environmental benchmarks.
+                {t("certifications_we_adhere_to_the_strictest")}
               </p>
             </div>
 
@@ -44,8 +46,8 @@ export function Certifications() {
                     {cert.icon}
                   </div>
                   <div>
-                    <h4 className="text-base font-black uppercase tracking-tight">{cert.name}</h4>
-                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{cert.body}</p>
+                    <h4 className="text-base font-black uppercase tracking-tight">{t(cert.name)}</h4>
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t(cert.body)}</p>
                   </div>
                 </motion.div>
               ))}
@@ -60,24 +62,24 @@ export function Certifications() {
                       <div className="size-12 rounded-full bg-[#fabf37] flex items-center justify-center text-black">
                          <Globe className="size-6" />
                       </div>
-                      <h3 className="text-white text-2xl font-black uppercase tracking-tight">Global Export Reach</h3>
+                      <h3 className="text-white text-2xl font-black uppercase tracking-tight">{t("certifications_global_export_reach")}</h3>
                    </div>
                    
                    <div className="grid grid-cols-2 gap-8">
                       <div className="space-y-1">
                          <p className="text-[#fabf37] text-4xl font-black">46+</p>
-                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Countries Supplied</p>
+                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">{t("certifications_countries_supplied")}</p>
                       </div>
                       <div className="space-y-1">
                          <p className="text-[#fabf37] text-4xl font-black">2.4B</p>
-                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Units Exported Yearly</p>
+                         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">{t("certifications_units_exported_yearly")}</p>
                       </div>
                    </div>
 
                    <div className="p-6 bg-white/5 rounded-3xl border border-white/10 space-y-4">
                       <div className="flex items-center gap-3">
                          <Truck className="text-[#fabf37] size-5" />
-                         <span className="text-white text-xs font-black uppercase tracking-widest">Live Logistics Tracking</span>
+                         <span className="text-white text-xs font-black uppercase tracking-widest">{t("certifications_live_logistics_tracking")}</span>
                       </div>
                       <div className="flex gap-1 h-1.5">
                          {[1,2,3,4,5,6,7,8].map(i => (
@@ -89,7 +91,7 @@ export function Certifications() {
                             />
                          ))}
                       </div>
-                      <p className="text-zinc-500 text-[10px] font-bold">Consignments currently in transit to Europe, North America, and Middle East.</p>
+                      <p className="text-zinc-500 text-[10px] font-bold">{t("certifications_consignments_currently_in_transit_to")}</p>
                    </div>
                 </div>
                 

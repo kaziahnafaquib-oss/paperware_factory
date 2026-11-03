@@ -4,8 +4,11 @@ import { motion } from "motion/react";
 import { TrendingUp, Database, ChartBar, CircleCheck as CheckCircle2 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useGo } from "../lib/useGo";
+import { EnquiryForm } from "../components/paperware/enquiry-form";
 
-const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) => (
+const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) => {
+  const { t } = useLanguage();
+  return (
   <section className="relative pt-32 pb-20 px-4 overflow-hidden bg-white">
     <div className="absolute inset-0 z-0">
       <img src={imgForming} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-[0.14] pointer-events-none" />
@@ -21,18 +24,19 @@ const PageHeader = ({ title, subtitle }: { title: string; subtitle: string }) =>
       >
         <div className="flex items-center gap-2 mb-6">
           <div className="size-2 rounded-full bg-[#fabf37] animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Capital Growth Protocol</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">{t("investor_capital_growth_protocol")}</span>
         </div>
         <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
-          {title}
+          {t(title)}
         </h1>
         <p className="text-lg md:text-xl font-bold text-zinc-500 uppercase italic max-w-2xl leading-relaxed">
-          {subtitle}
+          {t(subtitle)}
         </p>
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 const ContentBlock = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <section className={`py-20 px-4 bg-white ${className}`}>
@@ -49,7 +53,7 @@ export function InvestorPage() {
   return (
     <div className="bg-white min-h-screen font-['Poppins',sans-serif] selection:bg-[#fabf37] selection:text-black">
       <PageHeader 
-        title="Investor Relations" 
+        title={t("investor_investor_relations")} 
         subtitle="Financing the future of high-precision, eco-friendly manufacturing in South Asia."
       />
 
@@ -58,15 +62,15 @@ export function InvestorPage() {
           <div className="lg:col-span-8 space-y-16">
             <div className="space-y-8">
               <p className="text-2xl font-medium text-zinc-600 leading-tight">
-                Paperware Factory welcomes strategic investors who share our vision for sustainable manufacturing and long-term growth.
+                {t("investor_paperware_factory_welcomes_strategic_inv")}
               </p>
               <p className="text-zinc-500 leading-relaxed text-lg">
-                Since starting commercial operations in 2020, the company has demonstrated steady growth in demand for eco-friendly paper packaging products in Bangladesh. Our technical advantage and operational efficiency provide a robust foundation for scalable returns.
+                {t("investor_since_starting_commercial_operations_in")}
               </p>
             </div>
 
             <div className="space-y-10">
-              <h3 className="text-3xl font-black uppercase tracking-tighter text-black">Strategic Opportunities</h3>
+              <h3 className="text-3xl font-black uppercase tracking-tighter text-black">{t("investor_strategic_opportunities")}</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 {[
                   { title: "Capacity Expansion", desc: "Scaling production floors to meet surging regional demand." },
@@ -80,10 +84,10 @@ export function InvestorPage() {
                       <div className="size-10 rounded-xl bg-white flex items-center justify-center text-[#fabf37] border border-zinc-200 group-hover:bg-zinc-900 group-hover:border-zinc-800 transition-colors">
                         <TrendingUp className="size-5" />
                       </div>
-                      <h4 className="text-[12px] font-black uppercase tracking-widest leading-none">{item.title}</h4>
+                      <h4 className="text-[12px] font-black uppercase tracking-widest leading-none">{t(item.title)}</h4>
                     </div>
                     <p className="text-xs font-bold text-zinc-500 group-hover:text-zinc-400 leading-relaxed">
-                      {item.desc}
+                      {t(item.desc)}
                     </p>
                   </div>
                 ))}
@@ -93,10 +97,10 @@ export function InvestorPage() {
             <div className="p-12 bg-[#fabf37]/5 rounded-[64px] border border-[#fabf37]/10 space-y-8">
               <div className="flex items-center gap-4">
                 <Database className="size-8 text-[#fabf37]" />
-                <h3 className="text-2xl font-black uppercase tracking-tight text-black">Operational Transparency</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-black">{t("investor_operational_transparency")}</h3>
               </div>
               <p className="text-zinc-600 font-medium leading-relaxed">
-                We ensure transparency through ERPNext-based financial tracking, reporting, and operational monitoring. Every batch, every transaction, and every efficiency metric is recorded in real-time.
+                {t("investor_we_ensure_transparency_through_erpnext")}
               </p>
             </div>
           </div>
@@ -107,17 +111,21 @@ export function InvestorPage() {
                 <ChartBar className="size-8" />
               </div>
               <div className="space-y-4">
-                <h4 className="text-2xl font-black uppercase tracking-tighter">Engagement Protocol</h4>
+                <h4 className="text-2xl font-black uppercase tracking-tighter">{t("investor_engagement_protocol")}</h4>
                 <p className="text-zinc-400 text-xs font-bold leading-relaxed uppercase">
-                  Investors are encouraged to engage with us for detailed business plans, forecasts, and growth strategies.
+                  {t("investor_investors_are_encouraged_to_engage")}
                 </p>
               </div>
               <button onClick={() => go("contact")} className="w-full py-6 bg-[#fabf37] text-black rounded-full font-black text-[10px] uppercase tracking-[0.3em] hover:bg-white transition-all shadow-2xl">
-                Request Prospectus
+                {t("investor_request_prospectus")}
               </button>
             </div>
           </div>
         </div>
+      </ContentBlock>
+
+      <ContentBlock className="pt-0">
+        <div id="investor-enquiry" className="max-w-4xl"><EnquiryForm kind="investor" /></div>
       </ContentBlock>
     </div>
   );

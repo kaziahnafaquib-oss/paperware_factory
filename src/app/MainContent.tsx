@@ -105,6 +105,7 @@ const ToneTransitionOverlay = ({ tone }: { tone: string }) => (
 
 // Advanced Immersive HUD Overlay (Local Component to resolve conflict and add premium layers)
 const HUDOverlay = React.memo(() => {
+  const { t } = useLanguage();
   return (
     <>
       <SharedHUDOverlay />
@@ -121,7 +122,7 @@ const HUDOverlay = React.memo(() => {
         {/* Predictive Data Streams */}
         <div className="absolute bottom-24 left-12 hidden xl:block">
           <div className="flex flex-col gap-1">
-            <span className="text-[7px] font-black text-[#fabf37]/40 tracking-[0.3em] uppercase">Predictive_Cache</span>
+            <span className="text-[7px] font-black text-[#fabf37]/40 tracking-[0.3em] uppercase">{t("maincontent_predictive_cache")}</span>
             <div className="flex gap-1">
               {[...Array(12)].map((_, i) => (
                 <motion.div
@@ -243,6 +244,7 @@ import imgHeroMobile from "figma:asset/7355363d5bbe4910fbf181181e9702179c6c7d50.
 
 // Neural Language Transition Effect
 function NeuralTransition({ isVisible, language }: { isVisible: boolean, language: string }) {
+  const { t } = useLanguage();
   return (
     <AnimatePresence>
       {isVisible && (
@@ -262,14 +264,14 @@ function NeuralTransition({ isVisible, language }: { isVisible: boolean, languag
               transition={{ duration: 0.5, repeat: Infinity }}
               className="size-24 rounded-full border-2 border-[#fabf37] flex items-center justify-center"
             >
-              <span className="text-3xl font-black text-[#fabf37]">{language}</span>
+              <span className="text-3xl font-black text-[#fabf37]">{t(language)}</span>
             </motion.div>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: 200 }}
               className="h-px bg-gradient-to-r from-transparent via-[#fabf37] to-transparent mt-8"
             />
-            <p className="text-[10px] font-black text-white uppercase tracking-[0.5em] mt-4">Calibrating Neural Hub...</p>
+            <p className="text-[10px] font-black text-white uppercase tracking-[0.5em] mt-4">{t("maincontent_calibrating_neural_hub")}</p>
           </div>
         </motion.div>
       )}
@@ -310,6 +312,7 @@ function PerspectiveSection({ children }: { children: React.ReactNode }) {
 
 // Loading component for Suspense
 function PageLoader() {
+  const { t } = useLanguage();
   const reducedMotion = prefersReducedMotion();
 
   return (
@@ -324,7 +327,7 @@ function PageLoader() {
           <div className="size-10 bg-black rounded-xl flex items-center justify-center text-[#fabf37] font-black text-xl">P</div>
         </div>
       </div>
-      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 animate-pulse">Initializing Terminal...</p>
+      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 animate-pulse">{t("maincontent_initializing_terminal")}</p>
     </div>
   );
 }
@@ -570,7 +573,7 @@ export function MainContent() {
           // for every position:sticky descendant, so the pinned sections never pin.
           <div id="main-content" className="bg-white relative overflow-x-clip font-['Poppins',sans-serif]">
             {/* Phase B a11y: the page had no <h1>. Visually hidden until the hero gets a real headline (Phase A-3). */}
-            <h1 className="sr-only">Paperware Factory: custom-printed paper cups and paper packaging, made in Dhaka, Bangladesh</h1>
+            <h1 className="sr-only">{t("maincontent_paperware_factory_custom_printed_paper")}</h1>
 
             {/* 1. IMMERSIVE HERO WITH VIDEO */}
             <div className="relative">
@@ -737,7 +740,7 @@ export function MainContent() {
           }}
         />
       );
-      default: return <Hero onExplore={() => handlePageChange("products")} videoUrl={heroVideoUrl} title={heroContent.title} subtitle1={heroContent.subtitle1} subtitle2={heroContent.subtitle2} />;
+      default: return <Hero onExplore={() => handlePageChange("products")} videoUrl={heroVideoUrl} title={t(heroContent.title)} subtitle1={heroContent.subtitle1} subtitle2={heroContent.subtitle2} />;
     }
   }, [currentPage, legacyRedirect, heroVideoUrl, heroVideoMobileUrl, clientsVideoUrl, heroContent, productsData, quoteBasket, factoryVideoUrl, handlePageChange, handleProductClick, addToQuoteBasket, removeFromQuoteBasket, productionStats, uploadedLogos, partnersData]);
 

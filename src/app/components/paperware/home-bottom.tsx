@@ -20,6 +20,7 @@ import tFoodBox from "../../../assets/products/takeaway-food-box.webp";
 import tCup from "../../../assets/industries/cafe-cup.webp";
 import tFlyers from "../../../assets/products/flyers.webp";
 import tGiftBags from "../../../assets/products/gift-bags.webp";
+import { useLanguage } from "../../context/LanguageContext";
 
 const MARQUEE = [mCookie, mGiftBag, mChowmein, mTissue, mCarryBag, mConfectionery, mStickers, mMagazines];
 
@@ -46,6 +47,7 @@ interface HomeBottomProps {
  * so it also runs with prefers-reduced-motion (the motion is user-driven).
  */
 export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
+  const { t } = useLanguage();
   const ctaRef = React.useRef<HTMLElement>(null);
   const trackRef = React.useRef<HTMLDivElement>(null);
   const tilesRef = React.useRef<HTMLUListElement>(null);
@@ -121,15 +123,15 @@ export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
       <section ref={ctaRef} className="hb-cta" aria-labelledby="hb-cta-h" data-testid="home-cta">
         <div className="hb-wrap">
           <h2 id="hb-cta-h" className="hb-display">
-            Your brand,
+            {t("home_bottom_your_brand")}
             <br />
-            on our paper.
+            {t("home_bottom_on_our_paper")}
           </h2>
           <div className="hb-cta-row">
-            <p className="hb-sub">From a single cup design to a full packaging line. Tell us what you need.</p>
+            <p className="hb-sub">{t("home_bottom_from_a_single_cup_design")}</p>
             <div className="hb-pills">
               <button type="button" className="hb-pill hb-pill-dark" onClick={() => onNavigate("quote")}>
-                Request a quote
+                {t("home_bottom_request_a_quote")}
               </button>
               <a
                 className="hb-pill hb-pill-outline"
@@ -137,7 +139,7 @@ export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Chat on WhatsApp
+                {t("home_bottom_chat_on_whatsapp")}
               </a>
             </div>
           </div>
@@ -151,38 +153,38 @@ export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      <section className="hb-cards" aria-label="Contact details">
+      <section className="hb-cards" aria-label={t("home_bottom_contact_details")}>
         <div className="hb-wrap">
           <ul className="hb-cards-grid">
             <li>
               <a className="hb-card" href={`tel:${SALES_PHONE_TEL}`}>
-                <span className="k">Phone</span>
-                <span className="v">{SALES_PHONE_DISPLAY}</span>
-                <span className="d">Factory working hour: 24/7</span>
+                <span className="k">{t("home_bottom_phone")}</span>
+                <span className="v">{t(SALES_PHONE_DISPLAY)}</span>
+                <span className="d">{t("factory_working_hour")}</span>
               </a>
             </li>
             <li>
               <a className="hb-card" href={`mailto:${SALES_EMAIL}`}>
-                <span className="k">Email</span>
+                <span className="k">{t("home_bottom_email")}</span>
                 <span className="v">
                   {/* break after the @ instead of mid-word when the card is narrow */}
-                  {SALES_EMAIL.split("@")[0]}@<wbr />{SALES_EMAIL.split("@")[1]}
+                  {t(SALES_EMAIL.split("@")[0])}@<wbr />{t(SALES_EMAIL.split("@")[1])}
                 </span>
-                <span className="d">Quotes, artwork, questions</span>
+                <span className="d">{t("home_bottom_quotes_artwork_questions")}</span>
               </a>
             </li>
             <li>
               <a className="hb-card" href={`https://wa.me/${SALES_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
-                <span className="k">WhatsApp</span>
-                <span className="v">{SALES_WHATSAPP_DISPLAY}</span>
-                <span className="d">Fastest reply</span>
+                <span className="k">{t("contact_menu_whatsapp")}</span>
+                <span className="v">{t(SALES_WHATSAPP_DISPLAY)}</span>
+                <span className="d">{t("home_bottom_fastest_reply")}</span>
               </a>
             </li>
             <li>
               <a className="hb-card" href={HEAD_OFFICE_MAP} target="_blank" rel="noopener noreferrer">
-                <span className="k">Head Office</span>
-                <span className="v">{HEAD_OFFICE}</span>
-                <span className="d">Open in Maps</span>
+                <span className="k">{t("head_office")}</span>
+                <span className="v">{t(HEAD_OFFICE)}</span>
+                <span className="d">{t("home_bottom_open_in_maps")}</span>
               </a>
             </li>
           </ul>
@@ -192,14 +194,14 @@ export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
       <section className="hb-discover" aria-labelledby="hb-discover-h">
         <div className="hb-wrap">
           <h3 id="hb-discover-h" className="hb-section-h">
-            Discover more
+            {t("home_bottom_discover_more")}
           </h3>
           <ul ref={tilesRef} className="hb-tiles">
             {DISCOVER.map((tile) => (
               <li key={tile.page}>
                 <button type="button" className="hb-tile" onClick={() => onNavigate(tile.page)} data-page={tile.page}>
                   <img src={tile.photo} alt="" width={999} height={1250} loading="lazy" decoding="async" />
-                  <span className="t">{tile.label}</span>
+                  <span className="t">{t(tile.label)}</span>
                 </button>
               </li>
             ))}

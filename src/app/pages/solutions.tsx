@@ -8,11 +8,12 @@ import imgPharmaceuticals from 'figma:asset/55b419d02b7ddadaade19007eb86f22b10b4
 import yPharmaBoxes from "figma:asset/370cc946765f24fecd2241c5798febf3f636cf5e.webp";
 import pTakeawayFoodBox from "figma:asset/products/takeaway-food-box.webp";
 import pCookieBoxes from "figma:asset/products/cookie-boxes.webp";
-import fCupsStacking from "figma:asset/factory/cups-stacking.webp";
+import pChowmeinBoxes from "figma:asset/products/chowmein-boxes.webp";
 import fFloorWide from "figma:asset/factory/floor-wide.webp";
 import fQcCupInspection from "figma:asset/factory/qc-cup-inspection.webp";
 import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { useGo } from "../lib/useGo";
+import { useLanguage } from "../context/LanguageContext";
 
 const solutions = [
   {
@@ -45,11 +46,12 @@ const solutions = [
     icon: <Factory className="size-10" />,
     description: "Heavy-duty paperware designed for industrial transport and storage, capable of handling high stress and weight.",
     features: ["Double-wall strength", "Moisture barrier", "Stackable geometry"],
-    image: fCupsStacking
+    image: pChowmeinBoxes
   }
 ];
 
 export function SolutionsPage() {
+  const { t } = useLanguage();
   const go = useGo();
   const heroImgRef = React.useRef<HTMLImageElement>(null);
   const processImgRef = React.useRef<HTMLImageElement>(null);
@@ -77,7 +79,7 @@ export function SolutionsPage() {
           <img ref={heroImgRef} loading="eager" decoding="async" 
             src={fFloorWide} 
             className="w-full h-full object-cover grayscale origin-center will-change-transform" 
-            alt="Industrial Background"
+            alt={t("solutions_industrial_background")}
           />
         </div>
         <div className="container mx-auto px-4 relative z-10">
@@ -87,15 +89,14 @@ export function SolutionsPage() {
             className="max-w-4xl"
           >
             <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px] mb-4 block">
-              Global Ecosystem
+              {t("solutions_global_ecosystem")}
             </span>
             <h1 className="text-6xl md:text-[100px] font-black uppercase tracking-tighter leading-none mb-8">
-              Industrial <br />
-              <span className="text-[#fabf37]">Solutions.</span>
+              {t("industrial")} <br />
+              <span className="text-[#fabf37]">{t("solutions_solutions")}</span>
             </h1>
             <p className="text-zinc-400 text-xl md:text-2xl font-medium max-w-2xl leading-relaxed">
-              Transforming complex supply chain challenges into sustainable, 
-              precision-engineered packaging systems for global enterprises.
+              {t("solutions_transforming_complex_supply_chain_challe")}
             </p>
           </motion.div>
         </div>
@@ -109,7 +110,7 @@ export function SolutionsPage() {
               "food-beverage": imgColorfulCups,
               "pharmaceutical": imgPharmaceuticals,
               "retail-fmcg": pCookieBoxes,
-              "industrial-bulk": fCupsStacking
+              "industrial-bulk": pChowmeinBoxes
             };
 
             return (
@@ -125,7 +126,7 @@ export function SolutionsPage() {
                 <div className="aspect-[16/9] overflow-hidden">
                   <ImageWithFallback 
                     src={paperImages[sol.id] || sol.image} 
-                    alt={sol.title} 
+                    alt={t(sol.title)} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300" 
                   />
                 </div>
@@ -134,20 +135,20 @@ export function SolutionsPage() {
                     {sol.icon}
                   </div>
                   <h3 className="text-4xl font-black uppercase tracking-tighter mb-4 text-black group-hover:text-white transition-colors">
-                    {sol.title}
+                    {t(sol.title)}
                   </h3>
                   <p className="text-zinc-500 font-medium leading-relaxed mb-8 group-hover:text-zinc-400 transition-colors">
-                    {sol.description}
+                    {t(sol.description)}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-12">
                     {sol.features.map((f) => (
                       <span key={f} className="px-4 py-2 rounded-full bg-white border border-black/5 text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:bg-zinc-800 group-hover:border-white/10 group-hover:text-white transition-all">
-                        {f}
+                        {t(f)}
                       </span>
                     ))}
                   </div>
                   <button onClick={() => go("contact")} className="mt-auto flex items-center gap-4 text-black font-black uppercase tracking-widest text-xs group-hover:text-[#fabf37] transition-colors">
-                    Explore Integration <ArrowRight className="size-5" />
+                    {t("solutions_explore_integration")} <ArrowRight className="size-5" />
                   </button>
                 </div>
               </div>
@@ -163,11 +164,11 @@ export function SolutionsPage() {
             <div className="space-y-12">
               <div className="space-y-4">
                 <span className="text-black font-black uppercase tracking-[0.4em] text-[10px]">
-                  Our Approach
+                  {t("solutions_our_approach")}
                 </span>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-                  How We <br /> 
-                  Work.
+                  {t("solutions_how_we")} <br /> 
+                  {t("solutions_work")}
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -181,8 +182,8 @@ export function SolutionsPage() {
                     <div className="size-12 bg-black text-[#fabf37] rounded-2xl flex items-center justify-center">
                       {item.icon}
                     </div>
-                    <h4 className="text-xl font-black uppercase tracking-tighter">{item.title}</h4>
-                    <p className="text-black/60 font-medium text-sm leading-relaxed">{item.desc}</p>
+                    <h4 className="text-xl font-black uppercase tracking-tighter">{t(item.title)}</h4>
+                    <p className="text-black/60 font-medium text-sm leading-relaxed">{t(item.desc)}</p>
                   </div>
                 ))}
               </div>
@@ -192,7 +193,7 @@ export function SolutionsPage() {
                 <img ref={processImgRef} loading="lazy" decoding="async" 
                   src={fQcCupInspection} 
                   className="w-full h-[120%] -mt-[10%] object-cover opacity-60 grayscale will-change-transform" 
-                  alt="Process" 
+                  alt={t("solutions_process")} 
                 />
               </div>
             </div>
@@ -204,14 +205,14 @@ export function SolutionsPage() {
       <section className="py-32 bg-white text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-6xl md:text-[100px] font-black uppercase tracking-tighter leading-none mb-12 text-black">
-            Ready to <span className="text-black italic">Integrate?</span>
+            {t("office_stationary_ready_to")} <span className="text-black italic">{t("solutions_integrate")}</span>
           </h2>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <button onClick={() => go("quote")} className="px-12 py-6 bg-black text-[#fabf37] rounded-full text-sm font-black uppercase tracking-widest hover:scale-105 transition-transform">
-              Initiate RFQ Sequence
+              {t("solutions_initiate_rfq_sequence")}
             </button>
             <button onClick={() => go("contact")} className="px-12 py-6 border-2 border-black text-black rounded-full text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all">
-              Consult With Engineering
+              {t("solutions_consult_with_engineering")}
             </button>
           </div>
         </div>

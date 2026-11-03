@@ -30,17 +30,17 @@ export function ERPPage() {
           <div className="space-y-10">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-50 rounded-full border border-zinc-100">
               <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Live Factory OS: ERPNext Powered</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("erp_live_factory_os_erpnext_powered")}</span>
             </div>
             <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] text-black">
-              Smart <br /><span className="text-[#fabf37]">Factory</span> Ecosystem
+              {t("about_us_smart")} <br /><span className="text-[#fabf37]">{t("business_factory")}</span> {t("erp_ecosystem")}
             </h1>
             <p className="text-zinc-500 font-bold text-lg md:text-xl max-w-xl leading-relaxed">
-              Our factory operates on an advanced ERPNext-based intelligence system, integrating every step of production into a seamless, data-driven workflow.
+              {t("erp_our_factory_operates_on_an")}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <button onClick={() => go("contact")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl flex items-center gap-4">
-                Request ERP Demo <ArrowRight className="size-5" />
+                {t("erp_request_erp_demo")} <ArrowRight className="size-5" />
               </button>
             </div>
           </div>
@@ -58,26 +58,26 @@ export function ERPPage() {
                 <div className="bg-white p-8 rounded-[40px] shadow-xl border border-black/5 space-y-4">
                    <Activity className="size-8 text-[#fabf37]" />
                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Yield Optimization</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("erp_yield_optimization")}</p>
                       <p className="text-3xl font-black">99.4%</p>
                    </div>
                 </div>
                 <div className="bg-white p-8 rounded-[40px] shadow-xl border border-black/5 space-y-4">
                    <ChartBar className="size-8 text-[#fabf37]" />
                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Waste Recovery</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("erp_waste_recovery")}</p>
                       <p className="text-3xl font-black">22%</p>
                    </div>
                 </div>
                 <div className="col-span-2 bg-black text-white p-10 rounded-[40px] shadow-2xl space-y-6">
                    <div className="flex items-center justify-between">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Active Production Job</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("erp_active_production_job")}</p>
                       <Zap className="size-5 text-[#fabf37] animate-pulse" />
                    </div>
                    <div className="space-y-2">
                       <div className="flex justify-between text-xs font-bold">
-                         <span>Batch #P-9921 (Office Stationery)</span>
-                         <span>74% Complete</span>
+                         <span>{t("erp_batch_p_9921_office_stationery")}</span>
+                         <span>{t("erp_74_complete")}</span>
                       </div>
                       <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
                          <div className="h-full bg-[#fabf37] w-[74%]" />
@@ -93,8 +93,8 @@ export function ERPPage() {
       {/* Visual Process Flow */}
       <section className="container mx-auto px-4 mb-40">
         <div className="text-center mb-20 space-y-4">
-           <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">The Manufacturing Protocol</h2>
-           <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Unified Workflow</h3>
+           <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">{t("erp_the_manufacturing_protocol")}</h2>
+           <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">{t("erp_unified_workflow")}</h3>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -105,8 +105,8 @@ export function ERPPage() {
                     {React.cloneElement(step.icon as React.ReactElement, { className: "size-8" })}
                   </div>
                   <div className="space-y-2">
-                    <h4 className="text-sm font-black uppercase tracking-widest">{step.title}</h4>
-                    <p className="text-[10px] font-bold text-zinc-400 leading-relaxed px-4">{step.desc}</p>
+                    <h4 className="text-sm font-black uppercase tracking-widest">{t(step.title)}</h4>
+                    <p className="text-[10px] font-bold text-zinc-400 leading-relaxed px-4">{t(step.desc)}</p>
                   </div>
                </div>
                {i < 5 && (
@@ -123,8 +123,8 @@ export function ERPPage() {
            <div className="grid lg:grid-cols-2 gap-24 items-center">
               <div className="space-y-12">
                  <div className="space-y-6">
-                    <h2 className="text-5xl font-black uppercase tracking-tighter">AI-Driven <br /><span className="text-[#fabf37]">Optimizations</span></h2>
-                    <p className="text-zinc-400 font-bold text-lg">Our ERP system goes beyond data entry, providing actionable intelligence for peak efficiency.</p>
+                    <h2 className="text-5xl font-black uppercase tracking-tighter">{t("erp_ai_driven")} <br /><span className="text-[#fabf37]">{t("erp_optimizations")}</span></h2>
+                    <p className="text-zinc-400 font-bold text-lg">{t("erp_our_erp_system_goes_beyond")}</p>
                  </div>
                  
                  <div className="grid sm:grid-cols-2 gap-8">
@@ -136,8 +136,8 @@ export function ERPPage() {
                     ].map((feature, i) => (
                       <div key={i} className="space-y-4">
                         <div className="text-[#fabf37]">{feature.icon}</div>
-                        <h4 className="font-black uppercase tracking-widest text-xs">{feature.title}</h4>
-                        <p className="text-zinc-500 font-bold text-[10px] leading-relaxed">{feature.desc}</p>
+                        <h4 className="font-black uppercase tracking-widest text-xs">{t(feature.title)}</h4>
+                        <p className="text-zinc-500 font-bold text-[10px] leading-relaxed">{t(feature.desc)}</p>
                       </div>
                     ))}
                  </div>
@@ -146,7 +146,7 @@ export function ERPPage() {
               <div className="space-y-8">
                 <div className="p-10 bg-zinc-800 rounded-[50px] border border-white/5 space-y-10">
                    <div className="flex items-center justify-between">
-                      <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Live Dashboard Preview</h4>
+                      <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("erp_live_dashboard_preview")}</h4>
                       <div className="size-2 rounded-full bg-[#fabf37]" />
                    </div>
                    
@@ -175,7 +175,7 @@ export function ERPPage() {
                    </div>
 
                    <button onClick={() => go("contact")} className="w-full py-5 rounded-full border border-white/10 font-black uppercase tracking-widest text-[10px] hover:bg-white hover:text-black transition-all">
-                      Access Enterprise Portal
+                      {t("erp_access_enterprise_portal")}
                    </button>
                 </div>
               </div>

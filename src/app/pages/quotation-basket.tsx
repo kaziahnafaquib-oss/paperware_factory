@@ -6,6 +6,7 @@ import {
   Phone, MessageSquare, Mail
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useLanguage } from "../context/LanguageContext";
 
 interface QuotationBasketPageProps {
   basket: any[];
@@ -14,6 +15,7 @@ interface QuotationBasketPageProps {
 }
 
 export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder }: QuotationBasketPageProps) {
+  const { t } = useLanguage();
   const [items, setItems] = React.useState(basket.map((p, i) => ({ 
     ...p, 
     qty: 1000, 
@@ -72,10 +74,10 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
           <div className="mb-10 md:mb-20 space-y-4">
              <div className="flex items-center gap-3">
                 <div className="size-2 bg-[#fabf37] rounded-full" />
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Inventory Matrix v2.0</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">{t("quotation_basket_inventory_matrix_v2_0")}</span>
              </div>
              <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-                Quotation <br /><span className="text-[#fabf37]">Basket</span>
+                {t("quotation_basket_quotation")} <br /><span className="text-[#fabf37]">{t("quotation_basket_basket")}</span>
              </h1>
           </div>
 
@@ -87,7 +89,7 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                   <div className="size-16 md:size-24 bg-white/5 rounded-full flex items-center justify-center mx-auto">
                     <FileText className="size-8 md:size-10 text-zinc-700" />
                   </div>
-                  <p className="text-xl md:text-2xl font-black uppercase tracking-tight text-zinc-500 italic">Your matrix is empty</p>
+                  <p className="text-xl md:text-2xl font-black uppercase tracking-tight text-zinc-500 italic">{t("quotation_basket_your_matrix_is_empty")}</p>
                 </div>
               ) : (
                 <div className="grid gap-4">
@@ -119,7 +121,7 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
 
                          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 md:gap-6 pt-4 md:pt-6 border-t border-white/5">
                             <div className="space-y-2">
-                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">Production Volume</p>
+                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">{t("quotation_basket_production_volume")}</p>
                                <div className="flex items-center justify-between bg-black p-1.5 rounded-full border border-white/10">
                                   <button onClick={() => updateQty(item._uniqueId, -500)} className="size-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all group/btn"><Minus className="size-3 group-active/btn:scale-75 transition-transform" /></button>
                                   <span className="text-xs md:text-sm font-black tabular-nums">{item.qty.toLocaleString()}</span>
@@ -127,16 +129,16 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                                </div>
                             </div>
                             <div className="space-y-2">
-                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">Paper Material</p>
+                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">{t("quotation_basket_paper_material")}</p>
                                <div className="relative">
                                  <select 
                                    value={["Premium Swedish Pulp", "Recycled Kraft", "Luxury Art Paper"].includes(item.grade) ? item.grade : "Premium Swedish Pulp"}
                                    onChange={(e) => updateAttribute(item._uniqueId, 'grade', e.target.value)}
                                    className="w-full bg-black border border-white/10 rounded-full px-4 py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase outline-none focus:border-[#fabf37] transition-colors appearance-none cursor-pointer text-white"
                                  >
-                                    <option>Premium Swedish Pulp</option>
-                                    <option>Recycled Kraft</option>
-                                    <option>Luxury Art Paper</option>
+                                    <option>{t("quotation_basket_premium_swedish_pulp")}</option>
+                                    <option>{t("action_modal_recycled_kraft")}</option>
+                                    <option>{t("quotation_basket_luxury_art_paper")}</option>
                                  </select>
                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
                                    <div className="size-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-white" />
@@ -151,10 +153,10 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                                     onChange={(e) => updateAttribute(item._uniqueId, 'gsm', e.target.value)}
                                     className="w-full bg-black border border-white/10 rounded-full px-4 py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase outline-none focus:border-[#fabf37] transition-colors appearance-none cursor-pointer text-white"
                                  >
-                                    <option>280 GSM</option>
-                                    <option>300 GSM</option>
-                                    <option>350 GSM</option>
-                                    <option>400 GSM</option>
+                                    <option>{t("quotation_basket_280_gsm")}</option>
+                                    <option>{t("quotation_basket_300_gsm")}</option>
+                                    <option>{t("product_details_350_gsm")}</option>
+                                    <option>{t("quotation_basket_400_gsm")}</option>
                                  </select>
                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
                                    <div className="size-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-white" />
@@ -162,17 +164,17 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                                </div>
                             </div>
                             <div className="space-y-2">
-                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">Finish</p>
+                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">{t("finish_title")}</p>
                                <div className="relative">
                                  <select 
                                     value={["Matte UV", "Gloss Laminated", "Soft Touch", "Metallic Foil"].includes(item.finish) ? item.finish : "Matte UV"}
                                     onChange={(e) => updateAttribute(item._uniqueId, 'finish', e.target.value)}
                                     className="w-full bg-black border border-white/10 rounded-full px-4 py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase outline-none focus:border-[#fabf37] transition-colors appearance-none cursor-pointer text-white"
                                  >
-                                    <option>Matte UV</option>
-                                    <option>Gloss Laminated</option>
-                                    <option>Soft Touch</option>
-                                    <option>Metallic Foil</option>
+                                    <option>{t("quotation_basket_matte_uv")}</option>
+                                    <option>{t("quotation_basket_gloss_laminated")}</option>
+                                    <option>{t("action_modal_soft_touch")}</option>
+                                    <option>{t("quotation_basket_metallic_foil")}</option>
                                  </select>
                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
                                    <div className="size-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-white" />
@@ -180,16 +182,16 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                                </div>
                             </div>
                             <div className="space-y-2">
-                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">Delivery</p>
+                               <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-600">{t("quotation_basket_delivery")}</p>
                                <div className="relative">
                                  <select 
                                     value={item.delivery || "Standard (7-10 Days)"}
                                     onChange={(e) => updateAttribute(item._uniqueId, 'delivery', e.target.value)}
                                     className="w-full bg-black border border-white/10 rounded-full px-4 py-2.5 md:py-3 text-[9px] md:text-[10px] font-black uppercase outline-none focus:border-[#fabf37] transition-colors appearance-none cursor-pointer text-white"
                                  >
-                                    <option>Standard (7-10 Days)</option>
-                                    <option>Express (3-5 Days)</option>
-                                    <option>Rush (24-48 Hours)</option>
+                                    <option>{t("quotation_basket_standard_7_10_days")}</option>
+                                    <option>{t("quotation_basket_express_3_5_days")}</option>
+                                    <option>{t("quotation_basket_rush_24_48_hours")}</option>
                                  </select>
                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
                                    <div className="size-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[4px] border-t-white" />
@@ -226,18 +228,18 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <div className="size-2 bg-black rounded-full animate-ping" />
-                        <h4 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em]">Inventory Summary</h4>
+                        <h4 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em]">{t("quotation_basket_inventory_summary")}</h4>
                       </div>
-                      <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">Industrial <br /> Manifest</h2>
+                      <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">{t("industrial")} <br /> {t("bulk_order_manifest")}</h2>
                     </div>
 
                     <div className="space-y-4 md:space-y-6">
                       <div className="flex justify-between items-center text-xs md:text-sm font-black border-b border-black/10 pb-4">
-                        <span className="opacity-40 uppercase tracking-widest text-[9px] md:text-[10px]">SKUs</span>
-                        <span>{items.length} Items</span>
+                        <span className="opacity-40 uppercase tracking-widest text-[9px] md:text-[10px]">{t("bulk_order_skus")}</span>
+                        <span>{items.length} {t("quotation_basket_items")}</span>
                       </div>
                       <div className="flex justify-between items-center text-xs md:text-sm font-black border-b border-black/10 pb-4">
-                        <span className="opacity-40 uppercase tracking-widest text-[9px] md:text-[10px]">Total Volume</span>
+                        <span className="opacity-40 uppercase tracking-widest text-[9px] md:text-[10px]">{t("quotation_basket_total_volume")}</span>
                         <span>{items.reduce((acc, curr) => acc + curr.qty, 0).toLocaleString()} PCS</span>
                       </div>
                     </div>
@@ -247,7 +249,7 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                       onClick={onProceedToOrder}
                       className="w-full bg-black text-[#fabf37] px-6 md:px-8 py-6 md:py-8 rounded-[24px] md:rounded-[32px] font-black uppercase tracking-widest text-[10px] md:text-xs shadow-2xl flex items-center justify-center gap-4 hover:scale-[1.02] active:scale-95 transition-all group disabled:opacity-50 disabled:grayscale"
                     >
-                       Proceed to Bulk Order <ArrowRight className="size-4 md:size-5 group-hover:translate-x-1 transition-transform" />
+                       {t("quotation_basket_proceed_to_bulk_order")} <ArrowRight className="size-4 md:size-5 group-hover:translate-x-1 transition-transform" />
                     </button>
 
                     <div className="pt-8 border-t border-black/10 flex flex-col gap-6">
@@ -257,11 +259,11 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                              <Phone className="size-6 md:size-7 text-[#fabf37]" />
                           </div>
                           <div className="space-y-1">
-                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">Executive Support</p>
+                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("exec_support")}</p>
                              <p className="md:text-2xl font-black text-black tracking-tighter leading-none group-hover/item:text-black/70 transition-colors text-[16px]">+09638-011101</p>
                              <div className="flex items-center gap-2 pt-1">
                                 <div className="size-2 rounded-full bg-green-500 animate-pulse" />
-                                <span className="text-[9px] font-black uppercase tracking-wider text-green-600">Available Now</span>
+                                <span className="text-[9px] font-black uppercase tracking-wider text-green-600">{t("featured_products_magazine_available_now")}</span>
                              </div>
                           </div>
                        </a>
@@ -272,7 +274,7 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                              <MessageSquare className="size-6 md:size-7 text-black group-hover/item:text-white transition-colors" />
                           </div>
                           <div className="space-y-1">
-                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">Call and WhatsApp</p>
+                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("call_whatsapp")}</p>
                              <p className="md:text-2xl font-black text-black tracking-tighter leading-none group-hover/item:text-black/70 transition-colors text-[16px]">+880 1901-459110</p>
                           </div>
                        </a>
@@ -283,7 +285,7 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                              <Mail className="size-6 md:size-7 text-black" />
                           </div>
                           <div className="space-y-1 overflow-hidden">
-                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">Formal Channel</p>
+                             <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("formal_channel")}</p>
                              <div className="relative inline-block">
                                 <p className="md:text-xl font-black text-black tracking-tight leading-none truncate group-hover/item:text-black/70 transition-colors text-[15px]">paperwarefactory@gmail.com</p>
                                 <div className="absolute -bottom-1 left-0 w-full h-[3px] bg-[#fabf37]" />
@@ -297,10 +299,10 @@ export default function QuotationBasketPage({ basket, onRemove, onProceedToOrder
                <div className="bg-zinc-900/40 backdrop-blur-xl p-6 md:p-8 rounded-[32px] md:rounded-[40px] border border-white/5 space-y-4 md:space-y-6">
                   <div className="flex items-center gap-4 text-[#fabf37]">
                      <ShieldCheck className="size-5 md:size-6" />
-                     <h4 className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">Secure Protocol</h4>
+                     <h4 className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{t("quotation_basket_secure_protocol")}</h4>
                   </div>
                   <p className="text-[9px] md:text-[10px] font-bold text-zinc-500 leading-relaxed italic">
-                     Your inventory selections are stored locally until transmitted via the Bulk Order Form.
+                     {t("quotation_basket_your_inventory_selections_are_stored")}
                   </p>
                </div>
             </div>

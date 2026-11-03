@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "motion/react";
 import { MapPin, Truck, Box, Pause, Play } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function NationwideExportSection() {
+  const { t } = useLanguage();
   // The map video plays for everyone (owner request) and has its own pause button (WCAG 2.2.2).
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [mapPaused, setMapPaused] = React.useState(false);
@@ -55,9 +57,9 @@ export function NationwideExportSection() {
               }} />
             </motion.div>
             <h2 className="text-[50px] lg:text-[80px] font-black uppercase tracking-tighter leading-none" style={{ color: 'rgb(0, 0, 0)' }}>
-              Nationwide & <br /> <span style={{ color: 'rgb(82, 82, 91)' }}>Export</span>
+              {t("nationwide_export_nationwide")} <br /> <span style={{ color: 'rgb(82, 82, 91)' }}>{t("export_intelligence")}</span>
             </h2>
-            <p className="font-bold leading-relaxed text-[16px]" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>We provide high-precision packaging solutions across all 64 districts of Bangladesh and international markets. Our dedicated supply chain ensures that your enterprise never runs out of stock, no matter where you are located.</p>
+            <p className="font-bold leading-relaxed text-[16px]" style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{t("nationwide_export_we_provide_high_precision_packaging")}</p>
             <div className="flex flex-col gap-4">
                <div 
                  className="flex items-center gap-6 p-6 rounded-3xl border" 
@@ -67,7 +69,7 @@ export function NationwideExportSection() {
                  }}
                >
                   <Truck className="size-6" style={{ color: '#fabf37' }} />
-                  <span className="font-black uppercase tracking-widest text-sm text-[13px]" style={{ color: 'rgb(0, 0, 0)' }}>Express Delivery to All Districts</span>
+                  <span className="font-black uppercase tracking-widest text-sm text-[13px]" style={{ color: 'rgb(0, 0, 0)' }}>{t("nationwide_export_express_delivery_to_all_districts")}</span>
                </div>
                <div 
                  className="flex items-center gap-6 p-6 rounded-3xl border" 
@@ -77,7 +79,7 @@ export function NationwideExportSection() {
                  }}
                >
                   <Box className="size-6" style={{ color: '#fabf37' }} />
-                  <span className="font-black uppercase tracking-widest text-sm text-[13px]" style={{ color: 'rgb(0, 0, 0)' }}>Bulk Fulfillment & Scheduled Shipping</span>
+                  <span className="font-black uppercase tracking-widest text-sm text-[13px]" style={{ color: 'rgb(0, 0, 0)' }}>{t("nationwide_export_bulk_fulfillment_scheduled_shipping")}</span>
                </div>
             </div>
           </div>
@@ -114,7 +116,7 @@ export function NationwideExportSection() {
                   type="button"
                   onClick={toggleMap}
                   aria-pressed={mapPaused}
-                  aria-label={mapPaused ? "Play map animation" : "Pause map animation"}
+                  aria-label={t(mapPaused ? "Play map animation" : "Pause map animation")}
                   className="absolute top-8 right-8 z-20 size-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37] focus-visible:ring-offset-2"
                 >
                   {mapPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
@@ -126,7 +128,7 @@ export function NationwideExportSection() {
                   className="absolute bottom-10 left-10 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest"
                   style={{ background: 'rgba(0, 0, 0, 1)', color: 'rgb(255, 255, 255)' }}
                 >
-                  Active Supply Nodes
+                  {t("nationwide_export_active_supply_nodes")}
                 </motion.div>
              </div>
           </div>

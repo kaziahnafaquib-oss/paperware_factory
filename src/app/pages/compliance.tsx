@@ -1,12 +1,15 @@
 import React, { useRef } from "react";
 import imgLeak from "@/assets/factory/qc-leak-test.webp";
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react";
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterLab from "@/assets/video-posters/quality-lab.jpg";
 import { useGo } from "../lib/useGo";
 import { 
   ShieldCheck, Award, FileCheck, Globe, TrendingUp, Zap, Box, 
   Droplets, Leaf, Truck, Calendar, ArrowRight, Download, Users,
   CircleCheck as CheckCircle2, Lock, Scale, Target
 } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 const certs = [
   { 
@@ -157,6 +160,7 @@ function TiltCard({ cert, i }: { cert: any, i: number }) {
 }
 
 export function CompliancePage() {
+  const { t } = useLanguage();
   const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -297,7 +301,7 @@ export function CompliancePage() {
             style={{ transform: "translateZ(50px)" }}
             className="inline-flex items-center gap-2 bg-[#fabf37] text-black px-8 py-3 rounded-full text-[12px] font-black uppercase tracking-[0.3em] mb-4 shadow-[0_25px_50px_-12px_rgba(250,191,55,0.5)]"
           >
-            <ShieldCheck className="size-4" /> Industrial Integrity
+            <ShieldCheck className="size-4" /> {t("compliance_industrial_integrity")}
           </motion.div>
           
           <div className="space-y-4">
@@ -308,7 +312,7 @@ export function CompliancePage() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="block"
               >
-                Global <span className="text-zinc-300 italic">Standards</span>
+                {t("compliance_global")} <span className="text-zinc-300 italic">{t("compliance_standards")}</span>
               </motion.span>
               <motion.span 
                 initial={{ y: 40, opacity: 0 }}
@@ -316,7 +320,7 @@ export function CompliancePage() {
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                 className="text-[#fabf37] block"
               >
-                Zero Compromise
+                {t("certifications_zero_compromise")}
               </motion.span>
             </h1>
             <motion.div 
@@ -332,14 +336,15 @@ export function CompliancePage() {
             transition={{ delay: 0.6 }}
             className="text-zinc-500 font-bold max-w-2xl mx-auto text-lg md:text-xl leading-relaxed"
           >
-            Integrating international quality frameworks, ethical sourcing, and environmental sustainability into every fiber of our manufacturing process.
+            {t("compliance_integrating_international_quality_framew")}
           </motion.p>
         </motion.div>
 
 
         <div className="aspect-[4/3] md:aspect-[21/9] rounded-[48px] overflow-hidden border border-black/5 shadow-xl mb-24">
-          <img src={imgLeak} alt="Hot-water leak test on a finished cup in the Paperware quality lab" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+          <img src={imgLeak} alt={t("compliance_hot_water_leak_test_on")} loading="lazy" decoding="async" className="size-full object-cover object-center" />
         </div>
+        <FactoryClip src={mediaUrl("quality-lab.mp4")} poster={posterLab} graded label={t("compliance_quality_lab_video")} className="aspect-[4/3] md:aspect-[21/9] rounded-[48px] border border-black/5 shadow-xl mb-24" />
         {/* Certificate Grid with Enhanced Reveal */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-40">
           {certs.map((cert, i) => (
@@ -371,8 +376,8 @@ export function CompliancePage() {
                 <pillar.icon className="size-16" />
               </motion.div>
               <div className="space-y-6" style={{ transform: "translateZ(60px)" }}>
-                <h4 className="text-3xl font-black uppercase tracking-tight">{pillar.title}</h4>
-                <p className="font-bold text-base leading-relaxed opacity-80">{pillar.desc}</p>
+                <h4 className="text-3xl font-black uppercase tracking-tight">{t(pillar.title)}</h4>
+                <p className="font-bold text-base leading-relaxed opacity-80">{t(pillar.desc)}</p>
               </div>
             </motion.div>
           ))}
@@ -406,20 +411,20 @@ export function CompliancePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 className="inline-flex items-center gap-3 text-[#fabf37] text-[10px] font-black uppercase tracking-[0.4em]"
               >
-                <Target className="size-5" /> Strategic Objectives
+                <Target className="size-5" /> {t("compliance_strategic_objectives")}
               </motion.div>
               <h2 className="text-6xl md:text-8xl font-black text-white uppercase leading-[0.85] tracking-tighter">
-                Future <br /> <span className="text-[#fabf37] italic">Ready</span> <br /> Facility
+                {t("compliance_future")} <br /> <span className="text-[#fabf37] italic">{t("featured_products_magazine_ready")}</span> <br /> {t("compliance_facility")}
               </h2>
               <p className="text-zinc-400 font-bold text-lg md:text-xl max-w-md leading-relaxed">
-                By 2030, Paperware aims to set the global benchmark for zero-waste industrial manufacturing in the South Asian region.
+                {t("compliance_by_2030_paperware_aims_to")}
               </p>
               <motion.button onClick={() => go("contact")} 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-black px-10 py-6 rounded-full font-black uppercase tracking-widest flex items-center gap-3 group/btn"
               >
-                Request Sustainability Report
+                {t("compliance_request_sustainability_report")}
                 <Download className="size-5 group-hover/btn:translate-y-1 transition-transform" />
               </motion.button>
             </div>
@@ -442,12 +447,12 @@ export function CompliancePage() {
                   </div>
                   <div className="flex-1 space-y-1">
                     <div className="text-white font-black text-xl md:text-2xl leading-none group-hover:text-[#fabf37] transition-colors uppercase tracking-tight">
-                      {item.task}
+                      {t(item.task)}
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="size-1.5 rounded-full bg-[#fabf37]" />
                       <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">
-                        Status: {item.status}
+                        {t("compliance_status")} {t(item.status)}
                       </div>
                     </div>
                   </div>

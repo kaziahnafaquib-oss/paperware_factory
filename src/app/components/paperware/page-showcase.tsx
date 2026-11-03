@@ -8,6 +8,7 @@ import {
   Activity, BarChart3, Globe, Database, BookOpen, Handshake, Building2, 
   Heart, CreditCard, UserCircle
 } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface PageShowcaseProps {
   onNavigate: (page: string) => void;
@@ -45,6 +46,7 @@ const pages = [
 ];
 
 export function PageShowcase({ onNavigate }: PageShowcaseProps) {
+  const { t } = useLanguage();
   const stripRef = React.useRef<HTMLDivElement>(null);
   // Scroll-scrubbed: the whole marquee strip drifts left with the page on top of its own loop.
   useScrollScrub(() => {
@@ -68,7 +70,7 @@ export function PageShowcase({ onNavigate }: PageShowcaseProps) {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-800 bg-zinc-900 mb-6"
         >
            <div className="size-1.5 bg-[#fabf37] rounded-full animate-pulse" />
-           <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Site Map</span>
+           <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("page_showcase_site_map")}</span>
         </motion.div>
         
         <motion.h2 
@@ -78,10 +80,10 @@ export function PageShowcase({ onNavigate }: PageShowcaseProps) {
           transition={{ delay: 0.1 }}
           className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mb-4"
         >
-          Explore <span className="text-[#fabf37]">Everything</span>
+          {t("page_showcase_explore")} <span className="text-[#fabf37]">{t("page_showcase_everything")}</span>
         </motion.h2>
         <p className="text-zinc-500 text-sm font-medium max-w-lg mx-auto">
-          Navigate through our comprehensive ecosystem of products, services, and company information.
+          {t("page_showcase_navigate_through_our_comprehensive_ecosy")}
         </p>
       </div>
 
@@ -112,8 +114,8 @@ export function PageShowcase({ onNavigate }: PageShowcaseProps) {
               </div>
 
               <div>
-                <h3 className="text-white font-black uppercase tracking-tight text-lg group-hover:text-[#fabf37] transition-colors">{page.title}</h3>
-                <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-wider mt-1">{page.desc}</p>
+                <h3 className="text-white font-black uppercase tracking-tight text-lg group-hover:text-[#fabf37] transition-colors">{t(page.title)}</h3>
+                <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-wider mt-1">{t(page.desc)}</p>
               </div>
 
               <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">

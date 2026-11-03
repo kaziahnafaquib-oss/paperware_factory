@@ -5,6 +5,7 @@ import imgTakeaway from '@/assets/products/takeaway-food-box.webp';
 import imgGiftBags from '@/assets/products/gift-bags.webp';
 import imgCookie from '@/assets/products/cookie-boxes.webp';
 import imgChowmein from '@/assets/products/chowmein-boxes.webp';
+import { useLanguage } from "../../context/LanguageContext";
 
 // No fabricated posts: each card links to a real Paperware profile and shows a real product photo.
 const profiles = [
@@ -15,10 +16,11 @@ const profiles = [
 ];
 
 export const SocialFeed = React.memo(function SocialFeed() {
+  const { t } = useLanguage();
     return (
         <div className="space-y-6">
             <div className="px-2">
-                <h3 className="text-xl font-black uppercase tracking-tight">Find Us Online</h3>
+                <h3 className="text-xl font-black uppercase tracking-tight">{t("socialfeed_find_us_online")}</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {profiles.map((p) => (
@@ -38,8 +40,8 @@ export const SocialFeed = React.memo(function SocialFeed() {
                         </div>
                         <div className="p-4 bg-[#fabf37] flex items-center justify-between gap-2">
                             <div className="min-w-0">
-                                <p className="text-[10px] font-black uppercase tracking-widest text-black">{p.platform}</p>
-                                <p className="text-[9px] font-bold text-black/70 truncate">{p.handle}</p>
+                                <p className="text-[10px] font-black uppercase tracking-widest text-black">{t(p.platform)}</p>
+                                <p className="text-[9px] font-bold text-black/70 truncate">{t(p.handle)}</p>
                             </div>
                             <ArrowRight className="size-4 text-black shrink-0" />
                         </div>

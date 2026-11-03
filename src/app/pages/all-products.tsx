@@ -127,7 +127,7 @@ export function AllProductsPage({
 
   return (
     <div className="bg-white min-h-screen relative overflow-hidden bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px]">
-      <h1 className="sr-only">All products</h1>
+      <h1 className="sr-only">{t("all_products_all_products")}</h1>
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <motion.div 
           animate={{ 
@@ -245,7 +245,7 @@ export function AllProductsPage({
 
         </div>
         
-        <React.Suspense fallback={<div className="h-96 flex items-center justify-center">Loading...</div>}>
+        <React.Suspense fallback={<div className="h-96 flex items-center justify-center">{t("all_products_loading")}</div>}>
           <TopSellingProducts onProductClick={onProductClick} products={dynamicProducts} />
         </React.Suspense>
         
@@ -326,7 +326,7 @@ export function AllProductsPage({
                  className="group flex items-center gap-3 px-6 py-3 bg-white border border-black/5 rounded-full hover:border-black hover:bg-black transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-0.5"
                >
                  <span className="text-black/30 group-hover:text-[#fabf37] transition-colors">{chip.icon}</span>
-                 <span className="text-[10px] font-black uppercase tracking-widest text-black group-hover:text-white transition-colors">{chip.label}</span>
+                 <span className="text-[10px] font-black uppercase tracking-widest text-black group-hover:text-white transition-colors">{t(chip.label)}</span>
                </motion.button>
              ))}
           </div>
@@ -340,17 +340,17 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img loading="lazy" decoding="async" src={fQcCupInspection} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Manufacturing" />
+              <img loading="lazy" decoding="async" src={fQcCupInspection} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt={t("manufacturing")} />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
-                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">Manufacturing Specialization</p>
+                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">{t("all_products_manufacturing_specialization")}</p>
                 </div>
                 <h4 className="text-white text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-6">
-                  Precision <br /> Manufacturing.
+                  {t("precision")} <br /> {t("about_us_manufacturing")}
                 </h4>
                 <p className="text-white/50 text-sm max-w-sm font-medium leading-relaxed group-hover:text-white transition-colors">
-                  Utilizing state-of-the-art neural-guided machinery to achieve micron-level cutting precision and foaming excellence.
+                  {t("all_products_utilizing_state_of_the_art")}
                 </p>
               </div>
            </motion.div>
@@ -361,17 +361,17 @@ export function AllProductsPage({
              transition={{ duration: 0.2, delay: 0.1, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black"
            >
-              <img loading="lazy" decoding="async" src={fOffsetPress} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt="Offset Printing Machine" />
+              <img loading="lazy" decoding="async" src={fOffsetPress} className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000 scale-110 group-hover:scale-100" alt={t("all_products_offset_printing_machine")} />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-12 flex flex-col justify-end">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
-                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">Premium Print Finish</p>
+                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">{t("all_products_premium_print_finish")}</p>
                 </div>
                 <h4 className="text-white text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-6">
-                  Offset <br /> Printing.
+                  {t("all_products_offset")} <br /> {t("all_products_printing")}
                 </h4>
                 <p className="text-white/50 text-sm max-w-sm font-medium leading-relaxed group-hover:text-white transition-colors">
-                  High-fidelity color reproduction and sustainable ink technologies for industry-leading packaging aesthetics.
+                  {t("all_products_high_fidelity_color_reproduction_and")}
                 </p>
               </div>
            </motion.div>
@@ -382,20 +382,20 @@ export function AllProductsPage({
              transition={{ duration: 0.2, ease: "circOut" }}
              className="relative h-[450px] rounded-[48px] overflow-hidden group bg-black md:col-span-2"
            >
-              <img loading="lazy" decoding="async" src={fTeam} className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt="Design Team" />
+              <img loading="lazy" decoding="async" src={fTeam} className="w-full h-full object-cover grayscale opacity-30 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-1000 scale-105 group-hover:scale-100" alt={t("all_products_design_team")} />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent p-12 flex flex-col justify-center">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-[2px] w-8 bg-[#fabf37]" />
-                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">Consultancy Services</p>
+                  <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-widest">{t("all_products_consultancy_services")}</p>
                 </div>
                 <h4 className="text-white text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-6">
-                  Expert <br /> Design Team.
+                  {t("all_products_expert")} <br /> {t("all_products_design_team_2")}
                 </h4>
                 <p className="text-white/60 text-lg max-w-md font-medium leading-relaxed group-hover:text-white transition-colors">
-                  Work with our award-winning designers to create sustainable packaging that defines your brand's future.
+                  {t("all_products_work_with_our_award_winning")}
                 </p>
                 <button onClick={() => onPageChange("contact")} className="mt-8 self-start px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest text-xs rounded-full hover:scale-105 transition-transform">
-                  Book A Session
+                  {t("all_products_book_a_session")}
                 </button>
               </div>
            </motion.div>

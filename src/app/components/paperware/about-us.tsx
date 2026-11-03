@@ -69,7 +69,7 @@ export function AboutUs() {
               <div className="rounded-[24px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.8)] bg-zinc-900 p-4 border border-white/5">
                 <img loading="lazy" decoding="async" 
                   src={imgCups} 
-                  alt="Paper Cups Collection" 
+                  alt={t("about_us_paper_cups_collection")} 
                   className="w-full h-auto object-cover rounded-[16px] grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>

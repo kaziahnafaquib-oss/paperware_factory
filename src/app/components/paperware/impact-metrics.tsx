@@ -73,16 +73,16 @@ export function ImpactMetrics() {
           >
              <div className="size-2 bg-[#FFC924] rounded-full animate-pulse" />
              <span className="text-zinc-600 font-mono uppercase tracking-widest text-[10px]">
-                Impact Calculator Engine
+                {t("impact_metrics_impact_calculator_engine")}
              </span>
           </motion.div>
           
           <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-zinc-900 leading-[0.85] mb-8">
-            PLASTIC VS <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFC924] to-[#ffb300]">PAPERWARE</span>
+            {t("impact_metrics_plastic_vs")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFC924] to-[#ffb300]">PAPERWARE</span>
           </h2>
           
           <p className="text-zinc-500 font-medium text-lg leading-relaxed max-w-2xl mx-auto">
-             See the difference. Calculate your potential impact by switching to Paperware's sustainable solutions.
+             {t("impact_metrics_see_the_difference_calculate_your")}
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export function ImpactMetrics() {
                        >
                           <div className={`size-3 rounded-full mb-3 transition-colors ${i <= selectedIndex ? 'bg-[#FFC924]' : 'bg-zinc-300'}`} />
                           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-900 hidden md:block">
-                             {opt.label}
+                             {t(opt.label)}
                           </span>
                        </button>
                     ))}
@@ -120,7 +120,7 @@ export function ImpactMetrics() {
               {/* Floating Value Badge */}
               <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-2 rounded-full shadow-xl">
                  <span className="font-black text-xl tracking-tight">
-                    {formatNumber(QUANTITY_OPTIONS[selectedIndex].value)} Cups
+                    {formatNumber(QUANTITY_OPTIONS[selectedIndex].value)} {t("impact_metrics_cups")}
                  </span>
                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 size-3 bg-zinc-900 rotate-45" />
               </div>
@@ -144,15 +144,15 @@ export function ImpactMetrics() {
                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                        className="w-48 md:w-64 relative mb-8 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                     >
-                       <div role="img" aria-label="Plastic waste" className="w-full aspect-square rounded-[2rem] bg-black rotate-[-5deg] shadow-2xl" />
+                       <div role="img" aria-label={t("impact_metrics_plastic_waste")} className="w-full aspect-square rounded-[2rem] bg-black rotate-[-5deg] shadow-2xl" />
                        <div className="absolute -top-6 -right-6 bg-red-500 text-white size-16 rounded-full flex items-center justify-center font-black text-2xl shadow-xl animate-bounce">
                           ×
                        </div>
                     </motion.div>
                     
-                    <h3 className="text-3xl font-black text-zinc-500 uppercase tracking-tighter mb-2 group-hover:text-red-500 transition-colors">The Waste</h3>
+                    <h3 className="text-3xl font-black text-zinc-500 uppercase tracking-tighter mb-2 group-hover:text-red-500 transition-colors">{t("impact_metrics_the_waste")}</h3>
                     <div className="inline-block bg-zinc-200 rounded-full px-4 py-1">
-                       <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Non-Recyclable</span>
+                       <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{t("impact_metrics_non_recyclable")}</span>
                     </div>
                  </div>
 
@@ -160,7 +160,7 @@ export function ImpactMetrics() {
                  <div className="absolute bottom-12 left-0 w-full px-8">
                     <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-red-100 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-xs font-black uppercase text-zinc-400">Plastic Created</span>
+                          <span className="text-xs font-black uppercase text-zinc-400">{t("impact_metrics_plastic_created")}</span>
                           <TrendingUp className="size-4 text-red-500" />
                        </div>
                        <div className="text-4xl font-black text-zinc-900 tracking-tighter">
@@ -186,22 +186,22 @@ export function ImpactMetrics() {
                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                        className="w-56 md:w-72 relative mb-8"
                     >
-                       <img src={cupCutout} alt="Paperware paper cup" className="w-full object-contain drop-shadow-2xl" />
+                       <img src={cupCutout} alt={t("impact_metrics_paperware_paper_cup")} className="w-full object-contain drop-shadow-2xl" />
                        {/* Floating Elements */}
                        <div className="absolute -top-4 -right-8 bg-white text-zinc-900 px-4 py-2 rounded-full shadow-xl flex items-center gap-2">
                           <Leaf className="size-4 text-[#FFC924] fill-current" />
-                          <span className="text-[10px] font-black uppercase tracking-widest">100% Eco</span>
+                          <span className="text-[10px] font-black uppercase tracking-widest">{t("impact_metrics_100_eco")}</span>
                        </div>
                        
                        {/* Branding */}
                        <div aria-hidden="true" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-zinc-900/10 font-black text-6xl leading-none tracking-tighter pointer-events-none">
-                          PAPER<br/>WARE
+                          {t("impact_metrics_paper")}<br/>WARE
                        </div>
                     </motion.div>
                     
-                    <h3 className="text-3xl font-black text-zinc-900 uppercase tracking-tighter mb-2">The Solution</h3>
+                    <h3 className="text-3xl font-black text-zinc-900 uppercase tracking-tighter mb-2">{t("impact_metrics_the_solution")}</h3>
                     <div className="inline-block bg-[#FFC924] rounded-full px-4 py-1 shadow-lg shadow-[#FFC924]/30">
-                       <span className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Plastic Free</span>
+                       <span className="text-xs font-bold text-zinc-900 uppercase tracking-widest">{t("impact_metrics_plastic_free")}</span>
                     </div>
                  </div>
 
@@ -209,7 +209,7 @@ export function ImpactMetrics() {
                  <div className="absolute bottom-12 left-0 w-full px-8">
                     <div className="bg-zinc-900 text-white p-6 rounded-2xl shadow-xl transform translate-y-0 transition-all duration-500">
                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-xs font-black uppercase text-[#FFC924]">Total Impact Saved</span>
+                          <span className="text-xs font-black uppercase text-[#FFC924]">{t("impact_metrics_total_impact_saved")}</span>
                           <Sparkles className="size-4 text-[#FFC924]" />
                        </div>
                        <div className="text-4xl font-black tracking-tighter">

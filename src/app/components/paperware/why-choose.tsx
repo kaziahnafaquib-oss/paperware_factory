@@ -35,7 +35,7 @@ export function WhyChoose() {
 
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <div className="text-center mb-32 space-y-4">
-          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Excellence</span>
+          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("why_choose_excellence")}</span>
           <h2 className="text-[48px] font-black text-black uppercase tracking-tight leading-none">
             {t('why_choose').split(' ').map((word, i) => i === 2 ? <br key={i} className="md:hidden" /> : null)}
             {t('why_choose')}
@@ -54,7 +54,7 @@ export function WhyChoose() {
             >
               <img loading="lazy" decoding="async" 
                 src={item.image} 
-                alt={item.title} 
+                alt={t(item.title)} 
                 className="absolute inset-0 size-full object-cover transition-transform duration-1000 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-700" />
@@ -65,10 +65,10 @@ export function WhyChoose() {
                      <span className="text-[10px] font-black italic tracking-tighter uppercase text-[#fabf37]">Paperware</span>
                   </div>
                   <h3 className="text-[26px] font-black text-white uppercase leading-tight tracking-tight">
-                    {item.title}
+                    {t(item.title)}
                   </h3>
                   <p className="text-white/70 font-bold text-[15px] leading-relaxed max-w-[280px] mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    {item.desc}
+                    {t(item.desc)}
                   </p>
                   
                   {/* Accent bar */}

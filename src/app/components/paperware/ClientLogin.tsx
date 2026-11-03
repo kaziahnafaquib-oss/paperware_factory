@@ -62,7 +62,7 @@ export function ClientLogin({ onLogin }: ClientLoginProps) {
           </motion.p>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-6 relative z-10">
+        <form onSubmit={(e) => { e.preventDefault(); toast.error("Portal sign-in is not connected yet. Access opens once the Paperware OS link is live."); }} className="space-y-6 relative z-10">
           <AnimatePresence mode="wait">
             {authMode === 'signup' ? (
               <motion.div 

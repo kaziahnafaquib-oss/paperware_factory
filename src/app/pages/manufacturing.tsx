@@ -7,10 +7,14 @@ import imgFloorWide from "../../assets/factory/floor-wide.webp";
 import { useGo } from "../lib/useGo";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterPress from "../../assets/video-posters/manufacturing-press.webp";
+import posterFloor from "../../assets/video-posters/factory-floor-wide.jpg";
+import posterForming from "../../assets/video-posters/cup-forming-closeups.jpg";
+import { useLanguage } from "../context/LanguageContext";
 
 const PRESS_VIDEO = mediaUrl("manufacturing-press.mp4");
 
 export function ManufacturingPage() {
+  const { t } = useLanguage();
   const go = useGo();
   const metrics = [
     { label: "Production Capacity", value: "2M+", unit: "PCS/DAY", icon: <Factory className="size-5" /> },
@@ -87,7 +91,7 @@ export function ManufacturingPage() {
           <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 0.6, transform: "scale(1.1)" }}>
             <ImageWithFallback
               src={imgFloorWide}
-              alt="Paperware production floor"
+              alt={t("about_us_paperware_production_floor")}
               loading="eager"
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
             />
@@ -104,24 +108,24 @@ export function ManufacturingPage() {
           >
             <div className="flex items-center gap-4">
               <div className="h-[2px] w-12 bg-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Our Factory</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">{t("manufacturing_our_factory")}</span>
             </div>
 
             <h1 className="text-6xl md:text-[120px] font-black text-white leading-[0.9] tracking-tighter uppercase">
-              INDUSTRIAL <br />
-              <span className="text-[#fabf37]">EXCELLENCE.</span>
+              {t("manufacturing_industrial")} <br />
+              <span className="text-[#fabf37]">{t("manufacturing_excellence")}</span>
             </h1>
 
             <p className="max-w-2xl text-zinc-400 font-bold uppercase tracking-widest text-xs leading-relaxed">
-              Merging sustainable paper technology with precision German engineering to deliver the world's most reliable packaging solutions at industrial scale.
+              {t("manufacturing_merging_sustainable_paper_technology_wit")}
             </p>
 
             <div className="flex flex-wrap gap-4 pt-8">
               <button onClick={() => go("factory-live")} className="bg-[#fabf37] text-black px-10 py-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-white transition-colors group">
-                Factory Tour <ArrowUpRight className="size-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                {t("manufacturing_factory_tour")} <ArrowUpRight className="size-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
               <button onClick={() => go("compliance")} className="bg-white/5 backdrop-blur-md border border-white/10 text-white px-10 py-5 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] hover:bg-white/10 transition-colors">
-                Compliance Data
+                {t("manufacturing_compliance_data")}
               </button>
             </div>
           </motion.div>
@@ -141,14 +145,14 @@ export function ManufacturingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="space-y-12">
               <div className="space-y-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">Workflow Engine</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">{t("manufacturing_workflow_engine")}</span>
                 <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-                  THE ART OF <br />
-                  <span className="text-zinc-500">SCALABLE</span> <br />
-                  PRODUCTION.
+                  {t("manufacturing_the_art_of")} <br />
+                  <span className="text-zinc-500">{t("manufacturing_scalable")}</span> <br />
+                  {t("manufacturing_production")}
                 </h2>
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-[11px] leading-relaxed max-w-xl">
-                  Our manufacturing process is designed for maximum efficiency and minimum environmental impact. From fiber sourcing to final delivery, every step is optimized via our Neural Factory Core.
+                  {t("manufacturing_our_manufacturing_process_is_designed")}
                 </p>
               </div>
 
@@ -164,9 +168,9 @@ export function ManufacturingPage() {
                       {p.icon}
                     </div>
                     <div className="space-y-2">
-                      <h4 className="text-lg font-black uppercase tracking-tight">{p.title}</h4>
+                      <h4 className="text-lg font-black uppercase tracking-tight">{t(p.title)}</h4>
                       <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest leading-relaxed max-w-sm">
-                        {p.desc}
+                        {t(p.desc)}
                       </p>
                     </div>
                   </motion.div>
@@ -181,13 +185,13 @@ export function ManufacturingPage() {
                   <FactoryClip
                     src={PRESS_VIDEO}
                     poster={posterPress}
-                    label="printing unit"
+                    label={t("manufacturing_printing_unit")}
                     className="w-full h-full"
                     controlPosition="bottom-right"
                   >
                     <div className="absolute bottom-4 left-4 z-10 bg-black/80 text-white rounded-2xl px-4 py-2">
-                      <span className="text-[9px] font-black uppercase tracking-widest text-white/60">Printing unit</span>
-                      <p className="text-xs font-black uppercase tracking-tight">Offset press, Paperware factory</p>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-white/60">{t("manufacturing_printing_unit_2")}</span>
+                      <p className="text-xs font-black uppercase tracking-tight">{t("manufacturing_offset_press_paperware_factory")}</p>
                     </div>
                   </FactoryClip>
                 </div>
@@ -199,6 +203,14 @@ export function ManufacturingPage() {
               <div className="absolute -bottom-24 -right-12 size-64 bg-black rounded-[40px] -z-10 opacity-5" />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Real footage from the Dhaka factory (public/media/SOURCES.txt). */}
+      <section className="py-24 bg-zinc-950 text-white">
+        <div className="max-w-7xl mx-auto px-6 grid gap-6 md:grid-cols-2">
+          <FactoryClip src={mediaUrl("factory-floor-wide.mp4")} poster={posterFloor} graded label={t("manufacturing_floor_video")} className="aspect-video rounded-3xl" />
+          <FactoryClip src={mediaUrl("cup-forming-closeups.mp4")} poster={posterForming} graded label={t("manufacturing_forming_video")} className="aspect-video rounded-3xl" />
         </div>
       </section>
 

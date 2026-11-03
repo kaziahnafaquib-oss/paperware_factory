@@ -54,7 +54,7 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     if (request.method !== "GET") return new Response("method not allowed", { status: 405, headers: cors });
     if (!env.META_PAGE_TOKEN) {
-      return Response.json({ error: "META_PAGE_TOKEN not configured" }, { status: 503, headers: cors });
+      return Response.json({ error: "feed unavailable" }, { status: 503, headers: cors });
     }
 
     const limit = Math.min(25, Math.max(1, Number(env.LIMIT) || 10));
@@ -97,8 +97,8 @@ export default {
         : [];
 
     const errors: string[] = [];
-    if (fb.status === "rejected") errors.push(`facebook: ${String(fb.reason).slice(0, 160)}`);
-    if (ig.status === "rejected") errors.push(`instagram: ${String(ig.reason).slice(0, 160)}`);
+    if (fb.status === "rejected") { console.error("facebook fetch failed", String(fb.reason).slice(0, 160)); errors.push("facebook unavailable"); }
+    if (ig.status === "rejected") { console.error("instagram fetch failed", String(ig.reason).slice(0, 160)); errors.push("instagram unavailable"); }
 
     const body = JSON.stringify({
       facebookPostUrls,

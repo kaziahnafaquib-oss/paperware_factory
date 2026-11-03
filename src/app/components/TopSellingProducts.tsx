@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "motion/react";
+import "./paperware/social-strip.css";
+import "./paperware/sustain-journey.css";
 import { Plus } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import yPaperCups from "figma:asset/6adcf127ea8fcf1105d20bd5049c27d9545b8c86.webp";
+import yPaperCups from "../../assets/products/cups/18-8-oz-single.jpg";
 import pTakeaway from "../../assets/products/takeaway-food-box.webp";
 import pCarryBag from "../../assets/cutouts/carry-bag-kraft.webp";
 import pBrochure from "../../assets/products/brochures.webp";
@@ -11,7 +13,7 @@ import pStickers from "../../assets/products/stickers.webp";
 import pTissue from "../../assets/products/tissue-boxes.webp";
 
 const defaultProducts = [
-  { id: 1, name: "8oz Paper Cup", category: "Paper Cups", image: yPaperCups, desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
+  { id: 1, name: "8oz Paper Cup", category: "Paper Cups", image: yPaperCups, pos: "50% 60%", desc: "Classic hot/cold beverage solution.", specs: [{ label: "Capacity", value: "8oz, 12oz, 16oz" }] },
   { id: 2, name: "Takeaway Food Box", category: "Restaurant Supplies", image: pTakeaway, desc: "Grease-proof ventilated design.", specs: [{ label: "Material", value: "Eco-Kraft" }] },
   { id: 3, name: "Kraft Carry Bag", category: "Packaging", image: pCarryBag, desc: "Premium textured carry bag.", specs: [{ label: "Finish", value: "Matte UV" }] },
   { id: 4, name: "Product Brochure", category: "Marketing", image: pBrochure, desc: "High-finish brand literature.", specs: [{ label: "Paper", value: "170 GSM Art" }] },
@@ -30,7 +32,7 @@ export function TopSellingProducts({
   const displayProducts = products?.length ? products : defaultProducts;
 
   return (
-    <div className="mb-8 container mx-auto px-4">
+    <div className="sustain-marquee mb-8 container mx-auto px-4">
       <div className="flex items-end justify-between mb-12">
         <div className="space-y-4">
           <div className="flex items-center gap-3">
@@ -49,11 +51,11 @@ export function TopSellingProducts({
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
         
-        <motion.div 
-          className="flex gap-6 py-4"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          style={{ width: "fit-content" }}
+        {/* CSS marquee (social-strip.css): keeps auto-scrolling under the owner's Reduce Motion setting, pauses on hover. */}
+        <div className="pwf-marquee-viewport">
+        <div
+          className="pwf-marquee-track gap-6 py-4"
+          style={{ "--pwf-marquee-dur": "30s" } as React.CSSProperties}
         >
           {[...displayProducts, ...displayProducts].map((product, idx) => (
             <motion.div 
@@ -65,7 +67,7 @@ export function TopSellingProducts({
               }}
             >
               <div className="h-40 rounded-[24px] overflow-hidden bg-white/80 border border-black/5 relative flex items-center justify-center">
-                <ImageWithFallback src={product.image} alt={product.name} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
+                <ImageWithFallback src={product.image} alt={product.name} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" style={{ objectPosition: product.pos ?? "center" }} />
                 <div className="absolute top-3 left-3 bg-black text-[#fabf37] px-3 py-1 rounded-full text-[7px] font-black uppercase tracking-widest">
                   {product.category}
                 </div>
@@ -96,7 +98,8 @@ export function TopSellingProducts({
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
+        </div>
       </div>
     </div>
   );

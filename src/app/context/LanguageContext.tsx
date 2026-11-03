@@ -27,8 +27,24 @@ const defaultContext: LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType>(defaultContext);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('EN');
-  const [tone, setTone] = useState<Tone>('corporate');
+  // Read the saved choice synchronously: a later persist effect would otherwise write 'EN' over it
+  // on the first render (visible under React.StrictMode's double mount).
+  const [language, setLanguage] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem('paperware-lang') as Language | null;
+      if (saved && translations[saved]) return saved;
+      const browserLang = navigator.language.split('-')[0].toUpperCase();
+      if (translations[browserLang]) return browserLang as Language;
+    } catch { /* storage unavailable */ }
+    return 'EN';
+  });
+  const [tone, setTone] = useState<Tone>(() => {
+    try {
+      const saved = localStorage.getItem('paperware-tone') as Tone | null;
+      if (saved) return saved;
+    } catch { /* storage unavailable */ }
+    return 'corporate';
+  });
   const [isRTL, setIsRTL] = useState(false);
 
   // Memoize the translation function to prevent unnecessary re-renders
@@ -37,27 +53,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [language, tone]);
 
   const [fontFamily, setFontFamily] = useState("'Poppins', sans-serif");
-
-  // Auto-detection logic
-  useEffect(() => {
-    try {
-      const savedLang = localStorage.getItem('paperware-lang') as Language;
-      const savedTone = localStorage.getItem('paperware-tone') as Tone;
-      
-      if (savedLang && translations[savedLang]) {
-        setLanguage(savedLang);
-      } else {
-        const browserLang = navigator.language.split('-')[0].toUpperCase();
-        if (translations[browserLang]) {
-          setLanguage(browserLang as Language);
-        }
-      }
-
-      if (savedTone) setTone(savedTone);
-    } catch (e) {
-      console.warn("LocalStorage not accessible", e);
-    }
-  }, []);
 
   useEffect(() => {
     try {

@@ -23,7 +23,7 @@ export function FeaturedProducts() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-20 md:mb-32 space-y-4">
-          <span className="text-black/30 font-black uppercase tracking-[0.4em] text-xs">Innovation</span>
+          <span className="text-black/30 font-black uppercase tracking-[0.4em] text-xs">{t("featured_products_innovation")}</span>
           <h2 className="text-[32px] md:text-[52px] font-black text-black uppercase tracking-tight leading-none">
             {t('featured_creations')}
           </h2>
@@ -73,7 +73,7 @@ export function FeaturedProducts() {
               
               <img ref={bagRef} loading="lazy" decoding="async" 
                 src={imgPaperBag} 
-                alt="Paper Bag" 
+                alt={t("paper_bag")} 
                 className="h-[300px] md:h-[450px] w-auto drop-shadow-[0_30px_50px_rgba(0,0,0,0.4)] will-change-transform" 
               />
               

@@ -22,6 +22,7 @@ import pStickers from "figma:asset/products/stickers.webp";
 const GLYPHS = [imgCup, pFoodBox, pGiftBag, pChowmein, pCarryBag, pStickers] as const;
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ClientLogo {
   id: string;
@@ -56,6 +57,7 @@ function TextLine({
   velocityFactor: MotionValue<number>;
   skew: MotionValue<number>;
 }) {
+  const { t } = useLanguage();
   const baseX = useMotionValue(0);
   const direction = React.useRef(baseVelocity < 0 ? -1 : 1);
   const x = useTransform(baseX, (v) => `${wrap(-100 / REPEATS, 0, v)}%`);
@@ -73,7 +75,7 @@ function TextLine({
     const glyph = GLYPHS[(i + (outline ? 3 : 0)) % GLYPHS.length];
     return (
       <span key={i} className="inline-flex items-center gap-[0.3em] mr-[0.3em]">
-        <span className={outline ? "text-transparent [-webkit-text-stroke:2px_#111]" : "text-[#111]"}>{words}</span>
+        <span className={outline ? "text-transparent [-webkit-text-stroke:2px_#111]" : "text-[#111]"}>{t(words)}</span>
         <span className="inline-flex size-[0.6em] rounded-full bg-[#fabf37] overflow-hidden shrink-0 ring-2 ring-[#111]">
           <img src={glyph} alt="" draggable={false} loading="lazy" decoding="async" className="w-full h-full object-cover" />
         </span>
@@ -142,9 +144,10 @@ function MagneticButton({
 /* Logo rows (only when real logos exist)                               */
 /* ------------------------------------------------------------------ */
 function LogoTile({ client }: { client: ClientLogo }) {
+  const { t } = useLanguage();
   return (
     <div className="shrink-0 w-[160px] h-[88px] md:w-[190px] md:h-[100px] rounded-[18px] bg-[#f6f1e7] border border-black/5 flex items-center justify-center p-5">
-      <ImageWithFallback src={client.image} alt={client.name} className="max-w-full max-h-full object-contain" />
+      <ImageWithFallback src={client.image} alt={t(client.name)} className="max-w-full max-h-full object-contain" />
     </div>
   );
 }
@@ -172,6 +175,7 @@ function LogoMarquee({ clients, velocityFactor, baseVelocity }: { clients: Clien
 
 /* ------------------------------------------------------------------ */
 export function PremiumClients({ clients: propClients, onPageChange }: PremiumClientsProps) {
+  const { t } = useLanguage();
   const reduced = useReducedMotion() ?? false;
   const [clients, setClients] = React.useState<ClientLogo[]>(propClients ?? []);
 
@@ -233,18 +237,18 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
         <div className="max-w-7xl mx-auto px-4 md:px-12 mb-8 md:mb-10">
           <p className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.3em] text-[#a16207]">
             <span aria-hidden="true" className="h-px w-8 bg-[#a16207]" />
-            {hasLogos ? "Trusted by" : "Clients"}
+            {t(hasLogos ? "Trusted by" : "Clients")}
           </p>
           <h2 id="clients-heading" className="sr-only">
-            Your brand, on our paper
+            {t("premium_clients_your_brand_on_our_paper")}
           </h2>
         </div>
 
         {/* Two giant lines moving against each other */}
         {reduced ? (
           <div aria-hidden="true" className="px-4 md:px-12 font-black uppercase tracking-[-0.03em] leading-[0.95] text-[clamp(44px,9vw,150px)]">
-            <p className="text-[#111]">Your brand</p>
-            <p className="text-transparent [-webkit-text-stroke:2px_#111]">On our paper</p>
+            <p className="text-[#111]">{t("premium_clients_your_brand")}</p>
+            <p className="text-transparent [-webkit-text-stroke:2px_#111]">{t("premium_clients_on_our_paper")}</p>
           </div>
         ) : (
           <div aria-hidden="true" className="-rotate-[2deg] scale-[1.03] origin-center">
@@ -256,7 +260,7 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
         <div className="max-w-7xl mx-auto px-4 md:px-12 mt-12 md:mt-16 space-y-10 md:space-y-12">
           {/* Logo rows (only when real logos exist) */}
           {hasLogos && (
-            <div aria-label="Client logos" role="group">
+            <div aria-label={t("premium_clients_client_logos")} role="group">
               {reduced ? (
                 <ul className="flex flex-wrap justify-center gap-4 md:gap-5">
                   {clients.map((client) => (
@@ -278,20 +282,20 @@ export function PremiumClients({ clients: propClients, onPageChange }: PremiumCl
               className="pointer-events-none absolute -left-24 -bottom-24 size-72 rounded-full bg-[#fabf37] opacity-20 blur-[90px]"
             />
             <div className="relative max-w-xl">
-              <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#fabf37] mb-4">Become a client</p>
+              <p className="text-[11px] font-black uppercase tracking-[0.3em] text-[#fabf37] mb-4">{t("premium_clients_become_a_client")}</p>
               <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-[0.95]">
-                Send us your artwork and quantities. We reply with a quote.
+                {t("premium_clients_send_us_your_artwork_and")}
               </h3>
             </div>
             <div className="relative flex flex-col sm:flex-row gap-3 shrink-0">
               <MagneticButton magnetic={!reduced} onClick={() => onPageChange?.("contact")} className={primary}>
-                Request a quote
+                {t("home_bottom_request_a_quote")}
                 <span className="size-9 rounded-full bg-[#111] text-[#fabf37] flex items-center justify-center">
                   <ArrowRight className="size-4 -rotate-45 group-hover:rotate-0 transition-transform" aria-hidden="true" />
                 </span>
               </MagneticButton>
               <button type="button" onClick={() => onPageChange?.("products")} className={secondary}>
-                See products
+                {t("premium_clients_see_products")}
               </button>
             </div>
           </div>

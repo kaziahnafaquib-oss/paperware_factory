@@ -104,7 +104,7 @@ export function SocialsPage() {
     {
       name: "Paperware Factory",
       handle: "tiktok.com/@paperwarefactory",
-      url: "http://tiktok.com/paperwarefactory",
+      url: "https://www.tiktok.com/@paperwarefactory",
       icon: Music2,
       color: "hover:bg-black/5"
     },
@@ -159,7 +159,7 @@ export function SocialsPage() {
                       transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                       className={`block ${i === 1 ? 'text-[#fabf37]' : ''}`}
                     >
-                      {word}
+                      {t(word)}
                     </motion.span>
                   ))}
                 </h1>
@@ -173,7 +173,7 @@ export function SocialsPage() {
                 exit={{ opacity: 0 }}
                 className="text-zinc-400 font-bold text-[10px] sm:text-lg md:text-xl uppercase tracking-[0.3em] sm:tracking-[0.5em] mt-8 sm:mt-12 max-w-[300px] sm:max-w-3xl mx-auto leading-relaxed"
               >
-                {toneContent[activeTone].subtitle}
+                {t(toneContent[activeTone].subtitle)}
               </motion.p>
             </AnimatePresence>
           </motion.div>
@@ -188,7 +188,7 @@ export function SocialsPage() {
             transition={{ delay: 1 }}
             className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t('scroll_to_connect') || "Scroll to Connect"}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t(t('scroll_to_connect') || "Scroll to Connect")}</span>
             <div className="w-px h-12 bg-zinc-200 overflow-hidden">
               <motion.div 
                 animate={{ y: [0, 48] }}
@@ -233,7 +233,7 @@ export function SocialsPage() {
                     >
                       <tone.icon className={`size-3 sm:size-4 transition-colors ${activeTone === tone.id ? 'text-[#fabf37]' : 'text-zinc-400'}`} />
                     </motion.div>
-                    {tone.label}
+                    {t(tone.label)}
                   </motion.button>
                 ))}
               </div>
@@ -286,12 +286,12 @@ export function SocialsPage() {
                             whileHover={{ scale: 1.05 }}
                             className="size-20 rounded-3xl bg-[#fdf2d7] mx-auto flex items-center justify-center border border-[#fabf37]/20 shadow-sm"
                           >
-                            <img loading="lazy" decoding="async" src={image_8788d2f066ca9921baf05e502ac560c2c717da5a} alt="Small Logo" className="size-14 object-contain" />
+                            <img loading="lazy" decoding="async" src={image_8788d2f066ca9921baf05e502ac560c2c717da5a} alt={t("socials_small_logo")} className="size-14 object-contain" />
                           </motion.div>
                           <h3 className="font-black text-2xl tracking-tight text-zinc-900">Paperware</h3>
                           <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 rounded-full border border-emerald-100">
                             <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                            <p className="text-[9px] font-black text-emerald-700 uppercase tracking-widest">{t('verified_hub') || "Verified Hub"}</p>
+                            <p className="text-[9px] font-black text-emerald-700 uppercase tracking-widest">{t(t('verified_hub') || "Verified Hub")}</p>
                           </div>
                         </div>
 
@@ -312,8 +312,8 @@ export function SocialsPage() {
                                 <link.icon className="size-6" />
                               </div>
                               <div className="flex-1 text-left">
-                                <p className="text-[11px] font-black uppercase tracking-tight text-zinc-800 leading-none mb-1">{link.name}</p>
-                                <p className="text-[9px] font-bold text-zinc-400 truncate">{link.handle}</p>
+                                <p className="text-[11px] font-black uppercase tracking-tight text-zinc-800 leading-none mb-1">{t(link.name)}</p>
+                                <p className="text-[9px] font-bold text-zinc-400 truncate">{t(link.handle)}</p>
                               </div>
                               <ArrowRight className="size-4 text-zinc-200 group-hover:text-black transition-colors" />
                             </motion.a>

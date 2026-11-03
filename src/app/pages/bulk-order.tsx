@@ -12,12 +12,14 @@ import {
 } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useGo } from "../lib/useGo";
+import { useLanguage } from "../context/LanguageContext";
 
 interface BulkOrderPageProps {
   basket?: any[];
 }
 
 export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
+  const { t } = useLanguage();
   const go = useGo();
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [formData, setFormData] = React.useState({
@@ -51,14 +53,14 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
           </div>
           <div className="space-y-6">
             <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-tight">
-              ALMOST <br /> <span className="text-[#fabf37]">THERE</span>
+              {t("bulk_order_almost")} <br /> <span className="text-[#fabf37]">{t("bulk_order_there")}</span>
             </h2>
             <p className="text-zinc-400 font-bold text-lg max-w-sm mx-auto leading-relaxed">
-              <span role="status" aria-live="polite">{INQUIRY_HANDOFF_BODY}</span>
+              <span role="status" aria-live="polite">{t(INQUIRY_HANDOFF_BODY)}</span>
             </p>
           </div>
           <button onClick={() => go("home")} className="w-full bg-white text-black px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm shadow-2xl hover:bg-[#fabf37] transition-all">
-             Back to Home
+             {t("bulk_order_back_to_home")}
           </button>
         </motion.div>
       </div>
@@ -78,26 +80,26 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
              <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <div className="size-2 bg-[#fabf37] rounded-full animate-pulse" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Industrial Procurement Portal</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">{t("bulk_order_industrial_procurement_portal")}</span>
                 </div>
                 <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8]">
-                   Bulk <br /><span className="text-[#fabf37]">Orders</span>
+                   {t("bulk_order_bulk")} <br /><span className="text-[#fabf37]">{t("bulk_order_orders")}</span>
                 </h1>
                 <p className="text-zinc-500 font-bold text-lg max-w-md">
-                   Fill out the B2B procurement form below for custom manufacturing, large-scale supply, or corporate contracts.
+                   {t("bulk_order_fill_out_the_b2b_procurement")}
                 </p>
              </div>
              <div className="flex flex-col items-end gap-6">
                 <div className="aspect-[16/9] w-full max-w-md rounded-[40px] overflow-hidden border border-white/5">
-                  <img src={imgPress} alt="The offset printing press at the Paperware factory" loading="lazy" decoding="async" className="size-full object-cover object-center" />
+                  <img src={imgPress} alt={t("bulk_order_the_offset_printing_press_at")} loading="lazy" decoding="async" className="size-full object-cover object-center" />
                 </div>
                 <div className="bg-zinc-900 border border-white/5 p-8 rounded-[40px] flex items-center gap-8 w-full max-w-md">
                    <div className="size-16 bg-[#fabf37]/10 rounded-2xl flex items-center justify-center">
                       <Shield className="size-8 text-[#fabf37]" />
                    </div>
                    <div>
-                      <h4 className="text-sm font-black uppercase tracking-widest">Enterprise SLA</h4>
-                      <p className="text-[10px] font-bold text-zinc-500">Tier-1 Priority Response Guaranteed within 4 Hours.</p>
+                      <h4 className="text-sm font-black uppercase tracking-widest">{t("bulk_order_enterprise_sla")}</h4>
+                      <p className="text-[10px] font-bold text-zinc-500">{t("bulk_order_tier_1_priority_response_guaranteed")}</p>
                    </div>
                 </div>
              </div>
@@ -115,41 +117,41 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                     <div className="space-y-8">
                       <div className="flex items-center gap-3 text-[#fabf37]">
                         <Building2 className="size-6" />
-                        <h4 className="text-lg font-black uppercase tracking-widest">Business Info</h4>
+                        <h4 className="text-lg font-black uppercase tracking-widest">{t("bulk_order_business_info")}</h4>
                       </div>
                       <div className="space-y-6">
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Company Name</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("auth_modal_company_name")}</label>
                           <input 
                             name="companyName"
                             value={formData.companyName}
                             onChange={handleInputChange}
-                            placeholder="e.g. Acme Corporation"
+                            placeholder={t("bulk_order_e_g_acme_corporation")}
                             className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Business Category</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_business_category")}</label>
                           <select 
                             name="businessType"
                             value={formData.businessType}
                             onChange={handleInputChange}
                             className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                           >
-                            <option>Corporate</option>
-                            <option>FMCG Brand</option>
-                            <option>Pharmaceutical</option>
-                            <option>Restaurant Chain</option>
-                            <option>Garments Accessories</option>
+                            <option>{t("corporate")}</option>
+                            <option>{t("bulk_order_fmcg_brand")}</option>
+                            <option>{t("pharmaceutical")}</option>
+                            <option>{t("bulk_order_restaurant_chain")}</option>
+                            <option>{t("bulk_order_garments_accessories")}</option>
                           </select>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Trade / TIN Number</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_trade_tin_number")}</label>
                           <input 
                             name="tin"
                             value={formData.tin}
                             onChange={handleInputChange}
-                            placeholder="Business Registration Number"
+                            placeholder={t("bulk_order_business_registration_number")}
                             className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                           />
                         </div>
@@ -159,21 +161,21 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                     <div className="space-y-8">
                       <div className="flex items-center gap-3 text-[#fabf37]">
                         <User className="size-6" />
-                        <h4 className="text-lg font-black uppercase tracking-widest">Contact Point</h4>
+                        <h4 className="text-lg font-black uppercase tracking-widest">{t("bulk_order_contact_point")}</h4>
                       </div>
                       <div className="space-y-6">
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Liaison Name</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_liaison_name")}</label>
                           <input 
                             name="contactPerson"
                             value={formData.contactPerson}
                             onChange={handleInputChange}
-                            placeholder="Procurement Manager"
+                            placeholder={t("bulk_order_procurement_manager")}
                             className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Email</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("home_bottom_email")}</label>
                           <input 
                             type="email"
                             name="email"
@@ -184,12 +186,12 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Phone</label>
+                          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("home_bottom_phone")}</label>
                           <input 
                             name="phone"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="+880 XXXX-XXXXXX"
+                            placeholder={t("bulk_order_880_xxxx_xxxxxx")}
                             className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                           />
                         </div>
@@ -201,23 +203,23 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                      <div className="space-y-8">
                         <div className="flex items-center gap-3 text-[#fabf37]">
                            <Truck className="size-6" />
-                           <h4 className="text-lg font-black uppercase tracking-widest">Supply Chain Logic</h4>
+                           <h4 className="text-lg font-black uppercase tracking-widest">{t("bulk_order_supply_chain_logic")}</h4>
                         </div>
                         <div className="grid md:grid-cols-2 gap-12">
                            <div className="space-y-2">
-                              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Shipping Destination</label>
+                              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_shipping_destination")}</label>
                               <textarea 
                                 name="address"
                                 value={formData.address}
                                 onChange={handleInputChange}
                                 rows={4}
-                                placeholder="Warehouse or HQ Address"
+                                placeholder={t("bulk_order_warehouse_or_hq_address")}
                                 className="w-full bg-black/60 border border-white/10 rounded-[40px] px-8 py-6 text-sm font-bold focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700 resize-none"
                               />
                            </div>
                            <div className="space-y-8">
                               <div className="space-y-2">
-                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Expected Timeline</label>
+                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_expected_timeline")}</label>
                                  <div className="relative">
                                     <input 
                                       type="date"
@@ -232,8 +234,8 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                               <div className="bg-[#fabf37] p-8 rounded-[40px] text-black flex gap-4">
                                  <Sparkles className="size-6 shrink-0" />
                                  <div className="space-y-1">
-                                    <p className="text-xs font-black uppercase">Volume Advantage Active</p>
-                                    <p className="text-[10px] font-bold opacity-70 leading-tight">By submitting this form, you will be assigned a dedicated Account Strategist.</p>
+                                    <p className="text-xs font-black uppercase">{t("bulk_order_volume_advantage_active")}</p>
+                                    <p className="text-[10px] font-bold opacity-70 leading-tight">{t("bulk_order_by_submitting_this_form_you")}</p>
                                  </div>
                               </div>
                            </div>
@@ -252,17 +254,17 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
 
                      <div className="space-y-10 relative z-10">
                         <div className="space-y-2">
-                           <h3 className="text-4xl font-black uppercase tracking-tighter leading-none italic underline decoration-[#fabf37] decoration-4 underline-offset-8">Final <br /> Manifest</h3>
-                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Protocol Type: B2B-Bulk</p>
+                           <h3 className="text-4xl font-black uppercase tracking-tighter leading-none italic underline decoration-[#fabf37] decoration-4 underline-offset-8">{t("bulk_order_final")} <br /> {t("bulk_order_manifest")}</h3>
+                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{t("bulk_order_protocol_type_b2b_bulk")}</p>
                         </div>
 
                         <div className="space-y-6">
                            <div className="flex justify-between items-center text-sm font-black border-b border-zinc-100 pb-4">
-                              <span className="opacity-40 uppercase tracking-widest text-[10px]">Configured Items</span>
-                              <span>{basket.length} SKUs</span>
+                              <span className="opacity-40 uppercase tracking-widest text-[10px]">{t("bulk_order_configured_items")}</span>
+                              <span>{basket.length} {t("bulk_order_skus")}</span>
                            </div>
                            <div className="flex justify-between items-center text-sm font-black border-b border-zinc-100 pb-4">
-                              <span className="opacity-40 uppercase tracking-widest text-[10px]">Total Units</span>
+                              <span className="opacity-40 uppercase tracking-widest text-[10px]">{t("bulk_order_total_units")}</span>
                               <span>{basket.reduce((acc, curr) => acc + (curr.qty || 0), 0).toLocaleString()} PCS</span>
                            </div>
                         </div>
@@ -279,7 +281,7 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                           }}
                           className="w-full bg-black text-[#fabf37] py-10 rounded-[40px] font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-95 transition-all shadow-2xl flex items-center justify-center gap-4 group"
                         >
-                           Transmit Inquiry <Send className="size-5 group-hover:translate-x-1 transition-transform" />
+                           {t("bulk_order_transmit_inquiry")} <Send className="size-5 group-hover:translate-x-1 transition-transform" />
                         </button>
                         
                      </div>
@@ -288,10 +290,10 @@ export default function BulkOrderPage({ basket = [] }: BulkOrderPageProps) {
                   <div className="bg-zinc-900/40 backdrop-blur-xl p-8 rounded-[40px] border border-white/5 space-y-6">
                     <div className="flex items-center gap-4 text-[#fabf37]">
                        <ShieldCheck className="size-6" />
-                       <h4 className="text-[10px] font-black uppercase tracking-widest">Industrial Privacy</h4>
+                       <h4 className="text-[10px] font-black uppercase tracking-widest">{t("bulk_order_industrial_privacy")}</h4>
                     </div>
                     <p className="text-[10px] font-bold text-zinc-500 leading-relaxed italic">
-                       Paperware respects trade secrets. All designs and specifications shared here are protected by a mutual non-disclosure framework.
+                       {t("bulk_order_paperware_respects_trade_secrets_all")}
                     </p>
                   </div>
                </div>

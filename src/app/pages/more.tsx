@@ -30,6 +30,7 @@ import {
 import { useLanguage } from "../context/LanguageContext";
 
 export function MorePage({ onPageChange }: { onPageChange: (id: string) => void }) {
+  const { t } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -98,7 +99,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
             className="flex items-center gap-6 md:gap-10 mb-8 md:mb-12"
           >
             <div className="h-[2px] w-12 md:w-20 bg-[#fabf37]" />
-            <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] text-zinc-400 whitespace-nowrap">System Directory</span>
+            <span className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] text-zinc-400 whitespace-nowrap">{t("more_system_directory")}</span>
             <div className="h-[2px] w-12 md:w-20 bg-[#fabf37]" />
           </motion.div>
           
@@ -112,7 +113,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               className="bg-[#fabf37] px-6 py-2 md:px-10 md:py-4 mb-2 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <h1 className="sr-only">The ecosystem</h1>
+              <h1 className="sr-only">{t("more_the_ecosystem")}</h1>
               <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[120px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(30px)" }}>
                 THE
               </p>
@@ -127,13 +128,13 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
               style={{ transformStyle: "preserve-3d" }}
             >
               <p aria-hidden="true" className="text-5xl sm:text-7xl md:text-[140px] font-black uppercase tracking-tighter leading-none text-black" style={{ transform: "translateZ(50px)" }}>
-                ECOSYSTEM.
+                {t("more_ecosystem")}
               </p>
               
               {/* Scroll to Explore overlay - Adjusted position to prevent overlap */}
               <div className="absolute -bottom-14 md:-bottom-16 left-0 w-full flex justify-center">
                 <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.5em] text-zinc-400/60 animate-pulse whitespace-nowrap">
-                  SCROLL TO EXPLORE
+                  {t("more_scroll_to_explore")}
                 </span>
               </div>
             </motion.div>
@@ -146,7 +147,7 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
             transition={{ delay: 0.5 }}
             className="max-w-[300px] sm:max-w-md md:max-w-3xl text-zinc-500 font-bold uppercase tracking-widest text-[10px] md:text-[13px] leading-relaxed px-4 relative z-10"
           >
-            Access our specialized tools, manufacturing insights, and global support network from a single industrial command center.
+            {t("more_access_our_specialized_tools_manufacturi")}
           </motion.p>
           
           {/* Animated line (repositioned) */}
@@ -224,11 +225,11 @@ export function MorePage({ onPageChange }: { onPageChange: (id: string) => void 
                 
                 <div className="space-y-4 md:space-y-6" style={{ transform: "translateZ(50px)" }}>
                   <h3 className="text-xl md:text-3xl font-black uppercase tracking-tight text-black group-hover:text-white transition-colors leading-none">
-                    {item.name}
+                    {t(item.name)}
                   </h3>
                   <div className="h-[3px] w-12 bg-[#fabf37] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
                   <p className="text-[11px] md:text-[13px] font-bold text-zinc-400 group-hover:text-zinc-300 uppercase tracking-widest leading-relaxed">
-                    {item.desc}
+                    {t(item.desc)}
                   </p>
                 </div>
               </div>

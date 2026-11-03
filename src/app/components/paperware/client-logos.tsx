@@ -36,6 +36,7 @@ import imgTheLocalCoffee from "figma:asset/058c912908a675dd8f29e166420432fcc4643
 import imgTerraBistro from "figma:asset/cebce585c69603a15f21e8c16a2274c0439654c4.webp";
 import imgTeaLounge from "figma:asset/d3505f2cc7c33731db33889792afb434adfda40f.webp";
 import imgTeaFirin from "figma:asset/0dd1f563ffeac48fcd397177d2282cf47d8042d4.webp";
+import { useLanguage } from "../../context/LanguageContext";
 
 export type ClientLogo = { name: string; img: string; category: string };
 
@@ -83,6 +84,7 @@ export const CLIENT_LOGOS: ClientLogo[] = [
  * The owner asked for continuous motion, so it also runs under prefers-reduced-motion (slower).
  */
 export function ClientLogoWall({ logos = CLIENT_LOGOS }: { logos?: ClientLogo[] }) {
+  const { t } = useLanguage();
   const rows = React.useMemo(() => {
     const per = Math.ceil(logos.length / 3);
     return [0, 1, 2].map((r) => {
@@ -94,12 +96,12 @@ export function ClientLogoWall({ logos = CLIENT_LOGOS }: { logos?: ClientLogo[] 
   if (!logos.length) return null;
 
   return (
-    <section aria-label="Our clients" className="py-16 md:py-24 bg-[#fdfaf3] border-y border-zinc-100 [content-visibility:visible]" style={{ overflowX: "clip" }}>
+    <section aria-label={t("client_logos_our_clients")} className="py-16 md:py-24 bg-[#fdfaf3] border-y border-zinc-100 [content-visibility:visible]" style={{ overflowX: "clip" }}>
       <div className="container mx-auto px-4 mb-10 md:mb-14 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none text-black">
-          Brands we <span className="text-zinc-400">pack for.</span>
+          {t("client_logos_brands_we")} <span className="text-zinc-400">{t("client_logos_pack_for")}</span>
         </h2>
-        <p className="text-zinc-500 font-bold text-xs md:text-sm uppercase tracking-widest">{logos.length} clients · Bangladesh</p>
+        <p className="text-zinc-500 font-bold text-xs md:text-sm uppercase tracking-widest">{logos.length} {t("client_logos_clients_bangladesh")}</p>
       </div>
       <div className="flex flex-col gap-5 md:gap-8">
         {rows.map((row, ri) => (
@@ -111,10 +113,10 @@ export function ClientLogoWall({ logos = CLIENT_LOGOS }: { logos?: ClientLogo[] 
               {row.map((c, i) => (
                 <div
                   key={`${ri}-${i}`}
-                  title={c.name}
+                  title={t(c.name)}
                   className="bg-white size-24 md:size-32 rounded-full p-5 md:p-7 flex items-center justify-center shadow-[0_8px_20px_-8px_rgba(0,0,0,0.08)] border border-zinc-100 shrink-0"
                 >
-                  <ImageWithFallback src={c.img} alt={c.name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+                  <ImageWithFallback src={c.img} alt={t(c.name)} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                 </div>
               ))}
             </div>

@@ -1,1 +1,19 @@
 node_modules
+
+# secrets and local tooling (never commit)
+.env
+.env.*
+!.env.example
+.playwright-mcp/
+audit/
+.serena/
+.claude/
+.impeccable/
+
+# build output, local env, OS junk
+dist/
+.env.local
+*.local
+.DS_Store
+supabase/.temp
+.wrangler

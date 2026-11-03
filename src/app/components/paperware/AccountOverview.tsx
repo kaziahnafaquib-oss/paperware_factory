@@ -91,7 +91,7 @@ export function AccountOverview({ onClose }: AccountOverviewProps) {
 
   const handleWhatsAppSupport = () => {
     const message = encodeURIComponent("Hello! I need support with my Paperware account.");
-    window.open(`https://wa.me/8801901459110?text=${message}`, '_blank');
+    window.open(`https://wa.me/8801901459110?text=${message}`, '_blank', 'noopener,noreferrer');
     toast.success("Opening WhatsApp...");
   };
 

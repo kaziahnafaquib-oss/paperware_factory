@@ -270,7 +270,7 @@ export const Navbar = React.memo(({
           <div className="w-full h-8 bg-[#fabf37]/90 backdrop-blur-sm flex items-center justify-between px-4 md:px-8 pointer-events-auto relative z-[5001] shadow-sm border-b border-white/10">
             <div className="flex items-center gap-2">
               <span className="hidden md:flex items-center gap-2 ml-4 px-2 py-0.5 bg-black/5 rounded text-[9px] font-black uppercase tracking-[0.2em] text-black">
-                Made In Bangladesh <img src={flagBd} className="w-3 h-auto" alt="BD" />
+                {t("navbar_made_in_bangladesh")} <img src={flagBd} className="w-3 h-auto" alt="BD" />
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -307,7 +307,7 @@ export const Navbar = React.memo(({
 
             <div className="flex-shrink-0 pl-1 md:pl-3 relative z-30">
               <button onClick={() => handleInternalPageChange("home")} className="focus:outline-none relative active:scale-95 transition-transform">
-                <motion.img src={image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2} alt="Paperware Logo" className="h-[50px] md:h-[64px] w-auto object-contain py-1 scale-110 md:scale-115 translate-y-1" />
+                <motion.img src={image_2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2} alt={t("navbar_paperware_logo")} className="h-[50px] md:h-[64px] w-auto object-contain py-1 scale-110 md:scale-115 translate-y-1" />
               </button>
             </div>
 
@@ -345,7 +345,7 @@ export const Navbar = React.memo(({
                             <motion.div layoutId="navbar-underline" className="absolute bottom-0 left-0 w-full h-[3px] bg-[#fabf37]" initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.3 }} />
                           )}
                           <span className={`relative z-10 transition-transform duration-300 ${!isCurrent ? 'hover:scale-110' : ''}`}>
-                            {link.name}
+                            {t(link.name)}
                           </span>
                           {(link.hasDropdown || link.isMega) && (
                             <ChevronDown className={`size-2.5 transition-transform relative z-10 ${activeDropdown === link.id ? 'rotate-180' : ''}`} />
@@ -354,7 +354,7 @@ export const Navbar = React.memo(({
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
                         <Tooltip.Content className="bg-black text-[#fabf37] px-2 py-1 rounded-md text-[7px] font-black uppercase tracking-wider shadow-xl border border-[#fabf37]/20" sideOffset={5}>
-                          Navigate to {link.name}
+                          {t("navbar_navigate_to")} {t(link.name)}
                           <Tooltip.Arrow className="fill-black" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
@@ -378,7 +378,7 @@ export const Navbar = React.memo(({
                                 onClick={() => handleInternalPageChange(item.id)}
                                 className="w-full flex items-center justify-between px-6 py-4 rounded-full bg-[#f3f3f5] hover:bg-[#fabf37] group transition-all text-left relative overflow-hidden"
                               >
-                                <span className="text-[11px] font-black uppercase tracking-widest text-black/70 group-hover:text-black transition-colors relative z-10">{item.name}</span>
+                                <span className="text-sm font-black uppercase tracking-widest text-black/70 group-hover:text-black transition-colors relative z-10">{item.name}</span>
                                 <ChevronDown className="size-3 text-black/20 group-hover:text-black -rotate-90 transition-all relative z-10" />
                                 <div className="absolute inset-0 bg-[#fabf37]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                               </motion.button>
@@ -413,7 +413,7 @@ export const Navbar = React.memo(({
                           <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
                               <motion.div className="size-2 bg-[#fabf37] rounded-full" animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }} transition={{ duration: 2, repeat: Infinity }} />
-                              <span className="font-mono text-[8px] text-black/20 tracking-[0.2em] uppercase">: Manufacturing_Active_044</span>
+                              <span className="font-mono text-[8px] text-black/20 tracking-[0.2em] uppercase">{t("navbar_manufacturing_active_044")}</span>
                             </div>
                             <div className="flex items-center gap-1">
                               {[1, 2, 3, 4, 5, 6].map(i => <motion.div key={i} className="w-3 h-[1px] bg-black/[0.08]" animate={{ opacity: [0.3, 0.8, 0.3] }} transition={{ duration: 2, repeat: Infinity, delay: i * 0.1 }} />)}
@@ -434,7 +434,7 @@ export const Navbar = React.memo(({
                                 <div className="space-y-3 relative z-10">
                                   <div className="flex items-center gap-2">
                                     <motion.div className="size-1 bg-[#fabf37] rounded-full shadow-[0_0_8px_rgba(250,191,55,0.4)]" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 2, repeat: Infinity, delay: idx * 0.1 }} />
-                                    <h4 className="text-[9px] font-black uppercase text-black tracking-[0.15em] group-hover/item:text-[#fabf37] transition-colors">{cat.title}</h4>
+                                    <h4 className="text-sm md:text-base font-black uppercase text-black tracking-[0.12em] group-hover/item:text-[#fabf37] transition-colors">{cat.title}</h4>
                                   </div>
                                   <div className="flex flex-col gap-1">
                                     {cat.items.map((sub: string, subIdx: number) => (
@@ -443,7 +443,7 @@ export const Navbar = React.memo(({
                                         className="w-full flex items-center justify-between px-2.5 py-1 rounded-full bg-[#f3f3f5] hover:bg-[#fabf37] group/subitem transition-all text-left relative overflow-hidden"
                                         initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 + subIdx * 0.02 }}
                                       >
-                                        <span className="text-[8px] font-black uppercase tracking-widest text-black/60 group-hover/subitem:text-black transition-colors relative z-10">{sub}</span>
+                                        <span className="text-sm font-black uppercase tracking-wider text-black/70 group-hover/subitem:text-black transition-colors relative z-10">{t(sub)}</span>
                                         <div className="absolute inset-0 bg-[#fabf37]/10 opacity-0 group-hover/subitem:opacity-100 transition-opacity" />
                                       </motion.button>
                                     ))}
@@ -461,15 +461,15 @@ export const Navbar = React.memo(({
                             <div className="flex items-center gap-4">
                               <div className="flex items-center gap-2">
                                 <motion.div className="size-1 bg-green-500 rounded-full" animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 1.5, repeat: Infinity }} />
-                                <span className="font-mono text-[7px] text-black/30 uppercase tracking-[0.2em]">Global_Sync: Stable</span>
+                                <span className="font-mono text-[7px] text-black/30 uppercase tracking-[0.2em]">{t("navbar_global_sync_stable")}</span>
                               </div>
                               <div className="flex items-center gap-1">
                                 <Activity className="size-2.5 text-black/20" />
-                                <span className="font-mono text-[7px] text-black/30 uppercase tracking-[0.2em]">{link.categories?.length || 0} Categories Active</span>
+                                <span className="font-mono text-[7px] text-black/30 uppercase tracking-[0.2em]">{link.categories?.length || 0} {t("navbar_categories_active")}</span>
                               </div>
                             </div>
                             <motion.button onClick={() => handleInternalPageChange('products')} className="text-[8px] font-black uppercase tracking-widest text-black/40 hover:text-[#fabf37] underline underline-offset-4 transition-colors flex items-center gap-1 group" whileHover={{ x: 2 }}>
-                              <span>Explore Full Catalog</span>
+                              <span>{t("navbar_explore_full_catalog")}</span>
                               <motion.span className="opacity-0 group-hover:opacity-100" animate={{ x: [0, 3, 0] }} transition={{ duration: 1, repeat: Infinity }}>→</motion.span>
                             </motion.button>
                           </motion.div>
@@ -510,7 +510,7 @@ export const Navbar = React.memo(({
                         className="flex items-center gap-1 px-2.5 md:px-3 h-[28px] md:h-[34px] bg-white rounded-full shadow-sm border border-black/5 hover:border-[#fabf37]/20 transition-all group relative overflow-hidden"
                       >
                         <motion.div className="absolute inset-0 bg-gradient-to-r from-[#fabf37]/0 via-[#fabf37]/10 to-[#fabf37]/0" initial={{ x: '-100%' }} whileHover={{ x: '100%' }} transition={{ duration: 0.6 }} />
-                        <span className="text-[7.5px] md:text-[8px] font-black uppercase tracking-widest text-black relative z-10">Portal</span>
+                        <span className="text-[7.5px] md:text-[8px] font-black uppercase tracking-widest text-black relative z-10">{t("navbar_portal")}</span>
                         <ChevronDown className={`size-2 text-black/30 transition-transform relative z-10 ${activeDropdown === "portal" ? "rotate-180" : ""}`} />
 
                         <DropdownMenu.Root open={activeDropdown === 'portal'} onOpenChange={(open) => !open && setActiveDropdown(null)}>
@@ -524,7 +524,7 @@ export const Navbar = React.memo(({
                                   <div className="absolute top-0 left-0 w-full h-1 bg-[#fabf37]" />
 
                                   <div className="mb-2 px-2 pt-1 flex items-center justify-between">
-                                    <span className="text-[8px] font-black uppercase tracking-widest text-black/40">Secure Access</span>
+                                    <span className="text-[8px] font-black uppercase tracking-widest text-black/40">{t("navbar_secure_access")}</span>
                                     <div className="size-1.5 bg-green-500 rounded-full animate-pulse" />
                                   </div>
 
@@ -540,7 +540,7 @@ export const Navbar = React.memo(({
                                   <motion.button onClick={() => { onAuthOpen('client'); setActiveDropdown(null); }} className="w-full text-left px-4 py-3 text-[9px] font-black uppercase bg-[#f4f4f5] hover:bg-[#eaeaea] rounded-xl transition-all group flex items-center justify-between relative overflow-hidden mb-2" whileHover={{ x: 2 }}>
                                     <div className="flex items-center gap-2.5">
                                       <Globe className="size-3 text-black/40 group-hover:text-black transition-colors" />
-                                      <span className="relative z-10 text-black tracking-wider">Client Portal</span>
+                                      <span className="relative z-10 text-black tracking-wider">{t("client_portal")}</span>
                                     </div>
                                     <motion.span className="text-black/20 group-hover:text-black text-[10px]" initial={{ x: -5, opacity: 0 }} whileHover={{ x: 0, opacity: 1 }}>→</motion.span>
                                   </motion.button>
@@ -548,7 +548,7 @@ export const Navbar = React.memo(({
                                     <motion.div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0" animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} />
                                     <div className="flex items-center gap-2.5">
                                       <Cpu className="size-3 text-black/40 group-hover:text-black relative z-10" />
-                                      <span className="relative z-10 text-black tracking-wider">Admin HQ</span>
+                                      <span className="relative z-10 text-black tracking-wider">{t("navbar_admin_hq")}</span>
                                     </div>
                                   </motion.button>
                                 </div>
@@ -560,7 +560,7 @@ export const Navbar = React.memo(({
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Content className="bg-black text-[#fabf37] px-2 py-1 rounded-md text-[7px] font-black uppercase tracking-wider shadow-xl border border-[#fabf37]/20" sideOffset={5}>
-                        Access Portal
+                        {t("navbar_access_portal")}
                         <Tooltip.Arrow className="fill-black" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
@@ -571,7 +571,7 @@ export const Navbar = React.memo(({
                   <Tooltip.Trigger asChild>
                     <motion.button
                       onClick={() => handleInternalPageChange('quotation-basket')}
-                      aria-label={quoteBasketCount ? `Quotation basket, ${quoteBasketCount} item${quoteBasketCount === 1 ? "" : "s"}` : "Quotation basket"}
+                      aria-label={t(quoteBasketCount ? `Quotation basket, ${quoteBasketCount} item${quoteBasketCount === 1 ? "" : "s"}` : "Quotation basket")}
                       className="after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:size-11 after:content-[''] relative size-[28px] md:size-[34px] bg-black rounded-full flex items-center justify-center shadow-lg mx-1 group"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
@@ -590,7 +590,7 @@ export const Navbar = React.memo(({
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content className="bg-black text-[#fabf37] px-2 py-1 rounded-md text-[7px] font-black uppercase tracking-wider shadow-xl border border-[#fabf37]/20" sideOffset={5}>
-                      Quote Basket {quoteBasketCount > 0 && `(${quoteBasketCount})`}
+                      {t("navbar_quote_basket")} {quoteBasketCount > 0 && `(${quoteBasketCount})`}
                       <Tooltip.Arrow className="fill-black" />
                     </Tooltip.Content>
                   </Tooltip.Portal>
@@ -633,7 +633,7 @@ export const Navbar = React.memo(({
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
                         <Tooltip.Content className="bg-black text-white px-2 py-1 rounded-md text-[7px] font-bold uppercase tracking-wider shadow-xl z-[6000]" sideOffset={5}>
-                          Language
+                          {t("navbar_language")}
                           <Tooltip.Arrow className="fill-black" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
@@ -649,10 +649,10 @@ export const Navbar = React.memo(({
                         >
                           {/* Header */}
                           <div className="flex items-center justify-between mb-3 pb-2 border-b border-black/5">
-                            <h4 className="text-[9px] font-black text-black/40 uppercase tracking-[0.2em]">Neural Node Selection</h4>
+                            <h4 className="text-[9px] font-black text-black/40 uppercase tracking-[0.2em]">{t("neural_node_selection")}</h4>
                             <div className="flex items-center gap-2">
                               <div className="size-1.5 rounded-full bg-green-500 animate-pulse" />
-                              <span className="text-[8px] font-bold text-black/40 uppercase tracking-widest">OS v2.5 Terminal</span>
+                              <span className="text-[8px] font-bold text-black/40 uppercase tracking-widest">{t("os_v25_terminal")}</span>
                             </div>
                           </div>
 
@@ -714,10 +714,10 @@ export const Navbar = React.memo(({
                                     : "bg-zinc-50 hover:bg-zinc-100 text-black/70"
                                     }`}
                                 >
-                                  <span className="text-base">{lang.flag}</span>
+                                  <span className="text-base">{t(lang.flag)}</span>
                                   <div className="flex flex-col">
-                                    <span className={`text-[10px] font-black uppercase tracking-wider ${language === lang.code ? "text-black" : "text-black/80 group-hover/lang:text-black transition-colors"}`}>{lang.code}</span>
-                                    <span className={`text-[8px] font-bold uppercase tracking-wider ${language === lang.code ? "text-black/60" : "text-black/40"}`}>{lang.name}</span>
+                                    <span className={`text-[10px] font-black uppercase tracking-wider ${language === lang.code ? "text-black" : "text-black/80 group-hover/lang:text-black transition-colors"}`}>{t(lang.code)}</span>
+                                    <span className={`text-[8px] font-bold uppercase tracking-wider ${language === lang.code ? "text-black/60" : "text-black/40"}`}>{t(lang.name)}</span>
                                   </div>
 
                                   {language === lang.code && (
@@ -730,8 +730,8 @@ export const Navbar = React.memo(({
 
                           {/* Footer */}
                           <div className="flex items-center justify-between mt-3 pt-3 border-t border-black/5">
-                            <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">46 Neural Nodes Active</span>
-                            <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">Sync: Optimal</span>
+                            <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">{t("navbar_46_neural_nodes_active")}</span>
+                            <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">{t("sync_optimal")}</span>
                           </div>
                         </motion.div>
                       </DropdownMenu.Content>
@@ -748,7 +748,7 @@ export const Navbar = React.memo(({
                         <motion.button
                           type="button"
                           onClick={(e: React.MouseEvent) => { e.stopPropagation(); item.action(); }}
-                          aria-label={item.label}
+                          aria-label={t(item.label)}
                           className="p-1 text-black/60 hover:text-black transition-all relative group after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:h-11 after:w-11 after:content-['']"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
@@ -759,7 +759,7 @@ export const Navbar = React.memo(({
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
                         <Tooltip.Content className="bg-black text-white px-2 py-1 rounded-md text-[7px] font-bold uppercase tracking-wider shadow-xl" sideOffset={5}>
-                          {item.label}
+                          {t(item.label)}
                           <Tooltip.Arrow className="fill-black" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
@@ -774,7 +774,7 @@ export const Navbar = React.memo(({
                   e.stopPropagation();
                   setIsMobileMenuOpen(prev => !prev);
                 }}
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-label={t(isMobileMenuOpen ? "Close menu" : "Open menu")}
                 aria-expanded={isMobileMenuOpen}
                 className="p-3 md:p-2 text-black/60 hover:text-black transition-all ml-0.5 relative group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
@@ -825,7 +825,7 @@ export const Navbar = React.memo(({
                         onClick={() => handleInternalPageChange(link.id || "home")}
                         className="flex-1 text-left py-3 min-h-11 text-[12px] font-bold uppercase tracking-wider text-black hover:text-[#fabf37] transition-colors"
                       >
-                        {link.name}
+                        {t(link.name)}
                       </button>
 
                       {/* Clicking arrow toggles dropdown */}
@@ -851,11 +851,11 @@ export const Navbar = React.memo(({
                           <div key={cat.id} className="py-1.5">
                             <div className="text-[9px] font-black uppercase text-[#fabf37] mb-0.5">{cat.title}</div>
                             {cat.items.map((item: string, idx: number) => (
-                              <button key={idx} onClick={() => handleInternalPageChange(cat.id)} className="block w-full text-left py-0.5 text-[10px] text-black/70 hover:text-black">{item}</button>
+                              <button key={idx} onClick={() => handleInternalPageChange(cat.id)} className="block w-full text-left py-1 text-xs text-black/70 hover:text-black">{t(item)}</button>
                             ))}
                           </div>
                         )) : link.items?.map((item: any) => (
-                          <button key={item.id + item.name} onClick={() => handleInternalPageChange(item.id)} className="block w-full text-left py-2.5 min-h-11 text-[10px] font-bold uppercase text-black/70 hover:text-black">
+                          <button key={item.id + item.name} onClick={() => handleInternalPageChange(item.id)} className="block w-full text-left py-2.5 min-h-11 text-xs font-bold uppercase text-black/70 hover:text-black">
                             {item.name}
                           </button>
                         ))}
@@ -874,10 +874,10 @@ export const Navbar = React.memo(({
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="size-1.5 rounded-full bg-green-500 animate-pulse" />
-                      <span className="text-[9px] font-black uppercase text-[rgb(255,255,255)] tracking-widest">Sustainability</span>
+                      <span className="text-[9px] font-black uppercase text-[rgb(255,255,255)] tracking-widest">{t("sustainability")}</span>
                     </div>
-                    <h4 className="text-base font-black text-black mb-1 uppercase tracking-tight">100% Eco-Friendly</h4>
-                    <p className="text-[11px] font-medium text-black/60 leading-relaxed max-w-[90%]">Our commitment to a greener future starts with every package we produce.</p>
+                    <h4 className="text-base font-black text-black mb-1 uppercase tracking-tight">{t("navbar_100_eco_friendly")}</h4>
+                    <p className="text-[11px] font-medium text-black/60 leading-relaxed max-w-[90%]">{t("navbar_our_commitment_to_a_greener")}</p>
                   </div>
                 </div>
 
@@ -902,10 +902,10 @@ export const Navbar = React.memo(({
                             className="w-[340px] bg-white border border-black/10 rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)] overflow-hidden p-3 font-['Poppins',sans-serif]"
                           >
                             <div className="flex items-center justify-between mb-3 pb-2 border-b border-black/5">
-                              <h4 className="text-[9px] font-black text-black/40 uppercase tracking-[0.2em]">Neural Node Selection</h4>
+                              <h4 className="text-[9px] font-black text-black/40 uppercase tracking-[0.2em]">{t("neural_node_selection")}</h4>
                               <div className="flex items-center gap-2">
                                 <div className="size-1.5 rounded-full bg-green-500 animate-pulse" />
-                                <span className="text-[8px] font-bold text-black/40 uppercase tracking-widest">OS v2.5 Terminal</span>
+                                <span className="text-[8px] font-bold text-black/40 uppercase tracking-widest">{t("os_v25_terminal")}</span>
                               </div>
                             </div>
 
@@ -967,10 +967,10 @@ export const Navbar = React.memo(({
                                       : "bg-zinc-50 hover:bg-zinc-100 text-black/70"
                                       }`}
                                   >
-                                    <span className="text-xl shadow-sm rounded-sm overflow-hidden">{lang.flag}</span>
+                                    <span className="text-xl shadow-sm rounded-sm overflow-hidden">{t(lang.flag)}</span>
                                     <div className="flex flex-col">
-                                      <span className={`text-[10px] font-black uppercase tracking-wider ${language === lang.code ? "text-black" : "text-black/80 group-hover/lang:text-black transition-colors"}`}>{lang.code}</span>
-                                      <span className={`text-[8px] font-bold uppercase tracking-wider ${language === lang.code ? "text-black/60" : "text-black/40"}`}>{lang.name}</span>
+                                      <span className={`text-[10px] font-black uppercase tracking-wider ${language === lang.code ? "text-black" : "text-black/80 group-hover/lang:text-black transition-colors"}`}>{t(lang.code)}</span>
+                                      <span className={`text-[8px] font-bold uppercase tracking-wider ${language === lang.code ? "text-black/60" : "text-black/40"}`}>{t(lang.name)}</span>
                                     </div>
 
                                     {language === lang.code && (
@@ -983,8 +983,8 @@ export const Navbar = React.memo(({
 
                             {/* Dropdown Footer */}
                             <div className="flex items-center justify-between mt-3 pt-3 border-t border-black/5">
-                              <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">46 Neural Nodes Active</span>
-                              <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">Sync: Optimal</span>
+                              <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">{t("navbar_46_neural_nodes_active")}</span>
+                              <span className="text-[8px] font-black text-black/30 uppercase tracking-[0.2em]">{t("sync_optimal")}</span>
                             </div>
                           </motion.div>
                         </DropdownMenu.Content>
@@ -997,11 +997,11 @@ export const Navbar = React.memo(({
 
 
                     <div className="flex flex-col items-center gap-4 mt-6 mb-2">
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black -mt-8">Made in Bangladesh 🇧🇩</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black -mt-8">{t("navbar_made_in_bangladesh_2")}</span>
                       <div className="flex items-center gap-3">
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all border border-black/5"><Facebook className="size-5" /></a>
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all border border-black/5"><Instagram className="size-5" /></a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 transition-all border border-black/5"><Linkedin className="size-5" /></a>
+                        <a href="https://www.facebook.com/paperwarefactory" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#1877F2] hover:bg-[#1877F2]/10 transition-all border border-black/5"><Facebook className="size-5" /></a>
+                        <a href="https://www.instagram.com/paperware_factory/" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#E4405F] hover:bg-[#E4405F]/10 transition-all border border-black/5"><Instagram className="size-5" /></a>
+                        <a href="https://www.linkedin.com/company/paperwarefactory/" target="_blank" rel="noopener noreferrer" className="size-10 flex items-center justify-center bg-black/5 rounded-full text-black/40 hover:text-[#0A66C2] hover:bg-[#0A66C2]/10 transition-all border border-black/5"><Linkedin className="size-5" /></a>
                       </div>
                     </div>
 
@@ -1027,7 +1027,7 @@ export const Navbar = React.memo(({
                         {[...posts.filter(p => !p.isHidden).slice(0, 6), ...posts.filter(p => !p.isHidden).slice(0, 6)].map((post, i) => (
                           <div key={`${post.id}-${i}`} className="flex items-center gap-5">
                             <div className="relative shrink-0">
-                              <img src={post.img} alt={post.platform} className="size-24 rounded-lg object-cover border border-black/10 shadow-sm" />
+                              <img src={post.img} alt={t(post.platform)} className="size-24 rounded-lg object-cover border border-black/10 shadow-sm" />
                               <div className={`absolute -bottom-2 -right-2 p-1.5 rounded-full border-2 border-white shadow-sm ${post.platform === 'Instagram' ? 'bg-pink-500 text-white' :
                                 post.platform === 'Facebook' ? 'bg-blue-600 text-white' :
                                   post.platform === 'LinkedIn' ? 'bg-sky-700 text-white' :
@@ -1040,9 +1040,9 @@ export const Navbar = React.memo(({
                               </div>
                             </div>
                             <div className="flex flex-col gap-1">
-                              <span className="text-xs font-bold uppercase tracking-wide text-black/90 max-w-[240px] truncate">{post.caption}</span>
+                              <span className="text-xs font-bold uppercase tracking-wide text-black/90 max-w-[240px] truncate">{t(post.caption)}</span>
                               <span className="text-[10px] font-medium text-black/50 flex items-center gap-2">
-                                {post.platform} <span className="size-1 rounded-full bg-black/30" /> {post.date}
+                                {t(post.platform)} <span className="size-1 rounded-full bg-black/30" /> {t(post.date)}
                               </span>
                             </div>
                             <div className="w-px h-16 bg-black/5 mx-2" />
@@ -1064,13 +1064,13 @@ export const Navbar = React.memo(({
                     >
                       {[...Array(4)].map((_, i) => (
                         <div key={i} className="flex items-center gap-8">
-                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">System Status: Online</span>
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">{t("navbar_system_status_online")}</span>
                           <span className="text-[9px] text-[#fabf37]">●</span>
-                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">Secure Connection</span>
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">{t("navbar_secure_connection")}</span>
                           <span className="text-[9px] text-[#fabf37]">●</span>
-                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">v2.5.0-beta</span>
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">{t("navbar_v2_5_0_beta")}</span>
                           <span className="text-[9px] text-[#fabf37]">●</span>
-                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">Paperware OS</span>
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/40">{t("navbar_paperware_os")}</span>
                           <span className="text-[9px] text-[#fabf37]">●</span>
                         </div>
                       ))}

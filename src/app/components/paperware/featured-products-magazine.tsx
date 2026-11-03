@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Zap, ArrowRight, ShoppingBasket as BasketIcon } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { useScrollScrub, clamp01 } from "@/app/lib/useScrollScrub";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Product {
   id: string;
@@ -17,6 +18,7 @@ interface FeaturedProductsMagazineProps {
 }
 
 export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedProductsMagazineProps) {
+  const { t } = useLanguage();
   const heroImgRef = React.useRef<HTMLDivElement>(null);
   // Scroll-scrubbed: the hero photo parallaxes inside its frame as the card crosses the viewport.
   useScrollScrub(() => {
@@ -55,7 +57,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
               <ImageWithFallback 
                 src={products[0]?.image} 
                 className="w-full h-full object-cover opacity-40 mix-blend-lighten"
-                alt={products[0]?.name}
+                alt={t(products[0]?.name)}
               />
             </div>
           </motion.div>
@@ -84,13 +86,13 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#fabf37] text-zinc-900 border-2 border-[#fabf37]/50">
                   <Zap className="size-4" />
-                  <span className="text-xs font-black uppercase tracking-widest">Featured Hero</span>
+                  <span className="text-xs font-black uppercase tracking-widest">{t("featured_products_magazine_featured_hero")}</span>
                 </div>
                 
                 <div className="space-y-2">
-                  <p className="text-zinc-400 text-sm font-bold uppercase tracking-widest">{products[0]?.category}</p>
+                  <p className="text-zinc-400 text-sm font-bold uppercase tracking-widest">{t(products[0]?.category)}</p>
                   <h3 className="text-4xl md:text-7xl font-black text-white leading-none tracking-tight max-w-2xl">
-                    {products[0]?.name}
+                    {t(products[0]?.name)}
                   </h3>
                 </div>
               </motion.div>
@@ -114,13 +116,13 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                 <div className="flex items-center gap-4 flex-wrap">
                   <div className="flex items-center gap-2">
                     <div className="size-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
-                    <span className="text-sm font-bold text-white uppercase tracking-wider">In Stock</span>
+                    <span className="text-sm font-bold text-white uppercase tracking-wider">{t("featured_products_magazine_in_stock")}</span>
                   </div>
                   <div className="h-6 w-px bg-white/20" />
-                  <span className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Premium Quality</span>
+                  <span className="text-sm font-bold text-zinc-400 uppercase tracking-wider">{t("featured_products_magazine_premium_quality")}</span>
                 </div>
                 <p className="text-zinc-300 text-base max-w-xl leading-relaxed">
-                  Our flagship eco-friendly packaging solution designed for excellence
+                  {t("featured_products_magazine_our_flagship_eco_friendly_packaging")}
                 </p>
               </div>
 
@@ -128,7 +130,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                 whileHover={{ x: 10 }}
                 className="hidden md:flex items-center gap-3 text-white font-black text-sm uppercase tracking-widest"
               >
-                Explore Details <ArrowRight className="size-5" />
+                {t("featured_products_magazine_explore_details")} <ArrowRight className="size-5" />
               </motion.div>
             </motion.div>
           </div>
@@ -156,11 +158,11 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                       <div className="space-y-3">
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 text-white">
                           <div className="size-1.5 bg-[#fabf37] rounded-full animate-pulse" />
-                          <span className="text-[10px] font-black uppercase tracking-widest">Spotlight</span>
+                          <span className="text-[10px] font-black uppercase tracking-widest">{t("featured_products_magazine_spotlight")}</span>
                         </div>
-                        <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">{product.category}</p>
+                        <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">{t(product.category)}</p>
                         <h3 className="text-2xl md:text-4xl font-black text-zinc-900 group-hover:text-[#fabf37] transition-colors leading-tight">
-                          {product.name}
+                          {t(product.name)}
                         </h3>
                       </div>
                     </div>
@@ -173,7 +175,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                       <ImageWithFallback 
                         src={product.image} 
                         className="relative w-full h-[250px] md:h-[300px] object-contain mix-blend-multiply"
-                        alt={product.name}
+                        alt={t(product.name)}
                       />
                     </motion.div>
                   </div>
@@ -182,7 +184,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-green-600">
                         <div className="size-2 bg-green-500 rounded-full animate-pulse" />
-                        <span className="text-xs font-bold uppercase">Available Now</span>
+                        <span className="text-xs font-bold uppercase">{t("featured_products_magazine_available_now")}</span>
                       </div>
                       <motion.div
                         whileHover={{ scale: 1.15 }}
@@ -199,7 +201,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                   <div className="space-y-4">
                     <div className="flex items-start justify-between">
                       <div className="text-[9px] font-black uppercase tracking-widest text-zinc-500 px-3 py-1 bg-zinc-50 rounded-full">
-                        {product.category}
+                        {t(product.category)}
                       </div>
                       <motion.div
                         whileHover={{ rotate: 90 }}
@@ -210,7 +212,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                     </div>
 
                     <h3 className="text-lg md:text-xl font-black text-zinc-900 group-hover:text-[#fabf37] transition-colors leading-tight pr-4">
-                      {product.name}
+                      {t(product.name)}
                     </h3>
 
                     <motion.div
@@ -220,7 +222,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                       <ImageWithFallback 
                         src={product.image} 
                         className="w-full h-[150px] md:h-[180px] object-contain mix-blend-multiply"
-                        alt={product.name}
+                        alt={t(product.name)}
                       />
                     </motion.div>
                   </div>
@@ -228,7 +230,7 @@ export function FeaturedProductsMagazine({ products, onProductClick }: FeaturedP
                   <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
                     <div className="flex items-center gap-1.5">
                       <div className="size-1.5 bg-green-500 rounded-full" />
-                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Ready</span>
+                      <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">{t("featured_products_magazine_ready")}</span>
                     </div>
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 15 }}

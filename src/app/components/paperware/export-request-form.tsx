@@ -4,6 +4,7 @@ import { useDialogFocus } from "../../hooks/useDialogFocus";
 import { mailtoUrl, openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Globe, Ship, Plane, Box, ArrowRight, ShieldCheck, CircleCheck, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Twitter, Plus, Trash2, Upload } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ExportRequestFormProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface ExportRequestFormProps {
 }
 
 export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
+  const { t } = useLanguage();
   useEscapeKey(isOpen, onClose);
   const dialogRef = React.useRef<HTMLDivElement>(null);
   useDialogFocus(dialogRef, isOpen);
@@ -99,7 +101,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
         ref={dialogRef}
           role="dialog"
         aria-modal="true"
-        aria-label="Export inquiry"
+        aria-label={t("export_request_form_export_inquiry")}
         className="fixed inset-0 z-[9999] flex justify-center items-start md:items-center bg-black/80 backdrop-blur-xl overflow-y-auto py-4 md:py-8"
         style={{ paddingTop: "max(env(safe-area-inset-top), 1rem)" }}
       >
@@ -128,16 +130,16 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
               >
                 <CircleCheck className="size-12 text-black" />
               </motion.div>
-              <h2 className="text-2xl font-black uppercase tracking-tighter">{INQUIRY_HANDOFF_TITLE}</h2>
+              <h2 className="text-2xl font-black uppercase tracking-tighter">{t(INQUIRY_HANDOFF_TITLE)}</h2>
               <p role="status" aria-live="polite" className="text-zinc-600 font-bold max-w-md text-sm">
-                {INQUIRY_HANDOFF_BODY}
+                {t(INQUIRY_HANDOFF_BODY)}
               </p>
-              <a href={mailHref} className="text-sm font-bold text-black underline underline-offset-4">Send by email instead</a>
+              <a href={mailHref} className="text-sm font-bold text-black underline underline-offset-4">{t("export_request_form_send_by_email_instead")}</a>
               <button 
                 onClick={onClose}
                 className="px-8 py-3 bg-black text-white rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-transform"
               >
-                Close Window
+                {t("export_request_form_close_window")}
               </button>
             </div>
           ) : (
@@ -151,13 +153,13 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                     className="inline-flex items-center gap-2 px-3 py-1 bg-[#fabf37] rounded-full text-black"
                   >
                     <Globe className="size-3" />
-                    <span className="text-[8px] font-black uppercase tracking-widest">Global Export</span>
+                    <span className="text-[8px] font-black uppercase tracking-widest">{t("export_request_form_global_export")}</span>
                   </motion.div>
                   <h2 className="text-xl font-black uppercase tracking-tighter leading-none">
-                    Initialize <br /> <span className="text-[#fabf37]">Cargo</span> Request
+                    {t("export_request_form_initialize")} <br /> <span className="text-[#fabf37]">{t("export_request_form_cargo")}</span> {t("export_request_form_request")}
                   </h2>
                   <p className="text-zinc-400 text-[10px] font-bold leading-relaxed">
-                    Connect with our logistics AI to optimize your international shipping route and compliance protocols.
+                    {t("export_request_form_connect_with_our_logistics_ai")}
                   </p>
                 </div>
 
@@ -165,11 +167,11 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <CircleCheck className="text-[#fabf37] size-4" />
-                      <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">24h Quote Response</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">{t("export_request_form_24h_quote_response")}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <CircleCheck className="text-[#fabf37] size-4" />
-                      <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Direct Port Access</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">{t("export_request_form_direct_port_access")}</span>
                     </div>
                   </div>
 
@@ -184,7 +186,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                         <Phone className="text-[#fabf37] size-3" />
                       </div>
                       <div>
-                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">Executive Support</p>
+                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">{t("exec_support")}</p>
                         <div className="flex items-center gap-2">
                           <p className="font-black text-white group-hover:text-[#fabf37] transition-colors leading-none text-[10px]">+09638-011101</p>
                           <motion.span 
@@ -208,7 +210,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                         <MessageCircle className="text-black size-3" />
                       </div>
                       <div>
-                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">WhatsApp</p>
+                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">{t("contact_menu_whatsapp")}</p>
                         <div className="flex items-center gap-2">
                           <p className="font-black text-white group-hover:text-[#fabf37] transition-colors leading-none text-[10px]">+880 1901-459110</p>
                           <motion.span 
@@ -230,7 +232,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                         <Mail className="text-black size-3" />
                       </div>
                       <div>
-                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">Formal Channel</p>
+                        <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-0.5">{t("formal_channel")}</p>
                         <p className="text-[8px] font-black text-white group-hover:text-[#fabf37] transition-colors break-all">paperwarefactory@gmail.com</p>
                       </div>
                     </a>
@@ -244,11 +246,11 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                   {/* Row 1: Company & Email */}
                   <div className="grid md:grid-cols-2 gap-6 items-start">
                     <div className="space-y-1.5">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Company Name</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("auth_modal_company_name")}</label>
                       <input 
                         type="text" 
                         required
-                        placeholder="Global Corp Inc."
+                        placeholder={t("export_request_form_global_corp_inc")}
                         className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors text-black"
                       />
                     </div>
@@ -256,10 +258,10 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                     {/* Emails Section */}
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Email Address</label>
+                        <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_email_address")}</label>
                         {emails.length < 3 && (
                           <button type="button" onClick={addEmail} className="text-[8px] font-bold text-[#fabf37] hover:underline flex items-center gap-1">
-                            <Plus className="size-3" /> Add
+                            <Plus className="size-3" /> {t("export_request_form_add")}
                           </button>
                         )}
                       </div>
@@ -271,7 +273,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                               required={idx === 0}
                               value={email}
                               onChange={(e) => updateEmail(idx, e.target.value)}
-                              placeholder={idx === 0 ? "Primary Email Address" : "Secondary Email Address"}
+                              placeholder={t(idx === 0 ? "Primary Email Address" : "Secondary Email Address")}
                               className="flex-1 bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors text-black placeholder:text-zinc-300"
                             />
                             {idx > 0 && (
@@ -292,10 +294,10 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                   {/* Row 2: Contact & Apps (Combined per number) */}
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Contact Number(s)</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_contact_number_s")}</label>
                       {contactNumbers.length < 3 && (
                         <button type="button" onClick={addContactNumber} className="text-[8px] font-bold text-[#fabf37] hover:underline flex items-center gap-1">
-                          <Plus className="size-3" /> Add
+                          <Plus className="size-3" /> {t("export_request_form_add")}
                         </button>
                       )}
                     </div>
@@ -318,11 +320,11 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                               value={contact.number}
                               required={idx === 0}
                               onChange={(e) => updateContactNumber(idx, e.target.value)}
-                              placeholder={idx === 0 ? "Primary Contact Number" : "Alternative Number"}
+                              placeholder={t(idx === 0 ? "Primary Contact Number" : "Alternative Number")}
                               className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors text-black placeholder:text-zinc-300 pr-8"
                             />
                             <div className="flex flex-wrap gap-2 items-center">
-                              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mr-2">Available on:</span>
+                              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mr-2">{t("export_request_form_available_on")}</span>
                               {['WhatsApp', 'Viber', 'IMO', 'Direct Call'].map((app) => (
                                 <button
                                   key={app}
@@ -334,7 +336,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                                       : 'bg-white text-zinc-400 border-zinc-200 hover:border-black hover:text-black'
                                   }`}
                                 >
-                                  {app}
+                                  {t(app)}
                                 </button>
                               ))}
                             </div>
@@ -346,7 +348,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
 
                   {/* Row 3: Socials - 2x2 Grid for multiple inputs */}
                   <div className="space-y-2">
-                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Social Verification (Optional)</label>
+                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_social_verification_optional")}</label>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {[
                         { icon: Facebook, placeholder: "Facebook Profile URL", color: "hover:text-[#1877F2]" },
@@ -359,7 +361,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                           <div className="h-3 w-[1px] bg-zinc-200" />
                           <input 
                             type="text" 
-                            placeholder={social.placeholder}
+                            placeholder={t(social.placeholder)}
                             className="flex-1 bg-transparent border-none outline-none text-[10px] font-bold text-black placeholder:text-zinc-300"
                           />
                         </div>
@@ -370,23 +372,23 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                   {/* Row 4: Location */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-1.5">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Destination Country</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_destination_country")}</label>
                       <select className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors appearance-none text-black">
-                        <option>United Kingdom</option>
-                        <option>United Arab Emirates</option>
-                        <option>Germany</option>
-                        <option>United States</option>
-                        <option>Australia</option>
-                        <option>Saudi Arabia</option>
-                        <option>Netherlands</option>
+                        <option>{t("export_request_form_united_kingdom")}</option>
+                        <option>{t("export_request_form_united_arab_emirates")}</option>
+                        <option>{t("export_request_form_germany")}</option>
+                        <option>{t("export_request_form_united_states")}</option>
+                        <option>{t("export_request_form_australia")}</option>
+                        <option>{t("export_request_form_saudi_arabia")}</option>
+                        <option>{t("export_request_form_netherlands")}</option>
                       </select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Destination City / Port</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_destination_city_port")}</label>
                       <input 
                         type="text" 
                         required
-                        placeholder="e.g. London Gateway / Jebel Ali"
+                        placeholder={t("export_request_form_e_g_london_gateway_jebel")}
                         className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors text-black"
                       />
                     </div>
@@ -395,86 +397,86 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                   {/* Row 5: Area & Product */}
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-1.5">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Delivery Area / Zip Code</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_delivery_area_zip_code")}</label>
                       <input 
                         type="text" 
-                        placeholder="e.g. E1 6AN / Industrial Zone 2"
+                        placeholder={t("export_request_form_e_g_e1_6an_industrial")}
                         className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors text-black"
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Product Type</label>
+                      <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("action_modal_product_type")}</label>
                       <select className="w-full bg-transparent border-b border-zinc-200 py-2 font-black text-xs outline-none focus:border-[#fabf37] transition-colors appearance-none text-black" defaultValue="" required>
-                        <option value="" disabled>Select Product Type</option>
+                        <option value="" disabled>{t("export_request_form_select_product_type")}</option>
                         
-                        <optgroup label="Paper Cups & Accessories">
-                          <option>Paper Cup (All Sizes)</option>
-                          <option>Paper Cup Holder</option>
-                          <option>Paper Cup Jacket/Sleeve</option>
-                          <option>Paper Cup Carrier</option>
-                          <option>Ice Cream Cup & Bowl</option>
+                        <optgroup label={t("export_request_form_paper_cups_accessories")}>
+                          <option>{t("export_request_form_paper_cup_all_sizes")}</option>
+                          <option>{t("export_request_form_paper_cup_holder")}</option>
+                          <option>{t("export_request_form_paper_cup_jacket_sleeve")}</option>
+                          <option>{t("export_request_form_paper_cup_carrier")}</option>
+                          <option>{t("export_request_form_ice_cream_cup_bowl")}</option>
                         </optgroup>
 
-                        <optgroup label="Restaurant & Food Service">
-                          <option>Burger Box</option>
-                          <option>Pizza Box</option>
-                          <option>Food Box / Meal Box</option>
-                          <option>Chowmein / Noodle Box</option>
-                          <option>Meat Box</option>
-                          <option>Sandwich Box</option>
-                          <option>Fried Chicken/Fries Box</option>
-                          <option>Cake & Sweet Box</option>
-                          <option>Shawarma & Waffle Box</option>
-                          <option>Ice Cream Cone & Wrapper</option>
-                          <option>Sugar Sachet & Table Mat</option>
-                          <option>Food Menu</option>
-                          <option>Paper Straws & Cutlery</option>
+                        <optgroup label={t("export_request_form_restaurant_food_service")}>
+                          <option>{t("export_request_form_burger_box")}</option>
+                          <option>{t("export_request_form_pizza_box")}</option>
+                          <option>{t("export_request_form_food_box_meal_box")}</option>
+                          <option>{t("export_request_form_chowmein_noodle_box")}</option>
+                          <option>{t("export_request_form_meat_box")}</option>
+                          <option>{t("export_request_form_sandwich_box")}</option>
+                          <option>{t("export_request_form_fried_chicken_fries_box")}</option>
+                          <option>{t("export_request_form_cake_sweet_box")}</option>
+                          <option>{t("export_request_form_shawarma_waffle_box")}</option>
+                          <option>{t("export_request_form_ice_cream_cone_wrapper")}</option>
+                          <option>{t("export_request_form_sugar_sachet_table_mat")}</option>
+                          <option>{t("export_request_form_food_menu")}</option>
+                          <option>{t("export_request_form_paper_straws_cutlery")}</option>
                         </optgroup>
 
-                        <optgroup label="Office Stationery">
-                          <option>Business Card</option>
-                          <option>Envelope (All Sizes)</option>
-                          <option>Letterhead & Invoice Pad</option>
-                          <option>Money Receipt & Delivery Book</option>
-                          <option>Note Book & Diary</option>
-                          <option>File Folder</option>
+                        <optgroup label={t("export_request_form_office_stationery")}>
+                          <option>{t("export_request_form_business_card")}</option>
+                          <option>{t("export_request_form_envelope_all_sizes")}</option>
+                          <option>{t("export_request_form_letterhead_invoice_pad")}</option>
+                          <option>{t("export_request_form_money_receipt_delivery_book")}</option>
+                          <option>{t("export_request_form_note_book_diary")}</option>
+                          <option>{t("export_request_form_file_folder")}</option>
                         </optgroup>
 
-                        <optgroup label="Marketing & Retail Packaging">
-                          <option>Paper Carry Bag</option>
-                          <option>Brochure / Catalog / Magazine</option>
-                          <option>Flyer & Leaflet</option>
-                          <option>Sticker & Label</option>
-                          <option>Calendar</option>
-                          <option>Tissue Box</option>
-                          <option>Luxury Gift Box</option>
+                        <optgroup label={t("export_request_form_marketing_retail_packaging")}>
+                          <option>{t("export_request_form_paper_carry_bag")}</option>
+                          <option>{t("export_request_form_brochure_catalog_magazine")}</option>
+                          <option>{t("export_request_form_flyer_leaflet")}</option>
+                          <option>{t("export_request_form_sticker_label")}</option>
+                          <option>{t("export_request_form_calendar")}</option>
+                          <option>{t("export_request_form_tissue_box")}</option>
+                          <option>{t("export_request_form_luxury_gift_box")}</option>
                         </optgroup>
 
-                        <optgroup label="Pharmaceutical & Hospital">
-                          <option>Medicine Box</option>
-                          <option>Medicine Literature</option>
-                          <option>Patient & X-Ray File</option>
-                          <option>Prescription Pad</option>
-                          <option>Report Envelope</option>
+                        <optgroup label={t("export_request_form_pharmaceutical_hospital")}>
+                          <option>{t("export_request_form_medicine_box")}</option>
+                          <option>{t("export_request_form_medicine_literature")}</option>
+                          <option>{t("export_request_form_patient_x_ray_file")}</option>
+                          <option>{t("export_request_form_prescription_pad")}</option>
+                          <option>{t("export_request_form_report_envelope")}</option>
                         </optgroup>
 
-                        <optgroup label="FMCG & Garments">
-                          <option>Food & Beverage Packaging</option>
-                          <option>Personal & Home Care Packaging</option>
-                          <option>Confectionary Packaging</option>
-                          <option>Garment Hangtag</option>
-                          <option>Clothing Label</option>
-                          <option>Apparel Box</option>
+                        <optgroup label={t("export_request_form_fmcg_garments")}>
+                          <option>{t("export_request_form_food_beverage_packaging")}</option>
+                          <option>{t("export_request_form_personal_home_care_packaging")}</option>
+                          <option>{t("export_request_form_confectionary_packaging")}</option>
+                          <option>{t("export_request_form_garment_hangtag")}</option>
+                          <option>{t("export_request_form_clothing_label")}</option>
+                          <option>{t("export_request_form_apparel_box")}</option>
                         </optgroup>
 
-                        <option value="custom">Other / Custom Request</option>
+                        <option value="custom">{t("export_request_form_other_custom_request")}</option>
                       </select>
                     </div>
                   </div>
 
                   {/* Row 6: Quantity */}
                   <div className="space-y-1.5">
-                     <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Est. Quantity (Units)</label>
+                     <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_est_quantity_units")}</label>
                      <input 
                        type="number" 
                        placeholder="50,000"
@@ -484,7 +486,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
 
                   {/* Certifications */}
                   <div className="space-y-3">
-                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Required Certifications</label>
+                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_required_certifications")}</label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {[
                         { id: 'fsc', label: 'FSC Certified' },
@@ -497,23 +499,23 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                           <div className="size-3.5 border border-zinc-300 rounded flex items-center justify-center group-has-[:checked]:bg-[#fabf37] group-has-[:checked]:border-[#fabf37]">
                             <CircleCheck className="size-2.5 text-black opacity-0 group-has-[:checked]:opacity-100" />
                           </div>
-                          <span className="text-[8px] font-black uppercase tracking-tight text-black group-has-[:checked]:text-white">{cert.label}</span>
+                          <span className="text-[8px] font-black uppercase tracking-tight text-black group-has-[:checked]:text-white">{t(cert.label)}</span>
                         </label>
                       ))}
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Special Requirements / Compliance</label>
+                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_special_requirements_compliance")}</label>
                     <textarea 
-                      placeholder="Mention FDA/ISO specifics or branding needs..."
+                      placeholder={t("export_request_form_mention_fda_iso_specifics_or")}
                       rows={2}
                       className="w-full bg-zinc-100/50 rounded-2xl p-4 font-bold text-[10px] outline-none focus:ring-1 ring-[#fabf37] transition-all text-black"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">Product Sample / Design File</label>
+                    <label className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("export_request_form_product_sample_design_file")}</label>
                     <div className="relative group">
                       <div className={`border-2 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center text-center transition-all cursor-pointer ${attachment ? 'border-[#fabf37] bg-[#fabf37]/5' : 'border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50'}`}>
                         <input 
@@ -524,15 +526,15 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                               setAttachment(e.target.files[0]);
                             }
                           }}
-                          aria-label="Attach a reference image"
+                          aria-label={t("export_request_form_attach_a_reference_image")}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
                         {attachment ? (
                           <div className="flex flex-col items-center">
                             <div className="size-10 bg-white rounded-xl shadow-sm flex items-center justify-center mb-2 overflow-hidden">
-                              <img loading="lazy" decoding="async" src={URL.createObjectURL(attachment)} alt="Preview" className="w-full h-full object-cover" />
+                              <img loading="lazy" decoding="async" src={URL.createObjectURL(attachment)} alt={t("export_request_form_preview")} className="w-full h-full object-cover" />
                             </div>
-                            <p className="text-[10px] font-black text-black">{attachment.name}</p>
+                            <p className="text-[10px] font-black text-black">{t(attachment.name)}</p>
                             <p className="text-[8px] font-bold text-zinc-400">{(attachment.size / 1024 / 1024).toFixed(2)} MB</p>
                             <button 
                               type="button"
@@ -551,8 +553,8 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                             <div className="size-8 bg-zinc-100 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                               <Upload className="size-4 text-zinc-400" />
                             </div>
-                            <p className="text-[10px] font-bold text-zinc-500">Click to upload or drag and drop</p>
-                            <p className="text-[8px] font-bold text-zinc-400 mt-1">SVG, PNG, JPG (Max 10MB)</p>
+                            <p className="text-[10px] font-bold text-zinc-500">{t("export_request_form_click_to_upload_or_drag")}</p>
+                            <p className="text-[8px] font-bold text-zinc-400 mt-1">{t("export_request_form_svg_png_jpg_max_10mb")}</p>
                           </>
                         )}
                       </div>
@@ -563,7 +565,7 @@ export function ExportRequestForm({ isOpen, onClose }: ExportRequestFormProps) {
                     type="submit"
                     className="w-full bg-black text-white py-4 rounded-full font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-xl"
                   >
-                    Send Export Intent <ArrowRight className="size-4 text-[#fabf37]" />
+                    {t("export_request_form_send_export_intent")} <ArrowRight className="size-4 text-[#fabf37]" />
                   </button>
                 </form>
               </div>

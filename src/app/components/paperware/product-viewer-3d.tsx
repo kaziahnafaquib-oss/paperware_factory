@@ -94,7 +94,7 @@ export function ProductViewer3D() {
               >
                 <ImageWithFallback 
                   src={views.find(v => v.id === activeView)?.img || ""} 
-                  alt="3D Cup Preview" 
+                  alt={t("product_viewer_3d_3d_cup_preview")} 
                   className="max-h-full max-w-full object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.5)] transition-all duration-500"
                 />
               </motion.div>
@@ -103,7 +103,7 @@ export function ProductViewer3D() {
               <div className="absolute top-8 left-8 flex flex-col gap-2">
                 <div className="px-4 py-2 bg-white/80 backdrop-blur-xl border border-black/10 rounded-full flex items-center gap-2">
                   <Rotate3d className="size-4 text-[#fabf37]" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-black">360° Interactive</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-black">{t("product_viewer_3d_360_interactive")}</span>
                 </div>
               </div>
 
@@ -131,7 +131,7 @@ export function ProductViewer3D() {
                       : "bg-black/5 text-zinc-500 hover:bg-black/10"
                   }`}
                 >
-                  {v.name}
+                  {t(v.name)}
                 </button>
               ))}
             </div>
@@ -150,7 +150,7 @@ export function ProductViewer3D() {
                 360° <br /> {t('precision')} <br /> <span className="text-zinc-400 italic">{t('stable_render')}.</span>
               </h2>
               <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-xl uppercase italic">
-                Experience our packaging solutions in full volumetric detail before the first sheet is printed.
+                {t("product_viewer_3d_experience_our_packaging_solutions_in")}
               </p>
             </div>
 
@@ -165,15 +165,15 @@ export function ProductViewer3D() {
                     <item.icon className="size-6" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{item.title}</p>
-                    <p className="text-xl font-bold text-black">{item.val}</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t(item.title)}</p>
+                    <p className="text-xl font-bold text-black">{t(item.val)}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <button className="bg-black text-white px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-[#fabf37] hover:text-black transition-all flex items-center gap-4 shadow-2xl">
-              Request 3D Custom Sample <ArrowRight className="size-4" />
+              {t("product_viewer_3d_request_3d_custom_sample")} <ArrowRight className="size-4" />
             </button>
           </div>
         </div>

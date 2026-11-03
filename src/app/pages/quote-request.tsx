@@ -8,8 +8,10 @@ import {
   FileCheck, Layers, Ship, CreditCard, Save, Plus, Trash2, Eye,
   AlertCircle, Coins, ArrowRight
 } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 export function QuoteRequestPage() {
+  const { t } = useLanguage();
   const [handedOff, setHandedOff] = useState(false);
   const [certifications, setCertifications] = useState({
     fsc: false,
@@ -120,12 +122,12 @@ export function QuoteRequestPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Export & Bulk Orders</span>
+          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("quote_request_export_bulk_orders")}</span>
           <h1 className="text-[48px] md:text-[72px] font-black uppercase tracking-tighter leading-none text-white mt-4 mb-6">
-            Request a Quotation
+            {t("quote_request_request_a_quotation")}
           </h1>
           <p className="text-zinc-400 font-bold text-lg max-w-2xl mx-auto">
-            Complete export request form for international and bulk domestic orders with full certification support.
+            {t("quote_request_complete_export_request_form_for")}
           </p>
         </motion.div>
 
@@ -140,43 +142,43 @@ export function QuoteRequestPage() {
             <div className="space-y-8">
               <div className="flex items-center gap-3 text-[#fabf37]">
                 <Building2 className="size-6" />
-                <h4 className="text-lg font-black uppercase tracking-widest">Business Info</h4>
+                <h4 className="text-lg font-black uppercase tracking-widest">{t("bulk_order_business_info")}</h4>
               </div>
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Company Name</label>
-                  <input aria-label="Company Name" 
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("auth_modal_company_name")}</label>
+                  <input aria-label={t("auth_modal_company_name")} 
                     name="companyName"
                     value={formData.companyName}
                     onChange={handleInputChange}
-                    placeholder="e.g. Acme Corporation"
+                    placeholder={t("bulk_order_e_g_acme_corporation")}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Business Category</label>
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_business_category")}</label>
                   <select 
                     name="businessType"
-                    aria-label="Business type"
+                    aria-label={t("quote_request_business_type")}
                     value={formData.businessType}
                     onChange={handleInputChange}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                   >
-                    <option>Corporate</option>
-                    <option>FMCG Brand</option>
-                    <option>Pharmaceutical</option>
-                    <option>Restaurant Chain</option>
-                    <option>Garments Accessories</option>
-                    <option>Export Business</option>
+                    <option>{t("corporate")}</option>
+                    <option>{t("bulk_order_fmcg_brand")}</option>
+                    <option>{t("pharmaceutical")}</option>
+                    <option>{t("bulk_order_restaurant_chain")}</option>
+                    <option>{t("bulk_order_garments_accessories")}</option>
+                    <option>{t("quote_request_export_business")}</option>
                   </select>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Trade / TIN Number</label>
-                  <input aria-label="Trade / TIN Number" 
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_trade_tin_number")}</label>
+                  <input aria-label={t("bulk_order_trade_tin_number")} 
                     name="tin"
                     value={formData.tin}
                     onChange={handleInputChange}
-                    placeholder="Business Registration Number"
+                    placeholder={t("bulk_order_business_registration_number")}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                   />
                 </div>
@@ -187,22 +189,22 @@ export function QuoteRequestPage() {
             <div className="space-y-8">
               <div className="flex items-center gap-3 text-[#fabf37]">
                 <User className="size-6" />
-                <h4 className="text-lg font-black uppercase tracking-widest">Contact Point</h4>
+                <h4 className="text-lg font-black uppercase tracking-widest">{t("bulk_order_contact_point")}</h4>
               </div>
               <div className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Liaison Name</label>
-                  <input aria-label="Liaison Name" 
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_liaison_name")}</label>
+                  <input aria-label={t("bulk_order_liaison_name")} 
                     name="contactPerson"
                     value={formData.contactPerson}
                     onChange={handleInputChange}
-                    placeholder="Procurement Manager"
+                    placeholder={t("bulk_order_procurement_manager")}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Email</label>
-                  <input aria-label="Email" 
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("home_bottom_email")}</label>
+                  <input aria-label={t("home_bottom_email")} 
                     type="email"
                     name="email"
                     value={formData.email}
@@ -212,12 +214,12 @@ export function QuoteRequestPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Phone</label>
-                  <input aria-label="Phone" 
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("home_bottom_phone")}</label>
+                  <input aria-label={t("home_bottom_phone")} 
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="+880 XXXX-XXXXXX"
+                    placeholder={t("bulk_order_880_xxxx_xxxxxx")}
                     className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                   />
                 </div>
@@ -230,60 +232,60 @@ export function QuoteRequestPage() {
             <div className="space-y-8">
               <div className="flex items-center gap-3 text-[#fabf37]">
                 <Globe className="size-6" />
-                <h4 className="text-lg font-black uppercase tracking-widest">Shipping & Product Details</h4>
+                <h4 className="text-lg font-black uppercase tracking-widest">{t("quote_request_shipping_product_details")}</h4>
               </div>
               <div className="grid md:grid-cols-2 gap-12">
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Destination Country</label>
-                    <input aria-label="Destination Country" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("export_request_form_destination_country")}</label>
+                    <input aria-label={t("export_request_form_destination_country")} 
                       name="destinationCountry"
                       value={formData.destinationCountry}
                       onChange={handleInputChange}
-                      placeholder="e.g. United Kingdom"
+                      placeholder={t("quote_request_e_g_united_kingdom")}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Destination City / Port</label>
-                    <input aria-label="Destination City / Port" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("export_request_form_destination_city_port")}</label>
+                    <input aria-label={t("export_request_form_destination_city_port")} 
                       name="destinationCity"
                       value={formData.destinationCity}
                       onChange={handleInputChange}
-                      placeholder="e.g. London Gateway / Jebel Ali"
+                      placeholder={t("export_request_form_e_g_london_gateway_jebel")}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Delivery Area / Zip Code</label>
-                    <input aria-label="Delivery Area / Zip Code" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("export_request_form_delivery_area_zip_code")}</label>
+                    <input aria-label={t("export_request_form_delivery_area_zip_code")} 
                       name="zipCode"
                       value={formData.zipCode}
                       onChange={handleInputChange}
-                      placeholder="e.g. E1 6AN / Industrial Zone 2"
+                      placeholder={t("export_request_form_e_g_e1_6an_industrial")}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                     />
                   </div>
                 </div>
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Product Type</label>
-                    <select aria-label="Product Type" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("action_modal_product_type")}</label>
+                    <select aria-label={t("action_modal_product_type")} 
                       name="productType"
                       value={formData.productType}
                       onChange={handleInputChange}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                     >
-                      <option value="">Select Product Type</option>
-                      <option>Paper Cups</option>
-                      <option>Paper Bags</option>
-                      <option>Food Boxes</option>
-                      <option>Pharma Packaging</option>
+                      <option value="">{t("export_request_form_select_product_type")}</option>
+                      <option>{t("quote_request_paper_cups")}</option>
+                      <option>{t("partnerprogram_paper_bags")}</option>
+                      <option>{t("partnerprogram_food_boxes")}</option>
+                      <option>{t("quote_request_pharma_packaging")}</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Est. Quantity (Units)</label>
-                    <input aria-label="Est. Quantity (Units)" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("export_request_form_est_quantity_units")}</label>
+                    <input aria-label={t("export_request_form_est_quantity_units")} 
                       name="quantity"
                       value={formData.quantity}
                       onChange={handleInputChange}
@@ -292,9 +294,9 @@ export function QuoteRequestPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Expected Timeline</label>
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("bulk_order_expected_timeline")}</label>
                     <div className="relative">
-                      <input aria-label="Expected Timeline" 
+                      <input aria-label={t("bulk_order_expected_timeline")} 
                         type="date"
                         name="expectedDate"
                         value={formData.expectedDate}
@@ -313,15 +315,15 @@ export function QuoteRequestPage() {
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
               <FileText className="size-6" />
-              <h4 className="text-lg font-black uppercase tracking-widest">Special Requirements / Compliance</h4>
+              <h4 className="text-lg font-black uppercase tracking-widest">{t("export_request_form_special_requirements_compliance")}</h4>
             </div>
             <textarea 
-              aria-label="Special requirements / compliance"
+              aria-label={t("quote_request_special_requirements_compliance")}
               name="requirements"
               value={formData.requirements}
               onChange={handleInputChange}
               rows={5}
-              placeholder="Mention FDA/ISO specifics, branding needs, or special packaging requirements..."
+              placeholder={t("quote_request_mention_fda_iso_specifics_branding")}
               className="w-full bg-black/60 border border-white/10 rounded-[40px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700 resize-none"
             />
           </div>
@@ -330,7 +332,7 @@ export function QuoteRequestPage() {
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
               <CheckCircle2 className="size-6" />
-              <h4 className="text-lg font-black uppercase tracking-widest">Required Certifications</h4>
+              <h4 className="text-lg font-black uppercase tracking-widest">{t("export_request_form_required_certifications")}</h4>
             </div>
             <div className="bg-black/40 rounded-[40px] p-8">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -347,7 +349,7 @@ export function QuoteRequestPage() {
                       onChange={(e) => setCertifications({...certifications, [cert.id]: e.target.checked})}
                       className="size-5 rounded border-2 border-zinc-600 bg-black/60 text-[#fabf37] focus:ring-[#fabf37] cursor-pointer"
                     />
-                    <span className="text-sm font-bold text-zinc-400 group-hover:text-white transition-colors">{cert.label}</span>
+                    <span className="text-sm font-bold text-zinc-400 group-hover:text-white transition-colors">{t(cert.label)}</span>
                   </label>
                 ))}
               </div>
@@ -359,14 +361,14 @@ export function QuoteRequestPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 text-[#fabf37]">
                 <Layers className="size-6" />
-                <h4 className="text-lg font-black uppercase tracking-widest">Product Lines</h4>
+                <h4 className="text-lg font-black uppercase tracking-widest">{t("quote_request_product_lines")}</h4>
               </div>
               <button 
                 onClick={addProductLine}
                 className="flex items-center gap-2 bg-[#fabf37]/10 border border-[#fabf37]/30 px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider text-[#fabf37] hover:bg-[#fabf37] hover:text-black transition-all"
               >
                 <Plus className="size-4" />
-                Add Product
+                {t("quote_request_add_product")}
               </button>
             </div>
             <div className="space-y-4">
@@ -380,7 +382,7 @@ export function QuoteRequestPage() {
                     className="bg-black/40 rounded-[40px] p-6 space-y-4"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-black uppercase tracking-wider text-zinc-500">Product #{index + 1}</span>
+                      <span className="text-xs font-black uppercase tracking-wider text-zinc-500">{t("quote_request_product")}{index + 1}</span>
                       {productLines.length > 1 && (
                         <button 
                           onClick={() => removeProductLine(line.id)}
@@ -392,24 +394,24 @@ export function QuoteRequestPage() {
                     </div>
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Product Type</label>
-                        <select aria-label="Product Type" 
+                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">{t("action_modal_product_type")}</label>
+                        <select aria-label={t("action_modal_product_type")} 
                           value={line.productType}
                           onChange={(e) => handleProductLineChange(line.id, 'productType', e.target.value)}
                           className="w-full bg-black/60 border border-white/10 rounded-[24px] px-6 py-4 text-xs font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                         >
-                          <option value="">Select</option>
-                          <option>Paper Cups - 8oz</option>
-                          <option>Paper Cups - 12oz</option>
-                          <option>Paper Bags - Small</option>
-                          <option>Paper Bags - Large</option>
-                          <option>Food Boxes - 500ml</option>
-                          <option>Food Boxes - 1L</option>
+                          <option value="">{t("quote_request_select")}</option>
+                          <option>{t("quote_request_paper_cups_8oz")}</option>
+                          <option>{t("quote_request_paper_cups_12oz")}</option>
+                          <option>{t("quote_request_paper_bags_small")}</option>
+                          <option>{t("quote_request_paper_bags_large")}</option>
+                          <option>{t("quote_request_food_boxes_500ml")}</option>
+                          <option>{t("quote_request_food_boxes_1l")}</option>
                         </select>
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Quantity</label>
-                        <input aria-label="Quantity" 
+                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">{t("action_modal_quantity")}</label>
+                        <input aria-label={t("action_modal_quantity")} 
                           type="number"
                           value={line.quantity}
                           onChange={(e) => handleProductLineChange(line.id, 'quantity', e.target.value)}
@@ -418,11 +420,11 @@ export function QuoteRequestPage() {
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">Customization</label>
-                        <input aria-label="Customization" 
+                        <label className="text-[9px] font-black uppercase tracking-wider text-zinc-600 px-4">{t("quote_request_customization")}</label>
+                        <input aria-label={t("quote_request_customization")} 
                           value={line.customization}
                           onChange={(e) => handleProductLineChange(line.id, 'customization', e.target.value)}
-                          placeholder="Logo print, colors..."
+                          placeholder={t("quote_request_logo_print_colors")}
                           className="w-full bg-black/60 border border-white/10 rounded-[24px] px-6 py-4 text-xs font-bold text-white focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-700"
                         />
                       </div>
@@ -437,52 +439,52 @@ export function QuoteRequestPage() {
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
               <Ship className="size-6" />
-              <h4 className="text-lg font-black uppercase tracking-widest">Trade & Payment Terms</h4>
+              <h4 className="text-lg font-black uppercase tracking-widest">{t("quote_request_trade_payment_terms")}</h4>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Incoterms</label>
-                <select aria-label="Incoterms" 
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_incoterms")}</label>
+                <select aria-label={t("quote_request_incoterms")} 
                   name="incoterms"
                   value={formData.incoterms}
                   onChange={handleInputChange}
                   className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                 >
-                  <option>FOB (Free On Board)</option>
-                  <option>CIF (Cost, Insurance & Freight)</option>
-                  <option>DDP (Delivered Duty Paid)</option>
-                  <option>EXW (Ex Works)</option>
-                  <option>FCA (Free Carrier)</option>
+                  <option>{t("quote_request_fob_free_on_board")}</option>
+                  <option>{t("quote_request_cif_cost_insurance_freight")}</option>
+                  <option>{t("quote_request_ddp_delivered_duty_paid")}</option>
+                  <option>{t("quote_request_exw_ex_works")}</option>
+                  <option>{t("quote_request_fca_free_carrier")}</option>
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Payment Terms</label>
-                <select aria-label="Payment Terms" 
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_payment_terms")}</label>
+                <select aria-label={t("quote_request_payment_terms")} 
                   name="paymentTerms"
                   value={formData.paymentTerms}
                   onChange={handleInputChange}
                   className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                 >
-                  <option>30% Advance, 70% Before Shipment</option>
-                  <option>50% Advance, 50% Before Shipment</option>
-                  <option>100% LC at Sight</option>
-                  <option>Net 30 Days</option>
-                  <option>Net 60 Days</option>
+                  <option>{t("quote_request_30_advance_70_before_shipment")}</option>
+                  <option>{t("quote_request_50_advance_50_before_shipment")}</option>
+                  <option>{t("quote_request_100_lc_at_sight")}</option>
+                  <option>{t("quote_request_net_30_days")}</option>
+                  <option>{t("quote_request_net_60_days")}</option>
                 </select>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Currency</label>
-                <select aria-label="Currency" 
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_currency")}</label>
+                <select aria-label={t("quote_request_currency")} 
                   name="currency"
                   value={formData.currency}
                   onChange={handleInputChange}
                   className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-6 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                 >
-                  <option>USD 🇺🇸</option>
-                  <option>EUR 🇪🇺</option>
-                  <option>GBP 🇬🇧</option>
-                  <option>BDT 🇧🇩</option>
-                  <option>AED 🇦🇪</option>
+                  <option>{t("quote_request_usd")}</option>
+                  <option>{t("quote_request_eur")}</option>
+                  <option>{t("quote_request_gbp")}</option>
+                  <option>{t("quote_request_bdt")}</option>
+                  <option>{t("quote_request_aed")}</option>
                 </select>
               </div>
             </div>
@@ -492,7 +494,7 @@ export function QuoteRequestPage() {
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
               <Package className="size-6" />
-              <h4 className="text-lg font-black uppercase tracking-widest">Additional Options</h4>
+              <h4 className="text-lg font-black uppercase tracking-widest">{t("quote_request_additional_options")}</h4>
             </div>
             <div className="bg-black/40 rounded-[40px] p-8">
               <div className="grid md:grid-cols-2 gap-8">
@@ -507,8 +509,8 @@ export function QuoteRequestPage() {
                     <div className="flex items-center gap-3">
                       <Eye className="size-5 text-[#fabf37]" />
                       <div>
-                        <span className="text-sm font-bold text-white block">Request Physical Sample</span>
-                        <span className="text-xs text-zinc-500">Before bulk order confirmation</span>
+                        <span className="text-sm font-bold text-white block">{t("quote_request_request_physical_sample")}</span>
+                        <span className="text-xs text-zinc-500">{t("quote_request_before_bulk_order_confirmation")}</span>
                       </div>
                     </div>
                   </label>
@@ -522,8 +524,8 @@ export function QuoteRequestPage() {
                     <div className="flex items-center gap-3">
                       <Palette className="size-5 text-[#fabf37]" />
                       <div>
-                        <span className="text-sm font-bold text-white block">Custom Branding & Print</span>
-                        <span className="text-xs text-zinc-500">Logo, colors, design elements</span>
+                        <span className="text-sm font-bold text-white block">{t("quote_request_custom_branding_print")}</span>
+                        <span className="text-xs text-zinc-500">{t("quote_request_logo_colors_design_elements")}</span>
                       </div>
                     </div>
                   </label>
@@ -537,43 +539,43 @@ export function QuoteRequestPage() {
                     <div className="flex items-center gap-3">
                       <TrendingDown className="size-5 text-[#fabf37]" />
                       <div>
-                        <span className="text-sm font-bold text-white block">Volume Discount Request</span>
-                        <span className="text-xs text-zinc-500">For bulk orders above 100K units</span>
+                        <span className="text-sm font-bold text-white block">{t("quote_request_volume_discount_request")}</span>
+                        <span className="text-xs text-zinc-500">{t("quote_request_for_bulk_orders_above_100k")}</span>
                       </div>
                     </div>
                   </label>
                 </div>
                 <div className="space-y-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Shipping Method</label>
-                    <select aria-label="Shipping Method" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_shipping_method")}</label>
+                    <select aria-label={t("quote_request_shipping_method")} 
                       name="shippingMethod"
                       value={formData.shippingMethod}
                       onChange={handleInputChange}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                     >
-                      <option>Sea Freight (20-40 days)</option>
-                      <option>Air Freight (5-7 days)</option>
-                      <option>Express Courier (2-3 days)</option>
+                      <option>{t("quote_request_sea_freight_20_40_days")}</option>
+                      <option>{t("quote_request_air_freight_5_7_days")}</option>
+                      <option>{t("quote_request_express_courier_2_3_days")}</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Preferred Contact Method</label>
-                    <select aria-label="Preferred Contact Method" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_preferred_contact_method")}</label>
+                    <select aria-label={t("quote_request_preferred_contact_method")} 
                       name="preferredContact"
                       value={formData.preferredContact}
                       onChange={handleInputChange}
                       className="w-full bg-black/60 border border-white/10 rounded-[32px] px-8 py-5 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all appearance-none cursor-pointer"
                     >
-                      <option>Email</option>
-                      <option>Phone Call</option>
-                      <option>WhatsApp</option>
-                      <option>Video Meeting</option>
+                      <option>{t("home_bottom_email")}</option>
+                      <option>{t("quote_request_phone_call")}</option>
+                      <option>{t("contact_menu_whatsapp")}</option>
+                      <option>{t("quote_request_video_meeting")}</option>
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">Past Order Reference (Optional)</label>
-                    <input aria-label="Past Order Reference (Optional)" 
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 px-6">{t("quote_request_past_order_reference_optional")}</label>
+                    <input aria-label={t("quote_request_past_order_reference_optional")} 
                       name="pastOrderRef"
                       value={formData.pastOrderRef}
                       onChange={handleInputChange}
@@ -590,7 +592,7 @@ export function QuoteRequestPage() {
           <div className="pt-12 border-t border-white/5 space-y-8">
             <div className="flex items-center gap-3 text-[#fabf37]">
               <Upload className="size-6" />
-              <h4 className="text-lg font-black uppercase tracking-widest">Product Sample / Design File</h4>
+              <h4 className="text-lg font-black uppercase tracking-widest">{t("export_request_form_product_sample_design_file")}</h4>
             </div>
             <div className="border-2 border-dashed border-white/10 rounded-[40px] p-12 text-center hover:border-[#fabf37] transition-colors cursor-pointer group">
               <input type="file" id="file-upload" className="hidden" accept=".svg,.png,.jpg,.jpeg,.pdf" multiple />
@@ -599,8 +601,8 @@ export function QuoteRequestPage() {
                   <Upload className="size-8 text-zinc-500 group-hover:text-[#fabf37] transition-colors" />
                 </div>
                 <div className="space-y-2">
-                  <p className="text-base font-black text-white">Click to upload or drag and drop</p>
-                  <p className="text-xs font-semibold text-zinc-500">SVG, PNG, JPG, PDF. Please also send your files in the WhatsApp chat after you submit.</p>
+                  <p className="text-base font-black text-white">{t("export_request_form_click_to_upload_or_drag")}</p>
+                  <p className="text-xs font-semibold text-zinc-500">{t("quote_request_svg_png_jpg_pdf_please")}</p>
                 </div>
               </label>
             </div>
@@ -610,9 +612,9 @@ export function QuoteRequestPage() {
           <div className="bg-[#fabf37] p-8 rounded-[40px] text-black flex gap-4">
             <Sparkles className="size-6 shrink-0 mt-1" />
             <div className="space-y-1">
-              <p className="text-xs font-black uppercase">Export Documentation Support</p>
+              <p className="text-xs font-black uppercase">{t("quote_request_export_documentation_support")}</p>
               <p className="text-[10px] font-bold opacity-70 leading-tight">
-                By submitting this form, you will be assigned a dedicated Export Specialist who will handle all documentation including commercial invoices, packing lists, certificates of origin, and customs clearance support.
+                {t("quote_request_by_submitting_this_form_you")}
               </p>
             </div>
           </div>
@@ -630,7 +632,7 @@ export function QuoteRequestPage() {
             }}
             className="w-full bg-[#fabf37] text-black py-8 rounded-[40px] font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 hover:bg-white transition-all shadow-2xl group"
           >
-            Send Export Intent
+            {t("export_request_form_send_export_intent")}
             <motion.div
               animate={{ x: [0, 5, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -640,8 +642,8 @@ export function QuoteRequestPage() {
           </motion.button>
           {handedOff && (
             <div role="status" aria-live="polite" className="rounded-[32px] border-2 border-[#fabf37] bg-[#fabf37]/10 p-6 space-y-2 text-white">
-              <p className="text-sm font-black">{INQUIRY_HANDOFF_TITLE}</p>
-              <p className="text-sm font-medium text-zinc-300 leading-relaxed">{INQUIRY_HANDOFF_BODY}</p>
+              <p className="text-sm font-black">{t(INQUIRY_HANDOFF_TITLE)}</p>
+              <p className="text-sm font-medium text-zinc-300 leading-relaxed">{t(INQUIRY_HANDOFF_BODY)}</p>
             </div>
           )}
         </motion.div>

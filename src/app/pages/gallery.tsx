@@ -10,6 +10,7 @@ import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterCups from "../../assets/video-posters/gallery-printed-cups.webp";
 import posterPress from "../../assets/video-posters/manufacturing-press.webp";
+import { useLanguage } from "../context/LanguageContext";
 
 // Real Paperware product photos (src/assets/products) and factory clips (public/media, see
 // public/media/SOURCES.txt). Labels are product categories, not client names.
@@ -26,6 +27,7 @@ const galleryImages: GalleryItem[] = [
 ];
 
 export function GalleryPage() {
+  const { t } = useLanguage();
   const headRef = React.useRef<HTMLDivElement>(null);
   const gridRef = React.useRef<HTMLDivElement>(null);
 
@@ -53,12 +55,12 @@ export function GalleryPage() {
     <div className="pt-32 pb-24 bg-white min-h-screen font-['Poppins',sans-serif] overflow-x-clip">
       <div className="container mx-auto px-4">
         <div ref={headRef} className="text-center mb-24 space-y-4 will-change-transform">
-          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Showcase</span>
+          <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("gallery_showcase")}</span>
           <h1 className="text-[52px] font-black uppercase tracking-tight leading-none text-black">
-            Our Work <br /> Portfolio
+            {t("gallery_our_work")} <br /> {t("gallery_portfolio")}
           </h1>
           <p className="text-zinc-400 font-bold max-w-xl mx-auto pt-4">
-            Take a look at some of the custom packaging solutions we've delivered to our prestigious clients across Bangladesh.
+            {t("gallery_take_a_look_at_some")}
           </p>
         </div>
 
@@ -80,15 +82,15 @@ export function GalleryPage() {
               ) : (
                 <img loading={i < 3 ? "eager" : "lazy"} decoding="async"
                   src={item.url}
-                  alt={item.title}
+                  alt={t(item.title)}
                   className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               )}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               <div className="pointer-events-none absolute inset-0 p-10 flex flex-col justify-end translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                <p className="text-[#fabf37] font-black uppercase tracking-[0.2em] text-[10px]">{item.client}</p>
-                <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-6">{item.title}</h3>
+                <p className="text-[#fabf37] font-black uppercase tracking-[0.2em] text-[10px]">{t(item.client)}</p>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-6">{t(item.title)}</h3>
                 <span aria-hidden="true" className="size-14 rounded-2xl bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-colors">
                   <Maximize2 className="size-6" />
                 </span>

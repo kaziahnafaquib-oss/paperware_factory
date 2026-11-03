@@ -64,13 +64,13 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
             className="flex items-center gap-3 mb-6"
           >
             <div className="size-2 rounded-full bg-[#fabf37]" />
-            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Retail Supply</span>
+            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("fmcg_garments_retail_supply")}</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            FMCG <br /> <span className="text-zinc-500">Supplies</span>
+            FMCG <br /> <span className="text-zinc-500">{t("fmcg_garments_supplies")}</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
-            High-volume retail packaging for the world's leading consumer brands. We combine durability with high-end aesthetics to drive shelf impact.
+            {t("fmcg_garments_high_volume_retail_packaging_for")}
           </p>
         </div>
       </section>
@@ -81,11 +81,11 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
           <div className="size-16 rounded-3xl bg-[#fabf37] flex items-center justify-center text-black shadow-xl">
             <ShoppingBasket className="size-8" />
           </div>
-          <h2 className="text-3xl font-black uppercase tracking-tighter italic text-black">FMCG Sector</h2>
-          <p className="text-zinc-500 font-bold leading-relaxed max-w-2xl">Focusing on high-run efficiency, moisture barriers, and vibrant color reproduction for consumer shelf dominance.</p>
+          <h2 className="text-3xl font-black uppercase tracking-tighter italic text-black">{t("fmcg_garments_fmcg_sector")}</h2>
+          <p className="text-zinc-500 font-bold leading-relaxed max-w-2xl">{t("fmcg_garments_focusing_on_high_run_efficiency")}</p>
           <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-black/40"><CircleCheck className="size-4 text-[#fabf37]" /> Moisture Lock</li>
-              <li className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-black/40"><CircleCheck className="size-4 text-[#fabf37]" /> High Speed Die-Cut</li>
+              <li className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-black/40"><CircleCheck className="size-4 text-[#fabf37]" /> {t("fmcg_garments_moisture_lock")}</li>
+              <li className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-black/40"><CircleCheck className="size-4 text-[#fabf37]" /> {t("fmcg_garments_high_speed_die_cut")}</li>
           </ul>
         </div>
       </section>
@@ -101,7 +101,7 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
             >
               <div className="aspect-square overflow-hidden">
                 {p.image ? (
-                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <ImageWithFallback src={p.image} alt={t(p.name)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
                     <p.icon className="size-20" strokeWidth={1} />
@@ -113,13 +113,13 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
                    <div className="size-12 rounded-xl bg-zinc-50 flex items-center justify-center text-black group-hover:bg-black group-hover:text-[#fabf37] transition-all">
                      <p.icon className="size-5" />
                    </div>
-                   <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{p.category}</span>
+                   <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{t(p.category)}</span>
                 </div>
-                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{p.name}</h3>
-                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{p.desc}</p>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{t(p.name)}</h3>
+                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{t(p.desc)}</p>
                 <div className="flex items-center justify-between">
                   <button type="button" className="flex items-center gap-2 min-h-11 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
-                    Buy Now <ArrowRight className="size-4" />
+                    {t("fmcg_garments_buy_now")} <ArrowRight className="size-4" />
                   </button>
                   <div className="flex items-center gap-1">
                     <Zap className="size-3 text-[#fabf37]" />
@@ -139,13 +139,13 @@ export function FMCGSuppliesPage({ onProductClick }: { onProductClick: (p: any) 
         <div className="bg-[#fabf37] rounded-[80px] p-20 flex flex-col lg:flex-row items-center gap-12 overflow-hidden relative shadow-2xl">
           <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none"><Truck className="size-64 text-black" /></div>
           <div className="lg:w-1/2 space-y-6">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Bulk Retail <br /> Logistics</h2>
-            <p className="text-black/60 font-bold text-lg max-w-md">Optimized supply chain for high-volume retail brands. We deliver your seasonal packaging on time, every time.</p>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">{t("fmcg_garments_bulk_retail")} <br /> {t("logistics_command_logistics")}</h2>
+            <p className="text-black/60 font-bold text-lg max-w-md">{t("fmcg_garments_optimized_supply_chain_for_high")}</p>
           </div>
           <div className="lg:w-1/2 flex justify-end">
              <div className="bg-black text-[#fabf37] px-10 py-8 rounded-[40px] space-y-4">
-                <p className="text-[10px] font-black uppercase tracking-widest">Next-Day Dispatch</p>
-                <p className="text-2xl font-black italic">Available Now</p>
+                <p className="text-[10px] font-black uppercase tracking-widest">{t("fmcg_garments_next_day_dispatch")}</p>
+                <p className="text-2xl font-black italic">{t("featured_products_magazine_available_now")}</p>
              </div>
           </div>
         </div>

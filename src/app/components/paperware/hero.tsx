@@ -117,7 +117,7 @@ export const Hero = React.memo(function Hero({
               {t("premium_manufacturing")}
             </motion.span>
             <h1 className="text-[32px] sm:text-[45px] md:text-[96px] font-black text-white leading-[0.95] uppercase tracking-tighter drop-shadow-2xl">
-              {title || t("hero_title")}
+              {t(title || t("hero_title"))}
             </h1>
           </div>
 
@@ -137,10 +137,10 @@ export const Hero = React.memo(function Hero({
             className="max-w-4xl mx-auto space-y-4 px-4"
           >
             <p className="text-[14px] md:text-[26px] font-black text-black leading-tight uppercase tracking-tighter">
-              {subtitle1 || t("hero_subtitle_1")}
+              {t(subtitle1 || t("hero_subtitle_1"))}
             </p>
             <p className="text-[12px] md:text-[18px] font-bold text-white/90 leading-relaxed tracking-widest uppercase">
-              {subtitle2 || t("hero_subtitle_2")}
+              {t(subtitle2 || t("hero_subtitle_2"))}
             </p>
           </motion.div>
 

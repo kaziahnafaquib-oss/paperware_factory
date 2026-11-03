@@ -510,7 +510,7 @@ export default function CMSView({
                         )}
                         
                         {videoId ? (
-                          <div className="w-full h-full rounded-[36px] overflow-hidden relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
+                          <div className="w-full h-full rounded-[36px] overflow-hidden relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener,noreferrer')}>
                             <img loading="lazy" decoding="async" 
                               src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                               alt="Video thumbnail"
@@ -582,7 +582,7 @@ export default function CMSView({
 
                       if (videoId) {
                         return (
-                          <div className="w-full h-full relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank')}>
+                          <div className="w-full h-full relative group cursor-pointer" onClick={() => window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener,noreferrer')}>
                             <img loading="lazy" decoding="async" 
                               src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                               alt="Mobile video thumbnail"

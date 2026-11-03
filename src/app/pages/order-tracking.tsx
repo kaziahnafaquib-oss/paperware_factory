@@ -9,6 +9,8 @@ import {
   Instagram, Linkedin, Facebook, Database, ScanQrCode, Cpu, Thermometer, Droplets, Wind, Terminal,
   CheckCircle2, Radio, AlertTriangle, MessageCircle,
 } from "lucide-react";
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterDelivery from "../../assets/video-posters/delivery-dispatch.jpg";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
@@ -18,6 +20,7 @@ interface OrderTrackingPageProps {
 }
 
 export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrackingPageProps) {
+  const { t } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [orderId, setOrderId] = React.useState("");
   // Phase A0: there is no order database behind this page. Never show a fabricated shipment;
@@ -149,7 +152,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 transition={{ duration: 1, delay: 0.5 }}
                 className="h-px bg-[#fabf37]" 
               />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">Order Status</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#fabf37]">{t("order_tracking_order_status")}</span>
             </div>
             
             <h1 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-black flex flex-col items-start gap-3 md:gap-2" style={{ transformStyle: "preserve-3d" }}>
@@ -171,7 +174,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 className="bg-black text-[#fabf37] px-5 py-2 md:px-10 md:py-4 shadow-[6px_6px_0px_0px_rgba(250,191,55,1)] md:shadow-[15px_15px_0px_0px_rgba(250,191,55,1)] relative group cursor-default inline-block"
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <span className="relative z-10 block" style={{ transform: "translateZ(30px)" }}>Track</span>
+                <span className="relative z-10 block" style={{ transform: "translateZ(30px)" }}>{t("order_tracking_track")}</span>
                 <motion.div 
                   animate={{ top: ["0%", "100%", "0%"] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -197,7 +200,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 className="bg-zinc-100 text-black px-5 py-2 md:px-10 md:py-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] relative group cursor-default inline-block"
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <span className="relative z-10 block" style={{ transform: "translateZ(30px)" }}>Your</span>
+                <span className="relative z-10 block" style={{ transform: "translateZ(30px)" }}>{t("order_tracking_your")}</span>
                 <motion.div 
                   animate={{ top: ["100%", "0%", "100%"] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
@@ -223,7 +226,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 className="bg-[#fabf37] text-black px-6 py-2 md:px-12 md:py-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] relative group cursor-default inline-block"
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <span className="relative z-10 block" style={{ transform: "translateZ(40px)" }}>Shipment</span>
+                <span className="relative z-10 block" style={{ transform: "translateZ(40px)" }}>{t("order_tracking_shipment")}</span>
                 <motion.div 
                   animate={{ top: ["0%", "100%", "0%"] }}
                   transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
@@ -240,7 +243,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             className="max-w-xs text-right hidden md:block"
           >
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest leading-relaxed">
-              Ask us for the status of your order.
+              {t("order_tracking_ask_us_for_the_status")}
             </p>
           </motion.div>
         </div>
@@ -263,12 +266,12 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                     <input 
                       value={orderId}
                       onChange={(e) => setOrderId(e.target.value)}
-                      placeholder="ENTER SHIPMENT ID (e.g. PW-2025)"
+                      placeholder={t("order_tracking_enter_shipment_id_e_g")}
                       className="w-full bg-transparent border-none rounded-3xl py-7 pl-20 pr-8 text-xl font-black uppercase tracking-tight focus:ring-0 outline-none placeholder:text-zinc-200"
                     />
                   </div>
                   <button className="bg-black text-[#fabf37] px-12 py-7 rounded-[32px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-2xl">
-                    <Search className="size-5" /> Locate
+                    <Search className="size-5" /> {t("order_tracking_locate")}
                   </button>
                 </form>
              </div>
@@ -277,19 +280,19 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 className="bg-zinc-50 border-2 border-dashed border-zinc-200 text-zinc-400 px-8 py-7 rounded-[32px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:border-[#fabf37] hover:text-black transition-all group"
              >
                 <ScanQrCode className="size-6 group-hover:rotate-90 transition-transform" />
-                Scan Product QR
+                {t("order_tracking_scan_product_qr")}
              </button>
           </div>
           
           <div className="flex items-center gap-6 px-4">
-            <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Common Enquiries:</span>
+            <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("order_tracking_common_enquiries")}</span>
             {["Estimated ETA", "Bulk Logistics", "Port Status"].map(tag => (
               <button 
                 key={tag} 
                 onClick={() => { openWhatsAppInquiry("Order enquiry", { Topic: tag, "Order / reference": orderId }); setStatus("requested"); }}
                 className="text-[9px] font-bold text-zinc-400 hover:text-black transition-colors underline decoration-[#fabf37]/30"
               >
-                {tag}
+                {t(tag)}
               </button>
             ))}
           </div>
@@ -319,12 +322,11 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
               <div className="space-y-4">
                  <div className="flex items-center gap-3">
                     <div className="size-2 rounded-full bg-[#fabf37] animate-ping" />
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">Global Connectivity Feed</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">{t("contact_global_connectivity_feed")}</p>
                  </div>
-                 <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">Social <br /> Digital Footprint</h2>
+                 <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">{t("contact_social")} <br /> {t("contact_digital_footprint")}</h2>
                  <p className="text-[10px] font-bold text-zinc-400 max-w-md uppercase tracking-widest leading-relaxed">
-                    Direct stream from our enterprise social nodes. Experience the intersection 
-                    of industrial precision and digital transparency across all platforms.
+                    {t("contact_direct_stream_from_our_enterprise")}
                  </p>
               </div>
               <div className="flex gap-4">
@@ -332,7 +334,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                     <div className="flex -space-x-2">
                        <a 
                          href="https://www.instagram.com/paperware_factory/" 
-                         aria-label="Paperware Factory on Instagram"
+                         aria-label={t("contact_paperware_factory_on_instagram")}
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -341,7 +343,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.facebook.com/paperwarefactory" 
-                         aria-label="Paperware Factory on Facebook"
+                         aria-label={t("contact_paperware_factory_on_facebook")}
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -350,7 +352,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        </a>
                        <a 
                          href="https://www.linkedin.com/company/paperwarefactory/" 
-                         aria-label="Paperware Factory on LinkedIn"
+                         aria-label={t("contact_paperware_factory_on_linkedin")}
                          target="_blank" 
                          rel="noopener noreferrer" 
                          className="size-8 rounded-full bg-white border-2 border-zinc-100 flex items-center justify-center shadow-sm hover:scale-110 hover:z-10 transition-transform"
@@ -358,7 +360,7 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                           <Linkedin className="size-4 text-blue-700" />
                        </a>
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-black">Follow us</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-black">{t("contact_follow_us")}</span>
                  </div>
               </div>
             </div>
@@ -378,12 +380,12 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                        <div className="relative h-56 md:h-64 rounded-[30px] overflow-hidden mb-5">
                           <ImageWithFallback 
                              src={post.img} 
-                             alt={post.platform} 
+                             alt={t(post.platform)} 
                              className="w-full h-full object-cover group-hover/post:scale-105 transition-transform duration-1000" 
                           />
                           <div className="absolute top-4 left-4 px-4 py-2 bg-white/90 backdrop-blur-md rounded-full text-black text-[9px] font-black tracking-widest flex items-center gap-3 border border-white/20">
                              <post.icon className={`size-3.5 ${post.color}`} />
-                             {post.platform}
+                             {t(post.platform)}
                           </div>
                        </div>
                        <div className="space-y-4 px-2">
@@ -391,9 +393,9 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                              {post.caption}
                           </p>
                           <div className="flex items-center justify-between pt-2 border-t border-zinc-50">
-                             <span className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">{post.date}</span>
+                             <span className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">{t(post.date)}</span>
                              <div className="flex items-center gap-2 text-zinc-400 group-hover/post:text-black transition-colors">
-                                <span className="text-[9px] font-black uppercase tracking-widest">View Post</span>
+                                <span className="text-[9px] font-black uppercase tracking-widest">{t("contact_view_post")}</span>
                                 <ArrowRight className="size-4 group-hover/post:translate-x-1 transition-transform" />
                              </div>
                           </div>
@@ -405,15 +407,17 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
 
             <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40 relative z-10">
                <div className="flex items-center gap-6">
-                  <p className="text-[8px] font-black uppercase tracking-[0.4em]">Paperware Media Hub</p>
+                  <p className="text-[8px] font-black uppercase tracking-[0.4em]">{t("contact_paperware_media_hub")}</p>
                   <div className="flex items-center gap-2">
                      <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                     <p className="text-[8px] font-black uppercase tracking-[0.4em]">Network Optimized</p>
+                     <p className="text-[8px] font-black uppercase tracking-[0.4em]">{t("contact_network_optimized")}</p>
                   </div>
                </div>
             </div>
           </motion.div>
         </section>
+
+        <FactoryClip src={mediaUrl("delivery-dispatch.mp4")} poster={posterDelivery} graded label={t("order_tracking_delivery_video")} className="aspect-video rounded-3xl mb-24" />
 
         <AnimatePresence mode="wait">
           {status === "searching" && (
@@ -445,18 +449,18 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                   transition={{ duration: 2, repeat: Infinity }}
                   className="text-sm font-black uppercase tracking-[0.3em]"
                 >
-                  Synchronizing Ledger...
+                  {t("order_tracking_synchronizing_ledger")}
                 </motion.p>
-                <p className="text-[10px] font-bold text-zinc-400 max-w-xs uppercase tracking-widest">Verifying shipment signatures on the Paperware global network node-04...</p>
+                <p className="text-[10px] font-bold text-zinc-400 max-w-xs uppercase tracking-widest">{t("order_tracking_verifying_shipment_signatures_on_the")}</p>
               </div>
             </motion.div>
           )}
 
           {status === "requested" && (
             <motion.div key="requested" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl mx-auto py-24 text-center space-y-4" role="status" aria-live="polite">
-              <p className="text-2xl md:text-3xl font-black uppercase tracking-tight">We'll check your order for you</p>
+              <p className="text-2xl md:text-3xl font-black uppercase tracking-tight">{t("order_tracking_we_ll_check_your_order")}</p>
               <p className="text-base font-medium text-zinc-600 leading-relaxed">
-                Online tracking isn't available yet. We opened WhatsApp with your order details so our team can reply with the current status. Press Send there. If WhatsApp didn't open, message us on {SALES_WHATSAPP_DISPLAY} or call {SALES_PHONE_DISPLAY}.
+                {t("order_tracking_online_tracking_isn_t_available")} {t(SALES_WHATSAPP_DISPLAY)} {t("order_tracking_or_call")} {t(SALES_PHONE_DISPLAY)}.
               </p>
             </motion.div>
           )}
@@ -479,23 +483,23 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 >
                   <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                     <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">Current Status</p>
-                      <h3 className="text-4xl font-black uppercase tracking-tight">Quality Audit</h3>
+                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("order_tracking_current_status")}</p>
+                      <h3 className="text-4xl font-black uppercase tracking-tight">{t("order_tracking_quality_audit")}</h3>
                       <div className="flex items-center gap-2 pt-2">
                         <MapPin className="size-3.5 text-zinc-400" />
-                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Sector B, Manufacturing Hub, Dhaka</span>
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{t("order_tracking_sector_b_manufacturing_hub_dhaka")}</span>
                       </div>
                     </div>
                     <div className="flex flex-col gap-3 items-end">
                       <div className="bg-zinc-50 p-6 rounded-[32px] border border-black/5 text-center min-w-[140px]">
-                        <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-1">Est. Completion</p>
-                        <p className="text-lg font-black italic">Dec 24, 2025</p>
+                        <p className="text-[8px] font-black uppercase tracking-widest text-zinc-400 mb-1">{t("order_tracking_est_completion")}</p>
+                        <p className="text-lg font-black italic">{t("order_tracking_dec_24_2025")}</p>
                       </div>
                       <button 
                         onClick={onViewJourney}
                         className="text-[10px] font-black uppercase tracking-widest bg-black text-[#fabf37] px-6 py-3 rounded-full flex items-center gap-2 hover:scale-105 transition-all shadow-lg"
                       >
-                        Full Journey Details <ArrowRight className="size-3" />
+                        {t("order_tracking_full_journey_details")} <ArrowRight className="size-3" />
                       </button>
                     </div>
                   </div>
@@ -526,11 +530,11 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                         <div className="space-y-1 flex-1">
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-1">
                             <h4 className={`text-xl md:text-2xl font-black uppercase tracking-tight transition-colors ${step.done || step.current ? 'text-black' : 'text-zinc-200'}`}>
-                              {step.title}
+                              {t(step.title)}
                             </h4>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{step.date}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t(step.date)}</span>
                           </div>
-                          <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">{step.loc}</p>
+                          <p className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest">{t(step.loc)}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -547,9 +551,9 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Live Production Feed</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">{t("order_tracking_live_production_feed")}</p>
                       </div>
-                      <h3 className="text-3xl font-black uppercase tracking-tight">Factory Floor A2 Telemetry</h3>
+                      <h3 className="text-3xl font-black uppercase tracking-tight">{t("order_tracking_factory_floor_a2_telemetry")}</h3>
                     </div>
                     <Activity className="size-8 text-zinc-100" />
                   </div>
@@ -563,8 +567,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                       >
                         <data.icon className="size-5 text-zinc-400" />
                         <div>
-                          <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{data.label}</p>
-                          <p className="text-xl font-black italic">{data.value}</p>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t(data.label)}</p>
+                          <p className="text-xl font-black italic">{t(data.value)}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -579,8 +583,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 >
                    <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">Cargo Environment Control</p>
-                      <h3 className="text-3xl font-black uppercase tracking-tight text-black">Transit Telemetry</h3>
+                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("order_tracking_cargo_environment_control")}</p>
+                      <h3 className="text-3xl font-black uppercase tracking-tight text-black">{t("order_tracking_transit_telemetry")}</h3>
                     </div>
                     <Radio className="size-8 text-black animate-pulse" />
                   </div>
@@ -594,11 +598,11 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                       >
                         <div className="flex justify-between items-start">
                            <item.icon className="size-6 text-black group-hover/card:text-[#fabf37] transition-colors" />
-                           <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">{item.trend}</span>
+                           <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500">{t(item.trend)}</span>
                         </div>
                         <div className="space-y-1">
-                           <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400 group-hover/card:text-[#fabf37]/50">{item.label}</p>
-                           <p className="text-2xl font-black">{item.value}</p>
+                           <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400 group-hover/card:text-[#fabf37]/50">{t(item.label)}</p>
+                           <p className="text-2xl font-black">{t(item.value)}</p>
                         </div>
                       </motion.div>
                     ))}
@@ -616,20 +620,20 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                 >
                   <div className="space-y-6 relative z-10">
                     <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">AI Predictive Insights</p>
-                      <h4 className="text-3xl font-black uppercase italic tracking-tighter">Delivery Probability</h4>
+                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("order_tracking_ai_predictive_insights")}</p>
+                      <h4 className="text-3xl font-black uppercase italic tracking-tighter">{t("order_tracking_delivery_probability")}</h4>
                     </div>
                     <div className="flex items-end gap-4">
                       <span className="text-7xl font-black text-[#fabf37]">94%</span>
                       <div className="pb-3">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">On-Time Accuracy</p>
-                        <p className="text-[11px] font-bold text-emerald-400">Predicted Early (+2 Days)</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("order_tracking_on_time_accuracy")}</p>
+                        <p className="text-[11px] font-bold text-emerald-400">{t("order_tracking_predicted_early_2_days")}</p>
                       </div>
                     </div>
                     <div className="p-6 bg-white/5 rounded-3xl border border-white/10 flex items-start gap-4">
                        <AlertTriangle className="size-5 text-[#fabf37] shrink-0 mt-1" />
                        <p className="text-[11px] font-bold opacity-70 leading-relaxed">
-                         Optimal weather patterns detected across the Bay of Bengal. Supply route congestion is minimal.
+                         {t("order_tracking_optimal_weather_patterns_detected_across")}
                        </p>
                     </div>
                   </div>
@@ -642,20 +646,20 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
                   className="bg-zinc-900 p-10 rounded-[60px] border border-white/5 space-y-8"
                 >
                    <div className="flex items-center justify-between">
-                     <h3 className="text-xl font-black uppercase tracking-tight text-white">Blockchain Ledger</h3>
-                     <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-[8px] font-black uppercase tracking-[0.2em] rounded-full">Verified</span>
+                     <h3 className="text-xl font-black uppercase tracking-tight text-white">{t("order_tracking_blockchain_ledger")}</h3>
+                     <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-[8px] font-black uppercase tracking-[0.2em] rounded-full">{t("order_tracking_verified")}</span>
                    </div>
                    <div className="space-y-4">
                      <div className="p-4 bg-black/40 rounded-2xl border border-white/5 font-mono text-[9px] text-zinc-500 break-all">
-                       HASH: 8f2b3c91d0e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0
+                       {t("order_tracking_hash_8f2b3c91d0e5f6a7b8c9d0e1f2a3b4c5d6e")}
                      </div>
                    </div>
                 </motion.div>
 
                 <div className="bg-black p-10 rounded-[60px] text-white flex items-center justify-between group cursor-pointer overflow-hidden">
                   <div className="space-y-2 relative z-10">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">Need Help?</p>
-                    <h4 className="text-2xl font-black uppercase tracking-tighter italic">Logistics <br /> Support</h4>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">{t("order_tracking_need_help")}</p>
+                    <h4 className="text-2xl font-black uppercase tracking-tighter italic">{t("logistics_command_logistics")} <br /> {t("contact_menu_support")}</h4>
                   </div>
                   <div className="size-16 rounded-full bg-[#fabf37] flex items-center justify-center text-black">
                     <MessageCircle className="size-8" />
@@ -755,8 +759,8 @@ export function OrderTrackingPage({ onViewJourney, onFeedbackClick }: OrderTrack
             >
               <item.icon className="size-5 text-[#fabf37] shrink-0" style={{ transform: "translateZ(15px)" }} />
               <div className="space-y-1" style={{ transform: "translateZ(10px)" }}>
-                <p className="text-[11px] font-black uppercase tracking-tight">{item.title}</p>
-                <p className="text-[10px] font-bold text-zinc-400 leading-relaxed">{item.desc}</p>
+                <p className="text-[11px] font-black uppercase tracking-tight">{t(item.title)}</p>
+                <p className="text-[10px] font-bold text-zinc-400 leading-relaxed">{t(item.desc)}</p>
               </div>
             </motion.div>
           ))}

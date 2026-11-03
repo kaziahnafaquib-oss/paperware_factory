@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Leaf, Recycle, Wind, Droplets, Zap, ChevronRight, Calculator, PieChart } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function CarbonCalculator() {
+  const { t } = useLanguage();
   const [quantity, setQuantity] = useState(50000);
   const [material, setMaterial] = useState("kraft");
 
@@ -26,19 +28,19 @@ export function CarbonCalculator() {
                  <div className="space-y-6">
                     <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
                       <div className="h-[1px] w-12 bg-[#fabf37]" />
-                      Eco-Audit Tool
+                      {t("carbon_calculator_eco_audit_tool")}
                     </div>
                     <h2 className="text-[32px] md:text-[52px] font-black uppercase tracking-tighter leading-none">
-                      Impact <br /> <span className="text-zinc-600 italic">Calculator</span>
+                      {t("carbon_calculator_impact")} <br /> <span className="text-zinc-600 italic">{t("carbon_calculator_calculator")}</span>
                     </h2>
                     <p className="text-zinc-400 font-bold text-sm leading-relaxed">
-                      Quantify your company's contribution to the circular economy by switching to Paperware solutions.
+                      {t("carbon_calculator_quantify_your_company_s_contribution")}
                     </p>
                  </div>
 
                  <div className="space-y-8">
                     <div className="space-y-4">
-                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Order Quantity</label>
+                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("carbon_calculator_order_quantity")}</label>
                        <input 
                           type="range" 
                           min="1000" 
@@ -49,12 +51,12 @@ export function CarbonCalculator() {
                           className="w-full accent-[#fabf37]"
                        />
                        <div className="flex justify-between font-black text-2xl tracking-tight italic">
-                          <span>{quantity.toLocaleString()} <span className="text-[10px] uppercase not-italic text-zinc-600">Units</span></span>
+                          <span>{quantity.toLocaleString()} <span className="text-[10px] uppercase not-italic text-zinc-600">{t("carbon_calculator_units")}</span></span>
                        </div>
                     </div>
 
                     <div className="space-y-4">
-                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Select Material Technology</label>
+                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("carbon_calculator_select_material_technology")}</label>
                        <div className="grid grid-cols-1 gap-3">
                           {Object.entries(materials).map(([key, m]) => (
                             <button 
@@ -62,7 +64,7 @@ export function CarbonCalculator() {
                               onClick={() => setMaterial(key)}
                               className={`flex items-center justify-between px-6 py-4 rounded-2xl border-2 transition-all ${material === key ? 'bg-[#fabf37] border-[#fabf37] text-black' : 'bg-zinc-900 border-white/5 text-white hover:border-white/20'}`}
                             >
-                               <span className="text-xs font-black uppercase tracking-widest">{m.name}</span>
+                               <span className="text-xs font-black uppercase tracking-widest">{t(m.name)}</span>
                                <div className={`size-4 rounded-full border-2 ${material === key ? 'border-black bg-black' : 'border-white/20'}`} />
                             </button>
                           ))}
@@ -79,9 +81,9 @@ export function CarbonCalculator() {
                           <Recycle className="size-10" />
                        </div>
                        <div className="space-y-2">
-                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Total Plastic Avoided</p>
-                          <h3 className="text-4xl md:text-6xl font-black tracking-tighter italic">{plasticSaved} <span className="text-xl not-italic text-emerald-500">KG</span></h3>
-                          <p className="text-xs font-bold text-zinc-500 italic">Equivalent to ~{(parseFloat(plasticSaved)/0.01).toFixed(0)} plastic bottles.</p>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("carbon_calculator_total_plastic_avoided")}</p>
+                          <h3 className="text-4xl md:text-6xl font-black tracking-tighter italic">{t(plasticSaved)} <span className="text-xl not-italic text-emerald-500">KG</span></h3>
+                          <p className="text-xs font-bold text-zinc-500 italic">{t("carbon_calculator_equivalent_to")}{(parseFloat(plasticSaved)/0.01).toFixed(0)} {t("carbon_calculator_plastic_bottles")}</p>
                        </div>
                     </div>
 
@@ -90,9 +92,9 @@ export function CarbonCalculator() {
                           <Wind className="size-10" />
                        </div>
                        <div className="space-y-2">
-                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">CO2 Emissions Reduced</p>
-                          <h3 className="text-4xl md:text-6xl font-black tracking-tighter italic">{co2Saved} <span className="text-xl not-italic text-blue-500">KG</span></h3>
-                          <p className="text-xs font-bold text-zinc-500 italic">Equivalent to planting {(parseFloat(co2Saved)/21).toFixed(1)} trees.</p>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("carbon_calculator_co2_emissions_reduced")}</p>
+                          <h3 className="text-4xl md:text-6xl font-black tracking-tighter italic">{t(co2Saved)} <span className="text-xl not-italic text-blue-500">KG</span></h3>
+                          <p className="text-xs font-bold text-zinc-500 italic">{t("carbon_calculator_equivalent_to_planting")} {(parseFloat(co2Saved)/21).toFixed(1)} {t("carbon_calculator_trees")}</p>
                        </div>
                     </div>
                  </div>
@@ -103,12 +105,12 @@ export function CarbonCalculator() {
                           <PieChart className="size-8" />
                        </div>
                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Environment Impact Grade</p>
-                          <h4 className="text-2xl font-black uppercase">Tier 1 Sustainability</h4>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("carbon_calculator_environment_impact_grade")}</p>
+                          <h4 className="text-2xl font-black uppercase">{t("carbon_calculator_tier_1_sustainability")}</h4>
                        </div>
                     </div>
                     <button className="bg-black text-white px-10 py-5 rounded-full font-black uppercase tracking-widest text-[10px] hover:bg-[#fabf37] hover:text-black transition-all flex items-center gap-3">
-                       Download Audit Report <ChevronRight className="size-4" />
+                       {t("carbon_calculator_download_audit_report")} <ChevronRight className="size-4" />
                     </button>
                  </div>
 

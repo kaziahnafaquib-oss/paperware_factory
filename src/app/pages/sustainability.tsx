@@ -10,8 +10,10 @@ import {
 } from "recharts";
 import bannerImage from "figma:asset/5c87293e5521da72382b054681e7166a818841e9.webp";
 import exampleImage from 'figma:asset/de22a1513e35499b5f2c79ba9800a59dbb7543f8.webp';
-import { JourneySection } from "../components/sustainability/JourneySection";
-import { GreenCupSection } from "../components/sustainability/GreenCupSection";
+import { SustainJourneyGlobe } from "../components/paperware/sustain-journey-globe";
+import { SustainCupStory } from "../components/paperware/sustain-cup-story";
+import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
+import posterFloor from "../../assets/video-posters/factory-floor-wide.jpg";
 import { StorySection } from "../components/sustainability/StorySection";
 import { ProcessStepsSection } from "../components/sustainability/ProcessStepsSection";
 import { TopSellingProducts } from "../components/TopSellingProducts";
@@ -67,63 +69,18 @@ export function SustainabilityPage() {
   return (
     <div className="relative bg-[#fdfaf3] min-h-screen">
       {/* Full Screen Hero Banner */}
-      <div ref={heroRef} className="relative min-h-screen w-full overflow-hidden bg-zinc-900 flex flex-col justify-end pb-8">
-        {/* Forest Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-black">
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
-            {videoUrl ? (
-              (() => {
-                const getYouTubeId = (url: string) => {
-                  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                  const match = url.match(regExp);
-                  return (match && match[2].length === 11) ? match[2] : null;
-                };
-                const videoId = getYouTubeId(videoUrl);
-
-                if (videoId) {
-                  return (
-                    <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-black">
-                      <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] animate-pulse" />
-                        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse delay-700" />
-                      </div>
-                    </div>
-                  );
-                }
-
-                return (
-                  <video
-                    key={videoUrl}
-                    src={videoUrl}
-                    className="w-full h-full object-cover opacity-80"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    suppressHydrationWarning
-                    onLoadedData={(e) => {
-                      const video = e.currentTarget;
-                      video.play().catch(() => { });
-                    }}
-                    onError={(e) => {
-                      setVideoError(true);
-                      e.currentTarget.style.display = 'none';
-                    }}
-                    onPlay={() => { }}
-                   
-                  />
-                );
-              })()
-            ) : (
-              <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-black">
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] animate-pulse" />
-                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse delay-700" />
-                </div>
-              </div>
-            )}
-          </div>
+      <div ref={heroRef} className="relative min-h-screen w-full overflow-hidden bg-zinc-900 flex flex-col justify-end pb-20">
+        {/* Real factory-floor footage, graded, with a dark scrim so the text stays readable */}
+        <div className="absolute inset-0">
+        <FactoryClip
+          src={mediaUrl("factory-floor-wide.mp4")}
+          poster={posterFloor}
+          graded
+          label={t("manufacturing_floor_video")}
+          className="size-full"
+        >
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-black/30 pointer-events-none" />
+        </FactoryClip>
         </div>
 
         {/* Content Container */}
@@ -137,8 +94,8 @@ export function SustainabilityPage() {
               transition={{ duration: 0.8 }}
               className="text-4xl md:text-6xl font-medium text-white max-w-2xl leading-tight drop-shadow-lg"
             >
-              Empowering <br />
-              <span className="text-[#fabf37]">sustainable practices</span>
+              {t("sustainability_empowering")} <br />
+              <span className="text-[#fabf37]">{t("sustainability_sustainable_practices")}</span>
             </motion.h1>
 
           </div>
@@ -152,9 +109,9 @@ export function SustainabilityPage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="bg-[#9DC88D] p-4 rounded-xl h-[160px] flex flex-col justify-center relative overflow-hidden group"
             >
-              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">Sustainable Corporate Governance</h3>
+              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">{t("sustainability_sustainable_corporate_governance")}</h3>
               <p className="text-white/90 text-[10px] font-medium leading-relaxed relative z-10">
-                Dedicated to transparency, accountability, ethical practices, stakeholder engagement, and continuous improvement.
+                {t("sustainability_dedicated_to_transparency_accountability")}
               </p>
             </motion.div>
 
@@ -165,9 +122,9 @@ export function SustainabilityPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="bg-[#4D8B55] p-4 rounded-xl h-[160px] flex flex-col justify-center relative overflow-hidden group"
             >
-              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">Ethical Supply Chain</h3>
+              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">{t("sustainability_ethical_supply_chain")}</h3>
               <p className="text-white/90 text-[10px] font-medium leading-relaxed relative z-10">
-                Our supply chain starts with ethical, eco-friendly suppliers who share our values and commitment to the planet.
+                {t("sustainability_our_supply_chain_starts_with")}
               </p>
             </motion.div>
 
@@ -178,9 +135,9 @@ export function SustainabilityPage() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="bg-[#1A5336] p-4 rounded-xl h-[160px] flex flex-col justify-center relative overflow-hidden group"
             >
-              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">Material Reduction and Replacement</h3>
+              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">{t("sustainability_material_reduction_and_replacement")}</h3>
               <p className="text-white/80 text-[10px] font-medium leading-relaxed relative z-10">
-                Minimizing material usage and replacing non-renewable resources with sustainable, biodegradable alternatives.
+                {t("sustainability_minimizing_material_usage_and_replacing")}
               </p>
             </motion.div>
 
@@ -191,28 +148,23 @@ export function SustainabilityPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="bg-[#0D3B2E] p-4 rounded-xl h-[160px] flex flex-col justify-center relative overflow-hidden group"
             >
-              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">Paperware Happiness Project</h3>
+              <h3 className="text-sm font-bold text-white mb-1.5 relative z-10 leading-tight">{t("sustainability_paperware_happiness_project")}</h3>
               <p className="text-white/70 text-[10px] font-medium leading-relaxed relative z-10">
-                Initiative aimed to promote employee happiness by encouraging work-life balance and uplifting the community.
+                {t("sustainability_initiative_aimed_to_promote_employee")}
               </p>
             </motion.div>
           </div>
         </div>
       </div>
 
-      {/* New Journey Section */}
-      <div className="bg-white relative z-10 pt-12 lg:pt-24 px-4 md:px-8 container mx-auto pb-0">
-        <JourneySection />
+      <div className="bg-white relative z-10 pt-4 px-4 md:px-8 container mx-auto">
+        <SustainJourneyGlobe />
       </div>
 
-      {/* Green Cup Section */}
-      <div className="bg-white relative z-10 pb-12 lg:pb-24 px-4 md:px-8 container mx-auto pt-0">
-        <GreenCupSection />
-      </div>
-
-      {/* Story Section */}
-      <div className="bg-white relative z-10 pb-0 px-4 md:px-8 container mx-auto pt-0">
+      {/* Story of a Green Cup: heading, then the scroll-scrubbed cup */}
+      <div className="bg-white relative z-10 px-4 md:px-8 container mx-auto">
         <StorySection />
+        <SustainCupStory />
       </div>
 
       {/* Process Steps Section */}
@@ -233,10 +185,10 @@ export function SustainabilityPage() {
         >
           <div className="mb-12">
             <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter leading-none text-black mb-4">
-              Eco-Friendly Best Sellers
+              {t("sustainability_eco_friendly_best_sellers")}
             </h2>
             <p className="text-zinc-500 font-bold text-lg max-w-2xl">
-              Our most popular sustainable packaging solutions trusted by businesses worldwide
+              {t("sustainability_our_most_popular_sustainable_packaging")}
             </p>
           </div>
           <TopSellingProducts />

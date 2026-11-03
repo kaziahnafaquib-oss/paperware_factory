@@ -1,6 +1,8 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Lock, Mail, ArrowRight, Eye, EyeOff, ShieldCheck, User, Building2, Phone, Briefcase, Activity, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +12,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalProps) {
+  const { t } = useLanguage();
   const [authMode, setAuthMode] = React.useState<'login' | 'signup'>(type === 'admin' ? 'login' : 'login');
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -17,8 +20,8 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onLoginSuccess();
-    onClose();
+    // No auth backend is connected: never report success (security review H1, 2026-11-03).
+    toast.error("Portal sign-in is not connected yet. Access opens once the Paperware OS link is live.");
   };
 
   return (
@@ -58,13 +61,13 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
               <div className="flex items-center justify-center gap-2 mb-2">
                 <div className={`size-1.5 rounded-full ${type === 'admin' ? 'bg-red-500' : 'bg-[#fabf37]'}`} />
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-500">
-                  {type === 'admin' ? 'Administrative Access' : 'Client Secure Access'}
+                  {t(type === 'admin' ? 'Administrative Access' : 'Client Secure Access')}
                 </span>
               </div>
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none">
-                {type === 'admin' ? 'Admin' : 'Client'} <br />
+                {t(type === 'admin' ? 'Admin' : 'Client')} <br />
                 <span className={type === 'admin' ? 'text-red-500' : 'text-[#fabf37]'}>
-                  {authMode === 'login' ? 'Portal Login' : 'Registration'}
+                  {t(authMode === 'login' ? 'Portal Login' : 'Registration')}
                 </span>
               </h2>
             </div>
@@ -73,24 +76,24 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
               {authMode === 'signup' && type === 'client' ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Company Name</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("auth_modal_company_name")}</label>
                     <div className="relative">
                       <Building2 className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
-                      <input required type="text" placeholder="Global Logistics" className="w-full bg-[#242424] border border-white/5 rounded-2xl px-14 py-4 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" />
+                      <input required type="text" placeholder={t("global_logistics")} className="w-full bg-[#242424] border border-white/5 rounded-2xl px-14 py-4 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Full Name</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("auth_modal_full_name")}</label>
                     <div className="relative">
                       <User className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
-                      <input required type="text" placeholder="John Doe" className="w-full bg-[#242424] border border-white/5 rounded-2xl px-14 py-4 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" />
+                      <input required type="text" placeholder={t("auth_modal_john_doe")} className="w-full bg-[#242424] border border-white/5 rounded-2xl px-14 py-4 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" />
                     </div>
                   </div>
                 </div>
               ) : null}
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Enterprise Email</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("auth_modal_enterprise_email")}</label>
                 <div className="relative">
                   <Mail className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
                   <input required type="email" placeholder="manager@company.com" className="w-full bg-[#242424] border border-white/5 rounded-2xl px-14 py-4 text-sm font-bold text-white focus:border-[#fabf37] outline-none transition-all" />
@@ -98,7 +101,7 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Secure Key</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("auth_modal_secure_key")}</label>
                 <div className="relative">
                   <Lock className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-600" />
                   <input
@@ -110,7 +113,7 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      aria-label={t(showPassword ? "Hide password" : "Show password")}
                       aria-pressed={showPassword}
                     className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-[#fabf37] transition-colors"
                   >
@@ -126,7 +129,7 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                     : 'bg-[#fabf37] text-black shadow-[#fabf37]/20'
                   }`}
               >
-                {authMode === 'login' ? 'Authorize Access' : 'Register Account'}
+                {t(authMode === 'login' ? 'Authorize Access' : 'Register Account')}
                 <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -141,9 +144,9 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                   onClick={() => { onLoginSuccess(); onClose(); }}
                   className="w-full py-4 rounded-3xl border-2 border-dashed border-white/20 text-white font-black uppercase tracking-[0.2em] text-[10px] hover:border-[#fabf37] hover:text-[#fabf37] transition-colors"
                 >
-                  Demo login ({type === 'admin' ? 'Admin' : 'Customer'})
+                  {t("auth_modal_demo_login")}{t(type === 'admin' ? 'Admin' : 'Customer')})
                 </button>
-                <p className="text-center text-[10px] font-bold text-zinc-400">Local dev only. Not available on the live site.</p>
+                <p className="text-center text-[10px] font-bold text-zinc-400">{t("auth_modal_local_dev_only_not_available")}</p>
               </div>
             )}
 
@@ -153,14 +156,14 @@ export function AuthModal({ isOpen, onClose, type, onLoginSuccess }: AuthModalPr
                   onClick={() => setAuthMode(authMode === 'login' ? 'signup' : 'login')}
                   className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500 hover:text-[#fabf37] transition-colors"
                 >
-                  {authMode === 'login' ? "Don't have an account? Create one" : "Already have an account? Login"}
+                  {t(authMode === 'login' ? "Don't have an account? Create one" : "Already have an account? Login")}
                 </button>
               </div>
             )}
 
             {type === 'admin' && (
               <p className="mt-8 text-center text-[9px] font-black uppercase tracking-[0.2em] text-red-500/50">
-                Unauthorized access is strictly prohibited and logged.
+                {t("auth_modal_unauthorized_access_is_strictly_prohibit")}
               </p>
             )}
           </div>

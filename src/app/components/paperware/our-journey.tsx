@@ -8,6 +8,7 @@ import fFormingTurret from "../../../assets/factory/forming-turret.webp";
 import fCupFormingMachines from "../../../assets/factory/cup-forming-machines.webp";
 import posterLamination from "../../../assets/video-posters/lamination.webp";
 import { useGo } from "../../lib/useGo";
+import { useLanguage } from "../../context/LanguageContext";
 
 // Factory tour (public/media, served under the deploy sub-path). Poster is a real QC photo.
 // Owner-supplied 2026-11-02: public Facebook reel 1778452163018523 (HD 1272x720, video-only; the
@@ -102,6 +103,7 @@ interface MilestoneItemProps {
 }
 
 function MilestoneItem({ milestone }: MilestoneItemProps) {
+  const { t } = useLanguage();
   // The factory video autoplays muted for everyone (also under reduced motion) and has its own
   // pause control (WCAG 2.2.2), like the map in nationwide-export.tsx.
   const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -127,11 +129,11 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
           {/* Year */}
           <div className="relative">
             <div className="text-6xl md:text-8xl font-black text-black/5 select-none">
-              {milestone.year}
+              {t(milestone.year)}
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-xl md:text-2xl font-black text-[#fabf37]">
-                {milestone.year}
+                {t(milestone.year)}
               </span>
             </div>
           </div>
@@ -148,10 +150,10 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
         {/* Right - Info */}
         <div className="flex-1 md:text-right">
           <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-black mb-2 leading-none">
-            {milestone.title}
+            {t(milestone.title)}
           </h3>
           <p className="text-lg md:text-2xl font-bold text-zinc-400 uppercase tracking-wide">
-            {milestone.stat}
+            {t(milestone.stat)}
           </p>
         </div>
       </div>
@@ -174,7 +176,7 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
                 src={getYouTubeEmbed(milestone.videoUrl) || ''}
                 className="w-full h-full"
                 allowFullScreen
-                title={milestone.title}
+                title={t(milestone.title)}
               />
             ) : milestone.videoType === 'video' ? (
               <video
@@ -195,7 +197,7 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
             ) : (
               <img loading="lazy" decoding="async"
                 src={milestone.videoUrl}
-                alt={milestone.title}
+                alt={t(milestone.title)}
                 className="w-full h-full object-cover"
               />
             )}
@@ -208,7 +210,7 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
           <div className="absolute top-8 left-4 right-4 z-10 flex items-start justify-between">
             <div className="bg-[#fabf37] text-black rounded-2xl px-4 py-2 inline-block">
               <span className="text-lg font-black">
-                {milestone.year}
+                {t(milestone.year)}
               </span>
             </div>
             {milestone.videoType === 'video' && (
@@ -216,7 +218,7 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
                 type="button"
                 onClick={toggleVideo}
                 aria-pressed={videoPaused}
-                aria-label={videoPaused ? "Play factory video" : "Pause factory video"}
+                aria-label={t(videoPaused ? "Play factory video" : "Pause factory video")}
                 className="size-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37] focus-visible:ring-offset-2"
               >
                 {videoPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
@@ -230,14 +232,14 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
               <div className="flex items-center gap-2 mb-2">
                 <div className="size-2 rounded-full bg-[#fabf37] animate-pulse" />
                 <span className="text-[9px] font-black uppercase tracking-widest text-white/60">
-                  Milestone
+                  {t("our_journey_milestone")}
                 </span>
               </div>
               <h4 className="text-lg font-black uppercase text-white mb-1 leading-tight">
-                {milestone.title}
+                {t(milestone.title)}
               </h4>
               <p className="text-xs font-bold text-[#fabf37]">
-                {milestone.stat}
+                {t(milestone.stat)}
               </p>
             </div>
           </div>
@@ -257,6 +259,7 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
 }
 
 export function OurJourney() {
+  const { t } = useLanguage();
   const go = useGo();
   const sectionRef = React.useRef<HTMLElement>(null);
   const headerRef = React.useRef<HTMLDivElement>(null);
@@ -342,16 +345,16 @@ export function OurJourney() {
           <div className="flex items-center gap-4 mb-6">
             <div data-journey-rule className="h-1 w-12 bg-[#fabf37] origin-left will-change-transform" />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">
-              Our Story
+              {t("our_journey_our_story")}
             </span>
           </div>
 
           <h2 className="text-5xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.9] mb-6">
             <span data-journey-word className="text-black block will-change-transform">
-              Our
+              {t("department_showcase_our")}
             </span>
             <span data-journey-word className="text-[#fabf37] block will-change-transform">
-              Journey
+              {t("our_journey_journey")}
             </span>
           </h2>
         </div>
@@ -384,11 +387,11 @@ export function OurJourney() {
               {/* Text */}
               <div>
                 <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-white mb-3 leading-tight">
-                  Be Part Of<br />
-                  <span className="text-[#fabf37]">Our Story</span>
+                  {t("our_journey_be_part_of")}<br />
+                  <span className="text-[#fabf37]">{t("our_journey_our_story")}</span>
                 </h3>
                 <p className="text-sm md:text-base font-bold text-zinc-400 max-w-md">
-                  Join the brands that trust us for their packaging
+                  {t("our_journey_join_the_brands_that_trust")}
                 </p>
               </div>
 
@@ -397,7 +400,7 @@ export function OurJourney() {
                 type="button"
                 className="inline-flex items-center gap-3 px-8 py-4 bg-[#fabf37] text-black rounded-full text-sm font-black uppercase tracking-widest whitespace-nowrap shadow-xl shadow-[#fabf37]/20 hover:scale-105 transition-transform"
               >
-                <span>Get Started</span>
+                <span>{t("our_journey_get_started")}</span>
                 <ArrowRight className="size-5" strokeWidth={3} />
               </button>
             </div>

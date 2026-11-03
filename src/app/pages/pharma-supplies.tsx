@@ -67,13 +67,13 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
             className="flex items-center gap-3 mb-6"
           >
             <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]" />
-            <span className="text-emerald-600 font-black uppercase tracking-[0.4em] text-xs">Medical Grade Packaging</span>
+            <span className="text-emerald-600 font-black uppercase tracking-[0.4em] text-xs">{t("pharma_supplies_medical_grade_packaging")}</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Pharma <br /> <span className="text-zinc-500">Supplies</span>
+            {t("pharma_supplies_pharma")} <br /> <span className="text-zinc-500">{t("fmcg_garments_supplies")}</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
-            Safety, precision, and compliance. Our pharmaceutical packaging and hospital stationary are manufactured in sterile environments, meeting strict global healthcare standards.
+            {t("pharma_supplies_safety_precision_and_compliance_our")}
           </p>
         </div>
       </section>
@@ -88,8 +88,8 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
           ].map((item, i) => (
             <div key={i} className="p-8 bg-white border border-black/5 rounded-[32px] flex flex-col items-center text-center space-y-4">
               <div className="text-emerald-500">{item.icon}</div>
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-[rgb(0,0,0)]">{item.title}</h4>
-              <p className="text-zinc-400 font-bold text-[10px] uppercase leading-relaxed">{item.desc}</p>
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-[rgb(0,0,0)]">{t(item.title)}</h4>
+              <p className="text-zinc-400 font-bold text-[10px] uppercase leading-relaxed">{t(item.desc)}</p>
             </div>
           ))}
         </div>
@@ -106,7 +106,7 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
             >
               <div className="aspect-square overflow-hidden">
                 {p.image ? (
-                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <ImageWithFallback src={p.image} alt={t(p.name)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
                     <p.icon className="size-20" strokeWidth={1} />
@@ -118,13 +118,13 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
                   <div className="size-12 rounded-xl bg-zinc-50 flex items-center justify-center text-black group-hover:bg-black group-hover:text-[#fabf37] transition-all">
                     <p.icon className="size-5" />
                   </div>
-                  <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{p.category}</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{t(p.category)}</span>
                 </div>
-                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{p.name}</h3>
-                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{p.desc}</p>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{t(p.name)}</h3>
+                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{t(p.desc)}</p>
                 <div className="flex items-center justify-between">
                   <button type="button" className="flex items-center gap-2 min-h-11 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
-                    Order Now <ArrowRight className="size-4" />
+                    {t("marketing_materials_order_now")} <ArrowRight className="size-4" />
                   </button>
                   <Zap className="size-4 text-[#fabf37]" />
                 </div>
@@ -141,11 +141,11 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
         <div className="bg-black text-white rounded-[80px] p-16 flex flex-col lg:flex-row items-center gap-12 overflow-hidden relative">
           <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none"><Truck className="size-64 text-[#fabf37]" /></div>
           <div className="lg:w-1/2 space-y-6">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Emergency <br /> <span className="text-[#fabf37]">Supply</span> Chain</h2>
-            <p className="text-zinc-500 font-bold text-lg max-w-md">Critical medical stationary delivered within 24 hours to hospitals across the country.</p>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">{t("pharma_supplies_emergency")} <br /> <span className="text-[#fabf37]">{t("pharma_supplies_supply")}</span> {t("pharma_supplies_chain")}</h2>
+            <p className="text-zinc-500 font-bold text-lg max-w-md">{t("pharma_supplies_critical_medical_stationary_delivered_wi")}</p>
           </div>
           <div className="lg:w-1/2 flex justify-end">
-            <button onClick={() => go("quote")} className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">Hospital Quick-Order</button>
+            <button onClick={() => go("quote")} className="bg-[#fabf37] text-black px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">{t("pharma_supplies_hospital_quick_order")}</button>
           </div>
         </div>
       </section>
@@ -156,20 +156,20 @@ export function PharmaSuppliesPage({ onProductClick }: { onProductClick: (p: any
         <div className="container mx-auto px-12 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
           <div className="max-w-xl space-y-8">
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white">
-              The <span className="text-emerald-500">Sterile</span> Standard
+              {t("about_us_the")} <span className="text-emerald-500">{t("pharma_supplies_sterile")}</span> {t("action_modal_standard")}
             </h2>
             <p className="text-zinc-500 font-bold text-lg leading-relaxed">
-              We operate dedicated production lines for healthcare providers, with batch traceability.
+              {t("pharma_supplies_we_operate_dedicated_production_lines")}
             </p>
           </div>
           <div className="bg-white/5 backdrop-blur-3xl p-12 rounded-[60px] border border-white/10 space-y-6">
-            <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Production Engine Status</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">{t("pharma_supplies_production_engine_status")}</p>
             <div className="flex items-center gap-4">
                <div className="size-3 rounded-full bg-emerald-500 animate-ping" />
-               <span className="text-white font-black uppercase tracking-tighter">HEPA-Filtered Active</span>
+               <span className="text-white font-black uppercase tracking-tighter">{t("pharma_supplies_hepa_filtered_active")}</span>
             </div>
             <button onClick={() => go("contact")} className="w-full bg-emerald-500 text-black py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-all">
-              Request Compliance Audit
+              {t("pharma_supplies_request_compliance_audit")}
             </button>
           </div>
         </div>

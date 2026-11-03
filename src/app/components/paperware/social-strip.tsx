@@ -2,6 +2,7 @@ import React from "react";
 import { Facebook, Instagram, ArrowRight } from "lucide-react";
 import { useSocialFeedSettings, instagramEmbedUrl, facebookPostEmbedUrl } from "../../lib/social-feeds";
 import "./social-strip.css";
+import { useLanguage } from "../../context/LanguageContext";
 
 const FB_URL = "https://www.facebook.com/paperwarefactory";
 const IG_URL = "https://www.instagram.com/paperware_factory/";
@@ -36,7 +37,9 @@ function useNearViewport<T extends HTMLElement>(margin = 600) {
   return [ref, near] as const;
 }
 
-const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Facebook }) => (
+const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: typeof Facebook }) => {
+  const { t } = useLanguage();
+  return (
   <a
     href={href}
     target="_blank"
@@ -46,12 +49,14 @@ const FollowCard = ({ href, label, Icon }: { href: string; label: string; Icon: 
     <span className="size-12 rounded-2xl bg-black flex items-center justify-center shrink-0">
       <Icon className="size-6 text-[#fabf37]" />
     </span>
-    <span className="flex-1 min-w-0 text-sm font-black uppercase tracking-widest text-black">{label}</span>
+    <span className="flex-1 min-w-0 text-sm font-black uppercase tracking-widest text-black">{t(label)}</span>
     <ArrowRight className="size-5 text-black shrink-0 group-hover:translate-x-1 transition-transform" />
   </a>
-);
+  );
+};
 
 function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; reverse?: boolean }) {
+  const { t } = useLanguage();
   const duration = Math.max(30, items.length * 5);
   return (
     <div className="pwf-marquee-viewport">
@@ -87,7 +92,7 @@ function MarqueeRow({ items, near, reverse }: { items: Item[]; near: boolean; re
                 </span>
                 {near && (
                   <iframe
-                    title={copy === 1 ? `${it.title} (repeat)` : it.title}
+                    title={t(copy === 1 ? `${it.title} (repeat)` : it.title)}
                     src={it.src}
                     loading="lazy"
                     width={it.kind === "fb" ? W + FB_CROP * 2 : W}
@@ -119,6 +124,7 @@ export function SocialStrip({
   /** Render only the post rows (nothing when no posts are configured). */
   postsOnly?: boolean;
 }) {
+  const { t } = useLanguage();
   const s = useSocialFeedSettings();
   const [ref, near] = useNearViewport<HTMLElement>(600);
 
@@ -144,22 +150,22 @@ export function SocialStrip({
   return (
     <section
       ref={ref}
-      aria-label="Social feed"
+      aria-label={t("social_strip_social_feed")}
       className={`py-20 border-t overflow-hidden ${dark ? "bg-black border-white/10" : "bg-zinc-50 border-zinc-100"}`}
     >
       <div className="text-center mb-12 space-y-2 px-4">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">{eyebrow}</h3>
-        <h2 className={`text-3xl font-black uppercase tracking-tighter ${dark ? "text-white" : "text-zinc-900"}`}>{title}</h2>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">{t(eyebrow)}</h3>
+        <h2 className={`text-3xl font-black uppercase tracking-tighter ${dark ? "text-white" : "text-zinc-900"}`}>{t(title)}</h2>
       </div>
 
       {empty ? (
         <div className="max-w-3xl mx-auto px-4 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FollowCard href={s.facebookPageUrl || FB_URL} label="Follow on Facebook" Icon={Facebook} />
-            <FollowCard href={s.instagramProfileUrl || IG_URL} label="Follow on Instagram" Icon={Instagram} />
+            <FollowCard href={s.facebookPageUrl || FB_URL} label={t("live_social_feeds_follow_on_facebook")} Icon={Facebook} />
+            <FollowCard href={s.instagramProfileUrl || IG_URL} label={t("live_social_feeds_follow_on_instagram")} Icon={Instagram} />
           </div>
           <p className={`text-center text-xs ${dark ? "text-white/50" : "text-zinc-500"}`}>
-            Posts appear here once added in Admin → Social Media → Social Feeds.
+            {t("social_strip_posts_appear_here_once_added")}
           </p>
         </div>
       ) : (

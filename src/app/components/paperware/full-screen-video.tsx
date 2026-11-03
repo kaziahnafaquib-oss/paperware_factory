@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface FullScreenVideoSectionProps {
   /** YouTube link (watch/shorts/youtu.be/embed) or a direct MP4 URL. Set from Admin → CMS → Product Gallery. */
@@ -11,6 +12,7 @@ const getYouTubeId = (url: string): string | null =>
 const YT_ORIGIN = "https://www.youtube-nocookie.com";
 
 export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps) {
+  const { t } = useLanguage();
   const url = (videoUrl || "").trim();
   const ytId = url ? getYouTubeId(url) : null;
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
@@ -39,7 +41,7 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
     : "";
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black" aria-label="Paperware factory film">
+    <section className="relative h-screen w-full overflow-hidden bg-black" aria-label={t("full_screen_video_paperware_factory_film")}>
       <div className="absolute inset-0 z-0 overflow-hidden">
         {ytId ? (
           <>
@@ -56,7 +58,7 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
               ref={iframeRef}
               key={ytId}
               src={embedSrc}
-              title="Paperware Factory film"
+              title={t("full_screen_video_paperware_factory_film_2")}
               allow="autoplay; encrypted-media"
               referrerPolicy="strict-origin-when-cross-origin"
               className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.15]"
@@ -88,7 +90,7 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
         <div className="flex items-center gap-3">
           <div className="size-2 animate-ping rounded-full bg-[#fabf37]" />
           <span className="text-[10px] font-black tracking-[0.3em] text-white uppercase opacity-50">
-            Sustainable Daily Life Usage
+            {t("full_screen_video_sustainable_daily_life_usage")}
           </span>
         </div>
         {url && (
@@ -98,8 +100,8 @@ export function FullScreenVideoSection({ videoUrl }: FullScreenVideoSectionProps
             aria-pressed={soundOn}
             className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full border border-white/30 px-5 text-[11px] font-black uppercase tracking-widest text-white hover:border-[#fabf37] hover:text-[#fabf37] transition-colors"
           >
-            <span aria-hidden="true">{soundOn ? "🔊" : "🔇"}</span>
-            {soundOn ? "Sound off" : "Sound on"}
+            <span aria-hidden="true">{t(soundOn ? "🔊" : "🔇")}</span>
+            {t(soundOn ? "Sound off" : "Sound on")}
           </button>
         )}
       </div>

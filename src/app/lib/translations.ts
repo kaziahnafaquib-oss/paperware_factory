@@ -1,3 +1,6 @@
+import { SITE_I18N, EXISTING_FILL } from './i18n/site-i18n';
+import { SITE_LANG_FILES } from './i18n/lang';
+
 const EN = {
   // Navbar
   home: "Home",
@@ -1015,6 +1018,40 @@ export const translations: Record<string, any> = {
   EN, BN, AR, TR, DE, FR, ES, ZH, HI, RU, JA, KO, FA, IT, PT, UR, VN, TH, ID, NL, PL, SV, EL, MS, AF, AK
 };
 
+// Public-site strings (generated). New keys carry EN + the 11 picker languages; EXISTING_FILL completes
+// keys that were still English in the older language objects.
+const SITE_LANGS = ["BN", "AR", "TR", "ES", "FR", "DE", "IT", "PT", "RU", "ZH", "JA"] as const;
+Object.entries(SITE_I18N).forEach(([key, row]) => {
+  (EN as any)[key] = row.EN;
+  SITE_LANGS.forEach(lang => {
+    const v = row[lang];
+    if (v) (translations[lang] as Record<string, string>)[key] = v;
+  });
+});
+// Per-language files (owner approved machine translation, 3 Nov 2026). A value is applied when the language
+// table has no own string for the key or still carries the English text.
+Object.entries(SITE_LANG_FILES).forEach(([lang, table]) => {
+  const target = translations[lang] as Record<string, string> | undefined;
+  if (!target) return;
+  Object.entries(table).forEach(([key, value]) => {
+    if (!value) return;
+    const own = target[key];
+    if (typeof own !== 'string' || own === (EN as any)[key]) target[key] = value;
+  });
+});
+Object.entries(EXISTING_FILL).forEach(([key, row]) => {
+  SITE_LANGS.forEach(lang => {
+    const v = row[lang];
+    if (v) (translations[lang] as Record<string, string>)[key] = v;
+  });
+});
+
+// Reverse lookup (English text -> key) so data-driven strings (card arrays, props) can be translated at render.
+const EN_TEXT_TO_KEY: Record<string, string> = Object.create(null);
+Object.entries(EN as any as Record<string, any>).forEach(([k, v]) => {
+  if (typeof v === "string" && !(v in EN_TEXT_TO_KEY)) EN_TEXT_TO_KEY[v] = k;
+});
+
 const allSupportedLangs = [
   "EN", "BN", "AR", "TR", "FA", "DE", "FR", "ES", "ZH", "JA", 
   "KO", "RU", "HI", "UR", "IT", "PT", "VN", "TH", "ID", "NL", 
@@ -1034,17 +1071,29 @@ allSupportedLangs.forEach(lang => {
 export type TranslationKey = keyof typeof EN;
 export type LanguageCode = string;
 
+const has = (o: unknown, k: string): boolean => !!o && Object.prototype.hasOwnProperty.call(o, k);
+
 export const getTranslation = (key: TranslationKey | string, lang: LanguageCode = 'EN', tone: Tone = 'corporate'): string => {
+  if (typeof key !== 'string') return key as unknown as string;
   // 1. Check localized tone variants first
-  if (localizedToneVariants[lang]?.[key]?.[tone]) {
+  if (has(localizedToneVariants[lang], key) && localizedToneVariants[lang][key][tone]) {
     return localizedToneVariants[lang][key][tone];
   }
-  
-  // 2. Check global tone variants (defaults to EN)
-  if (toneVariants[key] && toneVariants[key][tone]) {
+
+  // 2. Global tone variants are English copy: only use them for EN (other languages use their own strings)
+  const ownVal = has(translations[lang], key) ? translations[lang][key] : undefined;
+  if (has(toneVariants, key) && toneVariants[key][tone] && (lang === 'EN' || typeof ownVal !== 'string')) {
     return toneVariants[key][tone];
   }
-  
-  // 3. Fallback to standard translations
-  return translations[lang]?.[key] || translations['EN']?.[key] || key;
+
+  // 3. Standard translations, then English, then (for data-driven English text) the reverse key lookup
+  const table = translations[lang];
+  if (has(table, key) && typeof table[key] === 'string' && table[key]) return table[key];
+  const enKey = has(EN_TEXT_TO_KEY, key) ? EN_TEXT_TO_KEY[key] : undefined;
+  if (enKey) {
+    if (lang !== 'EN' && has(table, enKey) && typeof table[enKey] === 'string' && table[enKey]) return table[enKey];
+    return key;
+  }
+  if (has(translations['EN'], key) && translations['EN'][key]) return translations['EN'][key];
+  return key;
 };

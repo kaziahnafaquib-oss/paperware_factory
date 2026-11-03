@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Globe, Anchor, Ship, Truck, Activity, Box, MapPin, Search, ChevronRight } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function LogisticsCommand() {
+  const { t } = useLanguage();
   const shipments = [
     { id: "PW-9901", origin: "Chittagong, BD", dest: "London, UK", status: "In Transit", vessel: "Ever Ace", progress: 65, type: "Sea" },
     { id: "PW-9904", origin: "Dhaka, BD", dest: "Dubai, UAE", status: "Port Loading", vessel: "CMA CGM", progress: 12, type: "Sea" },
@@ -23,20 +25,20 @@ export function LogisticsCommand() {
                 <div className="space-y-4">
                    <div className="flex items-center gap-3">
                       <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Global Command Active</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">{t("global_command_active")}</span>
                    </div>
                    <h2 className="text-[32px] md:text-[52px] font-black uppercase tracking-tighter leading-none">
-                     Logistics <br /> <span className="text-zinc-700 italic">Neural Network</span>
+                     {t("logistics_command_logistics")} <br /> <span className="text-zinc-700 italic">{t("logistics_command_neural_network")}</span>
                    </h2>
                 </div>
                 <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex gap-8 w-full sm:w-auto justify-around">
                    <div className="text-center">
-                      <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Active Vessels</p>
+                      <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("active_vessels")}</p>
                       <p className="text-xl font-black text-[#fabf37]">42</p>
                    </div>
                    <div className="w-px h-full bg-white/5" />
                    <div className="text-center">
-                      <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Ports Connected</p>
+                      <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("ports_connected")}</p>
                       <p className="text-xl font-black text-[#fabf37]">118</p>
                    </div>
                 </div>
@@ -67,7 +69,7 @@ export function LogisticsCommand() {
                        <div className="absolute inset-0 bg-white rounded-full animate-ping opacity-50" />
                     </div>
                     <div className="absolute top-6 left-1/2 -translate-x-1/2 whitespace-nowrap bg-white/80 backdrop-blur-xl border border-black/10 rounded-lg px-3 py-1 text-[8px] font-black uppercase tracking-widest opacity-0 group-hover/ship:opacity-100 transition-opacity text-black">
-                       {pos.label} - Track Now
+                       {t(pos.label)} {t("logistics_command_track_now")}
                     </div>
                   </motion.div>
                 ))}
@@ -78,12 +80,12 @@ export function LogisticsCommand() {
                          <Search className="size-5 sm:size-6" />
                       </div>
                       <input 
-                        placeholder="Enter Tracking No."
+                        placeholder={t("enter_tracking_no")}
                         className="bg-transparent border-none outline-none text-xs sm:text-sm font-bold flex-1 placeholder:text-zinc-400 text-black"
                       />
                    </div>
                    <button className="w-full md:w-auto bg-black text-white px-6 sm:px-8 py-3 rounded-full font-black uppercase tracking-widest text-[9px] sm:text-[10px] hover:bg-[#fabf37] hover:text-black transition-all">
-                      Scan Neural Link
+                      {t("scan_neural_link")}
                    </button>
                 </div>
              </div>
@@ -93,7 +95,7 @@ export function LogisticsCommand() {
           <div className="w-full lg:w-1/3 h-full">
              <div className="bg-white/40 backdrop-blur-3xl border border-black/10 rounded-[40px] sm:rounded-[48px] p-6 sm:p-8 space-y-8 h-full shadow-2xl">
                 <div className="flex items-center justify-between">
-                   <h3 className="text-xl font-black uppercase tracking-tight text-black">Active Terminal</h3>
+                   <h3 className="text-xl font-black uppercase tracking-tight text-black">{t("active_terminal")}</h3>
                    <div className="flex gap-1">
                       <div className="size-1 bg-[#fabf37] animate-bounce" />
                       <div className="size-1 bg-[#fabf37] animate-bounce [animation-delay:0.2s]" />
@@ -106,8 +108,8 @@ export function LogisticsCommand() {
                      <div key={i} className="p-6 bg-black/5 backdrop-blur-md border border-black/5 rounded-3xl space-y-4 group hover:border-[#fabf37]/50 hover:bg-black/10 transition-all">
                         <div className="flex justify-between items-start">
                            <div>
-                              <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{ship.id}</p>
-                              <p className="text-lg font-black text-black">{ship.origin} → {ship.dest}</p>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t(ship.id)}</p>
+                              <p className="text-lg font-black text-black">{t(ship.origin)} → {t(ship.dest)}</p>
                            </div>
                            <div className={`p-2 rounded-lg ${ship.type === 'Sea' ? 'bg-blue-500/10 text-blue-600' : 'bg-orange-500/10 text-orange-600'}`}>
                               {ship.type === 'Sea' ? <Ship className="size-4" /> : <Truck className="size-4" />}
@@ -116,8 +118,8 @@ export function LogisticsCommand() {
                         
                         <div className="space-y-2">
                            <div className="flex justify-between text-[8px] font-black uppercase tracking-widest text-zinc-500">
-                              <span>Voyage: {ship.vessel}</span>
-                              <span>{ship.progress}% Complete</span>
+                              <span>{t("logistics_command_voyage")} {t(ship.vessel)}</span>
+                              <span>{ship.progress}{t("logistics_command_complete")}</span>
                            </div>
                            <div className="h-1.5 bg-zinc-200 rounded-full overflow-hidden">
                               <motion.div 
@@ -131,10 +133,10 @@ export function LogisticsCommand() {
                         <div className="flex items-center justify-between pt-2">
                            <div className="flex items-center gap-2">
                               <Activity className="size-3 text-zinc-500" />
-                              <span className="text-[10px] font-bold text-zinc-600">{ship.status}</span>
+                              <span className="text-[10px] font-bold text-zinc-600">{t(ship.status)}</span>
                            </div>
                            <button className="text-[8px] font-black uppercase tracking-widest flex items-center gap-2 group-hover:text-[#fabf37] transition-colors text-black">
-                              Full Report <ChevronRight className="size-3" />
+                              {t("full_report")} <ChevronRight className="size-3" />
                            </button>
                         </div>
                      </div>
@@ -144,11 +146,11 @@ export function LogisticsCommand() {
                 <div className="bg-[#fabf37] p-6 sm:p-8 rounded-[32px] text-black space-y-4">
                    <div className="flex items-center gap-2">
                       <Globe className="size-5" />
-                      <span className="text-[10px] font-black uppercase tracking-widest">Network Health</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest">{t("network_health")}</span>
                    </div>
-                   <p className="text-lg sm:text-xl font-black italic leading-tight">100% On-time Delivery target maintained for Q4.</p>
+                   <p className="text-lg sm:text-xl font-black italic leading-tight">{t("logistics_command_100_on_time_delivery_target")}</p>
                    <button className="w-full py-4 bg-black text-white rounded-2xl font-black uppercase tracking-widest text-[10px] hover:translate-y-[-2px] transition-transform">
-                      Global Port Status Dashboard
+                      {t("port_status_dashboard")}
                    </button>
                 </div>
              </div>

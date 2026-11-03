@@ -77,15 +77,15 @@ export function Catalog3DPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Product Showroom</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">{t("catalog_3d_product_showroom")}</span>
             </div>
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none">
-              360° <span className="text-zinc-600">Product</span> <br /> <span className="text-[#fabf37]">Preview</span>
+              360° <span className="text-zinc-600">{t("catalog_3d_product")}</span> <br /> <span className="text-[#fabf37]">{t("export_request_form_preview")}</span>
             </h1>
           </div>
           <div className="max-w-xs text-right hidden md:block">
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest leading-relaxed">
-              Browse sample packaging formats and ask us for physical samples.
+              {t("catalog_3d_browse_sample_packaging_formats_and")}
             </p>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function Catalog3DPage() {
           
           {/* Sidebar Navigation */}
           <div data-col className="lg:col-span-3 space-y-4 will-change-transform">
-            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-6 px-4">Catalog Selection</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-6 px-4">{t("catalog_3d_catalog_selection")}</p>
             {products.map((p, idx) => (
               <button
                 key={p.id}
@@ -106,10 +106,10 @@ export function Catalog3DPage() {
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[9px] font-black tracking-widest uppercase opacity-60">{p.id}</span>
+                  <span className="text-[9px] font-black tracking-widest uppercase opacity-60">{t(p.id)}</span>
                   {selectedProduct === idx && <CircleCheck className="size-4" />}
                 </div>
-                <h3 className="font-black text-lg uppercase leading-tight">{p.name}</h3>
+                <h3 className="font-black text-lg uppercase leading-tight">{t(p.name)}</h3>
               </button>
             ))}
             
@@ -132,20 +132,20 @@ export function Catalog3DPage() {
             >
               <ImageWithFallback 
                 src={products[selectedProduct].image}
-                alt={products[selectedProduct].name}
+                alt={t(products[selectedProduct].name)}
                 className="w-full h-full object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.8)]"
               />
             </motion.div>
 
             {/* Interaction UI */}
             <div className="absolute z-20 bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl p-2 rounded-full border border-white/10">
-              <button onClick={() => setRotation(prev => prev - 45)} aria-label="Rotate left" className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev - 45)} aria-label={t("catalog_3d_rotate_left")} className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <RefreshCw className="size-5 text-zinc-400" />
               </button>
               <div className="h-4 w-px bg-white/10" />
-              <button onClick={() => setRotation(prev => prev + 360)} className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">360 Mode</button>
+              <button onClick={() => setRotation(prev => prev + 360)} className="px-6 py-2 text-[9px] font-black uppercase tracking-[0.2em] text-white">{t("catalog_3d_360_mode")}</button>
               <div className="h-4 w-px bg-white/10" />
-              <button onClick={() => setRotation(prev => prev + 45)} aria-label="Rotate right" className="p-3 hover:bg-white/10 rounded-full transition-colors">
+              <button onClick={() => setRotation(prev => prev + 45)} aria-label={t("catalog_3d_rotate_right")} className="p-3 hover:bg-white/10 rounded-full transition-colors">
                 <Expand className="size-5 text-zinc-400" />
               </button>
             </div>
@@ -156,21 +156,21 @@ export function Catalog3DPage() {
           <div data-col className="lg:col-span-3 space-y-8 will-change-transform">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-black uppercase tracking-tighter">{products[selectedProduct].name}</h2>
-                <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-full">New</div>
+                <h2 className="text-3xl font-black uppercase tracking-tighter">{t(products[selectedProduct].name)}</h2>
+                <div className="px-3 py-1 bg-[#fabf37] text-black text-[9px] font-black rounded-full">{t("catalog_3d_new")}</div>
               </div>
               <p className="text-sm font-bold text-zinc-400 leading-relaxed">
-                {products[selectedProduct].description}
+                {t(products[selectedProduct].description)}
               </p>
             </div>
 
             <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Technical Specs</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("catalog_3d_technical_specs")}</p>
               <div className="space-y-3">
                 {products[selectedProduct].specs.map((spec, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 bg-zinc-900/50 rounded-2xl border border-white/5">
                     <Layers className="size-4 text-[#fabf37]" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">{spec}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">{t(spec)}</span>
                   </div>
                 ))}
               </div>
@@ -179,15 +179,15 @@ export function Catalog3DPage() {
             <div className="p-8 bg-zinc-900 rounded-[40px] border border-white/5 space-y-6">
               <div className="flex justify-between items-end">
                 <div className="space-y-1">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Pricing</p>
-                  <p className="text-xl font-black">On request</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-500">{t("catalog_3d_pricing")}</p>
+                  <p className="text-xl font-black">{t("catalog_3d_on_request")}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[10px] font-bold text-zinc-400">Made in Dhaka</p>
+                  <p className="text-[10px] font-bold text-zinc-400">{t("catalog_3d_made_in_dhaka")}</p>
                 </div>
               </div>
               <button type="button" onClick={() => openWhatsAppInquiry("Sample request", { Product: products[selectedProduct].name })} className="w-full py-6 bg-[#fabf37] text-black rounded-3xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform shadow-[0_20px_40px_-10px_rgba(250,191,55,0.4)]">
-                Request Samples <ArrowRight className="size-4" />
+                {t("catalog_3d_request_samples")} <ArrowRight className="size-4" />
               </button>
             </div>
           </div>

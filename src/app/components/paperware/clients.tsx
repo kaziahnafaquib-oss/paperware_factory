@@ -23,7 +23,7 @@ export function Clients() {
           className="max-w-4xl mx-auto bg-[#fabf37] text-black rounded-3xl px-8 py-14 md:px-16 text-center"
         >
           <p className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[1.05]">
-            Trusted by cafés, restaurants, hospitals and brands across Bangladesh
+            {t("clients_trusted_by_caf_s_restaurants")}
           </p>
         </motion.div>
 

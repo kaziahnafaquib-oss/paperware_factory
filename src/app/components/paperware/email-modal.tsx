@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Send, User, Mail, MessageSquare, ShieldCheck, Factory, Building2, Phone, Hash, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { openWhatsAppInquiry, collectFormFields, INQUIRY_HANDOFF_TITLE, INQUIRY_HANDOFF_BODY } from "../../lib/inquiry";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface EmailModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface EmailModalProps {
 }
 
 export function EmailModal({ isOpen, onClose }: EmailModalProps) {
+  const { t } = useLanguage();
   useEscapeKey(isOpen, onClose);
   const dialogRef = React.useRef<HTMLDivElement>(null);
   useDialogFocus(dialogRef, isOpen);
@@ -33,7 +35,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
     <AnimatePresence>
       {isOpen && (
         <div ref={dialogRef}
-          role="dialog" aria-modal="true" aria-label="Request a quotation" className="fixed inset-0 z-[2000] flex items-center justify-center p-4 overflow-y-auto outline-none">
+          role="dialog" aria-modal="true" aria-label={t("email_modal_request_a_quotation")} className="fixed inset-0 z-[2000] flex items-center justify-center p-4 overflow-y-auto outline-none">
           {/* Backdrop */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -59,10 +61,10 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="size-2 bg-[#fabf37] rounded-full" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Contact Protocol</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">{t("email_modal_contact_protocol")}</span>
                   </div>
                   <h2 className="text-4xl font-black uppercase tracking-tighter text-white flex flex-wrap gap-x-3 leading-none">
-                    Direct <span className="text-[#fabf37]">Inquiry</span>
+                    {t("email_modal_direct")} <span className="text-[#fabf37]">{t("email_modal_inquiry")}</span>
                   </h2>
                 </div>
                 <button 
@@ -79,35 +81,35 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                   {/* Personal Info */}
                   <div className="relative group">
                     <User className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                    <input required type="text" placeholder="YOUR FULL NAME" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
+                    <input required type="text" placeholder={t("email_modal_your_full_name")} className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
                   </div>
 
                   <div className="relative group">
                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                    <input required type="email" placeholder="CORPORATE EMAIL" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
+                    <input required type="email" placeholder={t("email_modal_corporate_email")} className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
                   </div>
 
                   {/* Corporate Info */}
                   <div className="relative group">
                     <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                    <input required type="text" placeholder="COMPANY NAME" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
+                    <input required type="text" placeholder={t("email_modal_company_name")} className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
                   </div>
 
                   <div className="relative group">
                     <Phone className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                    <input required type="tel" placeholder="WHATSAPP / PHONE" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
+                    <input required type="tel" placeholder={t("email_modal_whatsapp_phone")} className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
                   </div>
 
                   {/* Requirements */}
                   <div className="relative group">
                     <Hash className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                    <input required type="text" placeholder="EXPECTED QUANTITY" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
+                    <input required type="text" placeholder={t("email_modal_expected_quantity")} className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800" />
                   </div>
 
                   <div className="relative group">
                     <div className="absolute left-5 top-1/2 -translate-y-1/2 size-4 text-zinc-700 pointer-events-none"><ChevronDown className="size-4" /></div>
                     <select required defaultValue="" className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl py-4 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all appearance-none cursor-pointer">
-                      <option value="" disabled>PRODUCT CATEGORY</option>
+                      <option value="" disabled>{t("email_modal_product_category")}</option>
                       {productCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                     </select>
                   </div>
@@ -115,7 +117,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
 
                 <div className="relative group">
                   <MessageSquare className="absolute left-5 top-5 size-4 text-zinc-700 group-focus-within:text-[#fabf37] transition-colors" />
-                  <textarea required rows={4} placeholder="YOUR MESSAGE OR RFQ DETAILS" className="w-full bg-zinc-900/50 border border-white/5 rounded-[24px] py-5 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800 resize-none" />
+                  <textarea required rows={4} placeholder={t("email_modal_your_message_or_rfq_details")} className="w-full bg-zinc-900/50 border border-white/5 rounded-[24px] py-5 pl-14 pr-4 text-[10px] font-bold uppercase tracking-widest text-white focus:outline-none focus:border-[#fabf37]/30 transition-all placeholder:text-zinc-800 resize-none" />
                 </div>
 
                 <button 
@@ -127,7 +129,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                     <div className="size-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                   ) : (
                     <>
-                      TRANSMIT MESSAGE
+                      {t("email_modal_transmit_message")}
                       <Send className="size-4" />
                     </>
                   )}
@@ -138,7 +140,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
               <div className="pt-6 border-t border-white/5 flex items-center gap-4">
                 <ShieldCheck className="size-5 text-zinc-700 shrink-0" />
                 <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest italic leading-relaxed">
-                  Your inquiry is protected by end-to-end industrial encryption protocols.
+                  {t("email_modal_your_inquiry_is_protected_by")}
                 </p>
               </div>
             </div>

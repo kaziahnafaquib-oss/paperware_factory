@@ -1,5 +1,8 @@
 import React from "react";
 import imgFloorMachines from "@/assets/factory/floor-cup-machines.webp";
+import imgFloorWide from "@/assets/factory/floor-wide.webp";
+import imgOffsetPress from "@/assets/factory/offset-press.webp";
+import imgCupsStacking from "@/assets/factory/cups-stacking.webp";
 import { motion } from "motion/react";
 import { 
   Globe, ShieldCheck, Truck, ChartBar, 
@@ -11,6 +14,28 @@ import { useLanguage } from "../context/LanguageContext";
 import { ExportIntelligence } from "../components/paperware/export-intelligence";
 import { ExportRequestForm } from "../components/paperware/export-request-form";
 
+const HERO_BG = [imgFloorWide, imgFloorMachines, imgOffsetPress, imgCupsStacking];
+
+function HeroBackdrop() {
+  const [idx, setIdx] = React.useState(0);
+  React.useEffect(() => {
+    const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const id = window.setInterval(() => setIdx((i) => (i + 1) % HERO_BG.length), 6000);
+    return () => window.clearInterval(id);
+  }, []);
+  return (
+    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      {HERO_BG.map((src, i) => (
+        <img key={src} src={src} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async"
+          className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-[1500ms] ease-in-out data-[on=true]:opacity-30"
+          data-on={i === idx} />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+    </div>
+  );
+}
+
 export function ExportPage() {
   const { t } = useLanguage();
   const [isFormOpen, setIsFormOpen] = React.useState(false);
@@ -20,7 +45,7 @@ export function ExportPage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-32">
         <div className="bg-black rounded-[60px] p-12 md:p-24 text-white relative overflow-hidden">
-          <img src={imgFloorMachines} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-25 pointer-events-none" />
+          <HeroBackdrop />
           <div className="absolute inset-0  pointer-events-none" />
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
             <Globe className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[1200px]" />
@@ -34,7 +59,7 @@ export function ExportPage() {
             <h1 className="text-[40px] md:text-[72px] font-black uppercase tracking-tighter leading-[0.85]">
               {t('seamless_logistics').split(' ').map((word, i) => (
                 <span key={i} style={{ display: 'contents' }}>
-                  {word === 'Global' ? <span className="text-[#fabf37]">{word}</span> : word}{' '}
+                  {word === 'Global' ? <span className="text-[#fabf37]">{t(word)}</span> : word}{' '}
                   {i === 0 && <br />}
                 </span>
               ))}
@@ -66,6 +91,7 @@ export function ExportPage() {
 }
 
 function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: React.FC<{ className: string }> }, index: number }) {
+  const { t } = useLanguage();
   const [rotateX, setRotateX] = React.useState(0);
   const [rotateY, setRotateY] = React.useState(0);
   const [glareX, setGlareX] = React.useState(50);
@@ -167,8 +193,8 @@ function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: 
           className="relative z-10 space-y-2"
           style={{ transform: "translateZ(40px)" }}
         >
-          <h4 className="text-lg font-black uppercase tracking-tight text-white">{cert.title}</h4>
-          <p className="text-[11px] font-bold text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">{cert.desc}</p>
+          <h4 className="text-lg font-black uppercase tracking-tight text-white">{t(cert.title)}</h4>
+          <p className="text-[11px] font-bold text-zinc-400 leading-relaxed group-hover:text-zinc-300 transition-colors">{t(cert.desc)}</p>
         </div>
 
         {/* 3D Border Glow */}
@@ -184,6 +210,7 @@ function CertCard({ cert, index }: { cert: { title: string, desc: string, Icon: 
 }
 
 function OptimizationCard({ icon: Icon, label, value, delay }: { icon: React.FC<{ className: string }>, label: string, value: string, delay: number }) {
+  const { t } = useLanguage();
   const [rotateX, setRotateX] = React.useState(0);
   const [rotateY, setRotateY] = React.useState(0);
 
@@ -233,8 +260,8 @@ function OptimizationCard({ icon: Icon, label, value, delay }: { icon: React.FC<
         
         {/* Content with depth */}
         <div style={{ transform: "translateZ(30px)" }}>
-          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-zinc-400 transition-colors">{label}</p>
-          <p className="text-2xl font-black group-hover:text-[#fabf37] transition-colors">{value}</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-zinc-400 transition-colors">{t(label)}</p>
+          <p className="text-2xl font-black group-hover:text-[#fabf37] transition-colors">{t(value)}</p>
         </div>
 
         {/* Glare effect */}

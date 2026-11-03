@@ -4,6 +4,7 @@ import {
   Terminal, Cpu, Database, Activity, 
   RefreshCw, ShieldCheck, Zap, ArrowUpRight
 } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface LogEntry {
   id: string;
@@ -14,6 +15,7 @@ interface LogEntry {
 }
 
 export function ERPSyncTerminal() {
+  const { t } = useLanguage();
   const [logs, setLogs] = React.useState<LogEntry[]>([]);
   const [metrics, setMetrics] = React.useState({
     throughput: 1240,
@@ -81,13 +83,13 @@ export function ERPSyncTerminal() {
           </div>
           <div className="flex items-center gap-2 ml-4">
             <Terminal className="size-3 text-[#fabf37]" />
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Paperware OS v4.0 - ERP Sync Terminal</span>
+            <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">{t("erp_sync_terminal_paperware_os_v4_0_erp")}</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[9px] font-bold text-emerald-500 uppercase">Live Pipeline</span>
+            <span className="text-[9px] font-bold text-emerald-500 uppercase">{t("erp_sync_terminal_live_pipeline")}</span>
           </div>
           <RefreshCw className="size-3 text-white/20 animate-spin-slow" />
         </div>
@@ -97,29 +99,29 @@ export function ERPSyncTerminal() {
         {/* Left: Live Metrics Dashboard */}
         <div className="p-6 space-y-6 bg-zinc-950/30">
           <div className="space-y-4">
-            <h4 className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em]">Operational Metrics</h4>
+            <h4 className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em]">{t("erp_sync_terminal_operational_metrics")}</h4>
             
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
                 <div className="flex items-center gap-2 text-white/40">
                   <Activity className="size-3" />
-                  <span className="text-[8px] font-bold uppercase">Throughput</span>
+                  <span className="text-[8px] font-bold uppercase">{t("throughput")}</span>
                 </div>
-                <div className="text-xl font-bold text-white">{metrics.throughput}<span className="text-[10px] text-white/30 ml-1">U/min</span></div>
+                <div className="text-xl font-bold text-white">{metrics.throughput}<span className="text-[10px] text-white/30 ml-1">{t("erp_sync_terminal_u_min")}</span></div>
               </div>
               
               <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
                 <div className="flex items-center gap-2 text-white/40">
                   <Zap className="size-3" />
-                  <span className="text-[8px] font-bold uppercase">Latency</span>
+                  <span className="text-[8px] font-bold uppercase">{t("latency")}</span>
                 </div>
-                <div className="text-xl font-bold text-white">{metrics.latency}<span className="text-[10px] text-white/30 ml-1">ms</span></div>
+                <div className="text-xl font-bold text-white">{metrics.latency}<span className="text-[10px] text-white/30 ml-1">{t("erp_sync_terminal_ms")}</span></div>
               </div>
             </div>
 
             <div className="p-4 rounded-2xl bg-[#fabf37]/5 border border-[#fabf37]/10 space-y-3">
               <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-widest text-[#fabf37]">
-                <span>Sync Consistency</span>
+                <span>{t("erp_sync_terminal_sync_consistency")}</span>
                 <span>{metrics.syncRate.toFixed(2)}%</span>
               </div>
               <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
@@ -133,7 +135,7 @@ export function ERPSyncTerminal() {
           </div>
 
           <div className="space-y-4 pt-4 border-t border-white/5">
-            <h4 className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em]">Hardware Nodes</h4>
+            <h4 className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em]">{t("erp_sync_terminal_hardware_nodes")}</h4>
             <div className="space-y-2">
               {[
                 { name: "Core Processor", status: "Nominal", icon: <Cpu className="size-3" /> },
@@ -143,9 +145,9 @@ export function ERPSyncTerminal() {
                 <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 text-[9px]">
                   <div className="flex items-center gap-3 text-white/60">
                     {node.icon}
-                    <span className="font-bold uppercase tracking-wider">{node.name}</span>
+                    <span className="font-bold uppercase tracking-wider">{t(node.name)}</span>
                   </div>
-                  <span className="text-emerald-500 font-black uppercase">{node.status}</span>
+                  <span className="text-emerald-500 font-black uppercase">{t(node.status)}</span>
                 </div>
               ))}
             </div>
@@ -166,14 +168,14 @@ export function ERPSyncTerminal() {
                   animate={{ opacity: 1, x: 0 }}
                   className="flex items-start gap-3 text-[10px] py-0.5 group"
                 >
-                  <span className="text-white/20 shrink-0">[{log.timestamp}]</span>
+                  <span className="text-white/20 shrink-0">[{t(log.timestamp)}]</span>
                   <span className={`px-1.5 rounded bg-white/5 font-bold shrink-0 ${
                     log.status === 'warning' ? 'text-amber-500' : 'text-[#fabf37]'
-                  }`}>{log.source}</span>
+                  }`}>{t(log.source)}</span>
                   <span className={`flex-1 ${
                     log.status === 'warning' ? 'text-amber-400/80' : 'text-zinc-400'
                   }`}>
-                    {log.message}
+                    {t(log.message)}
                   </span>
                   <ArrowUpRight className="size-3 text-white/0 group-hover:text-white/20 transition-colors" />
                 </motion.div>
@@ -183,18 +185,18 @@ export function ERPSyncTerminal() {
           
           {/* Console Input Simulation */}
           <div className="px-6 py-4 bg-zinc-900/50 border-t border-white/5 flex items-center gap-3">
-            <span className="text-[#fabf37] text-[10px] font-black">root@paperware:~$</span>
+            <span className="text-[#fabf37] text-[10px] font-black">{t("erp_sync_terminal_root_paperware")}</span>
             <div className="flex-1 h-4 relative">
               <motion.div 
                 animate={{ opacity: [1, 0] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
                 className="absolute left-0 top-0 w-2 h-4 bg-[#fabf37]/50"
               />
-              <span className="text-zinc-500 text-[10px] ml-3 italic">Awaiting neural command...</span>
+              <span className="text-zinc-500 text-[10px] ml-3 italic">{t("erp_sync_terminal_awaiting_neural_command")}</span>
             </div>
             <div className="flex gap-2">
-              <span className="px-2 py-0.5 rounded bg-white/5 text-[8px] text-white/40 uppercase font-black">UTF-8</span>
-              <span className="px-2 py-0.5 rounded bg-white/5 text-[8px] text-white/40 uppercase font-black">SSL:AES-256</span>
+              <span className="px-2 py-0.5 rounded bg-white/5 text-[8px] text-white/40 uppercase font-black">{t("erp_sync_terminal_utf_8")}</span>
+              <span className="px-2 py-0.5 rounded bg-white/5 text-[8px] text-white/40 uppercase font-black">{t("erp_sync_terminal_ssl_aes_256")}</span>
             </div>
           </div>
         </div>

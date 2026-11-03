@@ -13,6 +13,7 @@ import pGiftBags from "../../../assets/products/gift-bags.webp";
 import pConfectionery from "../../../assets/products/confectionery-boxes.webp";
 import pTissue from "../../../assets/products/tissue-boxes.webp";
 import pMedicine from "../../../assets/products/medicine-boxes.webp";
+import { useLanguage } from "../../context/LanguageContext";
 
 /** Finale strip: bags, boxes and food packaging (no cups: the cups had their own chapters). Owner request, 1 Nov 2026. */
 const FINALE_PRODUCTS = [
@@ -94,6 +95,7 @@ const ACTIONS_SELECTOR = "[data-line]";
 
 /* ---------- component ---------- */
 export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
+  const { t } = useLanguage();
   const sectionRef = React.useRef<HTMLElement>(null);
   const stageRef = React.useRef<HTMLDivElement>(null);
   const bgRef = React.useRef<HTMLDivElement>(null);
@@ -265,30 +267,30 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
         {/* objects */}
         <div ref={heroRef} className="wwa__obj">
           <div className="wwa__shadow" />
-          <img src={imgCup} alt="Paperware Factory branded paper cup" draggable={false} decoding="async" />
+          <img src={imgCup} alt={t("who_we_are_paperware_factory_branded_paper_cup")} draggable={false} decoding="async" />
         </div>
         <div ref={waveRef} className="wwa__obj">
           <div className="wwa__shadow" />
-          <img src={imgWave} alt="Paper cup with yellow wave print" draggable={false} loading="lazy" decoding="async" />
+          <img src={imgWave} alt={t("who_we_are_paper_cup_with_yellow_wave")} draggable={false} loading="lazy" decoding="async" />
         </div>
         <div ref={rippleRef} className="wwa__obj">
           <div className="wwa__shadow" />
-          <img src={imgRipple} alt="Orange ripple-wall paper cup" draggable={false} loading="lazy" decoding="async" />
+          <img src={imgRipple} alt={t("who_we_are_orange_ripple_wall_paper_cup")} draggable={false} loading="lazy" decoding="async" />
         </div>
         <div ref={stripeRef} className="wwa__obj">
           <div className="wwa__shadow" />
-          <img src={imgStripe} alt="Paper cup with orange stripe print" draggable={false} loading="lazy" decoding="async" />
+          <img src={imgStripe} alt={t("who_we_are_paper_cup_with_orange_stripe")} draggable={false} loading="lazy" decoding="async" />
         </div>
         <div ref={bagRef} className="wwa__obj wwa__obj--bag">
           <div className="wwa__shadow" />
-          <img src={imgBag} alt="Kraft paper carry bag with wave print" draggable={false} loading="lazy" decoding="async" />
+          <img src={imgBag} alt={t("who_we_are_kraft_paper_carry_bag_with")} draggable={false} loading="lazy" decoding="async" />
         </div>
 
         <div ref={marqueeRef} className="wwa__marquee" aria-hidden="true">
           <div className="wwa__marquee-track">
             {[0, 1].map((copy) => FINALE_PRODUCTS.map((item, i) => (
               <div key={`${copy}-${i}`} className="wwa__tile">
-                <img src={item.src} alt={copy === 0 ? item.alt : ""} draggable={false} loading="lazy" decoding="async" />
+                <img src={item.src} alt={t(copy === 0 ? item.alt : "")} draggable={false} loading="lazy" decoding="async" />
               </div>
             )))}
           </div>
@@ -296,27 +298,27 @@ export function WhoWeAreSection({ onQuote, onProducts }: WhoWeAreProps) {
 
         {/* copy */}
         <div ref={copyIntroRef} className="wwa__copy wwa__copy--center">
-          <h2 id="who-we-are-heading" className="wwa__line wwa__h1" data-line>Paper cups.</h2>
-          <p className="wwa__line wwa__sub" data-line>Made in Dhaka. Printed with your brand.</p>
+          <h2 id="who-we-are-heading" className="wwa__line wwa__h1" data-line>{t("who_we_are_paper_cups")}</h2>
+          <p className="wwa__line wwa__sub" data-line>{t("who_we_are_made_in_dhaka_printed_with")}</p>
         </div>
 
         <div ref={copyCloseRef} className="wwa__copy wwa__copy--left">
-          <h3 className="wwa__line wwa__h2" data-line>Every band,<br />your colours.</h3>
+          <h3 className="wwa__line wwa__h2" data-line>{t("who_we_are_every_band")}<br />{t("who_we_are_your_colours")}</h3>
         </div>
 
-        <div ref={capWaveRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Wave</p></div>
-        <div ref={capRippleRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Ripple</p></div>
-        <div ref={capStripeRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>Stripe</p></div>
+        <div ref={capWaveRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>{t("who_we_are_wave")}</p></div>
+        <div ref={capRippleRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>{t("who_we_are_ripple")}</p></div>
+        <div ref={capStripeRef} className="wwa__copy wwa__copy--caption"><p className="wwa__line wwa__cap" data-line>{t("who_we_are_stripe")}</p></div>
 
         <div ref={copyBagRef} className="wwa__copy wwa__copy--top">
-          <h3 className="wwa__line wwa__h2" data-line>And the bag<br />it goes home in.</h3>
+          <h3 className="wwa__line wwa__h2" data-line>{t("who_we_are_and_the_bag")}<br />{t("who_we_are_it_goes_home_in")}</h3>
         </div>
 
         <div ref={copyFinaleRef} className="wwa__copy wwa__copy--finale">
-          <h3 className="wwa__line wwa__h2" data-line>Your brand,<br />on our paper.</h3>
+          {/* Owner (3 Nov 2026): "Your brand, on our paper." appears once on the home page — in the CTA block below. */}
           <div className="wwa__line wwa__actions" data-line>
-            <button type="button" className="wwa__btn wwa__btn--primary" onClick={onQuote}>Request a quote</button>
-            <button type="button" className="wwa__btn wwa__btn--ghost" onClick={onProducts}>See products</button>
+            <button type="button" className="wwa__btn wwa__btn--primary" onClick={onQuote}>{t("home_bottom_request_a_quote")}</button>
+            <button type="button" className="wwa__btn wwa__btn--ghost" onClick={onProducts}>{t("premium_clients_see_products")}</button>
           </div>
         </div>
       </div>

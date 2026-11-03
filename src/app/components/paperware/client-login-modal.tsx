@@ -32,27 +32,9 @@ export function ClientLoginModal({ isOpen, onClose, onLoginSuccess, onViewFaq }:
     setError("");
     setIsLoading(true);
 
-    // Simulate login API call
-    setTimeout(() => {
-      // Mock validation
-      if (loginMethod === "email" && formData.email && formData.password) {
-        onLoginSuccess();
-        onClose();
-      } else if (loginMethod === "phone" && formData.phone && formData.password) {
-        onLoginSuccess();
-        onClose();
-      } else if (loginMethod === "otp" && formData.otp) {
-        onLoginSuccess();
-        onClose();
-      } else {
-        setError("Invalid credentials. Please try again.");
-        setLoginAttempts(loginAttempts + 1);
-        if (loginAttempts >= 2) {
-          setShowSecurityInfo(true);
-        }
-      }
-      setIsLoading(false);
-    }, 1000);
+    // No auth backend is connected: never report success (security review H1, 2026-11-03).
+    setError("Portal sign-in is not connected yet. Access opens once the Paperware OS link is live.");
+    setIsLoading(false);
   };
 
   const sendOtp = async () => {

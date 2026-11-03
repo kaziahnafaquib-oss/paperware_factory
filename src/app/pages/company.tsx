@@ -13,6 +13,7 @@ import imgQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
 import imgFormingTurret from "../../assets/factory/forming-turret.webp";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterTeam from "../../assets/video-posters/company-team.webp";
+import { useLanguage } from "../context/LanguageContext";
 
 // Real footage of the Paperware office team and dispatch (public/media/SOURCES.txt).
 const TEAM_VIDEO = mediaUrl("company-team.mp4");
@@ -97,6 +98,7 @@ function TiltCard({ children, className }: { children: React.ReactNode, classNam
 
 // Parallax Image Component
 function ParallaxImage({ src, alt, className }: { src: string, alt: string, className?: string }) {
+  const { t } = useLanguage();
   const ref = React.useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -111,7 +113,7 @@ function ParallaxImage({ src, alt, className }: { src: string, alt: string, clas
       <motion.div style={{ y, scale }} className="w-full h-full">
         <ImageWithFallback
           src={src}
-          alt={alt}
+          alt={t(alt)}
           className="w-full h-full object-cover"
         />
       </motion.div>
@@ -121,6 +123,7 @@ function ParallaxImage({ src, alt, className }: { src: string, alt: string, clas
 
 // Magnetic Button
 function MagneticButton({ children, onClick, className, "aria-label": ariaLabel }: { children: React.ReactNode, onClick?: () => void, className?: string, "aria-label"?: string }) {
+  const { t } = useLanguage();
   const ref = React.useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -142,7 +145,7 @@ function MagneticButton({ children, onClick, className, "aria-label": ariaLabel 
 
   return (
     <motion.button
-      aria-label={ariaLabel}
+      aria-label={t(ariaLabel)}
       ref={ref}
       onClick={onClick}
       onMouseMove={handleMouseMove}
@@ -156,6 +159,7 @@ function MagneticButton({ children, onClick, className, "aria-label": ariaLabel 
 }
 
 export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => void }) {
+  const { t } = useLanguage();
   const containerRef = React.useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -304,7 +308,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               <span className="px-6 py-2 rounded-full bg-white/80 backdrop-blur-md border border-zinc-200 text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow cursor-default">
                 <span className="size-2 rounded-full bg-[#fabf37] animate-ping" />
                 <span className="size-2 rounded-full bg-[#fabf37] absolute" />
-                Corporate Profile
+                {t("company_corporate_profile")}
               </span>
             </motion.div>
 
@@ -318,7 +322,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                   transition={{ delay: 0.5, duration: 0.8, type: "spring", stiffness: 100 }}
                   className="absolute inset-0 bg-[#fabf37] origin-center -skew-x-6 md:-skew-x-12 rounded-lg md:rounded-2xl shadow-2xl transition-colors"
                 />
-                <span className="relative z-10 text-5xl md:text-[9rem] lg:text-[11rem] text-black drop-shadow-sm group-hover:text-black/90 block pt-1 md:pt-4">COMPANY</span>
+                <span className="relative z-10 text-5xl md:text-[9rem] lg:text-[11rem] text-black drop-shadow-sm group-hover:text-black/90 block pt-1 md:pt-4">{t("company_company")}</span>
 
                 {/* Shine Effect on Box */}
                 <motion.div
@@ -339,7 +343,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{ delay: 0.8 + i * 0.1, duration: 0.6, ease: "easeOut" }}
                   >
-                    {word}
+                    {t(word)}
                   </motion.span>
                 ))}
                 <motion.span
@@ -350,7 +354,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                   className="text-black font-bold px-2 rounded decoration-clone cursor-default bg-[#fabf37]/20 hover:bg-[#fabf37]/40"
                   style={{ backgroundColor: "#fabf3733" }}
                 >
-                  premium
+                  {t("company_premium")}
                 </motion.span>
                 {["packaging", "solutions", "that", "define", "brands."].map((word, i) => (
                   <motion.span
@@ -359,14 +363,14 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{ delay: 1.1 + i * 0.1, duration: 0.6, ease: "easeOut" }}
                   >
-                    {word}
+                    {t(word)}
                   </motion.span>
                 ))}
               </div>
 
               <MagneticButton
                 onClick={() => window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'smooth' })}
-                aria-label="Scroll to content"
+                aria-label={t("company_scroll_to_content")}
                 className="size-20 md:size-24 rounded-full bg-black text-white flex items-center justify-center shrink-0 hover:scale-110 hover:bg-[#fabf37] hover:text-black transition-all duration-300 shadow-2xl shadow-zinc-300 ring-4 ring-zinc-50 group mt-4 md:mt-0"
               >
                 <motion.div
@@ -402,16 +406,17 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                 className={`group relative overflow-hidden rounded-3xl bg-zinc-50 border border-zinc-100 hover:border-[#fabf37]/50 transition-colors duration-500 ${section.colSpan || 'md:col-span-1'} min-h-[400px] flex flex-col`}
               >
                 {/* Card Content Wrapper */}
-                <div className="flex-1 p-8 flex flex-col relative z-20">
+                {/* Owner (3 Nov 2026): no white fade over the media. The copy sits on its own panel instead. */}
+                <div className="mt-auto m-4 p-6 md:p-7 flex flex-col relative z-20 rounded-2xl bg-white/90 backdrop-blur-sm border border-white/60 max-w-md">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-auto">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-zinc-400">
                         <section.icon className="size-4" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">{section.subtitle}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest">{t(section.subtitle)}</span>
                       </div>
                       <h3 className="text-2xl font-bold uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors duration-300">
-                        {section.title}
+                        {t(section.title)}
                       </h3>
                     </div>
                     <span className="text-[10px] font-mono text-zinc-500">0{idx + 1}</span>
@@ -420,12 +425,12 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                   {/* Description & Action */}
                   <div className="space-y-6 mt-8">
                     <p className="text-sm text-zinc-500 leading-relaxed max-w-md">
-                      {section.desc}
+                      {t(section.desc)}
                     </p>
 
                     <div className="flex items-center justify-between">
                       <div className="px-3 py-1.5 rounded-full bg-white border border-zinc-100 text-[10px] font-bold uppercase tracking-wider text-zinc-400 shadow-sm">
-                        {section.stats}
+                        {t(section.stats)}
                       </div>
 
                       <button
@@ -441,14 +446,13 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
                 {/* Background Image / Video Decoration */}
                 <div className="absolute inset-0 z-0">
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-50 via-zinc-50/70 to-transparent z-10 pointer-events-none" />
                   {"video" in section && section.video && section.poster ? (
                     <FactoryClip
                       src={section.video}
                       poster={section.poster}
-                      label="office team"
+                      label={t("company_office_team")}
                       className="w-full h-full bg-zinc-50"
-                      videoClassName="object-[center_30%] opacity-70 group-hover:opacity-90 transition-opacity duration-500"
+                      videoClassName="object-[center_30%]"
                       controlPosition="top-right"
                     />
                   ) : (
@@ -459,8 +463,8 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
                     >
                       <ImageWithFallback
                           src={section.image}
-                          alt={section.title}
-                          className="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-500"
+                          alt={t(section.title)}
+                          className="w-full h-full object-cover"
                         />
                     </motion.div>
                   )}
@@ -476,20 +480,22 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
 
         {/* Top Scrolling Marquee */}
         <div className="w-full border-y border-zinc-100 bg-zinc-50 py-6 mb-24 overflow-hidden">
-          <motion.div
-            className="flex whitespace-nowrap w-max"
-            animate={{ x: "-50%" }}
-            transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+          {/* CSS marquee (social-strip.css): motion's JS animation froze under the owner's Reduce Motion setting. */}
+          <div className="pwf-marquee-viewport" aria-hidden="true">
+          <div
+            className="pwf-marquee-track whitespace-nowrap"
+            style={{ "--pwf-marquee-dur": "25s" } as React.CSSProperties}
           >
             {[...Array(6)].map((_, i) => (
               <div key={i} className="flex items-center gap-12 px-6">
-                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-[rgb(147,147,147)]">Start Project</span>
+                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-[rgb(147,147,147)]">{t("start_project")}</span>
                 <Sparkles className="size-8 text-[#fabf37]" />
-                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-zinc-900">Get in Touch</span>
+                <span className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-zinc-900">{t("contact_menu_get_in_touch")}</span>
                 <ArrowRight className="size-8 text-zinc-300" />
               </div>
             ))}
-          </motion.div>
+          </div>
+          </div>
         </div>
 
         <div className="px-6 flex flex-col items-center relative z-10">
@@ -512,7 +518,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               className="absolute inset-0 bg-[#fabf37] -z-10 transform -skew-x-2"
             />
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none px-4 py-2 text-black">
-              Ready to Collaborate?
+              {t("company_ready_to_collaborate")}
             </h2>
           </div>
 
@@ -523,7 +529,7 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-zinc-500 text-sm md:text-lg font-medium max-w-lg mx-auto text-center mb-10 leading-relaxed"
           >
-            Let's create packaging that speaks volumes about your brand's commitment to quality.
+            {t("company_let_s_create_packaging_that")}
           </motion.p>
 
           {/* Buttons */}
@@ -537,13 +543,13 @@ export function CompanyPage({ onPageChange }: { onPageChange: (page: string) => 
               onClick={() => onPageChange('contact')}
               className="px-8 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 hover:bg-zinc-800 transition-all shadow-xl shadow-black/20"
             >
-              Get Started
+              {t("our_journey_get_started")}
             </button>
             <button
               onClick={() => onPageChange('about')}
               className="px-8 py-4 bg-white border border-zinc-200 text-black rounded-full text-xs font-bold uppercase tracking-widest hover:border-black transition-colors"
             >
-              Learn More
+              {t("company_learn_more")}
             </button>
           </motion.div>
         </div>

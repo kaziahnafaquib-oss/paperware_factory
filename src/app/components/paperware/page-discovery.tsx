@@ -8,6 +8,7 @@ import {
   Briefcase, Mail, FileText, Settings,
   Box, Layers, Zap, Info, Activity
 } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 const pages = [
   { id: 'products', title: 'Full Catalog', icon: ShoppingBag, color: 'bg-blue-600' },
@@ -29,6 +30,7 @@ const pages = [
 ];
 
 export function PageDiscovery({ onNavigate }: { onNavigate: (page: string) => void }) {
+  const { t } = useLanguage();
   const [isPaused, setIsPaused] = React.useState(false);
 
   return (
@@ -42,10 +44,10 @@ export function PageDiscovery({ onNavigate }: { onNavigate: (page: string) => vo
           className="space-y-2"
         >
           <span className="inline-block text-zinc-500 font-bold uppercase tracking-[0.2em] text-[10px] bg-zinc-100 px-3 py-1 rounded-full border border-zinc-200 shadow-sm">
-            Explore Paperware
+            {t("page_discovery_explore_paperware")}
           </span>
           <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-zinc-900 drop-shadow-sm">
-            Discover <span className="text-yellow-500 drop-shadow-sm">More</span>
+            {t("page_discovery_discover")} <span className="text-yellow-500 drop-shadow-sm">{t("more")}</span>
           </h2>
         </motion.div>
       </div>
@@ -139,7 +141,7 @@ export function PageDiscovery({ onNavigate }: { onNavigate: (page: string) => vo
                     <div className="space-y-1.5 md:space-y-2" style={{ transform: 'translateZ(15px)' }}>
                       <h3 className="text-base md:text-lg font-black text-zinc-900 leading-[1.1] tracking-tight group-hover:translate-x-1 transition-transform duration-300">
                         {page.title.split(' ').map((word, i) => (
-                          <span key={i} className="block text-[13px] md:text-[15px] font-black">{word}</span>
+                          <span key={i} className="block text-[13px] md:text-[15px] font-black">{t(word)}</span>
                         ))}
                       </h3>
                       
@@ -147,7 +149,7 @@ export function PageDiscovery({ onNavigate }: { onNavigate: (page: string) => vo
                       
                       <div className="flex items-center justify-between group-hover:pl-1 transition-all duration-300">
                         <span className="text-[9px] md:text-[11px] font-black text-zinc-600 uppercase tracking-[0.15em] group-hover:text-zinc-900 transition-colors">
-                          EXPLORE
+                          {t("page_discovery_explore")}
                         </span>
                         <div className="size-5 md:size-6 rounded-full bg-zinc-900 group-hover:bg-zinc-900 flex items-center justify-center transition-all duration-300 group-hover:scale-125" style={{
                           boxShadow: '0 4px 12px rgba(0,0,0,0.3)'

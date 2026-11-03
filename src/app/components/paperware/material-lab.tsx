@@ -5,8 +5,10 @@ import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.
 import imgQcLeakTest from "../../../assets/factory/qc-leak-test.webp";
 import imgKraftBag from "../../../assets/cutouts/carry-bag-kraft.webp";
 import { useScrollScrub, clamp01, easeOut3 } from "../../lib/useScrollScrub";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const MaterialLab = React.memo(function MaterialLab() {
+  const { t } = useLanguage();
   const [activeMaterial, setActiveMaterial] = useState(0);
 
   const materials = [
@@ -95,7 +97,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.7 }}
                     src={materials[activeMaterial].image}
-                    alt={materials[activeMaterial].name}
+                    alt={t(materials[activeMaterial].name)}
                     className="size-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"
                   />
                 </AnimatePresence>
@@ -104,8 +106,8 @@ export const MaterialLab = React.memo(function MaterialLab() {
                 <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between overflow-hidden">
                    <div className="flex justify-between items-start">
                       <div className="space-y-1">
-                         <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Microscopic Scan v4.2</p>
-                         <h3 className="text-xl md:text-3xl font-black uppercase tracking-tight italic">{materials[activeMaterial].name}</h3>
+                         <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("material_lab_microscopic_scan_v4_2")}</p>
+                         <h3 className="text-xl md:text-3xl font-black uppercase tracking-tight italic">{t(materials[activeMaterial].name)}</h3>
                       </div>
                       <div className="size-10 md:size-12 rounded-xl bg-[#fabf37] flex items-center justify-center text-black">
                          <Fingerprint className="size-5 md:size-6" />
@@ -142,7 +144,7 @@ export const MaterialLab = React.memo(function MaterialLab() {
                         : "bg-transparent border-white/10 text-white hover:border-white/30"
                     }`}
                   >
-                    {m.name}
+                    {t(m.name)}
                   </button>
                 ))}
              </div>
@@ -153,13 +155,13 @@ export const MaterialLab = React.memo(function MaterialLab() {
              <div className="space-y-6">
                 <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
                   <div className="h-[1px] w-12 bg-[#fabf37]" />
-                  Material Intelligence
+                  {t("material_lab_material_intelligence")}
                 </div>
                 <h2 className="text-[32px] md:text-[64px] font-black uppercase tracking-tighter leading-none">
-                  Engineered <br /> <span className="text-zinc-600 italic">For B2B</span> <br /> Scale.
+                  {t("material_lab_engineered")} <br /> <span className="text-zinc-600 italic">{t("material_lab_for_b2b")}</span> <br /> {t("material_lab_scale")}
                 </h2>
                 <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-xl">
-                  {materials[activeMaterial].description}
+                  {t(materials[activeMaterial].description)}
                 </p>
              </div>
 
@@ -169,8 +171,8 @@ export const MaterialLab = React.memo(function MaterialLab() {
                       <Layers className="size-8" />
                    </div>
                    <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">GSM Grade</p>
-                      <p className="text-xl font-black uppercase">{materials[activeMaterial].grade}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("material_lab_gsm_grade")}</p>
+                      <p className="text-xl font-black uppercase">{t(materials[activeMaterial].grade)}</p>
                    </div>
                 </div>
                 <div className="flex gap-6 p-8 bg-zinc-900/80 backdrop-blur-xl rounded-[32px] border border-white/10 hover:border-[#fabf37]/30 transition-all group">
@@ -178,8 +180,8 @@ export const MaterialLab = React.memo(function MaterialLab() {
                       <Beaker className="size-8" />
                    </div>
                    <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Texture Profile</p>
-                      <p className="text-xl font-black uppercase">{materials[activeMaterial].texture}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("material_lab_texture_profile")}</p>
+                      <p className="text-xl font-black uppercase">{t(materials[activeMaterial].texture)}</p>
                    </div>
                 </div>
              </div>
@@ -188,13 +190,13 @@ export const MaterialLab = React.memo(function MaterialLab() {
                 <div className="relative z-10 space-y-6">
                    <div className="flex items-center gap-3">
                       <Cpu className="size-6 animate-pulse" />
-                      <span className="text-[10px] font-black uppercase tracking-widest">Sustainability Audit</span>
+                      <span className="text-[10px] font-black uppercase tracking-widest">{t("material_lab_sustainability_audit")}</span>
                    </div>
                    <h3 className="text-2xl font-black uppercase tracking-tight leading-none italic">
-                     This material reduces carbon footprint by {(activeMaterial + 1) * 14}% compared to traditional plastic-lined boards.
+                     {t("material_lab_this_material_reduces_carbon_footprint")} {(activeMaterial + 1) * 14}{t("material_lab_compared_to_traditional_plastic_lined")}
                    </h3>
                    <button className="bg-black text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:translate-x-2 transition-transform">
-                      Request Material Swatch Kit
+                      {t("material_lab_request_material_swatch_kit")}
                    </button>
                 </div>
                 {/* Abstract Pattern */}

@@ -27,6 +27,14 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { useScrollScrub, easeOut3, clamp01 } from "../lib/useScrollScrub";
 import { useLanguage } from "../context/LanguageContext";
 import { useGo } from "../lib/useGo";
+import { CupSizeTables } from "../components/paperware/cup-size-tables";
+
+// Paper cup pages pass "Single/Double/Ripple Wall" variants or "Paper Cup(s)" products.
+const isPaperCupProduct = (p: { name: string; category?: string }) => {
+  const text = `${p.category ?? ""} ${p.name}`;
+  if (/holder|lid|sleeve/i.test(text)) return false;
+  return /\bcups?\b/i.test(text) || /^\s*(single|double|ripple)[\s-]wall\b/i.test(p.name);
+};
 
 const FloatingDataBits = () => {
   const [bits, setBits] = React.useState<any[]>([]);
@@ -153,7 +161,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
       wa: `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`
     };
-    window.open(links[platform as keyof typeof links], '_blank');
+    window.open(links[platform as keyof typeof links], '_blank', 'noopener,noreferrer');
   };
 
   const productionMetrics = [
@@ -230,7 +238,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
             onClick={onBack}
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black/40 hover:text-black transition-colors"
           >
-            <ArrowLeft className="size-4" /> Back to Catalog
+            <ArrowLeft className="size-4" /> {t("back_to_catalog")}
           </button>
           
           {/* Social Sharing Section */}
@@ -248,7 +256,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
               }}
               className="flex items-center gap-3 text-[9px] font-black uppercase tracking-[0.2em]"
             >
-               Share:
+               {t("product_details_share")}
             </motion.div>
             <div className="flex items-center gap-2">
               <button onClick={() => handleShare('wa')} className="relative size-10 rounded-full border border-black/5 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all overflow-hidden group/social">
@@ -293,19 +301,19 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
             variants={itemVariants}
             className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-100 rounded-full text-[9px] font-black uppercase tracking-widest text-zinc-500"
           >
-            {product.category || "General"} Category
+            {t(product.category || "General")} {t("category")}
           </motion.div>
           <motion.h1 
             variants={itemVariants}
             className="text-[64px] md:text-[72px] font-black uppercase tracking-tighter leading-[0.9] text-black"
           >
-            {product.name}
+            {t(product.name)}
           </motion.h1>
           <motion.p 
             variants={itemVariants}
             className="text-zinc-500 font-bold md:text-lg leading-relaxed max-w-xl text-[14px]"
           >
-            {product.desc} Professional-grade B2B manufacturing solution with customized industrial specifications.
+            {t(product.desc)} {t("product_details_professional_grade_b2b_manufacturing_sol")}
           </motion.p>
         </div>
 
@@ -354,17 +362,17 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                  />
                  <ImageWithFallback 
                    src={productImages[activeImageIdx]} 
-                   alt={product.name}
+                   alt={t(product.name)}
                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
                  />
 
                  {/* Technical Dimension Lines */}
                  <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                     <div className="absolute top-1/2 left-10 right-10 h-px bg-[#fabf37]/50 flex justify-between items-center px-4">
-                       <span className="bg-[#fabf37] text-black text-[8px] font-black px-1">L: 250mm</span>
+                       <span className="bg-[#fabf37] text-black text-[8px] font-black px-1">{t("product_details_l_250mm")}</span>
                     </div>
                     <div className="absolute left-1/2 top-10 bottom-10 w-px bg-[#fabf37]/50 flex flex-col justify-between items-center py-4">
-                       <span className="bg-[#fabf37] text-black text-[8px] font-black px-1 rotate-90">H: 350mm</span>
+                       <span className="bg-[#fabf37] text-black text-[8px] font-black px-1 rotate-90">{t("product_details_h_350mm")}</span>
                     </div>
                  </div>
                  
@@ -375,14 +383,14 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                      className="bg-black text-[#fabf37] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg"
                    >
-                     <Zap className="size-3" /> Live Production
+                     <Zap className="size-3" /> {t("product_details_live_production")}
                    </motion.div>
                    <motion.div 
                      animate={{ y: [0, -5, 0] }}
                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
                      className="bg-emerald-500 text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg"
                    >
-                     <Leaf className="size-3" /> 100% Eco-Friendly
+                     <Leaf className="size-3" /> {t("navbar_100_eco_friendly")}
                    </motion.div>
                  </div>
 
@@ -398,7 +406,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       >
                         <Maximize2 className="size-4" />
                       </motion.div>
-                      Launch 360° Preview
+                      {t("product_details_launch_360_preview")}
                     </button>
                  </div>
 
@@ -407,7 +415,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       <div className="flex items-center gap-1 mb-1">
                          {[1,2,3,4,5].map(i => <Star key={i} className="size-3 fill-[#fabf37] text-[#fabf37]" />)}
                       </div>
-                      <p className="text-[9px] font-black uppercase text-black/40 tracking-widest">4.9/5 (240 Reviews)</p>
+                      <p className="text-[9px] font-black uppercase text-black/40 tracking-widest">{t("product_details_4_9_5_240_reviews")}</p>
                    </div>
                    <div className="flex gap-2">
                       <div className="size-12 rounded-2xl bg-white/80 backdrop-blur-md flex items-center justify-center border border-white/20"><Layers className="size-5" /></div>
@@ -431,8 +439,8 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       {cert.icon}
                    </div>
                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-black mb-1">{cert.name}</p>
-                      <p className="text-[9px] font-bold text-zinc-400">{cert.desc}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-black mb-1">{t(cert.name)}</p>
+                      <p className="text-[9px] font-bold text-zinc-400">{t(cert.desc)}</p>
                    </div>
                 </div>
               ))}
@@ -453,8 +461,8 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                         <div className="size-3 bg-emerald-500 rounded-full relative" />
                      </div>
                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Live Status</p>
-                        <p className="text-sm font-black text-black">Line 04: Producing Batch #{Math.floor(Math.random() * 9000) + 1000}</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("product_details_live_status")}</p>
+                        <p className="text-sm font-black text-black">{t("product_details_line_04_producing_batch")}{Math.floor(Math.random() * 9000) + 1000}</p>
                      </div>
                   </div>
                   <History className="size-5 text-zinc-300" />
@@ -466,9 +474,9 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                     <div key={i} className="space-y-2">
                        <div className="flex items-center gap-2 text-[#fabf37]">
                           {m.icon}
-                          <p className="text-[8px] font-black uppercase tracking-[0.15em] text-zinc-400">{m.label}</p>
+                          <p className="text-[8px] font-black uppercase tracking-[0.15em] text-zinc-400">{t(m.label)}</p>
                        </div>
-                       <p className="text-[11px] font-black text-black">{m.value}</p>
+                       <p className="text-[11px] font-black text-black">{t(m.value)}</p>
                     </div>
                   ))}
                </div>
@@ -480,7 +488,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
             {/* Industrial Tone Attributes Section */}
             <div className="space-y-8">
                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400">
-                 <Settings2 className="size-4" /> Technical Specifications
+                 <Settings2 className="size-4" /> {t("technical_specs")}
                </div>
                <div className="grid gap-6">
                   {attributes.map((attr, i) => {
@@ -499,7 +507,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
 
                     return (
                       <div key={i} className="space-y-3">
-                         <p className="text-[10px] font-black uppercase tracking-widest">{attr.name}</p>
+                         <p className="text-[10px] font-black uppercase tracking-widest">{t(attr.name)}</p>
                          <div className="flex flex-wrap gap-2">
                             {attr.options.map((opt, j) => (
                               <button 
@@ -511,7 +519,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                                   : 'bg-white text-zinc-500 border-zinc-100 hover:border-black'
                                 }`}
                               >
-                                 {opt}
+                                 {t(opt)}
                               </button>
                             ))}
                          </div>
@@ -530,11 +538,11 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
             >
                <div className="flex items-center justify-between">
                   <div className="space-y-1">
-                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">Phase 1</p>
-                     <p className="text-sm font-black uppercase text-[rgb(34,34,34)]">Physical Prototypes</p>
+                     <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">{t("product_details_phase_1")}</p>
+                     <p className="text-sm font-black uppercase text-[rgb(34,34,34)]">{t("physical_prototypes")}</p>
                   </div>
                   <button onClick={() => go("contact")} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#fabf37] hover:underline">
-                     Sample Policy <ArrowRight className="size-3" />
+                     {t("product_details_sample_policy")} <ArrowRight className="size-3" />
                   </button>
                </div>
                <div className="flex gap-4">
@@ -542,7 +550,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                      <div className="size-10 rounded-xl bg-[#fabf37]/10 flex items-center justify-center text-[#fabf37]">
                         <Package className="size-5" />
                      </div>
-                     <p className="text-[10px] font-black uppercase leading-tight text-[rgb(75,75,75)]">Request <br /> Dummy Unit</p>
+                     <p className="text-[10px] font-black uppercase leading-tight text-[rgb(75,75,75)]">{t("export_request_form_request")} <br /> {t("product_details_dummy_unit")}</p>
                   </div>
                </div>
             </motion.div>
@@ -563,16 +571,16 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                         <Leaf className="size-5" />
                      </div>
                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Eco-Impact Estimate</p>
-                        <p className="text-sm font-black text-white uppercase">Environmental ROI</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500">{t("eco_impact_estimate")}</p>
+                        <p className="text-sm font-black text-white uppercase">{t("environmental_roi")}</p>
                      </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                      {sustainabilityMetrics.map((m, i) => (
                        <div key={i} className="bg-white/5 rounded-2xl p-4 border border-white/5">
                           <div className={`mb-2 ${m.color}`}>{m.icon}</div>
-                          <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter mb-1">{m.label}</p>
-                          <p className="text-xs font-black text-white">{m.value}</p>
+                          <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter mb-1">{t(m.label)}</p>
+                          <p className="text-xs font-black text-white">{t(m.value)}</p>
                        </div>
                      ))}
                   </div>
@@ -600,23 +608,23 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                <div className="relative z-10 space-y-6 md:space-y-8">
                  <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-white/10 pb-6 md:pb-8 gap-6">
                     <div className="space-y-1">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Quotation Mode</p>
-                       <p className="text-3xl md:text-4xl font-black">Request Pricing</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("quotation_mode")}</p>
+                       <p className="text-3xl md:text-4xl font-black">{t("request_pricing")}</p>
                     </div>
                     <div className="text-left sm:text-right">
                        <div className="flex items-center gap-2 sm:justify-end text-[#fabf37] mb-1">
                           <ClipboardList className="size-4" />
-                          <span className="text-[10px] font-black uppercase tracking-widest">Response Time</span>
+                          <span className="text-[10px] font-black uppercase tracking-widest">{t("response_time")}</span>
                        </div>
-                       <p className="text-xl font-black italic uppercase">~4 HOURS</p>
+                       <p className="text-xl font-black italic uppercase">{t("product_details_4_hours")}</p>
                     </div>
                  </div>
 
                  <div className="space-y-6">
                     <div className="flex justify-between items-end gap-4">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Order Volume</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("order_volume")}</p>
                        <div className="bg-zinc-800 px-4 py-2 rounded-xl text-lg md:text-xl font-black text-[#fabf37]">
-                          {quantity.toLocaleString()} <span className="text-[10px] text-zinc-500 uppercase">units</span>
+                          {quantity.toLocaleString()} <span className="text-[10px] text-zinc-500 uppercase">{t("product_details_units")}</span>
                        </div>
                     </div>
                     <input 
@@ -635,18 +643,18 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                       onClick={() => onAddToQuote({ ...product, quantity })}
                       className="bg-[#fabf37] text-black px-6 md:px-8 py-5 md:py-6 rounded-full font-black uppercase tracking-widest hover:scale-[1.02] transition-all shadow-xl flex items-center justify-center gap-4 group text-xs md:text-sm"
                     >
-                       Add to Basket <ChevronRight className="size-5 group-hover:translate-x-1 transition-transform" />
+                       {t("add_to_basket")} <ChevronRight className="size-5 group-hover:translate-x-1 transition-transform" />
                     </button>
                     <div className="bg-white/5 rounded-[24px] md:rounded-[32px] p-5 md:p-6 border border-white/10 flex flex-col justify-center">
-                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">Executive Support</p>
+                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-2">{t("exec_support")}</p>
                        <p className="text-sm font-black text-white">+09638-011101</p>
-                       <p className="text-[9px] font-bold text-[#fabf37]">Whatsapp: +880 1901-459110</p>
+                       <p className="text-[9px] font-bold text-[#fabf37]">{t("product_details_whatsapp_880_1901_459110")}</p>
                     </div>
                  </div>
 
                  <div className="pt-4 text-center border-t border-white/5">
                     <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                       Official Channel: <span className="text-white ml-2">paperwarefactory@gmail.com</span>
+                       {t("product_details_official_channel")} <span className="text-white ml-2">paperwarefactory@gmail.com</span>
                     </p>
                  </div>
                </div>
@@ -666,28 +674,28 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                 onClick={() => setActiveTab("description")}
                 className={`px-6 md:px-12 py-4 md:py-6 text-xs md:text-sm font-black uppercase tracking-widest transition-all relative shrink-0 ${activeTab === "description" ? 'text-black' : 'text-zinc-400 hover:text-black'}`}
               >
-                 Description
+                 {t("description")}
                  {activeTab === "description" && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-1 bg-[#fabf37]" />}
               </button>
               <button 
                 onClick={() => setActiveTab("additional")}
                 className={`px-6 md:px-12 py-4 md:py-6 text-xs md:text-sm font-black uppercase tracking-widest transition-all relative shrink-0 ${activeTab === "additional" ? 'text-black' : 'text-zinc-400 hover:text-black'}`}
               >
-                 Additional Info
+                 {t("additional_info")}
                  {activeTab === "additional" && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-1 bg-[#fabf37]" />}
               </button>
               <button 
                 onClick={() => setActiveTab("manufacturing")}
                 className={`px-6 md:px-12 py-4 md:py-6 text-xs md:text-sm font-black uppercase tracking-widest transition-all relative shrink-0 ${activeTab === "manufacturing" ? 'text-black' : 'text-zinc-400 hover:text-black'}`}
               >
-                 Manufacturing
+                 {t("manufacturing")}
                  {activeTab === "manufacturing" && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-1 bg-[#fabf37]" />}
               </button>
               <button 
                 onClick={() => setActiveTab("materials")}
                 className={`px-6 md:px-12 py-4 md:py-6 text-xs md:text-sm font-black uppercase tracking-widest transition-all relative shrink-0 ${activeTab === "materials" ? 'text-black' : 'text-zinc-400 hover:text-black'}`}
               >
-                 Material Matrix
+                 {t("product_details_material_matrix")}
                  {activeTab === "materials" && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-1 bg-[#fabf37]" />}
               </button>
            </div>
@@ -702,20 +710,20 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                   className="space-y-8"
                 >
                    <h2 className="text-3xl font-black text-black leading-tight uppercase tracking-tighter">
-                      {product.name} printing service in Dhaka Bangladesh
+                      {t(product.name)} {t("product_details_printing_service_in_dhaka_bangladesh")}
                    </h2>
                    <div className="text-zinc-500 font-medium leading-[1.8] space-y-6">
                       <p className="text-[15px]">
-                         {product.name} is one of your most important office tools for your business. It makes a good first impression on new clients, and offered as a friendly reminder of past services to existing ones. We are the trusted {product.name} printing service in Dhaka Bangladesh of hundreds of companies in Bangladesh to print qualityful eye-catching Customize Packaging.
+                         {t(product.name)} {t("product_details_is_one_of_your_most")} {t(product.name)} {t("product_details_printing_service_in_dhaka_bangladesh_2")}
                       </p>
                       <p>
-                         Whether you're running a startup or small & medium enterprises — those custom design {product.name} is the perfect publicity material for Office. Available with full color print UV Print there's no handier way to make yourself memorable.
+                         {t("product_details_whether_you_re_running_a")} {t(product.name)} {t("product_details_is_the_perfect_publicity_material")}
                       </p>
                       <p>
-                         Just tell us your expectation, our professional creative graphic designers will customize it with your own personalized text in your choice of fonts and colors, review and approve your the design, after placing your order. Your custom {product.name} will be on their way to you in record time. Isn't that easy?
+                         {t("product_details_just_tell_us_your_expectation")} {t(product.name)} {t("product_details_will_be_on_their_way")}
                       </p>
                       <p className="border-l-4 border-[#fabf37] pl-8 py-4 italic bg-zinc-50 rounded-r-2xl">
-                         Paperware provides the best service provider in Dhaka Bangladesh, trusted by hundreds of businesses and organizations across the Bangladesh. Our Reasonable pricing and 100% customer satisfaction guarantee prove it. Paperware is more than just a name, it's our promise.
+                         {t("product_details_paperware_provides_the_best_service")}
                       </p>
                    </div>
                 </motion.div>
@@ -730,10 +738,10 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                    {additionalInfo.map((info, i) => (
                      <div key={i} className={`flex flex-col md:flex-row border-b border-black/5 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-zinc-50'}`}>
                         <div className="md:w-1/3 px-6 md:px-10 py-4 md:py-6 text-[10px] md:text-xs font-black uppercase tracking-widest text-[#fabf37] border-b md:border-b-0 md:border-r border-black/5">
-                           {info.label}
+                           {t(info.label)}
                         </div>
                         <div className="flex-1 px-6 md:px-10 py-4 md:py-6 text-xs md:text-sm text-zinc-600 font-medium italic">
-                           {info.value}
+                           {t(info.value)}
                         </div>
                      </div>
                    ))}
@@ -754,8 +762,8 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                               {React.cloneElement(step.icon as React.ReactElement, { className: "size-6" })}
                            </div>
                            <div className="space-y-1">
-                              <p className="text-[10px] font-black uppercase tracking-widest text-black">{step.title}</p>
-                              <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter">{step.time}</p>
+                              <p className="text-[10px] font-black uppercase tracking-widest text-black">{t(step.title)}</p>
+                              <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter">{t(step.time)}</p>
                            </div>
                         </div>
                       ))}
@@ -766,11 +774,11 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                             <Clock className="size-6" />
                          </div>
                          <div>
-                            <p className="text-white text-sm font-black uppercase">Standard Lead Time</p>
-                            <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Calculated from final artwork approval</p>
+                            <p className="text-white text-sm font-black uppercase">{t("product_details_standard_lead_time")}</p>
+                            <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">{t("product_details_calculated_from_final_artwork_approval")}</p>
                          </div>
                       </div>
-                      <p className="text-4xl font-black text-white italic">7-10 BUSINESS DAYS</p>
+                      <p className="text-4xl font-black text-white italic">{t("product_details_7_10_business_days")}</p>
                    </div>
                 </motion.div>
               ) : (
@@ -784,24 +792,24 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                    <table className="w-full text-left min-w-[600px]">
                       <thead>
                          <tr className="border-b border-white/10">
-                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">Grade Type</th>
-                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Stiffness</th>
-                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Printability</th>
-                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Eco-Score</th>
+                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">{t("product_details_grade_type")}</th>
+                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("product_details_stiffness")}</th>
+                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("product_details_printability")}</th>
+                            <th className="pb-6 text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{t("eco_score")}</th>
                          </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
                          {materialComparison.map((m, i) => (
                            <tr key={i} className="group hover:bg-white/5 transition-colors">
-                              <td className="py-6 text-sm font-black text-white">{m.type}</td>
-                              <td className="py-6 text-xs font-bold text-zinc-400">{m.stiffness}</td>
-                              <td className="py-6 text-xs font-bold text-zinc-400">{m.print}</td>
+                              <td className="py-6 text-sm font-black text-white">{t(m.type)}</td>
+                              <td className="py-6 text-xs font-bold text-zinc-400">{t(m.stiffness)}</td>
+                              <td className="py-6 text-xs font-bold text-zinc-400">{t(m.print)}</td>
                               <td className="py-6">
                                  <div className="flex items-center gap-3">
                                     <div className="w-24 h-1.5 bg-white/10 rounded-full overflow-hidden">
                                        <div className="h-full bg-[#fabf37]" style={{ width: m.eco }} />
                                     </div>
-                                    <span className="text-[10px] font-black text-[#fabf37]">{m.eco}</span>
+                                    <span className="text-[10px] font-black text-[#fabf37]">{t(m.eco)}</span>
                                  </div>
                               </td>
                            </tr>
@@ -815,19 +823,19 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
            {/* Metadata Section from User Image */}
            <div className="mt-16 md:mt-24 pt-12 md:pt-16 border-t border-black/10 space-y-6 md:space-y-8">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm font-bold">
-                 <span className="text-zinc-400 uppercase tracking-widest text-xs">SKU:</span>
-                 <span className="text-black">PP-CAL-2025</span>
+                 <span className="text-zinc-400 uppercase tracking-widest text-xs">{t("product_details_sku")}</span>
+                 <span className="text-black">{t("product_details_pp_cal_2025")}</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm font-bold">
-                 <span className="text-zinc-400 uppercase tracking-widest text-xs">Categories:</span>
-                 <span className="text-[#fabf37] hover:underline cursor-pointer">Gift Item, Promotional Product</span>
+                 <span className="text-zinc-400 uppercase tracking-widest text-xs">{t("product_details_categories")}</span>
+                 <span className="text-[#fabf37] hover:underline cursor-pointer">{t("product_details_gift_item_promotional_product")}</span>
               </div>
               <div className="space-y-4">
-                 <span className="text-zinc-400 text-xs font-black uppercase tracking-[0.2em] block">Technical Tags:</span>
+                 <span className="text-zinc-400 text-xs font-black uppercase tracking-[0.2em] block">{t("product_details_technical_tags")}</span>
                  <div className="flex flex-wrap gap-2">
                     {tags.map(tag => (
                       <span key={tag} className="px-4 py-2 bg-zinc-50 border border-black/5 rounded-full text-[10px] font-bold text-zinc-500 hover:text-black hover:border-black transition-all cursor-pointer">
-                         {tag}
+                         {t(tag)}
                       </span>
                     ))}
                  </div>
@@ -835,15 +843,17 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
            </div>
         </motion.div>
 
+        {isPaperCupProduct(product) && <CupSizeTables />}
+
         {/* Suggested Products Marquee - NEW SECTION */}
         <div className="mt-32 md:mt-48 overflow-hidden">
            <div className="container mx-auto px-4 mb-12">
               <div className="flex items-center gap-4 mb-2">
                  <div className="size-2 bg-[#fabf37] rounded-full animate-pulse" />
-                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Next-Gen Inventory</p>
+                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">{t("product_details_next_gen_inventory")}</p>
               </div>
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-black">
-                 Suggested Solutions.
+                 {t("product_details_suggested_solutions")}
               </h2>
            </div>
            
@@ -874,18 +884,18 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                              }}
                              className="aspect-[4/3] rounded-[32px] overflow-hidden bg-zinc-100 border border-black/5 mb-6 relative"
                            >
-                              <img loading="lazy" decoding="async" src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.name} />
+                              <img loading="lazy" decoding="async" src={item.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={t(item.name)} />
                               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border border-black/5">
-                                 {item.cat}
+                                 {t(item.cat)}
                               </div>
                               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                  <div className="bg-[#fabf37] text-black px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-widest scale-90 group-hover:scale-100 transition-transform">
-                                    View Details
+                                    {t("view_details")}
                                  </div>
                               </div>
                            </motion.div>
-                           <p className="text-xs font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{item.name}</p>
-                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">View Specifications</p>
+                           <p className="text-xs font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{t(item.name)}</p>
+                           <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">{t("product_details_view_specifications")}</p>
                         </div>
                       ))}
                    </div>
@@ -903,14 +913,14 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
               <div className="space-y-4">
                  <div className="flex items-center gap-3">
                     <div className="h-[2px] w-12 bg-[#fabf37]" />
-                    <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-[0.4em]">Global Success</p>
+                    <p className="text-[#fabf37] text-[10px] font-black uppercase tracking-[0.4em]">{t("product_details_global_success")}</p>
                  </div>
                  <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter text-black">
-                    Client Success <br /> Stories.
+                    {t("product_details_client_success")} <br /> {t("product_details_stories")}
                  </h2>
               </div>
               <p className="text-zinc-500 font-bold max-w-sm leading-relaxed">
-                 See how industry leaders are transforming their supply chain with Paperware's precision packaging solutions.
+                 {t("product_details_see_how_industry_leaders_are")}
               </p>
            </div>
 
@@ -923,17 +933,17 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                        whileHover={{ y: -10 }}
                        className="min-w-[280px] sm:min-w-[320px] md:min-w-[450px] aspect-video bg-zinc-900 rounded-[32px] md:rounded-[48px] overflow-hidden relative group cursor-pointer shadow-xl"
                      >
-                        <img loading="lazy" decoding="async" src={video.thumb} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700" alt={video.client} />
+                        <img loading="lazy" decoding="async" src={video.thumb} className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-700" alt={t(video.client)} />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent transition-colors">
                            <div className="size-16 md:size-20 rounded-full bg-[#fabf37]/20 border border-[#fabf37]/40 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
                               <PlayCircle className="size-8 md:size-10 text-[#fabf37] fill-[#fabf37]/20" />
                            </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 bg-gradient-to-t from-black via-black/40 to-transparent">
-                           <p className="text-[#fabf37] text-[9px] font-black uppercase tracking-[0.2em] mb-2">{video.location}</p>
-                           <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{video.client}</p>
+                           <p className="text-[#fabf37] text-[9px] font-black uppercase tracking-[0.2em] mb-2">{t(video.location)}</p>
+                           <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{t(video.client)}</p>
                            <div className="mt-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all translate-y-4 group-hover:translate-y-0">
-                              <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">Watch Case Study</span>
+                              <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">{t("product_details_watch_case_study")}</span>
                               <div className="h-px flex-1 bg-white/10" />
                               <ArrowRight className="size-4 text-[#fabf37]" />
                            </div>
@@ -968,8 +978,8 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
               {/* Modal Header */}
               <div className="flex items-center justify-between p-6 md:p-10 border-b border-white/5 relative z-20">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Interactive View</p>
-                  <h3 className="text-xl md:text-2xl font-black uppercase text-white">{product.name}</h3>
+                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">{t("product_details_interactive_view")}</p>
+                  <h3 className="text-xl md:text-2xl font-black uppercase text-white">{t(product.name)}</h3>
                 </div>
                 <button 
                   onClick={() => setShow360(false)}
@@ -984,7 +994,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                 {/* 3D Model Control Overlay */}
                 <div className="absolute bottom-10 left-10 flex items-center gap-6 z-20">
                   <div className="flex flex-col gap-2">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Rotation Axis</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">{t("realtime_ops_rotation_axis")}</p>
                     <div className="flex gap-1">
                       <div className="h-1 w-8 bg-[#fabf37]" />
                       <div className="h-1 w-4 bg-white/20" />
@@ -1011,14 +1021,14 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                 >
                   <ImageWithFallback 
                     src={product.image}
-                    alt={product.name}
+                    alt={t(product.name)}
                     className="w-full h-full object-contain drop-shadow-[0_50px_80px_rgba(0,0,0,0.8)]"
                   />
                 </motion.div>
 
                 {/* Instructions Overlay */}
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 text-[9px] font-black uppercase tracking-widest text-zinc-400">
-                  <RefreshCw className="size-3 animate-spin-slow" /> Drag to Rotate • Scale: 1:1 Digital Twin
+                  <RefreshCw className="size-3 animate-spin-slow" /> {t("product_details_drag_to_rotate_scale_1")}
                 </div>
               </div>
 
@@ -1026,13 +1036,13 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
               <div className="p-6 md:p-10 border-t border-white/5 flex flex-wrap gap-4 items-center justify-between relative z-20">
                 <div className="flex items-center gap-6">
                   <div className="space-y-1">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">Durability</p>
-                    <p className="text-xs font-black text-[#fabf37]">A++ Grade</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">{t("product_details_durability")}</p>
+                    <p className="text-xs font-black text-[#fabf37]">{t("product_details_a_grade")}</p>
                   </div>
                   <div className="h-6 w-px bg-white/10" />
                   <div className="space-y-1">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">Weight</p>
-                    <p className="text-xs font-black text-white">350 GSM</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">{t("product_details_weight")}</p>
+                    <p className="text-xs font-black text-white">{t("product_details_350_gsm")}</p>
                   </div>
                 </div>
                 <button 
@@ -1042,7 +1052,7 @@ export function ProductDetailsPage({ product, onBack, onAddToQuote, onContactCli
                   }}
                   className="px-8 py-4 bg-[#fabf37] text-black rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform"
                 >
-                  Add to Quote from Preview
+                  {t("product_details_add_to_quote_from_preview")}
                 </button>
               </div>
             </motion.div>

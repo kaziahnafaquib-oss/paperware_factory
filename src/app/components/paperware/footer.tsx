@@ -62,20 +62,20 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fabf37] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-[#fabf37]"></span>
                   </span>
-                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">Industrial Intelligence</span>
+                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400">{t("footer_industrial_intelligence")}</span>
                 </div>
                 <h3 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-white leading-[0.9]">
-                  Subscribe to our <br className="hidden md:block" />
+                  {t("footer_subscribe_to_our")} <br className="hidden md:block" />
                   <Motion.span
                     animate={{ opacity: [1, 0.3, 1] }}
                     transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
                     className="text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] via-[#fff5d6] to-[#fabf37]"
                   >
-                    Global Update Stream
+                    {t("footer_global_update_stream")}
                   </Motion.span>
                 </h3>
                 <p className="text-zinc-400 text-base font-medium max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                  Get direct access to manufacturing insights, sustainability reports, and product innovation alerts.
+                  {t("footer_get_direct_access_to_manufacturing")}
                 </p>
               </div>
 
@@ -98,12 +98,12 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                     name="newsletter-email"
                     required
                     autoComplete="email"
-                    aria-label="Your work email"
-                    placeholder="Enter your corporate email..."
+                    aria-label={t("footer_your_work_email")}
+                    placeholder={t("footer_enter_your_corporate_email")}
                     className="flex-1 bg-transparent border-none text-white placeholder:text-zinc-400 focus:ring-0 px-3 py-4 font-bold text-sm outline-none min-w-0"
                   />
                   <button type="submit" className="bg-[#fabf37] hover:bg-white hover:scale-105 active:scale-95 text-black px-6 py-3.5 rounded-full font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 group/btn shadow-[0_0_20px_rgba(250,191,55,0.3)] shrink-0">
-                    Join <ArrowRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
+                    {t("footer_join")} <ArrowRight className="size-3 group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </form>
               </div>
@@ -120,7 +120,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                 className="h-40 w-auto mb-2 drop-shadow-sm select-none"
               />
               <p className="text-[14px] font-bold leading-relaxed opacity-80 max-w-[260px]">
-                Premium B2B manufacturing platform for sustainable paper packaging solutions.
+                {t("footer_desc")}
               </p>
             </div>
 
@@ -129,7 +129,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
               {/* Quick Links */}
               <div className="space-y-8 text-center md:text-left">
                 <div className="relative inline-block md:block">
-                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Quick Links</h4>
+                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t("quick_links")}</h4>
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
                 </div>
                 <ul className="space-y-4 pt-2">
@@ -140,7 +140,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                         className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0 w-fit"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />
-                        <span>{item}</span>
+                        <span>{t(item)}</span>
                       </a>
                     </li>
                   ))}
@@ -150,7 +150,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
               {/* Our Products */}
               <div className="space-y-8 text-center md:text-left">
                 <div className="relative inline-block md:block">
-                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Our Products</h4>
+                  <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t("our_products")}</h4>
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
                 </div>
                 <ul className="space-y-4 pt-2">
@@ -168,7 +168,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                         className="group flex items-center gap-2 text-[15px] font-bold hover:text-white transition-colors duration-300 mx-auto md:mx-0 cursor-pointer"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-black group-hover:bg-white transition-colors duration-300 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0" />
-                        <span className="transform group-hover:translate-x-1 transition-transform duration-300">{item.name}</span>
+                        <span className="transform group-hover:translate-x-1 transition-transform duration-300">{t(item.name)}</span>
                       </a>
                     </li>
                   ))}
@@ -179,7 +179,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             {/* Get In Touch */}
             <div className="space-y-8 text-center md:text-left">
               <div className="relative inline-block md:block">
-                <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">Get In Touch</h4>
+                <h4 className="font-black uppercase tracking-[0.25em] text-[15px]">{t("get_in_touch")}</h4>
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-10 h-[3px] bg-black"></div>
               </div>
               <ul className="space-y-6 pt-2">
@@ -214,7 +214,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                       <item.icon className="size-4" />
                     </div>
                     <div className="space-y-1 text-center md:text-left">
-                      <p className="text-[9px] font-black uppercase tracking-wider opacity-60 leading-none">{item.title}</p>
+                      <p className="text-[9px] font-black uppercase tracking-wider opacity-60 leading-none">{t(item.title)}</p>
                       {item.href ? (
                         <a
                           href={item.href}
@@ -222,14 +222,14 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
                           rel="noopener noreferrer"
                           className="text-[13px] font-extrabold leading-tight hover:text-white transition-colors block max-w-[220px]"
                         >
-                          {item.text}
+                          {t(item.text)}
                         </a>
                       ) : (
                         <button
                           onClick={item.action}
                           className="text-[13px] font-extrabold leading-tight hover:text-white transition-colors block max-w-[220px]"
                         >
-                          {item.text}
+                          {t(item.text)}
                         </button>
                       )}
                     </div>
@@ -241,7 +241,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-black/10 pt-20 pb-4">
             <p className="text-xs font-bold uppercase tracking-widest opacity-60">
-              © {new Date().getFullYear()} Paperware Factory. All rights reserved.
+              © {new Date().getFullYear()} {t("footer_paperware_factory_all_rights_reserved")}
             </p>
 
             <div className="flex gap-4">
@@ -260,7 +260,7 @@ export function Footer({ onPageChange }: { onPageChange: (page: string) => void 
             </div>
 
             <p className="text-xs font-black uppercase tracking-widest flex items-center gap-2 opacity-80 mr-8">
-              Made in Bangladesh
+              {t("made_in_bangladesh")}
               <Motion.span
                 animate={{
                   scaleY: [1, 1.05, 0.95, 1],

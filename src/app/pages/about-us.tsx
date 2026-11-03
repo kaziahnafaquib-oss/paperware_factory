@@ -5,6 +5,8 @@ import { MediaPlayer } from "../components/paperware/media-player";
 import { mediaUrl } from "../components/paperware/factory-clip";
 import { useReducedMotionPreference } from "../lib/reducedMotion";
 import posterFloor from "@/assets/video-posters/about-floor.webp";
+import posterCutting from "@/assets/video-posters/cutting.webp";
+import posterPrinting from "@/assets/video-posters/printing.webp";
 import { OurJourney } from "@/app/components/paperware/our-journey";
 import { useScrollScrub, clamp01, smooth, easeOut3 } from "../lib/useScrollScrub";
 
@@ -99,8 +101,9 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         icon: Factory,
         photo: fOffsetPress,
         photoAlt: "Offset printing press",
-        /* Owner (2 Nov 2026): real press footage (public/media/SOURCES.txt). */
-        video: mediaUrl("manufacturing-press.mp4"),
+        /* Owner (2 Nov 2026): printing-unit footage from the April 2025 shoot (public/media/SOURCES.txt). */
+        video: mediaUrl("printing.mp4"),
+        poster: posterPrinting,
         machineName: "HEIDELBERG MO-V-P",
         detail: "HIGH-PRECISION 4-COLOR OFFSET PRINTING FOR PREMIUM BRANDING.",
         specs: [
@@ -126,7 +129,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         label: "CUTTING UNIT",
         icon: Cpu,
         photo: mDieCutting,
-        photoAlt: "Die cutting machine",
+        photoAlt: "Die-cutting unit, workers stacking printed sheets",
+        /* Owner (2 Nov 2026): cutting-unit footage from the April 2025 shoot (public/media/SOURCES.txt). */
+        video: mediaUrl("cutting.mp4"),
+        poster: posterCutting,
         machineName: "DIE-CUT PRECISION",
         detail: "PRECISION DIE-CUTTING WITH MINIMAL WASTE & LASER ACCURACY.",
         specs: ["LASER GUIDED CALIBRATION", "ZERO-WASTE TRIMMING", "CUSTOM SHAPE SUPPORT"]
@@ -260,7 +266,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               <MediaPlayer
                 type={aboutUsVideos?.heroBackgroundType || "image"}
                 src={aboutUsVideos.heroBackground}
-                alt="Paperware production floor"
+                alt={t("about_us_paperware_production_floor")}
                 className="w-full h-full"
                 autoPlay={true}
                 muted={true}
@@ -290,21 +296,21 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="max-w-5xl">
             <div className="flex items-center gap-2 mb-4 md:mb-8">
               <div className="size-1.5 md:size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80">Established 2020 • Dhaka</span>
+              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] text-white/80">{t("about_us_established_2020_dhaka")}</span>
             </div>
 
             <h1
               ref={heroHeadRef}
               className="text-4xl md:text-7xl lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] mb-8 md:mb-12 text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)]"
             >
-              <span data-hero-line className="block will-change-transform">The <span className="text-[#fabf37]">Engine</span></span>
-              <span data-hero-line className="block will-change-transform">Behind the</span>
-              <span data-hero-line className="block will-change-transform text-white/70">Package.</span>
+              <span data-hero-line className="block will-change-transform">{t("about_us_the")} <span className="text-[#fabf37]">{t("about_us_engine")}</span></span>
+              <span data-hero-line className="block will-change-transform">{t("about_us_behind_the")}</span>
+              <span data-hero-line className="block will-change-transform text-white/70">{t("about_us_package")}</span>
             </h1>
 
             <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start">
               <p className="text-base md:text-2xl font-bold text-white/90 leading-tight max-w-2xl uppercase italic drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]">
-                {t('about_text_1')} We are not just manufacturers; we are supply chain architects.
+                {t('about_text_1')} {t("about_us_we_are_not_just_manufacturers")}
               </p>
               <button type="button" tabIndex={-1} aria-hidden="true" className="shrink-0 size-16 md:size-24 rounded-full bg-black text-[#fabf37] flex items-center justify-center group hover:scale-110 transition-transform">
                 <Play className="size-6 md:size-8 fill-current group-hover:translate-x-1 transition-transform" />
@@ -318,7 +324,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
             type="button"
             onClick={toggleHeroVideo}
             aria-pressed={!heroPaused}
-            aria-label={heroPaused ? "Play factory floor video" : "Pause factory floor video"}
+            aria-label={t(heroPaused ? "Play factory floor video" : "Pause factory floor video")}
             className="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-20 size-11 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fabf37] focus-visible:ring-offset-2"
           >
             {heroPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
@@ -334,10 +340,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
             <div className="lg:col-span-4 space-y-4 md:space-y-8">
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-[#fabf37] leading-none">
-                Our <br className="hidden md:block" /> Core <br className="hidden md:block" /> Mandate.
+                {t("department_showcase_our")} <br className="hidden md:block" /> {t("about_us_core")} <br className="hidden md:block" /> {t("about_us_mandate")}
               </h2>
               <p className="text-zinc-500 font-bold uppercase tracking-widest leading-relaxed text-xs md:text-sm">
-                Sustainability is not an option; it is the default setting of our factory.
+                {t("about_us_sustainability_is_not_an_option")}
               </p>
             </div>
 
@@ -351,7 +357,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                   <div className="aspect-video rounded-2xl md:rounded-3xl overflow-hidden bg-zinc-900">
                     <img
                       src={value.photo}
-                      alt={value.photoAlt}
+                      alt={t(value.photoAlt)}
                       loading="lazy"
                       decoding="async"
                       className="w-full h-full object-cover"
@@ -361,10 +367,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                     <value.icon className="size-5 md:size-7" />
                   </div>
                   <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white group-hover:text-black">
-                    {value.title}
+                    {t(value.title)}
                   </h3>
                   <p className="text-[11px] md:text-sm font-bold text-zinc-500 leading-relaxed group-hover:text-black/80 transition-colors">
-                    {value.desc}
+                    {t(value.desc)}
                   </p>
                 </div>
               ))}
@@ -378,7 +384,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center text-center mb-10 md:mb-24 space-y-2 md:space-y-4">
             <h2 className="text-3xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
-              Scaling <br /> <span className="text-zinc-500 italic">Excellence.</span>
+              {t("about_us_scaling")} <br /> <span className="text-zinc-500 italic">{t("about_us_excellence")}</span>
             </h2>
           </div>
 
@@ -399,19 +405,19 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                       {"video" in stat && stat.video ? (
                         <video
                           src={stat.video}
-                          poster={stat.photo}
+                          poster={("poster" in stat && stat.poster) || stat.photo}
                           className="w-full h-full object-cover"
                           autoPlay
                           muted
                           loop
                           playsInline
                           preload="none"
-                          aria-label={stat.photoAlt}
+                          aria-label={t(stat.photoAlt)}
                         />
                       ) : (
                         <img
                           src={stat.photo}
-                          alt={stat.photoAlt}
+                          alt={t(stat.photoAlt)}
                           loading="lazy"
                           decoding="async"
                           className="w-full h-full object-cover"
@@ -434,10 +440,10 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                     data-suffix={suffix}
                     className="text-6xl md:text-7xl font-black italic tracking-tighter leading-none text-black tabular-nums"
                   >
-                    {stat.val}
+                    {t(stat.val)}
                   </div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 mt-2">
-                    {stat.unit}
+                    {t(stat.unit)}
                   </div>
                 </div>
 
@@ -445,16 +451,16 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 <div className="mb-6">
                   <h3 className={`text-xl md:text-2xl font-black uppercase tracking-tight mb-2 leading-tight ${i === 0 ? 'text-[#fabf37]' : 'text-black'
                     }`}>
-                    {stat.label}
+                    {t(stat.label)}
                   </h3>
                   <p className="text-xs font-bold uppercase tracking-wide text-zinc-400">
-                    {stat.machineName}
+                    {t(stat.machineName)}
                   </p>
                 </div>
 
                 {/* Description */}
                 <p className="text-[10px] font-bold text-black leading-relaxed uppercase tracking-wide mb-6">
-                  {stat.detail}
+                  {t(stat.detail)}
                 </p>
 
                 {/* Specs List */}
@@ -464,7 +470,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                       <div className={`size-1.5 rounded-full mt-1.5 shrink-0 ${i === 0 ? 'bg-[#fabf37]' : 'bg-zinc-400'
                         }`} />
                       <p className="text-[10px] font-bold text-zinc-600 uppercase tracking-wide leading-relaxed">
-                        {spec}
+                        {t(spec)}
                       </p>
                     </div>
                   ))}
@@ -480,11 +486,11 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
       <section ref={floorRef} className="py-16 md:py-32 bg-zinc-50 overflow-x-clip">
         <div className="container mx-auto px-4 md:px-6 mb-8 md:mb-16 flex items-end justify-between">
           <div className="space-y-1 md:space-y-4">
-            <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter">Factory Floor</h2>
-            <p className="text-[8px] md:text-sm font-bold text-zinc-500 uppercase tracking-widest">A glimpse into our manufacturing hub.</p>
+            <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter">{t("about_us_factory_floor")}</h2>
+            <p className="text-[8px] md:text-sm font-bold text-zinc-500 uppercase tracking-widest">{t("about_us_a_glimpse_into_our_manufacturing")}</p>
           </div>
           <button onClick={() => go("gallery")} className="flex items-center gap-2 text-[8px] md:text-xs font-black uppercase tracking-widest hover:text-[#fabf37] transition-colors">
-            Full Gallery <ArrowRight className="size-3 md:size-4" />
+            {t("about_us_full_gallery")} <ArrowRight className="size-3 md:size-4" />
           </button>
         </div>
 
@@ -497,12 +503,12 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
               <MediaPlayer
                 type="image"
                 src={media.src}
-                alt={media.alt}
+                alt={t(media.alt)}
                 className="w-full h-full"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-8 md:p-12 flex flex-col justify-end pointer-events-none">
-                <p className="text-[#fabf37] text-xs font-black uppercase tracking-widest mb-2">Facility View</p>
-                <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{media.alt}</p>
+                <p className="text-[#fabf37] text-xs font-black uppercase tracking-widest mb-2">{t("about_us_facility_view")}</p>
+                <p className="text-white text-xl md:text-2xl font-black uppercase tracking-tight">{t(media.alt)}</p>
               </div>
             </div>
           ))}
@@ -515,9 +521,9 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
             <div className="space-y-6 md:space-y-12">
               <div className="space-y-2 md:space-y-4">
-                <div className="px-3 py-1 bg-[#fabf37] text-black text-[8px] md:text-[9px] font-black rounded-full uppercase inline-block">Methodology</div>
+                <div className="px-3 py-1 bg-[#fabf37] text-black text-[8px] md:text-[9px] font-black rounded-full uppercase inline-block">{t("about_us_methodology")}</div>
                 <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-                  Smart <br /> Manufacturing.
+                  {t("about_us_smart")} <br /> {t("about_us_manufacturing")}
                 </h2>
               </div>
 
@@ -525,8 +531,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                 <p ref={smartTextRef} className="text-xs md:text-lg font-bold text-zinc-400 leading-relaxed uppercase">
                   {smartSentences.map((s, i) => (
                     <React.Fragment key={i}>
-                      <span data-sentence style={{ opacity: 0.25 }}>{s}</span>
-                      {i < smartSentences.length - 1 ? " " : null}
+                      <span data-sentence style={{ opacity: 0.25 }}>{t(s)}</span>
+                      {t(i < smartSentences.length - 1 ? " " : null)}
                     </React.Fragment>
                   ))}
                 </p>
@@ -540,7 +546,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                   <MediaPlayer
                     type={aboutUsVideos?.smartManufacturingType || "image"}
                     src={aboutUsVideos?.smartManufacturing || imgInnovation}
-                    alt="Operator at the cup forming line"
+                    alt={t("about_us_operator_at_the_cup_forming")}
                     className="w-full h-full object-cover"
                   />
                 </div>

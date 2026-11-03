@@ -4,6 +4,7 @@ import { useDialogFocus } from "../../hooks/useDialogFocus";
 import { motion, AnimatePresence } from "motion/react";
 import { Search, X, TrendingUp, Clock, ArrowRight, HelpCircle, Package, Globe, Zap } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -40,6 +41,7 @@ const SEARCHABLE_PRODUCTS = [
 ];
 
 export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }: SearchOverlayProps) {
+  const { t } = useLanguage();
   useEscapeKey(isOpen, onClose);
   const dialogRef = React.useRef<HTMLDivElement>(null);
   useDialogFocus(dialogRef, isOpen);
@@ -78,7 +80,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
           ref={dialogRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Search products and pages"
+          aria-label={t("search_overlay_search_products_and_pages")}
           className="fixed inset-0 z-[3000] bg-zinc-950/95 backdrop-blur-3xl flex flex-col font-['Poppins',sans-serif]"
         >
           {/* Header */}
@@ -89,7 +91,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                 autoFocus
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="SEARCH PRODUCTS"
+                placeholder={t("search_overlay_search_products")}
                 className="w-full bg-transparent py-4 text-xl sm:text-2xl md:text-6xl font-[900] uppercase tracking-tighter sm:tracking-normal text-white focus:outline-none placeholder:text-zinc-800 caret-white"
               />
             </div>
@@ -115,8 +117,8 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                     className="space-y-8"
                   >
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#fabf37]">Results ({filteredResults.length})</h3>
-                      <button onClick={() => setQuery("")} className="text-[10px] font-black uppercase text-white/30 hover:text-white transition-colors">Clear Search</button>
+                      <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("search_overlay_results")}{filteredResults.length})</h3>
+                      <button onClick={() => setQuery("")} className="text-[10px] font-black uppercase text-white/30 hover:text-white transition-colors">{t("search_overlay_clear_search")}</button>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {filteredResults.length > 0 ? filteredResults.map((product) => (
@@ -133,14 +135,14 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                             <Package className="size-6" />
                           </div>
                           <div>
-                            <h4 className="text-sm font-black text-white group-hover:text-black uppercase tracking-tight">{product.name}</h4>
-                            <p className="text-[10px] font-bold text-white/40 group-hover:text-black/60 uppercase tracking-widest">{product.category}</p>
+                            <h4 className="text-sm font-black text-white group-hover:text-black uppercase tracking-tight">{t(product.name)}</h4>
+                            <p className="text-[10px] font-bold text-white/40 group-hover:text-black/60 uppercase tracking-widest">{t(product.category)}</p>
                           </div>
                           <ArrowRight className="size-5 ml-auto text-white/20 group-hover:text-black -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all" />
                         </button>
                       )) : (
                         <div className="col-span-full py-12 text-center border-2 border-dashed border-white/5 rounded-3xl">
-                          <p className="text-xs font-black uppercase tracking-[0.4em] text-white/10 italic">No products matched your search</p>
+                          <p className="text-xs font-black uppercase tracking-[0.4em] text-white/10 italic">{t("search_overlay_no_products_matched_your_search")}</p>
                         </div>
                       )}
                     </div>
@@ -154,7 +156,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                 <div className="space-y-8">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="size-5 text-[#fabf37]" />
-                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30">Suggested Search</h3>
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30">{t("search_overlay_suggested_search")}</h3>
                   </div>
                   <div className="flex flex-wrap gap-3">
                     {SUGGESTIONS.map((s) => (
@@ -163,7 +165,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                         onClick={() => handleSuggestionClick(s)}
                         className="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-xs font-bold text-white/60 hover:bg-[#fabf37] hover:text-black hover:border-[#fabf37] transition-all flex items-center gap-2 group"
                       >
-                        {s}
+                        {t(s)}
                         <ArrowRight className="size-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
                       </button>
                     ))}
@@ -175,10 +177,10 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Clock className="size-5 text-[#fabf37]" />
-                      <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30">Recent Searches</h3>
+                      <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30">{t("search_overlay_recent_searches")}</h3>
                     </div>
                     {recentSearches.length > 0 && (
-                      <button onClick={handleClearRecent} className="text-[10px] font-black uppercase text-white/20 hover:text-[#fabf37] transition-colors">Clear All</button>
+                      <button onClick={handleClearRecent} className="text-[10px] font-black uppercase text-white/20 hover:text-[#fabf37] transition-colors">{t("search_overlay_clear_all")}</button>
                     )}
                   </div>
                   <div className="space-y-4">
@@ -188,11 +190,11 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                         onClick={() => handleSuggestionClick(s)}
                         className="w-full flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition-colors group"
                       >
-                        <span className="text-sm font-bold text-white/80">{s}</span>
+                        <span className="text-sm font-bold text-white/80">{t(s)}</span>
                         <ArrowRight className="size-4 text-white/20 group-hover:text-[#fabf37] transition-colors" />
                       </button>
                     )) : (
-                      <p className="text-xs font-bold text-white/10 italic uppercase tracking-widest">No recent history</p>
+                      <p className="text-xs font-bold text-white/10 italic uppercase tracking-widest">{t("search_overlay_no_recent_history")}</p>
                     )}
                   </div>
                 </div>
@@ -200,7 +202,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
 
               {/* Trending Categories */}
               <div className="space-y-8">
-                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30 text-center">Trending Categories</h3>
+                <h3 className="text-xs font-black uppercase tracking-[0.3em] text-white/30 text-center">{t("search_overlay_trending_categories")}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   {TRENDING_CATEGORIES.map((cat) => (
                     <button
@@ -215,7 +217,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
                         {cat.icon}
                       </div>
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60 group-hover:text-white transition-colors">
-                        {cat.name}
+                        {t(cat.name)}
                       </span>
                       {/* Decorative background element */}
                       <div className="absolute top-0 right-0 size-24 bg-[#fabf37]/5 rounded-full blur-3xl -translate-y-12 translate-x-12 group-hover:bg-[#fabf37]/10 transition-all" />
@@ -232,7 +234,7 @@ export function SearchOverlay({ isOpen, onClose, onSelectProduct, onPageChange }
               onClick={handleHelp}
               className="group flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 rounded-full hover:bg-white/10 transition-all"
             >
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">Search Help?</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white transition-colors">{t("search_overlay_search_help")}</span>
               <div className="size-8 rounded-full bg-black border border-white/10 flex items-center justify-center text-white/40 group-hover:text-[#fabf37] group-hover:border-[#fabf37]/30 transition-all">
                 <HelpCircle className="size-4" />
               </div>

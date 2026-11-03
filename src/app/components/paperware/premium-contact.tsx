@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface PremiumContactProps {
   /** Navigate to the Contact page (state-based routing; a plain href="/contact" reloads the homepage). */
@@ -8,6 +9,7 @@ interface PremiumContactProps {
 }
 
 export function PremiumContact({ onContact }: PremiumContactProps) {
+  const { t } = useLanguage();
   return (
     <section className="relative bg-white py-24 md:py-32 overflow-hidden">
       {/* Animated Background */}
@@ -51,7 +53,7 @@ export function PremiumContact({ onContact }: PremiumContactProps) {
               >
                 <Sparkles className="size-4 text-[#fabf37]" />
                 <span className="text-xs font-black uppercase tracking-widest text-[#fabf37]">
-                  Get in Touch
+                  {t("contact_menu_get_in_touch")}
                 </span>
               </motion.div>
 
@@ -74,7 +76,7 @@ export function PremiumContact({ onContact }: PremiumContactProps) {
                     textShadow: "5px 5px 10px rgba(0, 0, 0, 0.1)"
                   }}
                 >
-                  Let's Create
+                  {t("premium_contact_let_s_create")}
                 </motion.span>
                 <br />
                 <motion.span 
@@ -85,12 +87,12 @@ export function PremiumContact({ onContact }: PremiumContactProps) {
                     textShadow: "3px 3px 20px rgba(250, 191, 55, 0.4)"
                   }}
                 >
-                  Something Amazing
+                  {t("premium_contact_something_amazing")}
                 </motion.span>
               </motion.h2>
 
               <p className="text-zinc-400 text-lg leading-relaxed max-w-xl mx-auto">
-                Ready to transform your packaging needs? Our team is here to help bring your vision to life with premium, eco-friendly solutions.
+                {t("premium_contact_ready_to_transform_your_packaging")}
               </p>
             </div>
 
@@ -106,7 +108,7 @@ export function PremiumContact({ onContact }: PremiumContactProps) {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#fabf37] text-zinc-900 font-black text-lg rounded-full hover:bg-[#e5ad2f] transition-all shadow-lg shadow-[#fabf37]/25 group"
             >
-              <span>Contact Us</span>
+              <span>{t("premium_contact_contact_us")}</span>
               <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </motion.div>

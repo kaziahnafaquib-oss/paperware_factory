@@ -135,7 +135,7 @@ export function PrivacyPolicy() {
           >
             <Shield className="size-4 text-[#fabf37]" />
             <span className="text-xs font-bold tracking-wider uppercase text-[#a16207]">
-              {t("language") === "BN" ? "গোপনীয়তা নীতি" : "Privacy Policy"}
+              {t(t("language") === "BN" ? "গোপনীয়তা নীতি" : "Privacy Policy")}
             </span>
           </Motion.div>
 
@@ -152,7 +152,7 @@ export function PrivacyPolicy() {
               </>
             ) : (
               <>
-                Your <span className="text-[#fabf37]">Privacy</span> Our Priority
+                {t("order_tracking_your")} <span className="text-[#fabf37]">{t("privacy_policy_privacy")}</span> {t("privacy_policy_our_priority")}
               </>
             )}
           </Motion.h1>
@@ -164,16 +164,16 @@ export function PrivacyPolicy() {
             className="text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed mb-3"
             style={{ transformStyle: "preserve-3d" }}
           >
-            {t("language") === "BN" 
+            {t(t("language") === "BN" 
               ? "পেপারওয়্যার-এ আমরা আপনার ডেটা সুরক্ষিত রাখতে এবং সম্পূর্ণ স্বচ্ছতার সাথে কাজ করতে প্রতিশ্রুতিবদ্ধ।"
-              : "At Paperware, we are committed to protecting your data and operating with complete transparency."
+              : "At Paperware, we are committed to protecting your data and operating with complete transparency.")
             }
           </Motion.p>
 
           <div className="text-xs text-zinc-500">
-            {t("language") === "BN" 
+            {t(t("language") === "BN" 
               ? "সর্বশেষ আপডেট: ১৫ জানুয়ারি, ২০২৬"
-              : "Last Updated: January 15, 2026"
+              : "Last Updated: January 15, 2026")
             }
           </div>
 
@@ -199,9 +199,9 @@ export function PrivacyPolicy() {
               </Motion.div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-zinc-500">
-                  {t("language") === "BN" ? "SSL সুরক্ষিত" : "SSL Secured"}
+                  {t(t("language") === "BN" ? "SSL সুরক্ষিত" : "SSL Secured")}
                 </p>
-                <p className="text-xs font-bold text-black">256-bit</p>
+                <p className="text-xs font-bold text-black">{t("privacy_policy_256_bit")}</p>
               </div>
             </Motion.div>
 
@@ -219,9 +219,9 @@ export function PrivacyPolicy() {
               </Motion.div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-zinc-500">
-                  {t("language") === "BN" ? "GDPR অনুগত" : "GDPR Compliant"}
+                  {t(t("language") === "BN" ? "GDPR অনুগত" : "GDPR Compliant")}
                 </p>
-                <p className="text-xs font-bold text-black">EU Standard</p>
+                <p className="text-xs font-bold text-black">{t("privacy_policy_eu_standard")}</p>
               </div>
             </Motion.div>
 
@@ -239,9 +239,9 @@ export function PrivacyPolicy() {
               </Motion.div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-zinc-500">
-                  {t("language") === "BN" ? "ডেটা এনক্রিপ্টেড" : "Data Encrypted"}
+                  {t(t("language") === "BN" ? "ডেটা এনক্রিপ্টেড" : "Data Encrypted")}
                 </p>
-                <p className="text-xs font-bold text-black">AES-256</p>
+                <p className="text-xs font-bold text-black">{t("privacy_policy_aes_256")}</p>
               </div>
             </Motion.div>
           </Motion.div>
@@ -259,7 +259,7 @@ export function PrivacyPolicy() {
                 <FileText className="size-5 text-zinc-600" />
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                    {t("language") === "BN" ? "সংস্করণ" : "Version"}
+                    {t(t("language") === "BN" ? "সংস্করণ" : "Version")}
                   </p>
                   <p className="text-lg font-black text-black">v2.1</p>
                 </div>
@@ -271,10 +271,10 @@ export function PrivacyPolicy() {
                 <CheckCircle2 className="size-5 text-emerald-600" />
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-                    {t("language") === "BN" ? "কার্যকর তারিখ" : "Effective Date"}
+                    {t(t("language") === "BN" ? "কার্যকর তারিখ" : "Effective Date")}
                   </p>
                   <p className="text-lg font-black text-black">
-                    {t("language") === "BN" ? "১৫ জানুয়ারি, ২০২৬" : "Jan 15, 2026"}
+                    {t(t("language") === "BN" ? "১৫ জানুয়ারি, ২০২৬" : "Jan 15, 2026")}
                   </p>
                 </div>
               </div>
@@ -287,7 +287,7 @@ export function PrivacyPolicy() {
                 className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full font-bold text-sm uppercase tracking-wider hover:bg-[#fabf37] hover:text-black transition-colors"
               >
                 <History className="size-4" />
-                {t("language") === "BN" ? "পরিবর্তন সম্পর্কে জিজ্ঞাসা" : "Ask About Changes"}
+                {t(t("language") === "BN" ? "পরিবর্তন সম্পর্কে জিজ্ঞাসা" : "Ask About Changes")}
               </Motion.button>
             </div>
           </Motion.div>
@@ -304,7 +304,7 @@ export function PrivacyPolicy() {
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="text-sm font-bold uppercase tracking-widest text-zinc-400"
             >
-              {t("language") === "BN" ? "নিচে স্ক্রল করুন" : "Scroll Down"}
+              {t(t("language") === "BN" ? "নিচে স্ক্রল করুন" : "Scroll Down")}
             </Motion.p>
             <Motion.button
               onClick={() => {
@@ -317,7 +317,7 @@ export function PrivacyPolicy() {
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label="Scroll to policy"
+              aria-label={t("privacy_policy_scroll_to_policy")}
               className="w-12 h-12 rounded-full bg-[#fabf37] flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             >
               <ChevronDown className="size-6 text-black" strokeWidth={3} />
@@ -360,10 +360,10 @@ export function PrivacyPolicy() {
 
                   <div className="flex-1">
                     <h2 className="text-xl md:text-2xl font-black mb-3 text-black" style={{ transform: "translateZ(40px)" }}>
-                      {t("language") === "BN" ? section.titleBn : section.title}
+                      {t(t("language") === "BN" ? section.titleBn : section.title)}
                     </h2>
                     <p className="text-sm md:text-base text-zinc-700 leading-relaxed" style={{ transform: "translateZ(20px)" }}>
-                      {t("language") === "BN" ? section.contentBn : section.content}
+                      {t(t("language") === "BN" ? section.contentBn : section.content)}
                     </p>
                   </div>
                 </div>
@@ -386,15 +386,15 @@ export function PrivacyPolicy() {
             <div className="relative z-10">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-black mb-4">
-                  {t("language") === "BN" 
+                  {t(t("language") === "BN" 
                     ? "গোপনীয়তা সংক্রান্ত প্রশ্ন?"
-                    : "Privacy Questions?"
+                    : "Privacy Questions?")
                   }
                 </h2>
                 <p className="text-xl text-zinc-400">
-                  {t("language") === "BN" 
+                  {t(t("language") === "BN" 
                     ? "আমাদের ডেডিকেটেড প্রাইভেসি টিম এখানে সাহায্য করতে প্রস্তুত"
-                    : "Our dedicated privacy team is here to help"
+                    : "Our dedicated privacy team is here to help")
                   }
                 </p>
               </div>
@@ -415,14 +415,14 @@ export function PrivacyPolicy() {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-zinc-400 uppercase tracking-wider mb-1 text-[12px]">
-                          {t("language") === "BN" ? item.labelBn : item.label}
+                          {t(t("language") === "BN" ? item.labelBn : item.label)}
                         </p>
                         <p className="text-white font-semibold break-all text-[13px]">
-                          {item.value}
+                          {t(item.value)}
                         </p>
                         {item.badge && (
                           <p className="text-xs font-bold text-[#fabf37] uppercase tracking-wider mt-1">
-                            {t("language") === "BN" ? item.badgeBn : item.badge}
+                            {t(t("language") === "BN" ? item.badgeBn : item.badge)}
                           </p>
                         )}
                       </div>
@@ -445,15 +445,15 @@ export function PrivacyPolicy() {
               <AlertCircle className="size-6 text-[#fabf37] shrink-0 mt-1" />
               <div>
                 <h3 className="text-xl font-black text-black mb-2">
-                  {t("language") === "BN" 
+                  {t(t("language") === "BN" 
                     ? "নীতি আপডেট সম্পর্কে নোট"
-                    : "Note About Policy Updates"
+                    : "Note About Policy Updates")
                   }
                 </h3>
                 <p className="text-zinc-700 leading-relaxed">
-                  {t("language") === "BN" 
+                  {t(t("language") === "BN" 
                     ? "আমরা সময়ে সময়ে এই গোপনীয়তা নীতি আপডেট করতে পারি। কোনো পরিবর্তন করা হলে আমরা এই পৃষ্ঠায় নতুন তারিখ সহ সংশোধিত নীতি পোস্ট করব। আমরা আপনাকে পর্যায়ক্রমে এই গোপনীয়তা নীতি পর্যালোচনা করতে উৎসাহিত করি যাতে আপনি আপডেট থাকতে পারেন।"
-                    : "We may update this Privacy Policy from time to time. If we make changes, we will post the revised policy on this page with a new date. We encourage you to periodically review this Privacy Policy to stay informed about how we are protecting your information."
+                    : "We may update this Privacy Policy from time to time. If we make changes, we will post the revised policy on this page with a new date. We encourage you to periodically review this Privacy Policy to stay informed about how we are protecting your information.")
                   }
                 </p>
               </div>

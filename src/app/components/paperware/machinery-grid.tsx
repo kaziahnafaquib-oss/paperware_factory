@@ -10,6 +10,7 @@ import imgHotFoil from "../../../assets/machinery/hot-foil.webp";
 import imgUvCoating from "../../../assets/machinery/uv-coating.webp";
 import imgPasting from "../../../assets/machinery/pasting.webp";
 import imgCupForming from "../../../assets/machinery/cup-forming-1.webp";
+import { useLanguage } from "../../context/LanguageContext";
 
 const MACHINES = [
   { name: "Printing Machine (Heidelberg 23×36, Demy)", unit: "Printing", image: imgHeidelbergDemy, desc: "Heidelberg single-colour Demy-size offset press for sharp text, fine detail and consistent colour on every run." },
@@ -24,16 +25,17 @@ const MACHINES = [
 ];
 
 export function MachineryGrid() {
+  const { t } = useLanguage();
   return (
     <section className="py-24 md:py-32 bg-white text-zinc-900" aria-labelledby="machinery-heading">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mb-12 md:mb-16 space-y-5">
-          <span className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">Our Machineries</span>
+          <span className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37] bg-black px-4 py-2 rounded-lg">{t("machinery_grid_our_machineries")}</span>
           <h2 id="machinery-heading" className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-            Print, cut, finish, <span className="text-zinc-500">form.</span>
+            {t("machinery_grid_print_cut_finish")} <span className="text-zinc-500">{t("machinery_grid_form")}</span>
           </h2>
           <p className="text-zinc-500 font-bold uppercase tracking-widest text-[11px] leading-relaxed">
-            The presses, cutters and formers on our floor in Dhaka.
+            {t("machinery_grid_the_presses_cutters_and_formers")}
           </p>
         </div>
 
@@ -43,16 +45,16 @@ export function MachineryGrid() {
               <div className="aspect-[4/3] bg-zinc-50 overflow-hidden">
                 <img
                   src={m.image}
-                  alt={m.name}
+                  alt={t(m.name)}
                   loading="lazy"
                   decoding="async"
                   className="size-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                 />
               </div>
               <div className="p-5 md:p-6 space-y-2">
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400">{m.unit} unit</span>
-                <h3 className="text-base md:text-lg font-black uppercase tracking-tight leading-tight">{m.name}</h3>
-                <p className="text-[11px] font-bold text-zinc-500 leading-relaxed">{m.desc}</p>
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400">{t(m.unit)} {t("machinery_grid_unit")}</span>
+                <h3 className="text-base md:text-lg font-black uppercase tracking-tight leading-tight">{t(m.name)}</h3>
+                <p className="text-[11px] font-bold text-zinc-500 leading-relaxed">{t(m.desc)}</p>
               </div>
             </li>
           ))}

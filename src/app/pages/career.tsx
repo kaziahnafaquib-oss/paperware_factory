@@ -153,6 +153,7 @@ function PerspectiveJobCard({ children }: { children: React.ReactNode }) {
 }
 
 function FloatingGallery({ images }: { images: string[] }) {
+  const { t } = useLanguage();
   return (
     <div className="relative h-[600px] w-full flex items-center justify-center perspective-2000 py-20">
       {images.map((img, i) => (
@@ -171,9 +172,9 @@ function FloatingGallery({ images }: { images: string[] }) {
           className="absolute w-[300px] h-[450px] rounded-[40px] overflow-hidden border-8 border-white shadow-2xl cursor-pointer"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <ImageWithFallback src={img} alt="Gallery" className="w-full h-full object-cover" />
+          <ImageWithFallback src={img} alt={t("career_gallery")} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end p-8">
-            <span className="text-white font-black uppercase text-xs tracking-widest">Workspace View 0{i+1}</span>
+            <span className="text-white font-black uppercase text-xs tracking-widest">{t("career_workspace_view_0")}{i+1}</span>
           </div>
         </motion.div>
       ))}
@@ -182,28 +183,30 @@ function FloatingGallery({ images }: { images: string[] }) {
 }
 
 function GlitchText({ text }: { text: string }) {
+  const { t } = useLanguage();
   return (
     <div className="relative inline-block group">
-      <span className="relative z-10">{text}</span>
+      <span className="relative z-10">{t(text)}</span>
       <motion.span
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 0.5, x: -2, y: 2 }}
         className="absolute inset-0 text-[#fabf37] z-0 translate-x-[2px] -translate-y-[2px] select-none pointer-events-none"
       >
-        {text}
+        {t(text)}
       </motion.span>
       <motion.span
         initial={{ opacity: 0 }}
         whileHover={{ opacity: 0.5, x: 2, y: -2 }}
         className="absolute inset-0 text-cyan-400 z-0 -translate-x-[2px] translate-y-[2px] select-none pointer-events-none"
       >
-        {text}
+        {t(text)}
       </motion.span>
     </div>
   );
 }
 
 function Counter({ value, duration = 2 }: { value: string, duration?: number }) {
+  const { t } = useLanguage();
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const displayValue = useTransform(rounded, (latest) => {
@@ -222,7 +225,7 @@ function Counter({ value, duration = 2 }: { value: string, duration?: number }) 
   }, [numericValue]);
 
   // Non-numeric values (e.g. "Modern") were rendered as "NaN"; show them as plain text.
-  if (Number.isNaN(numericValue)) return <span>{value}</span>;
+  if (Number.isNaN(numericValue)) return <span>{t(value)}</span>;
   return <motion.span>{displayValue}</motion.span>;
 }
 
@@ -266,14 +269,15 @@ const ParticleBackground = React.memo(() => {
 });
 
 const LiveProductionGraph = React.memo(() => {
+  const { t } = useLanguage();
   return (
     <div className="bg-black/90 p-6 rounded-3xl border border-[#fabf37]/20 space-y-4 shadow-2xl">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Activity className="size-4 text-[#fabf37] animate-pulse" />
-          <span className="text-[#fabf37] font-black uppercase text-[10px] tracking-widest">Efficiency Metrics</span>
+          <span className="text-[#fabf37] font-black uppercase text-[10px] tracking-widest">{t("career_efficiency_metrics")}</span>
         </div>
-        <span className="text-zinc-500 font-mono text-[10px]">REAL-TIME</span>
+        <span className="text-zinc-500 font-mono text-[10px]">{t("career_real_time")}</span>
       </div>
       <div className="flex items-end gap-1 h-12">
         {[...Array(12)].map((_, i) => (
@@ -322,6 +326,7 @@ function CustomCursor() {
 }
 
 function LiveFactoryFeed() {
+  const { t } = useLanguage();
   const events = [
     "Batch #829: Sustainable Kraft Paper processing...",
     "Automation System: Efficiency at 98.4%",
@@ -339,7 +344,7 @@ function LiveFactoryFeed() {
       >
         <div className="flex items-center gap-3 mb-3">
           <div className="size-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-[#fabf37] font-black uppercase text-[10px] tracking-widest">Live Automation Feed</span>
+          <span className="text-[#fabf37] font-black uppercase text-[10px] tracking-widest">{t("career_live_automation_feed")}</span>
         </div>
         <div className="space-y-2 h-20 overflow-hidden relative">
           <motion.div
@@ -361,6 +366,7 @@ function LiveFactoryFeed() {
 }
 
 function Marquee({ items }: { items: string[] }) {
+  const { t } = useLanguage();
   return (
     <div className="relative flex overflow-x-hidden border-y border-black/5 bg-white/50 backdrop-blur-sm py-8 mb-32">
       <motion.div
@@ -371,7 +377,7 @@ function Marquee({ items }: { items: string[] }) {
         {[...items, ...items].map((item, i) => (
           <div key={i} className="flex items-center gap-6" aria-hidden={i >= items.length ? true : undefined}>
             <span className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-black/50 hover:text-[#fabf37] transition-colors cursor-default">
-              {item}
+              {t(item)}
             </span>
             <div className="size-2 bg-[#fabf37] rounded-full" />
           </div>
@@ -487,6 +493,7 @@ function Magnetic({ children }: { children: React.ReactNode }) {
 }
 
 function TextReveal({ text, className = "" }: { text: string, className?: string }) {
+  const { t } = useLanguage();
   const words = text.split(" ");
   return (
     <span className={className}>
@@ -502,7 +509,7 @@ function TextReveal({ text, className = "" }: { text: string, className?: string
             }}
             className="inline-block"
           >
-            {word}
+            {t(word)}
           </motion.span>
         </span>
       ))}
@@ -571,6 +578,7 @@ function FloatingIndustrial3D() {
 }
 
 function DepartmentExplorer() {
+  const { t } = useLanguage();
   const [hovered, setHovered] = React.useState<number | null>(null);
   const depts = [
     { name: "Automation", icon: Settings, count: 4, desc: "Building the brains of our factory." },
@@ -598,14 +606,14 @@ function DepartmentExplorer() {
             <d.icon className="size-48 text-white" />
           </motion.div>
           <div className="absolute inset-0 p-8 flex flex-col justify-end gap-2">
-            <span className="text-[#fabf37] font-black text-xs uppercase tracking-[0.3em]">{d.count} Openings</span>
-            <h3 className="text-white text-2xl font-black uppercase tracking-tight">{d.name}</h3>
+            <span className="text-[#fabf37] font-black text-xs uppercase tracking-[0.3em]">{d.count} {t("career_openings")}</span>
+            <h3 className="text-white text-2xl font-black uppercase tracking-tight">{t(d.name)}</h3>
             <motion.p 
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: hovered === i ? 'auto' : 0, opacity: hovered === i ? 1 : 0 }}
               className="text-zinc-400 text-xs font-medium leading-relaxed"
             >
-              {d.desc}
+              {t(d.desc)}
             </motion.p>
           </div>
         </motion.div>
@@ -615,6 +623,7 @@ function DepartmentExplorer() {
 }
 
 function ReferralSection() {
+  const { t } = useLanguage();
   const go = useGo();
   return (
     <motion.div 
@@ -627,22 +636,22 @@ function ReferralSection() {
         <div className="space-y-6 text-center md:text-left">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 text-[#fabf37] text-[10px] font-black uppercase tracking-widest border border-white/10">
             <Star className="size-3 fill-current" />
-            Elite Referral Program
+            {t("career_elite_referral_program")}
           </div>
           <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white">
-            BRING A FELLOW <br /> <span className="text-[#fabf37]">INNOVATOR</span>
+            {t("career_bring_a_fellow")} <br /> <span className="text-[#fabf37]">{t("career_innovator")}</span>
           </h2>
           <p className="text-zinc-500 max-w-md font-medium">
-            Know someone who fits our industrial excellence? Refer them and get exclusive benefits plus a signing bonus.
+            {t("career_know_someone_who_fits_our")}
           </p>
         </div>
         <div className="flex flex-col gap-4 w-full md:w-auto">
           <Magnetic>
             <button onClick={() => go("contact")} className="bg-[#fabf37] text-black px-12 py-6 rounded-[24px] font-black uppercase tracking-widest text-sm hover:scale-105 transition-all w-full shadow-[0_20px_40px_rgba(250,191,55,0.2)]">
-              Refer Now
+              {t("career_refer_now")}
             </button>
           </Magnetic>
-          <p className="text-zinc-600 text-[10px] uppercase font-black tracking-[0.2em] text-center">T&C Apply • Verified Professionals Only</p>
+          <p className="text-zinc-600 text-[10px] uppercase font-black tracking-[0.2em] text-center">{t("career_t_c_apply_verified_professionals")}</p>
         </div>
       </div>
     </motion.div>
@@ -702,11 +711,11 @@ export function CareerPage() {
             >
               {[1, 2, 3, 4, 5].map(i => (
                 <div key={i} className="flex gap-8 items-center" aria-hidden={i > 1 ? true : undefined}>
-                  <span>Future of Manufacturing</span>
+                  <span>{t("career_future_of_manufacturing")}</span>
                   <div className="size-1 bg-[#fabf37] rounded-full" />
-                  <span>Sustainable Packaging Leaders</span>
+                  <span>{t("career_sustainable_packaging_leaders")}</span>
                   <div className="size-1 bg-[#fabf37] rounded-full" />
-                  <span>Dhaka Industrial Excellence</span>
+                  <span>{t("career_dhaka_industrial_excellence")}</span>
                   <div className="size-1 bg-[#fabf37] rounded-full" />
                 </div>
               ))}
@@ -722,11 +731,11 @@ export function CareerPage() {
                 className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-black text-[#fabf37] text-[10px] md:text-xs font-black uppercase tracking-widest shadow-2xl"
               >
                 <div className="size-2 rounded-full bg-[#fabf37] animate-ping" />
-                Now Hiring
+                {t("career_now_hiring")}
               </motion.div>
             </Magnetic>
             
-            <h1 className="text-[36px] sm:text-[48px] md:text-[86px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black perspective-2000 break-words"><span className="sr-only">Build your career in manufacturing</span><span aria-hidden="true">
+            <h1 className="text-[36px] sm:text-[48px] md:text-[86px] lg:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black perspective-2000 break-words"><span className="sr-only">{t("career_build_your_career_in_manufacturing")}</span><span aria-hidden="true">
               <TextReveal text="Build Your" /> <br />
               <motion.span 
                 initial={{ x: -100, opacity: 0, rotateY: -90, translateZ: 100 }}
@@ -745,8 +754,7 @@ export function CareerPage() {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="max-w-2xl mx-auto text-zinc-600 font-bold text-sm sm:text-base md:text-xl leading-relaxed"
             >
-              Paperware is redefining the industrial landscape of Bangladesh. 
-              Be part of a zero-waste future powered by premium automation.
+              {t("career_paperware_is_redefining_the_industrial")}
             </motion.p>
 
             <motion.div
@@ -757,7 +765,7 @@ export function CareerPage() {
             >
               <Magnetic>
                 <button onClick={() => document.getElementById('open-positions')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="bg-black text-white px-10 py-5 rounded-[20px] font-black uppercase tracking-[0.2em] text-sm hover:bg-[#fabf37] hover:text-black transition-all shadow-2xl border-b-4 border-zinc-800 active:border-b-0 active:translate-y-1">
-                  Explore Positions
+                  {t("career_explore_positions")}
                 </button>
               </Magnetic>
             </motion.div>
@@ -776,19 +784,19 @@ export function CareerPage() {
           >
             <ImageWithFallback 
               src={imgTeam} 
-              alt="The Paperware factory team" 
+              alt={t("career_the_paperware_factory_team")} 
               className="w-full h-full object-cover object-top md:object-[center_35%] group-hover:scale-110 transition-transform duration-[2s] ease-out"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-10 left-10 md:left-16">
-              <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px] md:text-xs block mb-2">Manufacturing Excellence</span>
-              <h3 className="text-white text-2xl md:text-4xl font-black uppercase tracking-tighter">Premium Production Hub</h3>
+              <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px] md:text-xs block mb-2">{t("career_manufacturing_excellence")}</span>
+              <h3 className="text-white text-2xl md:text-4xl font-black uppercase tracking-tighter">{t("career_premium_production_hub")}</h3>
             </div>
           </motion.div>
 
           <div className="text-center mb-16 space-y-4">
-            <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">Explore Sectors</span>
-            <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter">Our Core Departments</h2>
+            <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">{t("career_explore_sectors")}</span>
+            <h2 className="text-3xl md:text-6xl font-black uppercase tracking-tighter">{t("career_our_core_departments")}</h2>
           </div>
           <DepartmentExplorer />
         </div>
@@ -801,8 +809,8 @@ export function CareerPage() {
           className="mb-32"
         >
           <div className="text-center mb-16 space-y-4">
-            <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">Our Core Values</span>
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter">What Drives Us</h2>
+            <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">{t("career_our_core_values")}</span>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter">{t("career_what_drives_us")}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {values.map((v, i) => (
@@ -810,8 +818,8 @@ export function CareerPage() {
                 <div className={`size-16 rounded-2xl ${v.color} flex items-center justify-center mb-8 group-hover:rotate-12 transition-transform shadow-inner`}>
                   <v.icon className="size-8" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-black">{v.title}</h3>
-                <p className="text-zinc-500 text-sm font-medium leading-relaxed">{v.desc}</p>
+                <h3 className="text-2xl font-black uppercase tracking-tight mb-4 text-black">{t(v.title)}</h3>
+                <p className="text-zinc-500 text-sm font-medium leading-relaxed">{t(v.desc)}</p>
               </Thick3DCard>
             ))}
           </div>
@@ -826,8 +834,8 @@ export function CareerPage() {
         >
           <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
             <div className="space-y-4 text-center md:text-left">
-              <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">Culture & Space</span>
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Life at Paperware</h2>
+              <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">{t("career_culture_space")}</span>
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">{t("career_life_at_paperware")}</h2>
             </div>
           </div>
           
@@ -846,11 +854,11 @@ export function CareerPage() {
         >
           <div className="flex flex-col md:flex-row items-center justify-between mb-20 gap-8">
             <div className="text-center md:text-left space-y-4">
-              <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">Why Join Us</span>
-              <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-black leading-none">Employee <br /> Benefits</h2>
+              <span className="text-[#fabf37] font-black uppercase tracking-widest text-xs">{t("career_why_join_us")}</span>
+              <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-black leading-none">{t("career_employee")} <br /> {t("career_benefits")}</h2>
             </div>
             <div className="bg-black text-[#fabf37] p-10 rounded-[40px] font-black uppercase tracking-widest text-sm rotate-3 shadow-2xl border-b-8 border-r-8 border-[#fabf37]">
-              Premium Work Life
+              {t("career_premium_work_life")}
             </div>
           </div>
           
@@ -866,8 +874,8 @@ export function CareerPage() {
                 <div className="size-16 rounded-3xl bg-black text-[#fabf37] flex items-center justify-center mb-8 group-hover:shadow-[0_0_30px_rgba(250,191,55,0.3)] transition-all">
                   <b.icon className="size-8" />
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-tight mb-3">{b.title}</h3>
-                <p className="text-zinc-500 text-sm font-medium leading-relaxed">{b.desc}</p>
+                <h3 className="text-2xl font-black uppercase tracking-tight mb-3">{t(b.title)}</h3>
+                <p className="text-zinc-500 text-sm font-medium leading-relaxed">{t(b.desc)}</p>
               </ThreeDCard>
             ))}
           </div>
@@ -892,8 +900,8 @@ export function CareerPage() {
             </motion.div>
           </div>
           <div className="text-center mb-24 space-y-4">
-            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">Our Hiring Process</h2>
-            <p className="text-zinc-400 font-black uppercase tracking-[0.3em] text-xs">A precise journey to excellence</p>
+            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">{t("career_our_hiring_process")}</h2>
+            <p className="text-zinc-400 font-black uppercase tracking-[0.3em] text-xs">{t("career_a_precise_journey_to_excellence")}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 relative">
@@ -928,8 +936,8 @@ export function CareerPage() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <h3 className="text-2xl font-black uppercase tracking-tight group-hover:text-[#fabf37] transition-colors">{step.title}</h3>
-                  <p className="text-zinc-500 text-sm font-bold leading-relaxed px-4">{step.desc}</p>
+                  <h3 className="text-2xl font-black uppercase tracking-tight group-hover:text-[#fabf37] transition-colors">{t(step.title)}</h3>
+                  <p className="text-zinc-500 text-sm font-bold leading-relaxed px-4">{t(step.desc)}</p>
                 </div>
               </motion.div>
             ))}
@@ -947,7 +955,7 @@ export function CareerPage() {
           className="mb-32 max-w-3xl mx-auto"
         >
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-black uppercase tracking-tighter">Common Questions</h2>
+            <h2 className="text-3xl font-black uppercase tracking-tighter">{t("career_common_questions")}</h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq, i) => (
@@ -956,7 +964,7 @@ export function CareerPage() {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-zinc-50 transition-colors"
                 >
-                  <span className="font-black uppercase tracking-tight text-sm md:text-base text-black">{faq.q}</span>
+                  <span className="font-black uppercase tracking-tight text-sm md:text-base text-black">{t(faq.q)}</span>
                   <div className={`transition-transform duration-300 ${openFaq === i ? 'rotate-180' : ''}`}>
                     <ChevronDown className="size-5" />
                   </div>
@@ -967,7 +975,7 @@ export function CareerPage() {
                   className="overflow-hidden"
                 >
                   <div className="px-8 pb-6 text-zinc-500 font-medium leading-relaxed">
-                    {faq.a}
+                    {t(faq.a)}
                   </div>
                 </motion.div>
               </div>
@@ -991,14 +999,14 @@ export function CareerPage() {
             <motion.div style={{ scale: imageScale }} className="w-full h-full grid grid-cols-1 md:grid-cols-[1fr_minmax(0,320px)]">
               <ImageWithFallback
                 src={imgFloor}
-                alt="The Paperware production floor"
+                alt={t("career_the_paperware_production_floor")}
                 className="w-full h-full object-cover object-top md:object-[center_30%] hidden md:block"
               />
               {/* Real footage: our team on the factory floor (public/media/SOURCES.txt). */}
               <FactoryClip
                 src={FLOOR_VIDEO}
                 poster={posterFloor}
-                label="factory floor team"
+                label={t("career_factory_floor_team")}
                 className="w-full h-full"
                 controlPosition="top-right"
               />
@@ -1012,7 +1020,7 @@ export function CareerPage() {
             className="flex flex-col md:flex-row items-center justify-between gap-8 px-6 sm:px-10 py-8 sm:py-12 bg-white rounded-[40px] border border-zinc-100 shadow-2xl"
           >
             <div className="space-y-6 text-center md:text-left w-full" style={{ transform: "translateZ(40px)" }}>
-              <h2 id="open-positions" className="text-black font-black uppercase tracking-widest text-lg sm:text-2xl scroll-mt-32">Find Your Role</h2>
+              <h2 id="open-positions" className="text-black font-black uppercase tracking-widest text-lg sm:text-2xl scroll-mt-32">{t("career_find_your_role")}</h2>
               <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-4">
                 {departments.map(dept => (
                   <button
@@ -1024,7 +1032,7 @@ export function CareerPage() {
                         : 'bg-zinc-100 text-zinc-400 hover:bg-zinc-200'
                     }`}
                   >
-                    {dept}
+                    {t(dept)}
                   </button>
                 ))}
               </div>
@@ -1034,7 +1042,7 @@ export function CareerPage() {
               <div className="relative flex-1 md:w-80">
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
                 <input 
-                  placeholder="Search jobs..." 
+                  placeholder={t("career_search_jobs")} 
                   className="w-full bg-zinc-100 border-none rounded-[24px] py-5 pl-16 pr-6 text-sm font-bold outline-none focus:ring-2 focus:ring-[#fabf37] transition-all"
                 />
               </div>
@@ -1074,11 +1082,11 @@ export function CareerPage() {
                     </Magnetic>
                     <div className="text-center md:text-left space-y-1 w-full min-w-0">
                       <h3 className="text-lg sm:text-xl lg:text-2xl font-black uppercase tracking-tighter text-black group-hover:text-[#fabf37] transition-colors leading-[0.9] break-words">
-                        {job.title}
+                        {t(job.title)}
                       </h3>
                       <div className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-4 text-zinc-400 font-black text-[7px] sm:text-[9px] uppercase tracking-[0.2em] overflow-hidden">
-                        <span className="flex items-center gap-1.5 whitespace-nowrap"><MapPin className="size-3 text-[#fabf37]" /> {job.location}</span>
-                        <span className="bg-[#fabf37]/10 text-[#fabf37] px-3 py-1 rounded-full border border-[#fabf37]/10 whitespace-nowrap">{job.type}</span>
+                        <span className="flex items-center gap-1.5 whitespace-nowrap"><MapPin className="size-3 text-[#fabf37]" /> {t(job.location)}</span>
+                        <span className="bg-[#fabf37]/10 text-[#fabf37] px-3 py-1 rounded-full border border-[#fabf37]/10 whitespace-nowrap">{t(job.type)}</span>
                       </div>
                     </div>
                   </div>
@@ -1137,7 +1145,7 @@ export function CareerPage() {
       {/* Footer Decoration */}
       <div className="mt-32 border-t border-black/5 pt-12 text-center px-4">
         <p className="text-zinc-400 font-black uppercase tracking-[0.3em] text-[10px]">
-          Paperware Engineering & Sustainability
+          {t("career_paperware_engineering_sustainability")}
         </p>
       </div>
     </div>

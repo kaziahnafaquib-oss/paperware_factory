@@ -1,5 +1,6 @@
 import React from "react";
-import imgTeam from "@/assets/factory/team.webp";
+// Owner (3 Nov 2026): no real employee photos on the CSR page (consent) — a no-faces machine shot replaces the team photo.
+import imgTeam from "@/assets/factory/cups-stacking.webp";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 import { Heart, Users, ShieldCheck, Activity, HandHeart } from "lucide-react";
@@ -98,7 +99,7 @@ export function CSRPage() {
                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
              >
                 <span className="relative z-10 text-[#a16207] font-black uppercase tracking-[0.3em] text-sm px-6 py-3 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20 backdrop-blur-sm">
-                  Our Commitment
+                  {t("csr_our_commitment")}
                 </span>
              </motion.div>
           </motion.div>
@@ -109,12 +110,12 @@ export function CSRPage() {
             animate="show"
             className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-black flex flex-wrap justify-center gap-x-4 gap-y-2 leading-[0.9]"
           >
-            <span className="sr-only">Corporate Social Responsibility</span>
+            <span className="sr-only">{t("csr_corporate_social_responsibility")}</span>
             {"Corporate Social Responsibility".split(" ").map((word, i) => (
               <span key={i} aria-hidden="true" className="inline-flex overflow-hidden relative">
                 {word.split("").map((char, j) => (
                   <motion.span key={j} variants={letterAnimation} className="relative z-10">
-                    {char}
+                    {t(char)}
                   </motion.span>
                 ))}
               </span>
@@ -134,7 +135,7 @@ export function CSRPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-zinc-500 font-medium text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed pt-4"
           >
-            We believe in business with a heart. Our mission extends beyond profit to making a tangible difference in the lives of our people and community.
+            {t("csr_we_believe_in_business_with")}
           </motion.p>
           
            <motion.div 
@@ -148,14 +149,14 @@ export function CSRPage() {
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 className="flex flex-col items-center gap-2 text-zinc-400"
               >
-                  <span className="text-xs font-bold uppercase tracking-widest">Scroll to Explore</span>
+                  <span className="text-xs font-bold uppercase tracking-widest">{t("csr_scroll_to_explore")}</span>
                   <div className="w-px h-12 bg-gradient-to-b from-zinc-300 to-transparent" />
               </motion.div>
            </motion.div>
         </div>
 
         <div className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-[40px] overflow-hidden shadow-xl border border-black/5 mb-16">
-          <img src={imgTeam} alt="The Paperware factory team" loading="lazy" decoding="async" className="size-full object-cover object-[center_30%]" />
+          <img src={imgTeam} alt={t("about_us_cup_forming_machines")} loading="lazy" decoding="async" className="size-full object-cover object-[center_30%]" />
         </div>
         {/* Inclusive Employment Section */}
         <motion.div 
@@ -185,11 +186,11 @@ export function CSRPage() {
                 >
                   <Users className="size-10" />
                 </motion.div>
-                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-black">Empowering Abilities</h2>
+                <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-black">{t("csr_empowering_abilities")}</h2>
               </div>
               
               <p className="text-zinc-600 leading-relaxed font-medium text-lg">
-                At Paperware, we focus on ability, not disability. We are proud to provide meaningful employment opportunities to those often overlooked by society.
+                {t("csr_at_paperware_we_focus_on")}
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
@@ -198,10 +199,10 @@ export function CSRPage() {
                   className="p-6 rounded-3xl bg-zinc-50 hover:bg-[#fabf37]/10 border border-zinc-100 transition-colors"
                 >
                   <div className="text-4xl font-black text-[#fabf37] mb-2">
-                    <CountUp to={3} />
+                    <CountUp to={4} />
                   </div>
-                  <h4 className="font-bold text-black text-lg mb-1">Team Members</h4>
-                  <p className="text-sm text-zinc-500 font-medium">with speech & hearing impairment</p>
+                  <h4 className="font-bold text-black text-lg mb-1">{t("csr_team_members")}</h4>
+                  <p className="text-sm text-zinc-500 font-medium">{t("csr_with_speech_hearing_impairment")}</p>
                 </motion.div>
 
                 <motion.div 
@@ -211,8 +212,8 @@ export function CSRPage() {
                   <div className="text-4xl font-black text-[#fabf37] mb-2">
                     <CountUp to={2} />
                   </div>
-                  <h4 className="font-bold text-black text-lg mb-1">Burn Survivors</h4>
-                  <p className="text-sm text-zinc-500 font-medium">working with dignity</p>
+                  <h4 className="font-bold text-black text-lg mb-1">{t("csr_burn_survivors")}</h4>
+                  <p className="text-sm text-zinc-500 font-medium">{t("csr_working_with_dignity")}</p>
                 </motion.div>
               </div>
             </div>
@@ -246,8 +247,8 @@ export function CSRPage() {
                     className="absolute bottom-6 left-6 right-6"
                  >
                     <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-lg text-center transform group-hover/card:translate-y-[-5px] transition-transform duration-300">
-                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-2">Our Philosophy</p>
-                        <p className="text-base font-bold text-black italic">"Work is for everyone who has the will to contribute."</p>
+                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-2">{t("csr_our_philosophy")}</p>
+                        <p className="text-base font-bold text-black italic">{t("csr_work_is_for_everyone_who")}</p>
                     </div>
                  </motion.div>
               </motion.div>
@@ -280,11 +281,11 @@ export function CSRPage() {
                   <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
                     <Activity className="size-8 text-[#fabf37]" />
                   </div>
-                  <h3 className="text-3xl font-black uppercase tracking-tight">COVID-19<br/>Response</h3>
+                  <h3 className="text-3xl font-black uppercase tracking-tight">{t("csr_covid_19")}<br/>{t("csr_response")}</h3>
                 </div>
 
                 <p className="text-zinc-400 leading-relaxed mb-8 font-medium text-lg">
-                  During the global pandemic, we didn't step back. We stepped up. We stood by our community during the toughest times.
+                  {t("csr_during_the_global_pandemic_we")}
                 </p>
 
                 <ul className="space-y-4">
@@ -301,7 +302,7 @@ export function CSRPage() {
                        whileHover={{ x: 10 }}
                        className="flex items-center gap-4 text-base font-bold text-white/90 p-3 rounded-xl hover:bg-white/10 transition-colors cursor-default"
                      >
-                        <item.icon className="size-5 text-[#fabf37]" /> {item.text}
+                        <item.icon className="size-5 text-[#fabf37]" /> {t(item.text)}
                      </motion.li>
                    ))}
                 </ul>
@@ -322,9 +323,9 @@ export function CSRPage() {
            >
               
               <div className="relative z-10">
-                <h3 className="text-3xl font-black uppercase tracking-tight text-black mb-6">Ongoing Impact</h3>
+                <h3 className="text-3xl font-black uppercase tracking-tight text-black mb-6">{t("csr_ongoing_impact")}</h3>
                 <p className="text-black/80 font-bold leading-relaxed text-xl">
-                   Our commitment didn't end with the pandemic. We continue to support health and wellness initiatives for our workers and their families.
+                   {t("csr_our_commitment_didn_t_end")}
                 </p>
               </div>
 
@@ -336,7 +337,7 @@ export function CSRPage() {
                    transition={{ delay: 0.8 }}
                  >
                    <div className="h-0.5 flex-1 bg-black/10 group-hover:bg-black/30 transition-colors" />
-                   <span className="text-xs font-black uppercase tracking-[0.2em] text-black/50 group-hover:text-black/80 transition-colors">Since 2020</span>
+                   <span className="text-xs font-black uppercase tracking-[0.2em] text-black/50 group-hover:text-black/80 transition-colors">{t("csr_since_2020")}</span>
                  </motion.div>
               </div>
            </motion.div>

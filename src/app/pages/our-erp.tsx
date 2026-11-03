@@ -47,7 +47,7 @@ export function OurERPPage() {
               className="inline-flex items-center gap-3 px-5 py-2.5 bg-zinc-50 rounded-full border border-black/5"
             >
               <div className="size-2 rounded-full bg-[#fabf37] animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black">Operational Backbone: ERPNext</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black">{t("our_erp_operational_backbone_erpnext")}</span>
             </motion.div>
             
             <motion.h1 
@@ -55,7 +55,7 @@ export function OurERPPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-[50px] md:text-[100px] font-black uppercase tracking-tighter leading-[0.85] text-black"
             >
-              The <span className="text-[#fabf37]">Pulse</span> of <br />Manufacturing
+              {t("about_us_the")} <span className="text-[#fabf37]">{t("our_erp_pulse")}</span> {t("our_erp_of")} <br />{t("manufacturing")}
             </motion.h1>
             
             <motion.p 
@@ -64,8 +64,7 @@ export function OurERPPage() {
               transition={{ delay: 0.2 }}
               className="text-zinc-500 font-bold text-lg md:text-xl max-w-2xl leading-relaxed"
             >
-              Integrating every byte of data from our factory floor to global shipping lanes. 
-              Our ERP system is the invisible force ensuring precision, speed, and sustainability.
+              {t("our_erp_integrating_every_byte_of_data")}
             </motion.p>
 
             <div className="flex flex-wrap gap-4 pt-4">
@@ -73,7 +72,7 @@ export function OurERPPage() {
                  onClick={() => setIsFormOpen(true)}
                  className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl flex items-center gap-4 group"
                >
-                 Inquire Export Services <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
+                 {t("our_erp_inquire_export_services")} <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
                </button>
             </div>
           </div>
@@ -95,13 +94,13 @@ export function OurERPPage() {
                  onClick={() => setActiveTab('factory')}
                  className={`px-8 py-4 rounded-[24px] text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'factory' ? 'bg-black text-[#fabf37] shadow-xl' : 'text-zinc-400 hover:text-zinc-600'}`}
                >
-                 Internal ERP (Factory)
+                 {t("our_erp_internal_erp_factory")}
                </button>
                <button 
                  onClick={() => setActiveTab('logistics')}
                  className={`px-8 py-4 rounded-[24px] text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'logistics' ? 'bg-black text-[#fabf37] shadow-xl' : 'text-zinc-400 hover:text-zinc-600'}`}
                >
-                 Global Logistics (Export)
+                 {t("our_erp_global_logistics_export")}
                </button>
             </div>
          </div>
@@ -124,8 +123,8 @@ export function OurERPPage() {
                         {React.cloneElement(step.icon as React.ReactElement, { className: "size-8 relative z-10" })}
                       </div>
                       <div className="space-y-2">
-                        <h4 className="text-[11px] font-black uppercase tracking-widest text-black">{step.title}</h4>
-                        <p className="text-[9px] font-bold text-zinc-400 leading-relaxed max-w-[140px]">{step.desc}</p>
+                        <h4 className="text-[11px] font-black uppercase tracking-widest text-black">{t(step.title)}</h4>
+                        <p className="text-[9px] font-bold text-zinc-400 leading-relaxed max-w-[140px]">{t(step.desc)}</p>
                       </div>
                     </div>
                   ))}
@@ -156,8 +155,8 @@ export function OurERPPage() {
                            {React.cloneElement(pill.icon as React.ReactElement, { className: "size-8" })}
                         </div>
                         <div className="space-y-2">
-                           <h4 className="text-xl font-black uppercase tracking-tight">{pill.mode}</h4>
-                           <p className="text-sm font-bold text-zinc-400 leading-relaxed">{pill.desc}</p>
+                           <h4 className="text-xl font-black uppercase tracking-tight">{t(pill.mode)}</h4>
+                           <p className="text-sm font-bold text-zinc-400 leading-relaxed">{t(pill.desc)}</p>
                         </div>
                      </div>
                    ))}
@@ -166,14 +165,14 @@ export function OurERPPage() {
                 {/* Final Call to Action */}
                 <div className="bg-[#fabf37] rounded-[60px] p-12 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12 text-black relative overflow-hidden">
                    <div className="relative z-10 space-y-6">
-                      <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter leading-none">Ready to <br />Go Global?</h2>
-                      <p className="text-lg font-black max-w-md opacity-60">Consult with our logistics experts to optimize your international packaging supply chain.</p>
+                      <h2 className="text-[40px] md:text-[60px] font-black uppercase tracking-tighter leading-none">{t("office_stationary_ready_to")} <br />{t("our_erp_go_global")}</h2>
+                      <p className="text-lg font-black max-w-md opacity-60">{t("our_erp_consult_with_our_logistics_experts")}</p>
                    </div>
                    <button 
                      onClick={() => setIsFormOpen(true)}
                      className="relative z-10 px-16 py-8 bg-black text-[#fabf37] rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-2xl"
                    >
-                     Initialize Export Request
+                     {t("initialize_export_request")}
                    </button>
                    {/* Background Circle Decor */}
                    <div className="absolute top-1/2 right-0 -translate-y-1/2 size-[600px] rounded-full bg-white/20 blur-[100px] -mr-[300px]" />

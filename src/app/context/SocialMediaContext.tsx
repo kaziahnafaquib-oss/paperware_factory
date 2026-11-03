@@ -26,7 +26,7 @@ export function SocialMediaProvider({ children }: { children: React.ReactNode })
   const [socialLinks, setSocialLinks] = useState({
     instagram: "https://www.instagram.com/paperware_factory/",
     facebook: "https://www.facebook.com/paperwarefactory",
-    linkedin: "https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true",
+    linkedin: "https://www.linkedin.com/company/paperwarefactory/",
     youtube: "https://www.youtube.com/@PaperwareFactory"
   });
 

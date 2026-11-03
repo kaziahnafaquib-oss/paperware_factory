@@ -12,6 +12,7 @@ import imgFormingCloseup from "../../../assets/factory/forming-closeup.webp";
 import imgQcTechnician from "../../../assets/factory/qc-technician.webp";
 import posterLamination from "../../../assets/video-posters/lamination.webp";
 import { mediaUrl } from "./factory-clip";
+import { useLanguage } from "../../context/LanguageContext";
 
 const imgHeidelberg = imgOffsetPress;
 const imgOriginalHeidelberg = imgPressOperator;
@@ -121,6 +122,7 @@ const departments = [
 ];
 
 export function DepartmentShowcase() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState(departments[0].id);
   const headRef = React.useRef<HTMLDivElement>(null);
   const frameRef = React.useRef<HTMLDivElement>(null);
@@ -152,11 +154,11 @@ export function DepartmentShowcase() {
             className="flex items-center gap-4 text-black font-black uppercase tracking-[0.4em] text-[10px]"
           >
             <div className="h-[2px] w-12 bg-[#fabf37]" />
-            Departmental Infrastructure
+            {t("department_showcase_departmental_infrastructure")}
           </div>
           <h2 className="text-[32px] md:text-[64px] font-black uppercase tracking-tighter leading-none">
-            Our <span className="text-zinc-300">Operational</span> <br />
-            Units.
+            {t("department_showcase_our")} <span className="text-zinc-300">{t("department_showcase_operational")}</span> <br />
+            {t("department_showcase_units")}
           </h2>
         </div>
 
@@ -175,7 +177,7 @@ export function DepartmentShowcase() {
                 }`}
               >
                 <Icon className="size-4" />
-                {dept.name}
+                {t(dept.name)}
               </button>
             );
           })}
@@ -212,7 +214,7 @@ export function DepartmentShowcase() {
                             {machine.image ? (
                             <ImageWithFallback
                               src={machine.image}
-                              alt={machine.name}
+                              alt={t(machine.name)}
                               className="size-full object-cover grayscale brightness-75 group-hover/machine:grayscale-0 group-hover/machine:brightness-100 group-hover/machine:scale-105 transition-all duration-1000"
                             />
                             ) : (
@@ -231,15 +233,15 @@ export function DepartmentShowcase() {
                                   className="inline-flex items-center gap-2 bg-[#fabf37] text-black px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
                                 >
                                   <div className="size-1.5 bg-black rounded-full animate-pulse" />
-                                  Active Unit
+                                  {t("department_showcase_active_unit")}
                                 </motion.div>
                                 <h4 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
-                                  {machine.name}
+                                  {t(machine.name)}
                                 </h4>
                                 <div className="flex flex-wrap gap-3">
                                   {machine.specs.map((s, si) => (
                                     <span key={si} className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-widest border-b border-white/10 pb-1">
-                                      {s}
+                                      {t(s)}
                                     </span>
                                   ))}
                                 </div>
@@ -270,7 +272,7 @@ export function DepartmentShowcase() {
                         ) : (
                           <ImageWithFallback
                             src={dept.image}
-                            alt={dept.name}
+                            alt={t(dept.name)}
                             className="size-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-1000"
                           />
                         )}
@@ -285,22 +287,22 @@ export function DepartmentShowcase() {
                       <div className="space-y-4">
                         <p className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px] flex items-center gap-3">
                           <span className="w-8 h-px bg-[#fabf37]" />
-                          Industrial Core / 0{departments.indexOf(dept) + 1}
+                          {t("department_showcase_industrial_core_0")}{departments.indexOf(dept) + 1}
                         </p>
                         <h3 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] text-white italic">
-                          {dept.title}
+                          {t(dept.title)}
                         </h3>
                       </div>
                       
                       <p className="text-zinc-400 font-medium text-lg leading-relaxed max-w-lg">
-                        {dept.description}
+                        {t(dept.description)}
                       </p>
 
                       <div className="grid grid-cols-2 gap-4">
                         {dept.stats.map((stat, i) => (
                           <div key={i} className="p-6 rounded-[24px] bg-zinc-900/50 border border-white/5 group/stat hover:border-[#fabf37]/50 transition-colors">
-                            <p className="text-3xl font-black text-white group-hover/stat:text-[#fabf37] transition-colors">{stat.value}</p>
-                            <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest mt-1">{stat.label}</p>
+                            <p className="text-3xl font-black text-white group-hover/stat:text-[#fabf37] transition-colors">{t(stat.value)}</p>
+                            <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest mt-1">{t(stat.label)}</p>
                           </div>
                         ))}
                       </div>
@@ -309,7 +311,7 @@ export function DepartmentShowcase() {
                     <div className="flex flex-wrap gap-2 pt-8">
                       {dept.features.map((feature, i) => (
                         <span key={i} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-widest text-zinc-400">
-                          {feature}
+                          {t(feature)}
                         </span>
                       ))}
                     </div>
@@ -324,18 +326,18 @@ export function DepartmentShowcase() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-8 bg-zinc-50 rounded-[32px] border border-black/5 space-y-4">
             <Activity className="size-6 text-[#fabf37]" />
-            <h4 className="text-sm font-black uppercase tracking-widest">Real-time Telemetry</h4>
-            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">Continuous performance monitoring across all 5 units.</p>
+            <h4 className="text-sm font-black uppercase tracking-widest">{t("department_showcase_real_time_telemetry")}</h4>
+            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">{t("department_showcase_continuous_performance_monitoring_across")}</p>
           </div>
           <div className="p-8 bg-zinc-50 rounded-[32px] border border-black/5 space-y-4">
             <Gauge className="size-6 text-[#fabf37]" />
-            <h4 className="text-sm font-black uppercase tracking-widest">Synchronized Workflow</h4>
-            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">Optimized production handovers reducing bottleneck delays by 22%.</p>
+            <h4 className="text-sm font-black uppercase tracking-widest">{t("department_showcase_synchronized_workflow")}</h4>
+            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">{t("department_showcase_optimized_production_handovers_reducing_")}</p>
           </div>
           <div className="p-8 bg-zinc-50 rounded-[32px] border border-black/5 space-y-4">
             <Cpu className="size-6 text-[#fabf37]" />
-            <h4 className="text-sm font-black uppercase tracking-widest">Central AI Core</h4>
-            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">Predictive maintenance scheduling for zero unscheduled downtime.</p>
+            <h4 className="text-sm font-black uppercase tracking-widest">{t("department_showcase_central_ai_core")}</h4>
+            <p className="text-xs font-bold text-zinc-500 uppercase leading-relaxed">{t("department_showcase_predictive_maintenance_scheduling_for_ze")}</p>
           </div>
         </div>
       </div>

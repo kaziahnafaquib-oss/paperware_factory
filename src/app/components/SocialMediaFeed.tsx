@@ -38,7 +38,7 @@ export function SocialMediaFeed() {
     switch(platform) {
       case 'Instagram': return 'https://www.instagram.com/paperware_factory/';
       case 'Facebook': return 'https://www.facebook.com/paperwarefactory';
-      case 'LinkedIn': return 'https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true';
+      case 'LinkedIn': return 'https://www.linkedin.com/company/paperwarefactory/';
       case 'Youtube': return 'https://www.youtube.com/@PaperwareFactory';
       default: return 'https://www.instagram.com/paperware_factory/';
     }
@@ -69,7 +69,7 @@ export function SocialMediaFeed() {
                <div 
                  onClick={(e) => {
                    e.stopPropagation();
-                   window.open(url, '_blank');
+                   window.open(url, '_blank', 'noopener,noreferrer');
                  }}
                  onMouseEnter={() => setIsPaused(true)}
                  onMouseLeave={() => setIsPaused(false)}

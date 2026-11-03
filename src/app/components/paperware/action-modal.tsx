@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ArrowRight, Upload, Printer, HelpCircle, Calendar, AlertCircle, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ActionModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface ActionModalProps {
 }
 
 export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
+  const { t } = useLanguage();
   const [step, setStep] = useState(1);
   // Form states
   const [orderData, setOrderData] = useState({ product: 'Custom Kraft Boxes', qty: '', date: '', specs: '' });
@@ -75,7 +77,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                 <div className="space-y-1">
                     <div className="flex items-center gap-2 mb-2">
                         {getIcon()}
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Action Required</p>
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">{t("action_modal_action_required")}</p>
                     </div>
                   <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">{getTitle()}</h2>
                 </div>
@@ -101,21 +103,21 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Product Type</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_product_type")}</label>
                         <select 
                           value={orderData.product}
                           onChange={(e) => setOrderData({...orderData, product: e.target.value})}
                           className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                         >
-                            <option>Custom Kraft Boxes</option>
-                            <option>Premium Coffee Cups</option>
-                            <option>Shopping Bags</option>
-                            <option>Corrugated Cartons</option>
-                            <option>Food Wrappers</option>
+                            <option>{t("action_modal_custom_kraft_boxes")}</option>
+                            <option>{t("action_modal_premium_coffee_cups")}</option>
+                            <option>{t("action_modal_shopping_bags")}</option>
+                            <option>{t("action_modal_corrugated_cartons")}</option>
+                            <option>{t("action_modal_food_wrappers")}</option>
                         </select>
                     </motion.div>
                      <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Quantity</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_quantity")}</label>
                          <input 
                             type="number" 
                             placeholder="5000" 
@@ -128,30 +130,30 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Material</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("material")}</label>
                         <select 
                           className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                         >
-                            <option>Recycled Kraft</option>
-                            <option>Virgin Pulp</option>
-                            <option>Bamboo Fiber</option>
+                            <option>{t("action_modal_recycled_kraft")}</option>
+                            <option>{t("action_modal_virgin_pulp")}</option>
+                            <option>{t("action_modal_bamboo_fiber")}</option>
                         </select>
                     </motion.div>
                     <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Finish</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("finish_title")}</label>
                         <select 
                           className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                         >
-                            <option>Matte Lamination</option>
-                            <option>Glossy Lamination</option>
-                            <option>Uncoated</option>
-                            <option>Soft Touch</option>
+                            <option>{t("action_modal_matte_lamination")}</option>
+                            <option>{t("action_modal_glossy_lamination")}</option>
+                            <option>{t("action_modal_uncoated")}</option>
+                            <option>{t("action_modal_soft_touch")}</option>
                         </select>
                     </motion.div>
                   </div>
 
                   <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Required Delivery Date</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_required_delivery_date")}</label>
                         <div className="relative group">
                             <Calendar className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-zinc-400 group-focus-within:text-[#fabf37] transition-colors" />
                             <input 
@@ -163,19 +165,19 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                         </div>
                    </motion.div>
                   <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Specifications & Attributes</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_specifications_attributes")}</label>
                         <textarea 
                             rows={4} 
                             value={orderData.specs}
                             onChange={(e) => setOrderData({...orderData, specs: e.target.value})}
-                            placeholder="Describe dimensions, materials, finish (Matte/Gloss), and printing requirements..." 
+                            placeholder={t("action_modal_describe_dimensions_materials_finish_mat")} 
                             className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-medium text-black focus:ring-2 focus:ring-[#fabf37] outline-none resize-none transition-all hover:bg-zinc-100" 
                         />
                    </motion.div>
                    <motion.div variants={formItemVariants} className="flex items-center justify-between pt-4">
                         <button type="button" className="flex items-center gap-2 text-zinc-400 hover:text-black transition-colors group">
                             <Upload className="size-4 group-hover:scale-110 transition-transform" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Upload Design Files</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">{t("action_modal_upload_design_files")}</span>
                         </button>
                         <motion.button 
                             whileHover={{ scale: 1.05 }}
@@ -183,7 +185,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                             type="submit" 
                             className="px-8 py-4 bg-black text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all shadow-lg"
                         >
-                            Submit Order
+                            {t("action_modal_submit_order")}
                         </motion.button>
                    </motion.div>
                 </motion.form>
@@ -199,15 +201,15 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                   >
                       <motion.div variants={formItemVariants} className="p-6 bg-zinc-50 rounded-3xl border border-black/5 space-y-4 hover:shadow-md transition-all">
                           <div className="flex items-center justify-between">
-                              <p className="text-sm font-black">Last Order: #PW-8821</p>
-                              <span className="text-[10px] font-bold text-zinc-400">Oct 24, 2024</span>
+                              <p className="text-sm font-black">{t("action_modal_last_order_pw_8821")}</p>
+                              <span className="text-[10px] font-bold text-zinc-400">{t("action_modal_oct_24_2024")}</span>
                           </div>
-                           <p className="text-zinc-600 text-sm">Custom Kraft Boxes - Standard Finish</p>
+                           <p className="text-zinc-600 text-sm">{t("action_modal_custom_kraft_boxes_standard_finish")}</p>
                       </motion.div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <motion.div variants={formItemVariants} className="space-y-2">
-                             <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Quantity</label>
+                             <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_quantity")}</label>
                              <input 
                                 type="number" 
                                 value={reorderData.qty}
@@ -216,7 +218,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                              />
                         </motion.div>
                         <motion.div variants={formItemVariants} className="space-y-2">
-                             <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Delivery Date</label>
+                             <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_delivery_date")}</label>
                              <input 
                                 type="date" 
                                 value={reorderData.date}
@@ -232,7 +234,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                            type="submit" 
                            className="w-full py-4 bg-[#fabf37] text-black rounded-xl text-[10px] font-black uppercase tracking-widest shadow-[0_10px_20px_-5px_rgba(250,191,55,0.3)] hover:shadow-xl transition-all"
                        >
-                           Confirm Re-Order
+                           {t("action_modal_confirm_re_order")}
                        </motion.button>
                   </motion.form>
               )}
@@ -247,21 +249,21 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                    >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <motion.div variants={formItemVariants} className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Product Interest</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_product_interest")}</label>
                             <select 
                                 value={quoteData.product}
                                 onChange={(e) => setQuoteData({...quoteData, product: e.target.value})}
                                 className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                             >
-                                <option>Custom Kraft Boxes</option>
-                                <option>Premium Coffee Cups</option>
-                                <option>Shopping Bags</option>
-                                <option>Corrugated Cartons</option>
-                                <option>Other</option>
+                                <option>{t("action_modal_custom_kraft_boxes")}</option>
+                                <option>{t("action_modal_premium_coffee_cups")}</option>
+                                <option>{t("action_modal_shopping_bags")}</option>
+                                <option>{t("action_modal_corrugated_cartons")}</option>
+                                <option>{t("action_modal_other")}</option>
                             </select>
                         </motion.div>
                         <motion.div variants={formItemVariants} className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Target Quantity</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_target_quantity")}</label>
                             <input 
                                 type="number" 
                                 placeholder="e.g. 10000"
@@ -274,34 +276,34 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <motion.div variants={formItemVariants} className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Material Preference</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_material_preference")}</label>
                             <select 
                                 className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                             >
-                                <option>Recycled Kraft</option>
-                                <option>Virgin Pulp</option>
-                                <option>Bamboo Fiber</option>
-                                <option>Food Grade Cardboard</option>
+                                <option>{t("action_modal_recycled_kraft")}</option>
+                                <option>{t("action_modal_virgin_pulp")}</option>
+                                <option>{t("action_modal_bamboo_fiber")}</option>
+                                <option>{t("action_modal_food_grade_cardboard")}</option>
                             </select>
                         </motion.div>
                         <motion.div variants={formItemVariants} className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Finish Type</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("finish_type")}</label>
                             <select 
                                 className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none appearance-none cursor-pointer transition-all hover:bg-zinc-100"
                             >
-                                <option>Standard</option>
-                                <option>Matte</option>
-                                <option>Glossy</option>
-                                <option>Embossed</option>
+                                <option>{t("action_modal_standard")}</option>
+                                <option>{t("action_modal_matte")}</option>
+                                <option>{t("action_modal_glossy")}</option>
+                                <option>{t("action_modal_embossed")}</option>
                             </select>
                         </motion.div>
                     </div>
                     
                     <motion.div variants={formItemVariants} className="space-y-2">
-                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Project Specifications</label>
+                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_project_specifications")}</label>
                          <textarea 
                             rows={4} 
-                            placeholder="Tell us about dimensions, material preference, print colors..." 
+                            placeholder={t("action_modal_tell_us_about_dimensions_material")} 
                             value={quoteData.specs}
                             onChange={(e) => setQuoteData({...quoteData, specs: e.target.value})}
                             className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-medium text-black focus:ring-2 focus:ring-[#fabf37] outline-none resize-none transition-all hover:bg-zinc-100" 
@@ -309,7 +311,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                     </motion.div>
                     
                      <motion.div variants={formItemVariants} className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Desired Delivery</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_desired_delivery")}</label>
                         <input 
                             type="date" 
                             value={quoteData.date}
@@ -324,7 +326,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                         type="submit" 
                         className="w-full py-5 bg-black text-white rounded-[28px] text-[10px] font-black uppercase tracking-widest hover:bg-[#fabf37] hover:text-black transition-all shadow-lg"
                     >
-                        Request Custom Quote
+                        {t("action_modal_request_custom_quote")}
                     </motion.button>
                    </motion.form>
               )}
@@ -338,7 +340,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                       onSubmit={(e) => { e.preventDefault(); toast.success("Support Ticket Created", { description: "Ticket #TK-NEW has been assigned to your account." }); onClose(); }}
                   >
                       <motion.div variants={formItemVariants} className="space-y-2">
-                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Priority Level</label>
+                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_priority_level")}</label>
                          <div className="grid grid-cols-4 gap-2">
                              {['Low', 'Medium', 'High', 'Critical'].map((p) => (
                                  <motion.button 
@@ -349,17 +351,17 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                                     onClick={() => setSupportData({...supportData, priority: p})}
                                     className={`py-3 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all ${supportData.priority === p ? 'bg-black text-white border-black shadow-md' : 'bg-zinc-50 text-zinc-400 border-transparent hover:bg-zinc-100'}`}
                                  >
-                                     {p}
+                                     {t(p)}
                                  </motion.button>
                              ))}
                          </div>
                       </motion.div>
                       
                       <motion.div variants={formItemVariants} className="space-y-2">
-                           <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Subject</label>
+                           <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_subject")}</label>
                            <input 
                               type="text" 
-                              placeholder="Brief description of the issue"
+                              placeholder={t("action_modal_brief_description_of_the_issue")}
                               value={supportData.subject}
                               onChange={(e) => setSupportData({...supportData, subject: e.target.value})}
                               className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-bold text-black focus:ring-2 focus:ring-[#fabf37] outline-none transition-all hover:bg-zinc-100"
@@ -367,10 +369,10 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                       </motion.div>
                       
                        <motion.div variants={formItemVariants} className="space-y-2">
-                           <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Message</label>
+                           <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">{t("action_modal_message")}</label>
                            <textarea 
                                rows={4} 
-                               placeholder="Describe your issue in detail..."
+                               placeholder={t("action_modal_describe_your_issue_in_detail")}
                                value={supportData.message}
                                onChange={(e) => setSupportData({...supportData, message: e.target.value})}
                                className="w-full bg-zinc-50 border border-black/5 rounded-2xl px-6 py-4 text-sm font-medium text-black focus:ring-2 focus:ring-[#fabf37] outline-none resize-none transition-all hover:bg-zinc-100"
@@ -383,7 +385,7 @@ export function ActionModal({ isOpen, onClose, type }: ActionModalProps) {
                         type="submit" 
                         className="w-full py-5 bg-red-500 text-white rounded-[28px] text-[10px] font-black uppercase tracking-widest hover:bg-red-600 transition-all shadow-[0_10px_20px_-5px_rgba(239,68,68,0.3)] hover:shadow-xl"
                        >
-                        Submit Priority Ticket
+                        {t("action_modal_submit_priority_ticket")}
                     </motion.button>
                   </motion.form>
               )}

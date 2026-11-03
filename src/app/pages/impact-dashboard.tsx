@@ -31,17 +31,17 @@ export function ImpactDashboardPage() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <Leaf className="size-5 text-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">Sustainability Report v2.0</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#fabf37]">{t("impact_dashboard_sustainability_report_v2_0")}</span>
             </div>
             <h1 className="text-5xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85]">
-              Net <span className="text-zinc-800">Zero</span> <br /> <span className="text-white">Positive</span> <br /> <span className="text-[#fabf37]">Impact</span>
+              {t("impact_dashboard_net")} <span className="text-zinc-800">{t("impact_dashboard_zero")}</span> <br /> <span className="text-white">{t("impact_dashboard_positive")}</span> <br /> <span className="text-[#fabf37]">{t("carbon_calculator_impact")}</span>
             </h1>
           </div>
           
           <div className="p-10 bg-zinc-900 rounded-[48px] border border-white/5 space-y-4 max-w-sm">
             <Award className="size-8 text-[#fabf37]" />
-            <p className="text-2xl font-black uppercase tracking-tight">EcoVadis Platinum 2024</p>
-            <p className="text-xs font-bold text-zinc-500 leading-relaxed">We rank in the top 1% of manufacturers globally for sustainable performance.</p>
+            <p className="text-2xl font-black uppercase tracking-tight">{t("impact_dashboard_ecovadis_platinum_2024")}</p>
+            <p className="text-xs font-bold text-zinc-500 leading-relaxed">{t("impact_dashboard_we_rank_in_the_top")}</p>
           </div>
         </div>
 
@@ -64,9 +64,9 @@ export function ImpactDashboardPage() {
             >
               <item.icon className={`size-8 mb-6 ${item.color}`} />
               <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{item.label}</p>
-                <p className="text-4xl font-black italic">{item.val}</p>
-                <p className={`text-[9px] font-black uppercase ${item.color.replace('text', 'bg').replace('-400', '-500/10')} w-fit px-2 py-0.5 rounded-full mt-2`}>{item.sub}</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{t(item.label)}</p>
+                <p className="text-4xl font-black italic">{t(item.val)}</p>
+                <p className={`text-[9px] font-black uppercase ${item.color.replace('text', 'bg').replace('-400', '-500/10')} w-fit px-2 py-0.5 rounded-full mt-2`}>{t(item.sub)}</p>
               </div>
             </motion.div>
           ))}
@@ -78,8 +78,8 @@ export function ImpactDashboardPage() {
           <div className="bg-zinc-900 p-12 rounded-[60px] border border-white/5 space-y-10">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Material Integrity</p>
-                <h3 className="text-3xl font-black uppercase tracking-tighter">Fiber Composition</h3>
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("impact_dashboard_material_integrity")}</p>
+                <h3 className="text-3xl font-black uppercase tracking-tighter">{t("impact_dashboard_fiber_composition")}</h3>
               </div>
               <Recycle className="size-6 text-[#fabf37]" />
             </div>
@@ -107,7 +107,7 @@ export function ImpactDashboardPage() {
               </ResponsiveContainer>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
                 <p className="text-4xl font-black italic">100%</p>
-                <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">Traceable</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500">{t("impact_dashboard_traceable")}</p>
               </div>
             </div>
 
@@ -115,7 +115,7 @@ export function ImpactDashboardPage() {
               {pieData.map((item, i) => (
                 <div key={i} className="text-center space-y-2">
                   <div className="h-1 rounded-full mx-auto w-12" style={{ backgroundColor: item.color }} />
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{item.name}</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t(item.name)}</p>
                   <p className="text-sm font-black">{item.value}%</p>
                 </div>
               ))}
@@ -126,8 +126,8 @@ export function ImpactDashboardPage() {
           <div className="bg-zinc-900 p-12 rounded-[60px] border border-white/5 space-y-10">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Operational Excellence</p>
-                <h3 className="text-3xl font-black uppercase tracking-tighter">Waste Reduction</h3>
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("impact_dashboard_operational_excellence")}</p>
+                <h3 className="text-3xl font-black uppercase tracking-tighter">{t("impact_dashboard_waste_reduction")}</h3>
               </div>
               <Globe className="size-6 text-[#fabf37]" />
             </div>
@@ -153,8 +153,8 @@ export function ImpactDashboardPage() {
                   <ChartBar className="size-6" />
                 </div>
                 <div>
-                  <p className="text-[11px] font-black uppercase tracking-widest">Impact Assessment</p>
-                  <p className="text-xs font-bold text-zinc-500">Download the full 2024 ESG audit</p>
+                  <p className="text-[11px] font-black uppercase tracking-widest">{t("impact_dashboard_impact_assessment")}</p>
+                  <p className="text-xs font-bold text-zinc-500">{t("impact_dashboard_download_the_full_2024_esg")}</p>
                 </div>
               </div>
               <ArrowUpRight className="size-5 text-zinc-700 group-hover:text-[#fabf37] transition-colors" />
@@ -166,7 +166,7 @@ export function ImpactDashboardPage() {
         {/* Global Certifications */}
         <div className="mt-20 py-16 border-t border-white/5 flex flex-wrap justify-center items-center gap-12 grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all">
           {["ISO 14001", "FSC-C123456", "B-CORP PENDING", "GRS CERTIFIED", "OEKO-TEX"].map((cert, i) => (
-            <span key={i} className="text-2xl font-black uppercase tracking-tighter italic">{cert}</span>
+            <span key={i} className="text-2xl font-black uppercase tracking-tighter italic">{t(cert)}</span>
           ))}
         </div>
 

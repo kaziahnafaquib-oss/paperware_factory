@@ -4,6 +4,7 @@ import teamPhoto from "@/assets/factory/team.webp";
 import { useScrollScrub, clamp01 } from "../lib/useScrollScrub";
 import { Handshake, Award, ShieldCheck, Globe } from "lucide-react";
 import { useGo } from "../lib/useGo";
+import { useLanguage } from "../context/LanguageContext";
 
 export interface Partner {
   id: string;
@@ -35,6 +36,7 @@ const DEFAULT_PARTNERS: Partner[] = [];
 // `partners` / `signingImage` props are accepted for API compatibility but intentionally ignored:
 // the app shell seeds them with unverified placeholder partners and a stock photo.
 export function PartnersPage(_props: PartnersPageProps) {
+  const { t } = useLanguage();
   const go = useGo();
   const displayPartners = DEFAULT_PARTNERS;
   const displayImage = teamPhoto;
@@ -61,10 +63,11 @@ export function PartnersPage(_props: PartnersPageProps) {
         <img
           ref={heroImgRef}
           src={displayImage}
-          className="absolute inset-0 w-full h-full object-cover will-change-transform"
-          alt="The Paperware factory team"
+          className="absolute inset-0 w-full h-full object-cover object-[72%_center] md:object-[65%_center] will-change-transform"
+          alt={t("career_the_paperware_factory_team")}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        {/* Owner (3 Nov 2026): headline was sitting on the team's faces — heavier left scrim, photo focus shifted right. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 via-45% to-black/10" />
         
         <div className="absolute inset-0 flex items-center bg-gradient-to-t from-black/60 via-transparent to-transparent">
           <div className="container mx-auto px-4 md:px-12">
@@ -80,7 +83,7 @@ export function PartnersPage(_props: PartnersPageProps) {
                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#fabf37] text-black rounded-full font-black text-xs uppercase tracking-[0.2em] border-2 border-white/20 shadow-[0_0_30px_rgba(250,191,55,0.4)]"
                >
                   <Handshake className="size-4" />
-                  <span>Global Alliance Network</span>
+                  <span>{t("partners_global_alliance_network")}</span>
                </motion.div>
                
                <motion.h1 
@@ -88,10 +91,10 @@ export function PartnersPage(_props: PartnersPageProps) {
                  animate={{ opacity: 1, y: 0 }}
                  className="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85] drop-shadow-2xl"
                >
-                 Building <br/>
+                 {t("partners_building")} <br/>
                  <span className="relative inline-block">
                    <span className="absolute inset-0 blur-3xl bg-[#fabf37]/30" />
-                   <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] via-[#fff5d6] to-white filter drop-shadow-sm">For The Future</span>
+                   <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] via-[#fff5d6] to-white filter drop-shadow-sm">{t("partners_for_the_future")}</span>
                  </span>
                </motion.h1>
 
@@ -101,7 +104,7 @@ export function PartnersPage(_props: PartnersPageProps) {
                  className="flex flex-col gap-6 pl-6 border-l-4 border-[#fabf37]"
                >
                  <p className="text-zinc-100 text-xl md:text-2xl font-medium max-w-2xl leading-relaxed drop-shadow-lg">
-                   We believe in the power of collaboration. Our ecosystem of partners empowers us to deliver excellence at every step of the supply chain.
+                   {t("partners_we_believe_in_the_power")}
                  </p>
                </motion.div>
 
@@ -111,10 +114,10 @@ export function PartnersPage(_props: PartnersPageProps) {
                  className="flex flex-wrap gap-4 pt-6"
                >
                  <button onClick={() => go("partner-program")} className="px-10 py-4 bg-[#fabf37] text-black font-black uppercase tracking-widest rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-[#fabf37]/20">
-                   Join Our Network
+                   {t("partners_join_our_network")}
                  </button>
                  <button onClick={() => document.getElementById('partner-list')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="px-10 py-4 bg-white/10 backdrop-blur-md text-white font-bold uppercase tracking-widest rounded-full hover:bg-white/20 border border-white/20 transition-all duration-300">
-                   View Partners
+                   {t("partners_view_partners")}
                  </button>
                </motion.div>
              </motion.div>
@@ -146,8 +149,8 @@ export function PartnersPage(_props: PartnersPageProps) {
                    <item.icon className="size-8" />
                  </div>
                  <div>
-                   <h4 className="text-white text-lg font-black uppercase tracking-wide mb-1 group-hover:text-[#fabf37] transition-colors">{item.title}</h4>
-                   <p className="text-zinc-500 text-sm font-medium leading-relaxed group-hover:text-zinc-300 transition-colors">{item.text}</p>
+                   <h4 className="text-white text-lg font-black uppercase tracking-wide mb-1 group-hover:text-[#fabf37] transition-colors">{t(item.title)}</h4>
+                   <p className="text-zinc-500 text-sm font-medium leading-relaxed group-hover:text-zinc-300 transition-colors">{t(item.text)}</p>
                  </div>
                </motion.div>
              ))}
@@ -158,7 +161,7 @@ export function PartnersPage(_props: PartnersPageProps) {
       {/* Partners Sections */}
       <div id="partner-list" className="py-24 container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4">Our Ecosystem</h2>
+          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4">{t("partners_our_ecosystem")}</h2>
           <div className="w-24 h-1 bg-[#fabf37] mx-auto rounded-full" />
         </div>
 
@@ -171,16 +174,16 @@ export function PartnersPage(_props: PartnersPageProps) {
           >
             <div className="bg-[#fabf37] text-black rounded-[32px] p-10 md:p-14 flex flex-col justify-between gap-10">
               <p className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-[1.05]">
-                Building for the future, together.
+                {t("partners_building_for_the_future_together")}
               </p>
               <a href="/partner-program" className="self-start px-8 py-3 bg-black text-[#fabf37] font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-transform">
-                Join Our Network
+                {t("partners_join_our_network")}
               </a>
             </div>
             <div className="bg-black text-white rounded-[32px] p-10 md:p-14">
               <ul className="flex flex-wrap gap-3">
                 {CATEGORIES.map((c) => (
-                  <li key={c} className="px-5 py-2 rounded-full border-2 border-[#fabf37] text-[#fabf37] text-xs font-black uppercase tracking-widest">{c}</li>
+                  <li key={c} className="px-5 py-2 rounded-full border-2 border-[#fabf37] text-[#fabf37] text-xs font-black uppercase tracking-widest">{t(c)}</li>
                 ))}
               </ul>
             </div>
@@ -204,7 +207,7 @@ export function PartnersPage(_props: PartnersPageProps) {
                 <div className="flex items-center gap-4 mb-10">
                   <div className="h-px flex-1 bg-zinc-200" />
                   <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-black border-2 border-black rounded-full px-8 py-2">
-                    {category}
+                    {t(category)}
                   </h3>
                   <div className="h-px flex-1 bg-zinc-200" />
                 </div>
@@ -228,7 +231,7 @@ export function PartnersPage(_props: PartnersPageProps) {
               <div className="flex items-center gap-4 mb-10">
                 <div className="h-px flex-1 bg-zinc-200" />
                 <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-black border-2 border-black rounded-full px-8 py-2">
-                  Other Partners
+                  {t("partners_other_partners")}
                 </h3>
                 <div className="h-px flex-1 bg-zinc-200" />
               </div>
@@ -247,6 +250,7 @@ export function PartnersPage(_props: PartnersPageProps) {
 }
 
 function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
+  const { t } = useLanguage();
   const go = useGo();
   return (
     <motion.div
@@ -259,7 +263,7 @@ function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
     >
       <div className="relative size-24 md:size-32 mb-6 p-4 rounded-full bg-zinc-50 border border-zinc-100 group-hover:scale-110 transition-transform duration-500 overflow-hidden flex items-center justify-center">
          {partner.logo ? (
-           <img src={partner.logo} className="w-full h-full object-contain mix-blend-multiply" alt={partner.name} />
+           <img src={partner.logo} className="w-full h-full object-contain mix-blend-multiply" alt={t(partner.name)} />
          ) : (
            <div className="text-2xl font-black text-zinc-300">{partner.name.substring(0, 2)}</div>
          )}
@@ -267,16 +271,16 @@ function PartnerCard({ partner, index }: { partner: Partner; index: number }) {
       
       <div className="space-y-2">
         <h3 className="text-lg md:text-xl font-black text-black leading-tight">
-          {partner.name}
+          {t(partner.name)}
         </h3>
         <p className="text-sm text-zinc-500 leading-relaxed line-clamp-2">
-          {partner.description}
+          {t(partner.description)}
         </p>
       </div>
 
       <div className="mt-auto pt-6 w-full">
          <button onClick={() => go("contact")} className="w-full py-2 rounded-xl bg-zinc-100 text-xs font-bold uppercase hover:bg-black hover:text-[#fabf37] transition-colors">
-           Enquire
+           {t("partners_enquire")}
          </button>
       </div>
     </motion.div>

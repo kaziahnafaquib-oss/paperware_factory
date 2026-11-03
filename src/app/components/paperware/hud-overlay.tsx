@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "motion/react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const HUDOverlay = React.memo(() => {
+  const { t } = useLanguage();
   return (
     <div aria-hidden="true" className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-30 select-none">
       {/* Scanning Line */}
@@ -21,7 +23,7 @@ export const HUDOverlay = React.memo(() => {
       <div className="absolute top-1/2 -left-4 -translate-y-1/2 hidden md:flex flex-col gap-8 opacity-20">
         {[...Array(6)].map((_, i) => (
           <div key={i} className="text-[10px] tracking-widest font-mono rotate-90 origin-left whitespace-nowrap text-[#fabf37]">
-            SEC_SYS_0{i + 1} // STATUS_ACTIVE // {Math.random().toString(16).slice(2, 8).toUpperCase()}
+            {t("hud_overlay_sec_sys_0")}{i + 1} {t("hud_overlay_status_active")} {Math.random().toString(16).slice(2, 8).toUpperCase()}
           </div>
         ))}
       </div>
@@ -35,8 +37,8 @@ export const HUDOverlay = React.memo(() => {
         transition={{ duration: 4, repeat: Infinity }}
         className="absolute top-24 left-8 text-[8px] font-mono text-[#fabf37]/40 hidden lg:block"
       >
-        LATENCY: 0.002ms<br/>
-        LOAD_TIER: HIGH_AVAILABILITY
+        {t("hud_overlay_latency_0_002ms")}<br/>
+        {t("hud_overlay_load_tier_high_availability")}
       </motion.div>
     </div>
   );

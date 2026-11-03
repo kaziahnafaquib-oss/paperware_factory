@@ -8,6 +8,7 @@ import {
   MessageCircle, ArrowUpRight,
   HardHat, Microscope
 } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 const categories = [
   { id: 'all', label: 'All Protocols', icon: CircleHelp },
@@ -57,6 +58,7 @@ const faqs = [
 ];
 
 export function FAQPage() {
+  const { t } = useLanguage();
   const go = useGo();
   const containerRef = React.useRef<HTMLDivElement>(null);
   
@@ -166,8 +168,8 @@ export function FAQPage() {
                      <Settings className="size-4" />
                    </motion.div>
                    <div className="flex flex-col">
-                      <span className="text-[10px] font-black uppercase tracking-tighter leading-none">Paperware Core</span>
-                      <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">Help Centre</span>
+                      <span className="text-[10px] font-black uppercase tracking-tighter leading-none">{t("faq_paperware_core")}</span>
+                      <span className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">{t("faq_help_centre")}</span>
                    </div>
                 </div>
                 <div className="h-px w-12 bg-black/10" />
@@ -182,7 +184,7 @@ export function FAQPage() {
                     className="block text-black"
                     style={{ color: useTransform(scrollY, [0, 300], ["#000000", "#ffffff"]) }}
                   >
-                    Technical
+                    {t("faq_technical")}
                   </motion.span>
                   <motion.span 
                     initial={{ opacity: 0, x: 100 }}
@@ -190,7 +192,7 @@ export function FAQPage() {
                     transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                     className="text-[#fabf37] block"
                   >
-                    Protocols
+                    {t("faq_protocols")}
                   </motion.span>
                 </h1>
                 
@@ -207,7 +209,7 @@ export function FAQPage() {
                 className="flex flex-col md:flex-row md:items-end gap-12"
               >
                 <p className="text-zinc-600 font-bold text-xl max-w-xl leading-tight">
-                  Answers to common questions about orders, materials and delivery.
+                  {t("faq_answers_to_common_questions_about")}
                 </p>
                 
               </motion.div>
@@ -231,11 +233,11 @@ export function FAQPage() {
                   type="text" 
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="SCAN KNOWLEDGE BASE FOR PROTOCOLS..." 
+                  placeholder={t("faq_scan_knowledge_base_for_protocols")} 
                   className="bg-transparent border-none outline-none text-white font-black w-full py-6 placeholder:text-zinc-700 text-sm tracking-widest uppercase relative"
                 />
                 <button onClick={() => document.getElementById('faq-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="bg-[#fabf37] text-black px-12 py-6 rounded-[32px] font-black text-xs uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl relative overflow-hidden group/btn">
-                  <span className="relative z-10">Run Query</span>
+                  <span className="relative z-10">{t("faq_run_query")}</span>
                   <motion.div 
                     className="absolute inset-0 bg-white translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"
                   />
@@ -259,7 +261,7 @@ export function FAQPage() {
               style={{ rotateX: -mousePos.y * 0.1, rotateY: mousePos.x * 0.1, transformStyle: "preserve-3d" }}
               className="bg-white p-8 rounded-[40px] shadow-2xl border border-black/5 sticky top-32"
             >
-              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-8 px-4">Directives</h4>
+              <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-8 px-4">{t("faq_directives")}</h4>
               <div className="space-y-2">
                 {categories.map((cat, i) => (
                   <motion.button
@@ -273,7 +275,7 @@ export function FAQPage() {
                   >
                     <div className="flex items-center gap-4">
                       <cat.icon className={`size-5 ${activeCat === cat.id ? 'text-black' : 'text-zinc-400 group-hover:text-black'}`} />
-                      <span className="font-black text-xs uppercase tracking-widest">{cat.label}</span>
+                      <span className="font-black text-xs uppercase tracking-widest">{t(cat.label)}</span>
                     </div>
                     <ChevronRight className={`size-4 transition-transform ${activeCat === cat.id ? 'rotate-90' : 'opacity-0 group-hover:opacity-100'}`} />
                   </motion.button>
@@ -283,10 +285,10 @@ export function FAQPage() {
               {/* Support Teaser */}
               <div className="mt-12 pt-8 border-t border-dashed border-zinc-100">
                  <div className="bg-zinc-900 p-6 rounded-[30px] space-y-4">
-                    <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">AI Assistant Beta</p>
-                    <p className="text-white font-bold text-xs">Can't find a specific protocol? Ask our AI core.</p>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">{t("faq_ai_assistant_beta")}</p>
+                    <p className="text-white font-bold text-xs">{t("faq_can_t_find_a_specific")}</p>
                     <button onClick={() => go("contact")} className="w-full py-4 bg-[#fabf37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                       Launch Assistant <MessageCircle className="size-3" />
+                       {t("faq_launch_assistant")} <MessageCircle className="size-3" />
                     </button>
                  </div>
               </div>
@@ -321,10 +323,10 @@ export function FAQPage() {
                       <div className="space-y-4">
                         <div className="flex items-center gap-3">
                            {faq.tags.map(tag => (
-                             <span key={tag} className="text-[8px] font-black uppercase tracking-widest px-2 py-1 bg-zinc-100 rounded text-zinc-400">#{tag}</span>
+                             <span key={tag} className="text-[8px] font-black uppercase tracking-widest px-2 py-1 bg-zinc-100 rounded text-zinc-400">#{t(tag)}</span>
                            ))}
                         </div>
-                        <h3 className="text-xl lg:text-2xl font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{faq.q}</h3>
+                        <h3 className="text-xl lg:text-2xl font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{t(faq.q)}</h3>
                       </div>
                       <div className={`size-12 rounded-2xl flex items-center justify-center shrink-0 transition-all ${activeIdx === i ? 'bg-black text-[#fabf37] rotate-180' : 'bg-zinc-100 text-black group-hover:bg-[#fabf37]'}`}>
                         {activeIdx === i ? <Minus className="size-6" /> : <Plus className="size-6" />}
@@ -342,15 +344,15 @@ export function FAQPage() {
                           <div className="px-10 pb-10">
                             <div className="h-[2px] w-12 bg-[#fabf37] mb-8" />
                             <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-3xl">
-                              {faq.a}
+                              {t(faq.a)}
                             </p>
                             <div className="mt-10 flex gap-4">
                                <button onClick={() => go("contact")} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
-                                  Request Full Specs <ArrowUpRight className="size-3" />
+                                  {t("faq_request_full_specs")} <ArrowUpRight className="size-3" />
                                </button>
                                <div className="w-[1px] h-4 bg-zinc-200" />
                                <button onClick={() => window.print()} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#fabf37] transition-colors">
-                                  Print Data <Zap className="size-3" />
+                                  {t("faq_print_data")} <Zap className="size-3" />
                                </button>
                             </div>
                           </div>
@@ -364,8 +366,8 @@ export function FAQPage() {
                    <div className="size-20 bg-zinc-100 rounded-full flex items-center justify-center mx-auto mb-8">
                       <Search className="size-8 text-zinc-300" />
                    </div>
-                   <h3 className="text-2xl font-black uppercase">No Protocol Found</h3>
-                   <p className="text-zinc-500 font-bold">Try adjusting your query or filters for different results.</p>
+                   <h3 className="text-2xl font-black uppercase">{t("faq_no_protocol_found")}</h3>
+                   <p className="text-zinc-500 font-bold">{t("faq_try_adjusting_your_query_or")}</p>
                 </div>
               )}
             </AnimatePresence>
@@ -405,9 +407,9 @@ export function FAQPage() {
                        {item.icon && <item.icon className="size-8" />}
                     </div>
                     <div style={{ transform: "translateZ(50px)" }} className="space-y-4">
-                      <h4 className="text-xl font-black uppercase tracking-tight text-[rgb(0,0,0)]">{item.title}</h4>
+                      <h4 className="text-xl font-black uppercase tracking-tight text-[rgb(0,0,0)]">{t(item.title)}</h4>
                       <div className="h-1 w-8 bg-[#fabf37] group-hover:w-16 transition-all duration-500" />
-                      <p className="text-zinc-500 font-bold text-sm leading-relaxed">{item.desc}</p>
+                      <p className="text-zinc-500 font-bold text-sm leading-relaxed">{t(item.desc)}</p>
                     </div>
                  </motion.div>
                ))}

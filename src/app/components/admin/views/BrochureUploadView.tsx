@@ -49,7 +49,10 @@ export function BrochureUploadView() {
 
   const handleUpload = async () => {
     if (!file) return;
-
+    // Browser anon-key writes are disabled until an authenticated admin session exists (security review H2, 2026-11-03).
+    toast.error("Brochure upload is disabled until admin sign-in is connected.");
+    return;
+    // eslint-disable-next-line no-unreachable
     setUploading(true);
     try {
       const fileName = `brochure-${Date.now()}.pdf`;

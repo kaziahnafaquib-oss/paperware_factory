@@ -121,7 +121,7 @@ export function DigitalVault({ onClose }: DigitalVaultProps) {
     setShareMenuOpen(null);
     const message = `Check out this document: ${docName}`;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     toast.success(`Opening WhatsApp`, {
       description: `Share "${docName}" with your contacts`,
     });

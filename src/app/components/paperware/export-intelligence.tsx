@@ -10,6 +10,8 @@ import { ImageWithFallback } from "../figma/ImageWithFallback";
 import kraftBagCutout from "@/assets/cutouts/carry-bag-kraft.webp";
 import bangladeshFlagImage from 'figma:asset/ce6bea61e31dd50e8cbf06060db17726c1c41f3a.webp';
 import paperwareShippingImage from 'figma:asset/19e5679ad58f7a50390ebe911dd3186e6a891ce7.webp';
+import "./social-strip.css";
+import { useLanguage } from "../../context/LanguageContext";
 
 // --- 3D Tilt Component with Glare - REDUCED ROTATION FOR SMOOTH EXPERIENCE ---
 const TiltCard = ({ children, className = "", glare = true }: { children: React.ReactNode; className?: string, glare?: boolean }) => {
@@ -80,6 +82,7 @@ const TiltCard = ({ children, className = "", glare = true }: { children: React.
 };
 
 export function ExportIntelligence() {
+  const { t } = useLanguage();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -142,7 +145,7 @@ export function ExportIntelligence() {
        >
           <img loading="lazy" decoding="async" 
             src={kraftBagCutout} 
-            alt="Paperware kraft carry bag" 
+            alt={t("export_intelligence_paperware_kraft_carry_bag")} 
             className="w-full h-auto object-contain drop-shadow-2xl mix-blend-multiply"
           />
        </motion.div>
@@ -204,7 +207,7 @@ export function ExportIntelligence() {
               transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
             />
             <Globe className="size-3 relative z-10 animate-spin-slow" />
-            <span className="relative z-10">Global Trade Ready</span>
+            <span className="relative z-10">{t("export_intelligence_global_trade_ready")}</span>
           </motion.div>
           
           <div className="perspective-[1000px]">
@@ -216,7 +219,7 @@ export function ExportIntelligence() {
                 transition={{ delay: 0.1 }}
                 className="text-2xl md:text-4xl font-bold text-zinc-400 tracking-[0.2em] uppercase mb-2 md:mb-6"
               >
-                Source Premium Packaging
+                {t("export_intelligence_source_premium_packaging")}
               </motion.h2>
 
               {/* Main Composition */}
@@ -249,7 +252,7 @@ export function ExportIntelligence() {
                             zIndex: -i
                         }}
                      >
-                       BANGLADESH
+                       {t("export_intelligence_bangladesh")}
                      </motion.p>
                    ))}
                    
@@ -260,7 +263,7 @@ export function ExportIntelligence() {
                      className="text-[10vw] md:text-[120px] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#006a4e] via-[#004e39] to-black drop-shadow-2xl select-none relative z-10"
                      style={{ transformStyle: "preserve-3d", WebkitTextStroke: "1px rgba(255,255,255,0.1)" }}
                    >
-                     BANGLADESH
+                     {t("export_intelligence_bangladesh")}
                    </motion.p>
                    
                    {/* Depth Shadow Layer - Moves differently on scroll */}
@@ -268,7 +271,7 @@ export function ExportIntelligence() {
                      style={{ y: textShadowY, x: textShadowY, opacity: useTransform(scrollYProgress, [0, 0.5], [0.5, 0]) }}
                      className="absolute top-0 left-0 text-[10vw] md:text-[120px] leading-[0.8] font-black tracking-tighter text-zinc-200/50 -z-20 blur-sm translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4"
                    >
-                     BANGLADESH
+                     {t("export_intelligence_bangladesh")}
                    </motion.p>
                 </div>
 
@@ -298,7 +301,7 @@ export function ExportIntelligence() {
                 >
                    <motion.img loading="lazy" decoding="async" 
                       src={bangladeshFlagImage} 
-                      alt="Bangladesh Flag Bearer"
+                      alt={t("export_intelligence_bangladesh_flag_bearer")}
                       animate={{ 
                           y: [0, -15, 0],
                           rotateZ: [0, 2, 0],
@@ -330,7 +333,7 @@ export function ExportIntelligence() {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="text-xl font-medium text-zinc-500 max-w-2xl mx-auto leading-relaxed"
           >
-            We are equipped and ready to export high-quality, sustainable paper solutions to international markets.
+            {t("export_intelligence_we_are_equipped_and_ready")}
           </motion.p>
         </motion.div>
 
@@ -362,22 +365,20 @@ export function ExportIntelligence() {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#fabf37]" />
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#fabf37]" />
                 
-                <motion.div
-                    animate={{ x: [0, -1920] }}
-                    transition={{ 
-                        duration: 30, 
-                        repeat: Infinity, 
-                        ease: "linear" 
-                    }}
-                    className="flex items-center gap-16 whitespace-nowrap"
+                <div className="pwf-marquee-viewport">
+                <div
+                    className="pwf-marquee-track items-center whitespace-nowrap focus:[animation-play-state:paused] focus-visible:outline-none"
+                    style={{ "--pwf-marquee-dur": "30s" } as React.CSSProperties}
+                    tabIndex={0}
+                    aria-label="Sea freight, air cargo, land transport"
                 >
                     {/* Repeat items 4 times for seamless loop */}
-                    {[...Array(4)].map((_, groupIndex) => (
-                        <div key={groupIndex} className="contents">
+                    {[...Array(8)].map((_, groupIndex) => (
+                        <div key={groupIndex} className="flex items-center gap-16 pr-16" aria-hidden={groupIndex > 0 ? true : undefined}>
                             {/* Ship */}
                             <div className="flex items-center gap-6">
                                 <Ship className="size-12 text-[#fabf37]" strokeWidth={1.5} />
-                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">Sea Freight</span>
+                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">{t("export_intelligence_sea_freight")}</span>
                             </div>
                             
                             {/* Separator Dot */}
@@ -386,7 +387,7 @@ export function ExportIntelligence() {
                             {/* Plane */}
                             <div className="flex items-center gap-6">
                                 <Plane className="size-12 text-[#fabf37]" strokeWidth={1.5} />
-                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">Air Cargo</span>
+                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">{t("export_intelligence_air_cargo")}</span>
                             </div>
                             
                             {/* Separator Dot */}
@@ -395,14 +396,15 @@ export function ExportIntelligence() {
                             {/* Truck */}
                             <div className="flex items-center gap-6">
                                 <Truck className="size-12 text-[#fabf37]" strokeWidth={1.5} />
-                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">Land Transport</span>
+                                <span className="text-white font-black uppercase tracking-[0.3em] text-sm">{t("export_intelligence_land_transport")}</span>
                             </div>
                             
                             {/* Separator Dot */}
                             <div className="size-2 rounded-full bg-[#fabf37]/50" />
                         </div>
                     ))}
-                </motion.div>
+                </div>
+                </div>
             </div>
         </div>
 
@@ -442,8 +444,8 @@ export function ExportIntelligence() {
                     
                     <div>
                         <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 text-black">
-                            Let's Build a <span className="inline-block relative">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-zinc-500 relative z-10">Partnership</span>
+                            {t("export_intelligence_let_s_build_a")} <span className="inline-block relative">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-zinc-500 relative z-10">{t("export_intelligence_partnership")}</span>
                                 <motion.span 
                                     className="absolute -bottom-2 left-0 right-0 h-4 bg-[#fabf37]/30 -skew-x-12 -z-10"
                                     initial={{ scaleX: 0 }}
@@ -458,14 +460,14 @@ export function ExportIntelligence() {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
                         >
-                            Interested in importing our products? We are ready to discuss catalog, pricing, and shipping logistics.
+                            {t("export_intelligence_interested_in_importing_our_products")}
                         </motion.p>
                     </div>
 
                     <form className="bg-white p-3 rounded-[40px] border border-zinc-100 flex flex-col md:flex-row gap-3 max-w-xl mx-auto shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 group">
                         <input 
                             type="email" 
-                            placeholder="Enter your business email..." 
+                            placeholder={t("export_intelligence_enter_your_business_email")} 
                             className="flex-1 bg-transparent border-none text-black placeholder:text-zinc-400 px-8 py-4 focus:outline-none font-bold text-lg"
                         />
                         <motion.button 
@@ -487,7 +489,7 @@ export function ExportIntelligence() {
                                 whileHover={{ x: "100%" }}
                                 transition={{ duration: 0.5 }}
                             />
-                            <span className="relative z-10">Knock Us</span>
+                            <span className="relative z-10">{t("export_intelligence_knock_us")}</span>
                             <ArrowRight className="size-5 relative z-10" />
                         </motion.button>
                     </form>
@@ -503,7 +505,7 @@ export function ExportIntelligence() {
                         <div className="h-4 w-px bg-black/20" />
                         <div className="flex items-center gap-2">
                             <Ship className="size-4" />
-                            <span className="text-xs font-bold uppercase tracking-widest">MOQ: 10,000 Units</span>
+                            <span className="text-xs font-bold uppercase tracking-widest">{t("export_intelligence_moq_10_000_units")}</span>
                         </div>
                     </div>
                 </div>
@@ -518,6 +520,7 @@ export function ExportIntelligence() {
 
 // Sub-component for Hero Image Parallax to keep main component clean
 function HeroImageParallax() {
+  const { t } = useLanguage();
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -544,7 +547,7 @@ function HeroImageParallax() {
             <motion.div style={{ y, scale }} className="w-full h-full">
                 <img loading="lazy" decoding="async" 
                     src={paperwareShippingImage} 
-                    alt="Paperware Export Ready - Shipping Container Port" 
+                    alt={t("export_intelligence_paperware_export_ready_shipping_containe")} 
                     className="w-full h-full object-cover"
                 />
             </motion.div>
@@ -554,13 +557,13 @@ function HeroImageParallax() {
                 style={{ transform: "translateZ(80px)" }}
                 className="absolute bottom-12 left-12 z-30 bg-white/90 backdrop-blur-xl px-8 py-6 rounded-3xl shadow-2xl border border-white/50"
             >
-                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">Export Status</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">{t("export_intelligence_export_status")}</p>
                 <div className="flex items-center gap-3">
                     <span className="relative flex h-4 w-4">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
                     </span>
-                    <span className="font-black text-black text-lg">Open for Partnership</span>
+                    <span className="font-black text-black text-lg">{t("export_intelligence_open_for_partnership")}</span>
                 </div>
             </motion.div>
         </motion.div>

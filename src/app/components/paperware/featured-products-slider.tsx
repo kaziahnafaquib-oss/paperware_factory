@@ -12,6 +12,7 @@ import pCarryBag from "../../../assets/products/carry-bag-pink.webp";
 import pCalendar from "../../../assets/products/desk-calendars.webp";
 import pBrochure from "../../../assets/products/brochures.webp";
 import pStickers from "../../../assets/products/stickers.webp";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Tile = { name: string; photo: string; alt: string; hero?: boolean };
 
@@ -63,6 +64,7 @@ export const FeaturedProductsSlider = React.memo(function FeaturedProductsSlider
   onProducts,
   onQuote,
 }: FeaturedProductsSliderProps) {
+  const { t } = useLanguage();
   const sectionRef = React.useRef<HTMLElement>(null);
   const stageRef = React.useRef<HTMLDivElement>(null);
   const headRef = React.useRef<HTMLDivElement>(null);
@@ -173,24 +175,24 @@ export const FeaturedProductsSlider = React.memo(function FeaturedProductsSlider
   }, []);
 
   return (
-    <section ref={sectionRef} className="fp" aria-label="Featured products">
+    <section ref={sectionRef} className="fp" aria-label={t("featured_products_slider_featured_products")}>
       <div ref={stageRef} className="fp__stage">
         <div ref={headRef} className="fp__head">
           <div>
-            <p className="fp__eyebrow"><span className="fp__dot" aria-hidden="true" />Featured products</p>
-            <h2 className="fp__title">One of many.</h2>
+            <p className="fp__eyebrow"><span className="fp__dot" aria-hidden="true" />{t("featured_products_slider_featured_products")}</p>
+            <h2 className="fp__title">{t("featured_products_slider_one_of_many")}</h2>
           </div>
-          <button type="button" className="fp__cta" onClick={onQuote}>Get a quote</button>
+          <button type="button" className="fp__cta" onClick={onQuote}>{t("featured_products_slider_get_a_quote")}</button>
         </div>
 
         <div ref={gridRef} className="fp__grid">
-          {TILES.map((t) => (
-            <article key={t.name} className="fp__tile">
-              <button type="button" className="fp__hit" onClick={onProducts} aria-label={`${t.name}: see all products`}>
-                <div ref={t.hero ? heroRef : undefined} className="fp__ph">
+          {TILES.map((tile) => (
+            <article key={tile.name} className="fp__tile">
+              <button type="button" className="fp__hit" onClick={onProducts} aria-label={`${tile.name}: see all products`}>
+                <div ref={tile.hero ? heroRef : undefined} className="fp__ph">
                   <img
-                    src={t.photo}
-                    alt={t.alt}
+                    src={tile.photo}
+                    alt={t(tile.alt)}
                     width={999}
                     height={1250}
                     loading="eager"
@@ -198,18 +200,18 @@ export const FeaturedProductsSlider = React.memo(function FeaturedProductsSlider
                     draggable={false}
                   />
                 </div>
-                <span className="fp__name">{t.name}</span>
+                <span className="fp__name">{t(tile.name)}</span>
               </button>
-              <button type="button" className="fp__quote" onClick={onQuote} aria-label={`Get a quote for ${t.name}`}>
-                Get a quote
+              <button type="button" className="fp__quote" onClick={onQuote} aria-label={`Get a quote for ${tile.name}`}>
+                {t("featured_products_slider_get_a_quote")}
               </button>
             </article>
           ))}
         </div>
 
         <div ref={capRef} className="fp__cap" aria-hidden="true">
-          <h2>{HERO.name}</h2>
-          <p>Start with one. Scroll to see the rest.</p>
+          <h2>{t(HERO.name)}</h2>
+          <p>{t("featured_products_slider_start_with_one_scroll_to")}</p>
         </div>
       </div>
     </section>

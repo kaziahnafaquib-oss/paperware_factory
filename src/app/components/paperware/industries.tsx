@@ -13,6 +13,11 @@ import h3 from "../../../assets/industries/hospitals-3.webp";
 import pMedicine from "../../../assets/industries/medicine-boxes.webp";
 import pCalendars from "../../../assets/industries/desk-calendars.webp";
 import pTissue from "../../../assets/industries/tissue-box-rose.webp";
+import pRx from "../../../assets/industries/prescription-pad.webp";
+import pBrochures from "../../../assets/products/brochures.webp";
+import pFlyers from "../../../assets/products/flyers.webp";
+import pTissueFloral from "../../../assets/products/tissue-box-floral.webp";
+import pTissueBoxes from "../../../assets/products/tissue-boxes.webp";
 
 type Industry = { title: string; desc: string; photos: string[]; alt: string };
 
@@ -21,9 +26,9 @@ const getIndustries = (t: (key: string) => string): Industry[] => [
   { title: t("restaurants"), desc: t("restaurant_desc"), photos: [r1, r2, r3], alt: "Takeaway boxes and bags in use at a restaurant" },
   { title: t("cafes"), desc: t("cafe_desc"), photos: [c1, c2, c3], alt: "Paper cups in use at a cafe" },
   { title: t("hospitals"), desc: t("hospital_desc"), photos: [h1, h2, h3], alt: "Prescription pads and paper files in a hospital" },
-  { title: t("pharmaceutical"), desc: t("pharma_desc"), photos: [pMedicine], alt: "Medicine boxes" },
-  { title: t("corporate_clients"), desc: t("corporate_desc"), photos: [pCalendars], alt: "Desk calendars" },
-  { title: t("hotels"), desc: t("hotel_desc"), photos: [pTissue], alt: "Tissue box" },
+  { title: t("pharmaceutical"), desc: t("pharma_desc"), photos: [pMedicine, pRx, pBrochures], alt: "Medicine boxes" },
+  { title: t("corporate_clients"), desc: t("corporate_desc"), photos: [pCalendars, pBrochures, pFlyers], alt: "Desk calendars" },
+  { title: t("hotels"), desc: t("hotel_desc"), photos: [pTissue, pTissueFloral, pTissueBoxes], alt: "Tissue box" },
 ];
 
 const PER_STEP = 1;
@@ -173,8 +178,8 @@ export const Industries = React.memo(function Industries({ onExplore }: { onExpl
               <div key={i} className="ind__pair">
                 {pair.map((item) => (
                   <button key={item.title} type="button" className="ind__name" onClick={onExplore}>
-                    <span className="ind__word">{item.title}</span>
-                    <span className="ind__desc">{item.desc}</span>
+                    <span className="ind__word">{t(item.title)}</span>
+                    <span className="ind__desc">{t(item.desc)}</span>
                   </button>
                 ))}
               </div>

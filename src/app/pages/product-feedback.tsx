@@ -211,8 +211,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
               <ScanQrCode className="size-12 text-[#fabf37] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
            </div>
            <div className="space-y-2">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">AI Pattern Recognition</p>
-              <p className="text-white font-bold text-sm">Analyzing Batch Cryptography...</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#fabf37]">{t("product_feedback_ai_pattern_recognition")}</p>
+              <p className="text-white font-bold text-sm">{t("product_feedback_analyzing_batch_cryptography")}</p>
            </div>
            <motion.div 
             animate={{ top: ["0%", "100%", "0%"] }}
@@ -230,11 +230,11 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
             <AlertCircle className="size-10 text-black" />
           </div>
           <div className="space-y-3">
-            <h4 className="text-2xl font-black text-white uppercase tracking-tighter">Access Restricted</h4>
+            <h4 className="text-2xl font-black text-white uppercase tracking-tighter">{t("product_feedback_access_restricted")}</h4>
             <p className="text-zinc-400 font-bold text-sm leading-snug max-w-xs mx-auto">
-              {scanError === "CAMERA_BLOCKED" 
+              {t(scanError === "CAMERA_BLOCKED" 
                 ? "Camera permission was denied. Use manual entry or bypass to continue the traceability audit."
-                : "No camera detected on this device. Manual verification required."}
+                : "No camera detected on this device. Manual verification required.")}
             </p>
           </div>
           
@@ -244,7 +244,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   type="text" 
                   value={manualId}
                   onChange={(e) => setManualId(e.target.value)}
-                  placeholder="BATCH ID: #PW-88291-EXP"
+                  placeholder={t("product_feedback_batch_id_pw_88291_exp")}
                   className="w-full bg-white/5 border-2 border-white/10 rounded-3xl py-5 px-8 text-white font-bold uppercase tracking-wide text-base focus:border-[#fabf37] outline-none transition-all placeholder:text-zinc-500 text-[11px]"
                 />
                 <button 
@@ -252,13 +252,13 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   disabled={!manualId}
                   className="w-full bg-[#fabf37] text-black py-3.5 rounded-2xl font-black uppercase tracking-widest text-xs hover:scale-105 transition-all disabled:opacity-20 disabled:grayscale"
                 >
-                  Verify
+                  {t("product_feedback_verify")}
                 </button>
              </div>
 
              <div className="flex items-center gap-4 py-2">
                 <div className="h-px bg-white/5 flex-1" />
-                <span className="text-[10px] font-black text-zinc-700 uppercase tracking-widest">or use</span>
+                <span className="text-[10px] font-black text-zinc-700 uppercase tracking-widest">{t("product_feedback_or_use")}</span>
                 <div className="h-px bg-white/5 flex-1" />
              </div>
 
@@ -267,10 +267,10 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 className="w-full bg-zinc-800 text-white py-5 rounded-3xl font-black uppercase tracking-widest text-[9px] hover:bg-zinc-700 transition-all flex items-center justify-center gap-3 border border-white/5 group"
               >
                 <Sparkles className="size-4 text-[#fabf37] group-hover:rotate-12 transition-transform" /> 
-                Simulate AI Scan (Demo Mode)
+                {t("product_feedback_simulate_ai_scan_demo_mode")}
               </button>
               
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-600">Traceability Protocol v4.0.1</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-600">{t("product_feedback_traceability_protocol_v4_0_1")}</p>
           </div>
         </div>
       );
@@ -308,12 +308,12 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 <ScanQrCode className="size-8 text-[#fabf37] animate-pulse" />
              </div>
              <div className="space-y-2">
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">System Initializing</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("product_feedback_system_initializing")}</p>
                 <button 
                   onClick={handleSimulateScan}
                   className="bg-[#fabf37] text-black px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all hover:scale-105 shadow-2xl"
                 >
-                  Bypass & Simulate Scan
+                  {t("product_feedback_bypass_simulate_scan")}
                 </button>
              </div>
           </div>
@@ -350,9 +350,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20">
                   <Camera className="size-4 text-[#fabf37] animate-pulse" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Live Camera</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("product_feedback_live_camera")}</span>
                 </div>
-                <h3 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">Capture Photo Evidence</h3>
+                <h3 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">{t("product_feedback_capture_photo_evidence")}</h3>
               </div>
 
               <div className="relative aspect-[4/3] w-full max-w-2xl mx-auto overflow-hidden rounded-[40px] bg-zinc-900 border-2 border-[#fabf37]/30 shadow-[0_0_100px_rgba(250,191,55,0.2)]">
@@ -379,10 +379,10 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 className="bg-[#fabf37] text-black px-12 py-6 rounded-[28px] font-black uppercase tracking-widest text-sm flex items-center justify-center gap-4 shadow-2xl hover:shadow-[#fabf37]/50 transition-all mx-auto"
               >
                 <Camera className="size-6" />
-                Capture Photo
+                {t("product_feedback_capture_photo")}
               </motion.button>
 
-              <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">Photo will be added to your feedback</p>
+              <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">{t("product_feedback_photo_will_be_added_to")}</p>
             </div>
 
             {/* Hidden canvas for image capture */}
@@ -412,9 +412,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 <div className="space-y-6">
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#fabf37]/10 rounded-full border border-[#fabf37]/20">
                     <Sparkles className="size-4 text-[#fabf37]" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">AI Vision System</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("product_feedback_ai_vision_system")}</span>
                   </div>
-                  <h3 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">Point & Scan</h3>
+                  <h3 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">{t("product_feedback_point_scan")}</h3>
                 </div>
               )}
 
@@ -424,9 +424,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 <div className="space-y-2">
                   <div className="flex items-center justify-center gap-4 text-[#fabf37]">
                     <div className="size-2 rounded-full bg-[#fabf37] animate-ping" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">Ready for Batch Input</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">{t("product_feedback_ready_for_batch_input")}</span>
                   </div>
-                  <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-widest">Supports all Paperware Batch QR Codes</p>
+                  <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-widest">{t("product_feedback_supports_all_paperware_batch_qr")}</p>
                 </div>
               )}
             </div>
@@ -455,10 +455,10 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-50 rounded-full border border-zinc-100 shadow-sm"
                   >
                     <div className="size-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Product Feedback</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("product_feedback")}</span>
                   </motion.div>
                   <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-zinc-900">
-                    Tell us your <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] to-amber-600">Experience</span>
+                    {t("product_feedback_tell_us_your")} <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fabf37] to-amber-600">{t("product_feedback_experience")}</span>
                   </h1>
                 </div>
 
@@ -469,28 +469,28 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   className="w-full md:w-auto bg-black text-[#fabf37] px-8 py-5 rounded-[24px] font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-4 shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all group border border-white/10"
                 >
                   <ScanQrCode className="size-5 group-hover:rotate-90 transition-transform duration-500" />
-                  Scan Product QR
+                  {t("order_tracking_scan_product_qr")}
                 </motion.button>
               </div>
 
               <p className="text-zinc-600 font-bold text-base md:text-lg max-w-xl mb-12 leading-relaxed">
-                Your direct feedback powers our continuous improvement protocols. Each submission is analyzed by our quality assurance team to optimize production standards.
+                {t("product_feedback_your_direct_feedback_powers_our")}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-4 group">
                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                      <Layers2 className="size-3" /> Product Category
+                      <Layers2 className="size-3" /> {t("product_feedback_product_category")}
                     </label>
                     <div className="relative">
                       <select className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[24px] py-5 px-8 font-bold text-sm md:text-base text-zinc-900 focus:border-[#fabf37] focus:bg-white focus:shadow-xl focus:shadow-[#fabf37]/10 outline-none transition-all appearance-none cursor-pointer">
-                        <option>Office Stationery</option>
-                        <option>Paper Cups & Beverages</option>
-                        <option>Restaurant Supplies</option>
-                        <option>Marketing Materials</option>
-                        <option>Industrial Packaging</option>
-                        <option>Pharmaceutical Boxes</option>
+                        <option>{t("export_request_form_office_stationery")}</option>
+                        <option>{t("product_feedback_paper_cups_beverages")}</option>
+                        <option>{t("product_feedback_restaurant_supplies")}</option>
+                        <option>{t("product_feedback_marketing_materials")}</option>
+                        <option>{t("product_feedback_industrial_packaging")}</option>
+                        <option>{t("product_feedback_pharmaceutical_boxes")}</option>
                       </select>
                       <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500 group-hover:text-black transition-colors">
                         <ChevronRight className="size-5 rotate-90" />
@@ -499,30 +499,30 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                   </div>
                   <div className="space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                      <Ruler className="size-3" /> Spec / Size / Batch ID
+                      <Ruler className="size-3" /> {t("product_feedback_spec_size_batch_id")}
                     </label>
                     <input 
                       className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[24px] py-5 px-8 font-bold text-sm md:text-base text-zinc-900 focus:border-[#fabf37] focus:bg-white focus:shadow-xl focus:shadow-[#fabf37]/10 outline-none transition-all placeholder:text-zinc-400" 
-                      placeholder="e.g. 14in X 22in (Optional)" 
+                      placeholder={t("product_feedback_e_g_14in_x_22in")} 
                     />
                   </div>
                   <div className="space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                      <ScanQrCode className="size-3" /> Order / Invoice #
+                      <ScanQrCode className="size-3" /> {t("product_feedback_order_invoice")}
                     </label>
                     <input 
                       className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[24px] py-5 px-8 font-bold text-sm md:text-base text-zinc-900 focus:border-[#fabf37] focus:bg-white focus:shadow-xl focus:shadow-[#fabf37]/10 outline-none transition-all placeholder:text-zinc-400" 
-                      placeholder="e.g. INV-2024-882" 
+                      placeholder={t("product_feedback_e_g_inv_2024_882")} 
                     />
                   </div>
                   <div className="space-y-4">
                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                       <MessageSquare className="size-3" /> Contact Email (Optional)
+                       <MessageSquare className="size-3" /> {t("product_feedback_contact_email_optional")}
                      </label>
                      <input 
                        type="email"
                        className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[24px] py-5 px-8 font-bold text-sm md:text-base text-zinc-900 focus:border-[#fabf37] focus:bg-white focus:shadow-xl focus:shadow-[#fabf37]/10 outline-none transition-all placeholder:text-zinc-400" 
-                       placeholder="For resolution updates..." 
+                       placeholder={t("product_feedback_for_resolution_updates")} 
                      />
                   </div>
                 </div>
@@ -530,9 +530,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 <div className="space-y-6 bg-zinc-50/50 p-8 rounded-[40px] border border-zinc-100/50">
                   <div className="flex items-center justify-between">
                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 flex items-center gap-2">
-                       <Award className="size-3" /> Quality Rating
+                       <Award className="size-3" /> {t("product_feedback_quality_rating")}
                      </p>
-                     <span className="text-xs font-bold text-[#fabf37]">{rating > 0 ? `${rating}/5 Stars` : 'Select Rating'}</span>
+                     <span className="text-xs font-bold text-[#fabf37]">{t(rating > 0 ? `${rating}/5 Stars` : 'Select Rating')}</span>
                   </div>
                   <div className="flex justify-between gap-2 md:gap-4">
                     {[1, 2, 3, 4, 5].map((s) => (
@@ -559,14 +559,14 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
 
                   <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 flex items-center gap-2">
-                       <Sparkles className="size-3" /> Would you recommend Paperware?
+                       <Sparkles className="size-3" /> {t("product_feedback_would_you_recommend_paperware")}
                      </p>
                      <div className="flex gap-4 w-full md:w-auto">
                         <button type="button" onClick={() => setRecommend(prev => prev === 'yes' ? null : 'yes')} aria-pressed={recommend === 'yes'} className={`flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-[#fabf37] hover:text-black transition-all ${recommend === 'yes' ? '!border-[#fabf37] !text-black bg-[#fabf37]/20' : ''}`}>
-                           Yes, Definitely
+                           {t("product_feedback_yes_definitely")}
                         </button>
                         <button type="button" onClick={() => setRecommend(prev => prev === 'maybe' ? null : 'maybe')} aria-pressed={recommend === 'maybe'} className={`flex-1 md:flex-none px-6 py-3 rounded-xl border-2 border-zinc-200 text-zinc-500 font-bold text-xs uppercase hover:border-zinc-900 hover:text-black transition-all ${recommend === 'maybe' ? '!border-[#fabf37] !text-black bg-[#fabf37]/20' : ''}`}>
-                           Maybe Later
+                           {t("product_feedback_maybe_later")}
                         </button>
                      </div>
                   </div>
@@ -574,7 +574,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
 
                 <div className="space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                    <Layers2 className="size-3" /> Photo Evidence (Optional)
+                    <Layers2 className="size-3" /> {t("product_feedback_photo_evidence_optional")}
                   </label>
                   
                   {/* Upload Buttons */}
@@ -588,7 +588,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         <div className="size-10 rounded-full bg-zinc-100 flex items-center justify-center group-hover:bg-[#fabf37]/20 transition-colors">
                           <Upload className="size-4 text-zinc-400 group-hover:text-[#fabf37]" />
                         </div>
-                        <p className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-700">Upload Files</p>
+                        <p className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-700">{t("product_feedback_upload_files")}</p>
                       </div>
                     </button>
 
@@ -601,7 +601,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         <div className="size-10 rounded-full bg-zinc-100 flex items-center justify-center group-hover:bg-[#fabf37]/20 transition-colors">
                           <Camera className="size-4 text-zinc-400 group-hover:text-[#fabf37]" />
                         </div>
-                        <p className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-700">Take a photo</p>
+                        <p className="text-[10px] font-bold text-zinc-500 group-hover:text-zinc-700">{t("product_feedback_take_a_photo")}</p>
                       </div>
                     </button>
                   </div>
@@ -646,8 +646,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       <Target className="size-5 text-black" />
                     </div>
                     <div>
-                      <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-600">Quality Metrics</h3>
-                      <p className="text-xs text-zinc-500 font-bold">Rate individual aspects</p>
+                      <h3 className="text-[10px] font-black uppercase tracking-widest text-zinc-600">{t("product_feedback_quality_metrics")}</h3>
+                      <p className="text-xs text-zinc-500 font-bold">{t("product_feedback_rate_individual_aspects")}</p>
                     </div>
                   </div>
 
@@ -662,7 +662,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2 text-zinc-700">
                             {metric.icon}
-                            <span className="text-xs font-bold">{metric.label}</span>
+                            <span className="text-xs font-bold">{t(metric.label)}</span>
                           </div>
                           <span className="text-[10px] font-black text-[#fabf37]">
                             {qualityMetrics[metric.key as keyof typeof qualityMetrics]}/5
@@ -696,7 +696,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 {/* Quick Issue Tags */}
                 <div className="space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                    <AlertTriangle className="size-3" /> Quick Issue Tags (Optional)
+                    <AlertTriangle className="size-3" /> {t("product_feedback_quick_issue_tags_optional")}
                   </label>
                   <div className="flex flex-wrap gap-3">
                     {[
@@ -725,7 +725,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         }`}
                       >
                         {issue.icon}
-                        {issue.label}
+                        {t(issue.label)}
                       </motion.button>
                     ))}
                   </div>
@@ -737,7 +737,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     <div className="flex items-center gap-2">
                       <Truck className="size-4 text-blue-600" />
                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-700">
-                        Delivery Experience
+                        {t("product_feedback_delivery_experience")}
                       </label>
                     </div>
                     <div className="flex gap-2">
@@ -764,7 +764,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     <div className="flex items-center gap-2">
                       <Package className="size-4 text-blue-600" />
                       <label className="text-[10px] font-black uppercase tracking-widest text-zinc-700">
-                        Packaging Quality
+                        {t("product_feedback_packaging_quality")}
                       </label>
                     </div>
                     <div className="flex gap-2">
@@ -795,9 +795,9 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       <Leaf className="size-5 text-emerald-600" />
                       <div>
                         <label className="text-[10px] font-black uppercase tracking-widest text-zinc-700">
-                          Environmental Impact Score
+                          {t("product_feedback_environmental_impact_score")}
                         </label>
-                        <p className="text-[9px] text-zinc-500 font-bold">How eco-friendly was this product?</p>
+                        <p className="text-[9px] text-zinc-500 font-bold">{t("product_feedback_how_eco_friendly_was_this")}</p>
                       </div>
                     </div>
                     <span className="text-sm font-black text-emerald-600">{sustainabilityRating}/5</span>
@@ -826,7 +826,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 {/* Comparison with Previous Orders */}
                 <div className="space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                    <RefreshCw className="size-3" /> Compared to Previous Orders
+                    <RefreshCw className="size-3" /> {t("product_feedback_compared_to_previous_orders")}
                   </label>
                   <div className="grid grid-cols-3 gap-4">
                     <motion.button
@@ -840,7 +840,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       }`}
                     >
                       <ThumbsUp className={`size-8 mx-auto mb-2 ${comparisonRating === 'better' ? '' : 'text-zinc-400'}`} />
-                      <p className="text-[10px] font-black uppercase">Better</p>
+                      <p className="text-[10px] font-black uppercase">{t("product_feedback_better")}</p>
                     </motion.button>
 
                     <motion.button
@@ -856,7 +856,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       <div className="size-8 mx-auto mb-2 flex items-center justify-center">
                         <div className={`w-6 h-1 rounded-full ${comparisonRating === 'same' ? 'bg-white' : 'bg-zinc-400'}`} />
                       </div>
-                      <p className="text-[10px] font-black uppercase">Same</p>
+                      <p className="text-[10px] font-black uppercase">{t("product_feedback_same")}</p>
                     </motion.button>
 
                     <motion.button
@@ -870,7 +870,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       }`}
                     >
                       <ThumbsDown className={`size-8 mx-auto mb-2 ${comparisonRating === 'worse' ? '' : 'text-zinc-400'}`} />
-                      <p className="text-[10px] font-black uppercase">Worse</p>
+                      <p className="text-[10px] font-black uppercase">{t("product_feedback_worse")}</p>
                     </motion.button>
                   </div>
                 </div>
@@ -878,7 +878,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 {/* Suggested Improvements */}
                 <div className="space-y-4">
                   <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 ml-2 flex items-center gap-2">
-                    <Lightbulb className="size-3" /> Suggested Improvements
+                    <Lightbulb className="size-3" /> {t("product_feedback_suggested_improvements")}
                   </label>
                   <div className="flex flex-wrap gap-3">
                     {[
@@ -908,7 +908,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                             : 'bg-white text-zinc-600 border-2 border-zinc-200 hover:border-[#fabf37]'
                         }`}
                       >
-                        {improvement}
+                        {t(improvement)}
                       </motion.button>
                     ))}
                   </div>
@@ -921,8 +921,8 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       <ShieldCheck className="size-5 text-white" />
                     </div>
                     <div>
-                      <p className="text-xs font-black uppercase tracking-wide text-zinc-800">Submit Anonymously</p>
-                      <p className="text-[9px] text-zinc-500 font-bold">Your identity will be protected</p>
+                      <p className="text-xs font-black uppercase tracking-wide text-zinc-800">{t("product_feedback_submit_anonymously")}</p>
+                      <p className="text-[9px] text-zinc-500 font-bold">{t("product_feedback_your_identity_will_be_protected")}</p>
                     </div>
                   </div>
                   <button
@@ -930,7 +930,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     onClick={() => setIsAnonymous(!isAnonymous)}
                     role="switch"
                     aria-checked={isAnonymous}
-                    aria-label="Submit anonymously"
+                    aria-label={t("product_feedback_submit_anonymously_2")}
                     className={`relative w-16 h-8 rounded-full transition-all ${
                       isAnonymous ? 'bg-[#fabf37]' : 'bg-zinc-300'
                     }`}
@@ -946,7 +946,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                 <div className="space-y-4 relative">
                   <div className="flex justify-between items-end px-2">
                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-600 flex items-center gap-2">
-                       <MessageSquare className="size-3" /> Detailed Feedback
+                       <MessageSquare className="size-3" /> {t("product_feedback_detailed_feedback")}
                      </label>
                      <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border transition-all ${
                         sentiment === 'positive' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 
@@ -954,7 +954,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                         'bg-zinc-50 text-zinc-400 border-zinc-200'
                       }`}>
                         {sentiment === 'positive' ? <Smile className="size-3" /> : sentiment === 'neutral' ? <Meh className="size-3" /> : <Sparkles className="size-3" />}
-                        {sentiment} Sentiment
+                        {t(sentiment)} {t("product_feedback_sentiment")}
                       </div>
                   </div>
                   <textarea 
@@ -962,7 +962,7 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     className="w-full bg-zinc-50 border-2 border-zinc-100 rounded-[32px] py-6 px-8 font-bold text-sm md:text-base text-zinc-900 focus:border-[#fabf37] focus:bg-white focus:shadow-xl focus:shadow-[#fabf37]/10 outline-none transition-all resize-none placeholder:text-zinc-400" 
-                    placeholder="Tell us about the durability, print quality, and overall experience..." 
+                    placeholder={t("product_feedback_tell_us_about_the_durability")} 
                   />
                 </div>
 
@@ -976,10 +976,10 @@ export function ProductFeedbackPage({ onScanSuccess }: ProductFeedbackPageProps)
                       : 'bg-black text-[#fabf37] hover:bg-[#fabf37] hover:text-black shadow-black/20'
                   }`}
                 >
-                  {submitted ? <><CircleCheck className="size-6" /> Opened in WhatsApp</> : <><Send className="size-5 md:size-6" /> Send Feedback via WhatsApp</>}
+                  {submitted ? <><CircleCheck className="size-6" /> {t("contact_opened_in_whatsapp")}</> : <><Send className="size-5 md:size-6" /> {t("product_feedback_send_feedback_via_whatsapp")}</>}
                 </motion.button>
                 {submitted && (
-                  <p role="status" aria-live="polite" className="text-sm font-medium text-zinc-700 leading-relaxed text-center">{INQUIRY_HANDOFF_BODY} <a href={mailHref} className="font-bold text-black underline underline-offset-4">Send by email instead</a></p>
+                  <p role="status" aria-live="polite" className="text-sm font-medium text-zinc-700 leading-relaxed text-center">{t(INQUIRY_HANDOFF_BODY)} <a href={mailHref} className="font-bold text-black underline underline-offset-4">{t("export_request_form_send_by_email_instead")}</a></p>
                 )}
               </form>
             </motion.div>

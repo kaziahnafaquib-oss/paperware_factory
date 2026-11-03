@@ -22,7 +22,7 @@ export function CoverageArea() {
             className="lg:w-1/3 space-y-8 text-center lg:text-left"
           >
             <div className="space-y-4">
-              <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Distribution</span>
+              <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("coverage_area_distribution")}</span>
               <h2 className="text-[52px] font-black text-white uppercase tracking-tight leading-none">
                 {t('nationwide_reach')}
               </h2>
@@ -55,7 +55,7 @@ export function CoverageArea() {
               <div className="absolute inset-0 bg-[#fabf37]/10 blur-[60px] rounded-full group-hover:bg-[#fabf37]/20 transition-colors" />
               <img loading="lazy" decoding="async" 
                 src={imgMap} 
-                alt="Bangladesh Coverage Map" 
+                alt={t("coverage_area_bangladesh_coverage_map")} 
                 className="relative z-10 w-full max-w-3xl h-auto drop-shadow-[0_40px_100px_rgba(250,191,55,0.1)] transition-transform duration-700 hover:scale-105"
               />
             </div>

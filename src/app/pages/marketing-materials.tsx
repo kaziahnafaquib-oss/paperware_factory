@@ -70,13 +70,13 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
             className="flex items-center gap-3 mb-6"
           >
             <div className="size-2 rounded-full bg-[#fabf37]" />
-            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">High-Impact Brand Collateral</span>
+            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("marketing_materials_high_impact_brand_collateral")}</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Marketing <br /> <span className="text-zinc-500">Materials</span>
+            {t("marketing_materials_marketing")} <br /> <span className="text-zinc-500">{t("marketing_materials_materials")}</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
-            Turn your brand into a tangible experience. Our marketing collateral uses premium finishes, vibrant colors, and eco-friendly materials to leave a lasting impression.
+            {t("marketing_materials_turn_your_brand_into_a")}
           </p>
         </div>
       </section>
@@ -86,12 +86,12 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-black rounded-[60px] p-16 text-white space-y-8 relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-12 opacity-10 group-hover:scale-110 transition-transform"><Sparkles className="size-48" /></div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none relative z-10">Premium <br /> <span className="text-[#fabf37]">Finishes</span></h2>
-            <p className="text-zinc-500 font-bold leading-relaxed relative z-10">Spot UV, Foil Stamping, and Soft-Touch Lamination to make your marketing materials stand out from the noise.</p>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none relative z-10">{t("marketing_materials_premium")} <br /> <span className="text-[#fabf37]">{t("marketing_materials_finishes")}</span></h2>
+            <p className="text-zinc-500 font-bold leading-relaxed relative z-10">{t("marketing_materials_spot_uv_foil_stamping_and")}</p>
             <div className="flex gap-4 relative z-10">
-              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">UV Spot</span>
-              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">Gold Foil</span>
-              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">Embossing</span>
+              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">{t("marketing_materials_uv_spot")}</span>
+              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">{t("marketing_materials_gold_foil")}</span>
+              <span className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest">{t("marketing_materials_embossing")}</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8">
@@ -103,7 +103,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
              ].map((item, i) => (
                <div key={i} className="bg-white p-8 rounded-[40px] border border-black/5 flex flex-col items-center text-center space-y-4 hover:border-[#fabf37] transition-all">
                   <div className="text-zinc-300 group-hover:text-[#fabf37] transition-colors">{item.icon}</div>
-                  <h4 className="text-xs font-black uppercase tracking-widest text-black">{item.title}</h4>
+                  <h4 className="text-xs font-black uppercase tracking-widest text-black">{t(item.title)}</h4>
                </div>
              ))}
           </div>
@@ -121,7 +121,7 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
             >
               <div className="aspect-square overflow-hidden">
                 {p.image ? (
-                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <ImageWithFallback src={p.image} alt={t(p.name)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
                     <p.icon className="size-20" strokeWidth={1} />
@@ -133,13 +133,13 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
                   <div className="size-12 rounded-xl bg-zinc-50 flex items-center justify-center text-black group-hover:bg-black group-hover:text-[#fabf37] transition-all">
                     <p.icon className="size-5" />
                   </div>
-                  <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{p.category}</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{t(p.category)}</span>
                 </div>
-                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{p.name}</h3>
-                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{p.desc}</p>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{t(p.name)}</h3>
+                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{t(p.desc)}</p>
                 <div className="flex items-center justify-between">
                   <button type="button" className="flex items-center gap-2 min-h-11 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
-                    Order Now <ArrowRight className="size-4" />
+                    {t("marketing_materials_order_now")} <ArrowRight className="size-4" />
                   </button>
                   <Zap className="size-4 text-[#fabf37]" />
                 </div>
@@ -155,9 +155,9 @@ export function MarketingMaterialsPage({ onProductClick }: { onProductClick: (p:
       <section className="container mx-auto px-4">
         <div className="bg-[#fabf37] p-20 rounded-[80px] text-center space-y-8 shadow-2xl">
           <Megaphone className="size-20 mx-auto text-black" />
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Broadcast Your <span className="underline">Excellence</span></h2>
+          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">{t("marketing_materials_broadcast_your")} <span className="underline">{t("why_choose_excellence")}</span></h2>
           <button onClick={() => go("quote")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all">
-            Get A Custom Quote
+            {t("marketing_materials_get_a_custom_quote")}
           </button>
         </div>
       </section>

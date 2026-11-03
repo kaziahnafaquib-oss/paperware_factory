@@ -58,7 +58,7 @@ export default function HostingView() {
             <RefreshCw className="size-4" /> Trigger Deploy
           </button>
           <button 
-            onClick={() => window.open('https://hpanel.hostinger.com', '_blank')}
+            onClick={() => window.open('https://hpanel.hostinger.com', '_blank', 'noopener,noreferrer')}
             className="bg-[#fabf37] text-black px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 active:scale-95 transition-all"
           >
             <Globe className="size-4" /> Open hPanel

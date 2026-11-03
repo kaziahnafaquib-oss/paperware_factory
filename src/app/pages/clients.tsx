@@ -14,6 +14,7 @@ import imgBrochures from "@/assets/products/brochures.webp";
 import imgCarry from "@/assets/products/carry-bag-pink.webp";
 import imgFloor from "@/assets/factory/floor-cup-machines.webp";
 import { ClientLogoWall } from "../components/paperware/client-logos";
+import { ClientReels } from "../components/paperware/client-reels";
 
 // Client identities are confidential: no customer names, logos or testimonials are shown.
 // The only audience claim is the verified statement below.
@@ -98,12 +99,12 @@ export function ClientsPage({
           >
             <div className="relative z-10 text-center px-6">
               <div className="inline-flex items-center gap-3 bg-black text-white px-5 py-2.5 rounded-xl mb-10 mx-auto">
-                <span className="text-[8px] font-black uppercase tracking-[0.3em]">CLIENTS</span>
+                <span className="text-[8px] font-black uppercase tracking-[0.3em]">{t("clients_clients")}</span>
               </div>
               <h1 className="text-[56px] md:text-[120px] lg:text-[160px] font-black uppercase tracking-tighter leading-[0.8] text-black">
                 {t("building_legacies").split(" ").map((word, wi) => (
                   <span key={wi} className="inline-block mr-4 last:mr-0">
-                    {word}
+                    {t(word)}
                   </span>
                 ))}
               </h1>
@@ -118,7 +119,7 @@ export function ClientsPage({
             className="bg-[#fabf37] text-black rounded-[40px] md:rounded-[64px] px-8 py-16 md:px-20 md:py-28 text-center origin-center will-change-transform"
           >
             <p className="text-3xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.95]">
-              Trusted by cafés, restaurants, hospitals and brands across Bangladesh
+              {t("clients_trusted_by_caf_s_restaurants")}
             </p>
           </div>
         </div>
@@ -126,6 +127,9 @@ export function ClientsPage({
 
       {/* Client logo wall (owner-supplied logos from the original site) */}
       <ClientLogoWall />
+
+      {/* Client brand reels (Facebook embeds, owner-supplied links) */}
+      <ClientReels />
 
       {/* Real product reels */}
       <div ref={reelRef} className="bg-black py-16 md:py-24 overflow-hidden space-y-6 md:space-y-8">
@@ -137,7 +141,7 @@ export function ClientsPage({
             <div ref={row.ref} className="flex gap-6 md:gap-8 w-max px-4 will-change-transform">
               {row.items.map((it, i) => (
                 <div key={i} className="w-[240px] md:w-[360px] aspect-[4/3] rounded-3xl overflow-hidden bg-zinc-900 shrink-0">
-                  <img src={it.src} alt={it.alt} loading="lazy" className="size-full object-cover" />
+                  <img src={it.src} alt={t(it.alt)} loading="lazy" className="size-full object-cover" />
                 </div>
               ))}
             </div>
@@ -147,7 +151,7 @@ export function ClientsPage({
 
       <div className="container mx-auto px-4 md:px-6 relative z-20 pt-16 md:pt-24">
         <div className="relative rounded-[40px] overflow-hidden mb-12 h-[260px] md:h-[380px]">
-          <img src={imgFloor} alt="Paperware cup machines on the production floor" loading="lazy" className="size-full object-cover" />
+          <img src={imgFloor} alt={t("clients_paperware_cup_machines_on_the")} loading="lazy" className="size-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         </div>
 
@@ -167,8 +171,8 @@ export function ClientsPage({
                 </div>
                 <ArrowRight className="size-5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-2">{b.title}</h3>
-              <p className="text-sm font-medium opacity-80">{b.text}</p>
+              <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-2">{t(b.title)}</h3>
+              <p className="text-sm font-medium opacity-80">{t(b.text)}</p>
             </motion.button>
           ))}
         </div>

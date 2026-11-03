@@ -3,8 +3,10 @@ import { useEscapeKey } from "../../hooks/useEscapeKey";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle, Bot, X, Headphones } from "lucide-react";
 import { useChat } from "../../context/ChatContext";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const ContactMenu = () => {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   useEscapeKey(isOpen, () => setIsOpen(false));
   const [rotateX, setRotateX] = useState(0);
@@ -33,7 +35,7 @@ export const ContactMenu = () => {
   };
 
   const handleWhatsApp = () => {
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     setIsOpen(false);
   };
 
@@ -82,7 +84,7 @@ export const ContactMenu = () => {
           {/* Tooltip */}
           {!isOpen && (
             <span className="absolute bottom-full mb-3 px-3 py-2 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#fabf37]/20">
-              Support
+              {t("contact_menu_support")}
             </span>
           )}
         </motion.button>
@@ -117,10 +119,10 @@ export const ContactMenu = () => {
                 <div className="mb-6 relative z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-black uppercase tracking-widest text-emerald-400">Online Now</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-emerald-400">{t("contact_menu_online_now")}</span>
                   </div>
-                  <h3 className="font-black uppercase tracking-tight text-white leading-none mb-1 text-[16px]">Get in Touch</h3>
-                  <p className="text-xs font-semibold text-zinc-400">Choose your preferred channel</p>
+                  <h3 className="font-black uppercase tracking-tight text-white leading-none mb-1 text-[16px]">{t("contact_menu_get_in_touch")}</h3>
+                  <p className="text-xs font-semibold text-zinc-400">{t("contact_menu_choose_your_preferred_channel")}</p>
                 </div>
 
                 {/* Options - Vertical Stack */}
@@ -136,8 +138,8 @@ export const ContactMenu = () => {
                       <MessageCircle className="size-6" strokeWidth={2.5} fill="currentColor" />
                     </div>
                     <div className="text-left flex-1">
-                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">WhatsApp</p>
-                      <p className="text-[9px] font-bold opacity-90 leading-none">Direct messaging</p>
+                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">{t("contact_menu_whatsapp")}</p>
+                      <p className="text-[9px] font-bold opacity-90 leading-none">{t("contact_menu_direct_messaging")}</p>
                     </div>
                     <div className="size-8 rounded-full bg-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <MessageCircle className="size-4" />
@@ -155,8 +157,8 @@ export const ContactMenu = () => {
                       <Bot className="size-6" strokeWidth={2.5} />
                     </div>
                     <div className="text-left flex-1">
-                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">AI Assistant</p>
-                      <p className="text-[8px] font-bold opacity-70 leading-none">Instant responses</p>
+                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">{t("contact_menu_ai_assistant")}</p>
+                      <p className="text-[8px] font-bold opacity-70 leading-none">{t("contact_menu_instant_responses")}</p>
                     </div>
                     <div className="size-8 rounded-full bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Bot className="size-4" />
@@ -168,7 +170,7 @@ export const ContactMenu = () => {
                 <div className="mt-5 pt-5 border-t border-white/10 relative z-10">
                   <div className="flex items-center justify-center gap-2">
                     <div className="size-1.5 rounded-full bg-[#fabf37]" />
-                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Available 24/7</p>
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t("contact_menu_available_24_7")}</p>
                   </div>
                 </div>
               </div>

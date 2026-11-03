@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { MessageCircle } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 export const WhatsAppButton = () => {
+  const { t } = useLanguage();
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const phoneNumber = "+8801901459110";
@@ -28,7 +30,7 @@ export const WhatsAppButton = () => {
   };
 
   const handleClick = () => {
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -57,8 +59,8 @@ export const WhatsAppButton = () => {
         
         {/* Tooltip */}
         <span className="absolute bottom-full mb-3 px-3 py-2 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#25D366]/20">
-          WhatsApp Call
-          <span className="block text-[8px] text-zinc-400 mt-0.5 normal-case tracking-normal">{phoneNumber}</span>
+          {t("whatsapp_button_whatsapp_call")}
+          <span className="block text-[8px] text-zinc-400 mt-0.5 normal-case tracking-normal">{t(phoneNumber)}</span>
         </span>
 
         {/* Pulse Animation */}

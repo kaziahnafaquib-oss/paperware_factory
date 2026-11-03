@@ -31,7 +31,7 @@ export const Ticker = React.memo(() => {
     <div
       className="pw-marquee fixed top-0 w-full z-[1002] bg-[#fabf37] h-8 flex items-center overflow-hidden border-b border-black/5 shadow-sm"
       data-paused={paused ? "true" : undefined}
-      aria-label="Highlights"
+      aria-label={t("ticker_highlights")}
       role="region"
     >
       <div className="pw-marquee-track flex shrink-0 w-max whitespace-nowrap items-center gap-12 md:gap-24">
@@ -39,11 +39,11 @@ export const Ticker = React.memo(() => {
           <div key={group} className="flex items-center gap-12 md:gap-24" aria-hidden={group > 0 ? true : undefined}>
             {items.map((item, i) => (
               <div key={i} className={itemClass}>
-                <span aria-hidden="true">{item.icon}</span> {item.label}
+                <span aria-hidden="true">{item.icon}</span> {t(item.label)}
               </div>
             ))}
             <div className={itemClass}>
-              MADE IN BANGLADESH
+              {t("ticker_made_in_bangladesh")}
               <img loading="lazy" decoding="async" src={flagBd} alt="" width={20} height={12} className="h-3 w-auto rounded-sm shadow-sm" />
             </div>
             <div className="size-1.5 rounded-full bg-black/20" aria-hidden="true" />
@@ -55,7 +55,7 @@ export const Ticker = React.memo(() => {
         type="button"
         onClick={() => setPaused((p) => !p)}
         aria-pressed={paused}
-        aria-label={paused ? "Play scrolling highlights" : "Pause scrolling highlights"}
+        aria-label={t(paused ? "Play scrolling highlights" : "Pause scrolling highlights")}
         className="pw-marquee-control absolute right-0 top-0 h-8 w-10 flex items-center justify-center bg-[#fabf37] text-black shadow-[-12px_0_12px_#fabf37] hover:bg-black hover:text-[#fabf37] focus-visible:outline-2 focus-visible:outline-black focus-visible:-outline-offset-2 transition-colors"
       >
         {paused ? <Play className="size-3.5" aria-hidden="true" /> : <Pause className="size-3.5" aria-hidden="true" />}

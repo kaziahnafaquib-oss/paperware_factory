@@ -13,6 +13,7 @@ import { useGo } from "../lib/useGo";
 
 // New Component: Counting Stat for high-impact numbers
 function CountingStat({ value, suffix = "", delay = 0 }: { value: string, suffix?: string, delay?: number }) {
+  const { t } = useLanguage();
   const numValue = parseFloat(value.replace(/[^0-9.]/g, ''));
   const count = useSpring(0, { stiffness: 50, damping: 20 });
   const ref = React.useRef(null);
@@ -31,13 +32,14 @@ function CountingStat({ value, suffix = "", delay = 0 }: { value: string, suffix
       <motion.span className="text-3xl font-black italic">
         {display}
       </motion.span>
-      <span className="text-3xl font-black italic">{suffix}</span>
+      <span className="text-3xl font-black italic">{t(suffix)}</span>
     </div>
   );
 }
 
 // New Component: Staggered Text Reveal
 function StaggeredText({ text, className }: { text: string, className?: string }) {
+  const { t } = useLanguage();
   return (
     <div className={className}>
       {text.split(" ").map((word, i) => (
@@ -48,7 +50,7 @@ function StaggeredText({ text, className }: { text: string, className?: string }
             transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="inline-block"
           >
-            {word}
+            {t(word)}
           </motion.span>
         </span>
       ))}
@@ -216,7 +218,7 @@ export function TechnicalManifestoPage() {
           >
             <div className="h-[2px] w-20 bg-[#fabf37]/50" />
             <span className="text-xl md:text-3xl font-black uppercase tracking-[1em] text-[#fabf37] whitespace-nowrap">
-              Paperware K-BASE
+              {t("technical_manifesto_paperware_k_base")}
             </span>
             <div className="h-[2px] w-20 bg-[#fabf37]/50" />
           </motion.div>
@@ -234,7 +236,7 @@ export function TechnicalManifestoPage() {
           >
             <div className="size-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
             <span className="text-sm md:text-xl font-bold uppercase tracking-[0.5em] text-zinc-500">
-              Paperware <span className="text-white">Factory</span>
+              Paperware <span className="text-white">{t("business_factory")}</span>
             </span>
           </motion.div>
 
@@ -257,9 +259,9 @@ export function TechnicalManifestoPage() {
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
               />
-            <h1 className="sr-only">Technical manifesto</h1>
+            <h1 className="sr-only">{t("technical_manifesto_technical_manifesto")}</h1>
             <p aria-hidden="true" className="text-6xl md:text-[180px] font-black uppercase tracking-tighter leading-none text-black relative z-10">
-              TECHNICAL
+              {t("technical_manifesto_technical")}
             </p>
             {/* 3D Side Faces */}
             <div className="absolute top-0 right-full h-full w-4 bg-[#c4962b] origin-right skew-y-[10deg] rotate-y-[-90deg]" />
@@ -286,7 +288,7 @@ export function TechnicalManifestoPage() {
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent skew-x-12"
               />
             <p aria-hidden="true" className="text-6xl md:text-[200px] font-black uppercase tracking-tighter leading-none text-black italic relative z-10">
-              MANIFESTO.
+              {t("technical_manifesto_manifesto")}
             </p>
             
             {/* 3D Side Faces for White Block */}
@@ -294,7 +296,7 @@ export function TechnicalManifestoPage() {
             <div className="absolute top-full left-0 w-full h-4 bg-zinc-400 origin-top skew-x-[10deg] rotate-x-[-90deg]" />
 
             <div className="absolute -top-10 -right-20 bg-black text-[#fabf37] border-2 border-[#fabf37] px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl">
-              Dhaka
+              {t("contact_dhaka")}
             </div>
           </motion.div>
 
@@ -311,7 +313,7 @@ export function TechnicalManifestoPage() {
           className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
         >
           <div className="w-px h-24 bg-gradient-to-b from-transparent via-[#fabf37] to-transparent" />
-          <span className="text-[8px] font-black uppercase tracking-[0.5em] text-zinc-600">INITIATE SEQUENCE</span>
+          <span className="text-[8px] font-black uppercase tracking-[0.5em] text-zinc-600">{t("technical_manifesto_initiate_sequence")}</span>
         </motion.div>
       </section>
 
@@ -341,7 +343,7 @@ export function TechnicalManifestoPage() {
                     transition={{ delay: 0.3 }}
                     className="text-zinc-400 font-bold text-lg leading-relaxed max-w-xl"
                   >
-                    Our production, quality and logistics teams work from one plan, from order to delivery.
+                    {t("technical_manifesto_our_production_quality_and_logistics")}
                   </motion.p>
                 </div>
 
@@ -377,8 +379,8 @@ export function TechnicalManifestoPage() {
                     <div className="flex justify-between items-start">
                       <Terminal className="size-10" />
                       <div className="text-right">
-                        <p className="text-[10px] font-black uppercase tracking-widest opacity-40">System Node</p>
-                        <p className="text-xl font-black">DAC-MAIN-01</p>
+                        <p className="text-[10px] font-black uppercase tracking-widest opacity-40">{t("technical_manifesto_system_node")}</p>
+                        <p className="text-xl font-black">{t("technical_manifesto_dac_main_01")}</p>
                       </div>
                     </div>
                     
@@ -387,8 +389,8 @@ export function TechnicalManifestoPage() {
                       <div className="flex items-center gap-4">
                         <Activity className="size-12 animate-pulse" />
                         <div className="space-y-1">
-                          <p className="text-[10px] font-black uppercase opacity-40">Production</p>
-                          <p className="text-4xl font-black italic">DHAKA</p>
+                          <p className="text-[10px] font-black uppercase opacity-40">{t("office_stationary_production")}</p>
+                          <p className="text-4xl font-black italic">{t("technical_manifesto_dhaka")}</p>
                         </div>
                       </div>
                     </div>
@@ -413,7 +415,7 @@ export function TechnicalManifestoPage() {
 
       <section className="container mx-auto px-4 relative z-10">
         <div className="aspect-[4/3] md:aspect-[21/9] rounded-[40px] overflow-hidden border border-white/10">
-          <img src={imgForming} alt="Close-up of a cup forming machine at Paperware" loading="lazy" decoding="async" className="size-full object-cover" />
+          <img src={imgForming} alt={t("technical_manifesto_close_up_of_a_cup")} loading="lazy" decoding="async" className="size-full object-cover" />
         </div>
       </section>
 
@@ -425,9 +427,9 @@ export function TechnicalManifestoPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-6xl md:text-9xl font-black uppercase tracking-tighter"
           >
-            CORE <span className="text-zinc-500">PILLARS.</span>
+            CORE <span className="text-zinc-500">{t("technical_manifesto_pillars")}</span>
           </motion.h2>
-          <p className="text-[#fabf37] font-black uppercase tracking-[0.5em] text-[10px]">The DNA of Our Innovation</p>
+          <p className="text-[#fabf37] font-black uppercase tracking-[0.5em] text-[10px]">{t("technical_manifesto_the_dna_of_our_innovation")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -446,17 +448,17 @@ export function TechnicalManifestoPage() {
           className="max-w-4xl mx-auto space-y-12"
         >
           <h2 className="text-6xl md:text-[120px] font-black uppercase tracking-tighter leading-none">
-            ENGINEER <br />THE <span className="text-[#fabf37]">FUTURE.</span>
+            {t("technical_manifesto_engineer")} <br />THE <span className="text-[#fabf37]">{t("technical_manifesto_future")}</span>
           </h2>
           <p className="text-zinc-500 font-bold uppercase tracking-widest text-lg md:text-xl leading-relaxed">
-            Ready to integrate with a supply chain that thinks for itself? Join the Paperware ecosystem today.
+            {t("technical_manifesto_ready_to_integrate_with_a")}
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-8">
              <button onClick={() => go("partner-program")} className="bg-[#fabf37] text-black px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:scale-105 transition-all shadow-2xl">
-                Partner Integration
+                {t("technical_manifesto_partner_integration")}
              </button>
              <button onClick={() => go("contact")} className="bg-white/5 border border-white/10 text-white px-16 py-8 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-white/10 transition-all">
-                Contact Technical Hub
+                {t("technical_manifesto_contact_technical_hub")}
              </button>
           </div>
         </motion.div>
@@ -467,9 +469,9 @@ export function TechnicalManifestoPage() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8 opacity-30">
            <div className="flex items-center gap-4">
               <Code className="size-5" />
-              <p className="text-[10px] font-black uppercase tracking-widest">Paperware Technical Standard v5.0.0</p>
+              <p className="text-[10px] font-black uppercase tracking-widest">{t("technical_manifesto_paperware_technical_standard_v5_0")}</p>
            </div>
-           <p className="text-[10px] font-black uppercase tracking-widest">© 2025 Paperware OS. All Protocols Reserved.</p>
+           <p className="text-[10px] font-black uppercase tracking-widest">{t("technical_manifesto_2025_paperware_os_all_protocols")}</p>
         </div>
       </footer>
     </div>

@@ -231,7 +231,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
           >
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="size-8 text-[#fabf37] animate-spin" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Loading video...</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">{t("immersive_hero_loading_video")}</span>
             </div>
           </motion.div>
         )}
@@ -258,7 +258,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                title="Background video"
+                title={t("immersive_hero_background_video")}
                 style={{ border: 0 }}
                 onLoad={() => {
                   setIsLoading(false);
@@ -286,12 +286,12 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
               </div>
               <div className="space-y-3">
                 <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-wider">
-                  Video Embedding Restricted
+                  {t("immersive_hero_video_embedding_restricted")}
                 </h3>
                 <p className="text-sm text-white/60 leading-relaxed">
-                  This YouTube video cannot be embedded due to owner restrictions.
+                  {t("immersive_hero_this_youtube_video_cannot_be")}
                   <br className="hidden md:block" />
-                  Please use a video that allows embedding or upload directly.
+                  {t("immersive_hero_please_use_a_video_that")}
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
@@ -302,7 +302,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                   className="group flex items-center gap-2 bg-[#fabf37] text-black px-6 py-3 rounded-full text-xs font-black uppercase tracking-wider hover:bg-[#e5ad2a] transition-all"
                 >
                   <ExternalLink className="size-4" />
-                  Watch on YouTube
+                  {t("immersive_hero_watch_on_youtube")}
                 </a>
                 <button
                   onClick={() => {
@@ -311,7 +311,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                   }}
                   className="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors underline"
                 >
-                  Use Fallback Video
+                  {t("immersive_hero_use_fallback_video")}
                 </button>
               </div>
             </div>
@@ -375,14 +375,14 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                 onClick={() => {
                   if (brochureUrl) {
                     if (onDownload) onDownload();
-                    window.open(brochureUrl, '_blank');
+                    window.open(brochureUrl, '_blank', 'noopener,noreferrer');
                   } else {
                     onExplore("products");
                   }
                 }}
                 className="group relative overflow-hidden bg-[#fabf37] text-black w-36 md:w-52 px-4 md:px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(250,191,55,0.2)]"
               >
-                <span className="relative z-10">E-Catalog</span>
+                <span className="relative z-10">{t("immersive_hero_e_catalog")}</span>
                 <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
               </button>
 
@@ -390,7 +390,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
                 onClick={() => onExplore("contact")}
                 className="group bg-[#d6c8a9]/10 backdrop-blur-xl text-white border border-[#d6c8a9]/30 w-36 md:w-52 px-4 md:px-8 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.25em] transition-all hover:bg-[#d6c8a9] hover:text-black relative"
               >
-                Contact Sales
+                {t("immersive_hero_contact_sales")}
               </button>
             </div>
 
@@ -413,8 +413,8 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
             >
               <div className="text-[#fabf37]/50">{item.icon}</div>
               <div className="flex flex-col">
-                <span className="text-[7px] font-black text-white/30 tracking-widest">{item.label}</span>
-                <span className="text-[10px] font-black text-white tracking-widest">{item.value}</span>
+                <span className="text-[7px] font-black text-white/30 tracking-widest">{t(item.label)}</span>
+                <span className="text-[10px] font-black text-white tracking-widest">{t(item.value)}</span>
               </div>
             </motion.div>
           ))}
@@ -431,7 +431,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
           type="button"
           onClick={() => setVideoPaused((v) => !v)}
           aria-pressed={videoPaused}
-          aria-label={videoPaused ? "Play background video" : "Pause background video"}
+          aria-label={t(videoPaused ? "Play background video" : "Pause background video")}
           className="absolute bottom-28 left-4 lg:left-auto lg:bottom-12 lg:right-[14rem] z-30 size-10 rounded-full border border-white/10 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-[#fabf37] hover:text-black hover:border-[#fabf37] transition-all"
         >
           {videoPaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
@@ -444,7 +444,7 @@ export const ImmersiveHero = ({ videoUrl, brochureUrl, onExplore, onDownload, po
         className="absolute bottom-12 right-24 z-30 hidden lg:flex items-center gap-3 group"
       >
         <span className="text-[9px] font-black text-white/40 uppercase tracking-widest group-hover:text-white transition-colors">
-          {isMuted ? "Audio Muted" : "Audio Active"}
+          {t(isMuted ? "Audio Muted" : "Audio Active")}
         </span>
         <div className="size-10 rounded-full border border-white/10 bg-black/20 backdrop-blur-sm flex items-center justify-center text-white group-hover:bg-[#fabf37] group-hover:text-black group-hover:border-[#fabf37] transition-all">
           {isMuted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}

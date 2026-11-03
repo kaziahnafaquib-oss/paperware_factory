@@ -23,10 +23,12 @@ import { toast } from "sonner";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterJourney from "../../assets/video-posters/journey-print-laminate.webp";
 import { useGo } from "../lib/useGo";
+import { useLanguage } from "../context/LanguageContext";
 
 const JOURNEY_VIDEO = mediaUrl("journey-print-laminate.mp4");
 
 export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
+  const { t } = useLanguage();
   const go = useGo();
   const chartData = [
     { time: '00:00', consistency: 98.2 },
@@ -159,8 +161,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
     const url = window.location.href;
     
     switch(platform) {
-      case 'fb': window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank'); break;
-      case 'li': window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank'); break;
+      case 'fb': window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'noopener,noreferrer'); break;
+      case 'li': window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'noopener,noreferrer'); break;
       case 'insta': alert("Ready for Story! Capture and tag @PaperwareFactory"); break;
     }
   };
@@ -198,32 +200,32 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               onClick={onBack}
               className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-black transition-colors"
             >
-              <ArrowLeft className="size-4" /> Back to Tracking
+              <ArrowLeft className="size-4" /> {t("product_journey_back_to_tracking")}
             </button>
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 mb-2">
                 <Shield className="size-3" />
-                <span className="text-[9px] font-black uppercase tracking-widest">Authenticated Batch</span>
+                <span className="text-[9px] font-black uppercase tracking-widest">{t("product_journey_authenticated_batch")}</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-[rgb(0,0,0)]">Product <br /><span className="text-[#fabf37]">Traceability</span></h1>
+              <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none text-[rgb(0,0,0)]">{t("catalog_3d_product")} <br /><span className="text-[#fabf37]">{t("product_journey_traceability")}</span></h1>
               <div className="flex flex-wrap items-center gap-4">
-                <p className="text-zinc-500 font-bold text-lg">Batch ID: #PW-88291-EXP</p>
+                <p className="text-zinc-500 font-bold text-lg">{t("product_journey_batch_id_pw_88291_exp")}</p>
                 <div className="h-4 w-px bg-zinc-200 hidden md:block" />
-                <p className="text-zinc-400 font-bold text-sm">Manufacturing Unit: Unit-4 (Dhaka)</p>
+                <p className="text-zinc-400 font-bold text-sm">{t("product_journey_manufacturing_unit_unit_4_dhaka")}</p>
               </div>
             </div>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             <div className="flex items-center gap-2 bg-white p-2 rounded-full border border-black/5 shadow-sm">
-              <span className="text-[8px] font-black uppercase tracking-widest text-zinc-400 ml-4 mr-2">Share Journey:</span>
+              <span className="text-[8px] font-black uppercase tracking-widest text-zinc-400 ml-4 mr-2">{t("product_journey_share_journey")}</span>
               <button onClick={() => handleShare('fb')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Facebook className="size-4" /></button>
               <button onClick={() => handleShare('insta')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Instagram className="size-4" /></button>
               <button onClick={() => handleShare('li')} className="size-10 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all"><Linkedin className="size-4" /></button>
               <button onClick={() => { navigator.clipboard?.writeText(window.location.href); toast.success('Link copied'); }} className="size-10 rounded-full bg-[#fabf37] text-black flex items-center justify-center hover:scale-110 transition-all"><Share2 className="size-4" /></button>
             </div>
             <button onClick={() => go("contact")} className="bg-black text-[#fabf37] px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:scale-105 transition-all shadow-xl">
-              <Download className="size-4" /> Request Report
+              <Download className="size-4" /> {t("product_journey_request_report")}
             </button>
           </div>
         </div>
@@ -236,8 +238,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                 <Package className="size-10" />
               </div>
               <div>
-                <h2 className="text-2xl font-black uppercase tracking-tight">Premium Paper Cup</h2>
-                <p className="text-zinc-500 font-bold italic">"Crafted with 100% Biodegradable Cellulose"</p>
+                <h2 className="text-2xl font-black uppercase tracking-tight">{t("product_journey_premium_paper_cup")}</h2>
+                <p className="text-zinc-500 font-bold italic">{t("product_journey_crafted_with_100_biodegradable_cellulose")}</p>
               </div>
 
               {/* Manufacturer Spotlight */}
@@ -247,27 +249,27 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                     <User className="size-6 text-[#fabf37]" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Master Printer</p>
-                    <p className="font-black text-white">Majedur Rahman</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("product_journey_master_printer")}</p>
+                    <p className="font-black text-white">{t("product_journey_majedur_rahman")}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 text-[9px] font-black uppercase tracking-widest text-emerald-500">
-                  <Award className="size-3" /> 15 Years of Experience
+                  <Award className="size-3" /> {t("product_journey_15_years_of_experience")}
                 </div>
               </div>
 
               <div className="space-y-4 pt-8 border-t border-white/10">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-zinc-500 uppercase font-black tracking-widest">Production Unit</span>
-                  <span className="font-black">Heidelberg Offset Hub</span>
+                  <span className="text-zinc-500 uppercase font-black tracking-widest">{t("product_journey_production_unit")}</span>
+                  <span className="font-black">{t("product_journey_heidelberg_offset_hub")}</span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-zinc-500 uppercase font-black tracking-widest">QC Lead</span>
-                  <span className="font-black">Rumana Ahmed</span>
+                  <span className="text-zinc-500 uppercase font-black tracking-widest">{t("product_journey_qc_lead")}</span>
+                  <span className="font-black">{t("product_journey_rumana_ahmed")}</span>
                 </div>
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-zinc-500 uppercase font-black tracking-widest">Shift</span>
-                  <span className="font-black">Morning (06:00 - 14:00)</span>
+                  <span className="text-zinc-500 uppercase font-black tracking-widest">{t("product_journey_shift")}</span>
+                  <span className="font-black">{t("product_journey_morning_06_00_14_00")}</span>
                 </div>
               </div>
 
@@ -275,15 +277,15 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <div className="bg-[#fabf37] p-8 rounded-[35px] text-black space-y-6">
                  <div className="flex justify-between items-start">
                     <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Sustainability Score</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest opacity-60">{t("product_journey_sustainability_score")}</p>
                       <p className="font-black text-3xl">9.4/10</p>
                     </div>
                     <Leaf className="size-8" />
                  </div>
                  <div className="space-y-3">
                     <div className="flex justify-between text-[9px] font-black uppercase tracking-widest">
-                       <span>Carbon Footprint</span>
-                       <span>Low Impact</span>
+                       <span>{t("product_journey_carbon_footprint")}</span>
+                       <span>{t("product_journey_low_impact")}</span>
                     </div>
                     <div className="h-1.5 bg-black/10 rounded-full overflow-hidden">
                        <div className="h-full bg-black rounded-full w-[94%]" />
@@ -295,8 +297,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <div className="p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl flex items-center gap-4 text-emerald-500">
                 <ShieldCheck className="size-8" />
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-widest">Compliance Status</p>
-                  <p className="font-black text-sm">ISO 9001:2015 Verified</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest">{t("product_journey_compliance_status")}</p>
+                  <p className="font-black text-sm">{t("product_journey_iso_9001_2015_verified")}</p>
                 </div>
               </div>
 
@@ -304,24 +306,24 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <div className="p-8 bg-zinc-900 rounded-[35px] border border-white/5 space-y-6">
                  <div className="flex items-center gap-2">
                     <Settings className="size-4 text-[#fabf37] animate-spin-slow" />
-                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Machine Health Matrix</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("product_journey_machine_health_matrix")}</p>
                  </div>
                  <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Temperature</p>
+                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("product_journey_temperature")}</p>
                        <p className="text-lg font-black text-white">42.5°C</p>
                     </div>
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Speed (RPM)</p>
+                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("product_journey_speed_rpm")}</p>
                        <p className="text-lg font-black text-white">1,240</p>
                     </div>
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Pressure</p>
-                       <p className="text-lg font-black text-white">8.2 Bar</p>
+                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("product_journey_pressure")}</p>
+                       <p className="text-lg font-black text-white">{t("product_journey_8_2_bar")}</p>
                     </div>
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">Vibration</p>
-                       <p className="text-lg font-black text-emerald-400">Nominal</p>
+                       <p className="text-[8px] font-black uppercase tracking-widest text-zinc-500 mb-1">{t("product_journey_vibration")}</p>
+                       <p className="text-lg font-black text-emerald-400">{t("product_journey_nominal")}</p>
                     </div>
                  </div>
               </div>
@@ -330,8 +332,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <div className="bg-black rounded-[40px] p-10 text-white space-y-8">
                  <div className="flex justify-between items-start">
                     <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">Quality Analytics</p>
-                      <h3 className="text-xl font-black uppercase tracking-tight">Batch Consistency</h3>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("product_journey_quality_analytics")}</p>
+                      <h3 className="text-xl font-black uppercase tracking-tight">{t("product_journey_batch_consistency")}</h3>
                     </div>
                     <TrendingUp className="size-6 text-emerald-500" />
                  </div>
@@ -340,7 +342,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                     <ConsistencySparkline data={chartData} />
                  </div>
                  <div className="flex items-center gap-2 text-[9px] font-black uppercase tracking-widest text-zinc-500 bg-white/5 p-4 rounded-2xl">
-                    <Info className="size-3" /> Illustrative trend — not live production data.
+                    <Info className="size-3" /> {t("product_journey_illustrative_trend_not_live_production")}
                  </div>
               </div>
             </div>
@@ -351,31 +353,31 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                   <div className="size-12 rounded-2xl bg-zinc-50 flex items-center justify-center">
                     <Globe className="size-6 text-black" />
                   </div>
-                  <h3 className="text-xl font-black uppercase tracking-tight">Materials Provenance</h3>
+                  <h3 className="text-xl font-black uppercase tracking-tight">{t("product_journey_materials_provenance")}</h3>
                </div>
                <div className="space-y-6">
                   <div className="flex items-start gap-4">
                      <div className="size-2 bg-[#fabf37] rounded-full mt-2" />
                      <div className="flex-1 border-b border-zinc-50 pb-4">
-                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">Raw Pulp Source</p>
-                        <p className="font-bold text-sm">FSC Certified Scandinavian Forests</p>
-                        <p className="text-[10px] text-zinc-400 font-medium">Batch #FS-2210-91</p>
+                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">{t("product_journey_raw_pulp_source")}</p>
+                        <p className="font-bold text-sm">{t("product_journey_fsc_certified_scandinavian_forests")}</p>
+                        <p className="text-[10px] text-zinc-400 font-medium">{t("product_journey_batch_fs_2210_91")}</p>
                      </div>
                   </div>
                   <div className="flex items-start gap-4">
                      <div className="size-2 bg-black rounded-full mt-2" />
                      <div className="flex-1 border-b border-zinc-50 pb-4">
-                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">Eco-Inks</p>
-                        <p className="font-bold text-sm">Soy-Based Pigments (German Tech)</p>
-                        <p className="text-[10px] text-zinc-400 font-medium">Non-Toxic / Food Grade</p>
+                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">{t("product_journey_eco_inks")}</p>
+                        <p className="font-bold text-sm">{t("product_journey_soy_based_pigments_german_tech")}</p>
+                        <p className="text-[10px] text-zinc-400 font-medium">{t("product_journey_non_toxic_food_grade")}</p>
                      </div>
                   </div>
                   <div className="flex items-start gap-4">
                      <div className="size-2 bg-emerald-500 rounded-full mt-2" />
                      <div className="flex-1">
-                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">Adhesive</p>
-                        <p className="font-bold text-sm">Water-Soluble Corn Starch</p>
-                        <p className="text-[10px] text-zinc-400 font-medium">100% Biodegradable</p>
+                        <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-1">{t("product_journey_adhesive")}</p>
+                        <p className="font-bold text-sm">{t("product_journey_water_soluble_corn_starch")}</p>
+                        <p className="text-[10px] text-zinc-400 font-medium">{t("product_journey_100_biodegradable")}</p>
                      </div>
                   </div>
                </div>
@@ -389,40 +391,40 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
               <FactoryClip
                 src={JOURNEY_VIDEO}
                 poster={posterJourney}
-                label="printing and laminating line"
+                label={t("product_journey_printing_and_laminating_line")}
                 className="aspect-[9/16] md:aspect-auto md:h-[420px] rounded-[32px]"
                 controlPosition="top-right"
               />
               <div className="space-y-4 px-2 md:px-4">
-                <p className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">From the line</p>
-                <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight">Printed, laminated, dried</h3>
+                <p className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">{t("product_journey_from_the_line")}</p>
+                <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight">{t("product_journey_printed_laminated_dried")}</h3>
                 <p className="text-sm text-zinc-500 font-medium leading-relaxed">
-                  Sheets leave the offset press, pass through the laminating unit for protection and shine, then dry on the racks until crisp.
+                  {t("product_journey_sheets_leave_the_offset_press")}
                 </p>
               </div>
             </div>
             {/* Stats Overview */}
             <div className="mb-12 bg-white p-8 rounded-[40px] border border-black/5 flex flex-wrap items-center gap-8 md:gap-16">
                <div className="space-y-1 text-center md:text-left">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Production Time</p>
-                  <p className="text-xl font-black">72.4 Hours</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("product_journey_production_time")}</p>
+                  <p className="text-xl font-black">{t("product_journey_72_4_hours")}</p>
                </div>
                <div className="h-8 w-px bg-zinc-100 hidden md:block" />
                <div className="space-y-1 text-center md:text-left">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">QC Pass Rate</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("product_journey_qc_pass_rate")}</p>
                   <p className="text-xl font-black text-emerald-600">99.98%</p>
                </div>
                <div className="h-8 w-px bg-zinc-100 hidden md:block" />
                <div className="space-y-1 text-center md:text-left">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Factory Load</p>
-                  <p className="text-xl font-black text-[#fabf37]">Optimal</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("product_journey_factory_load")}</p>
+                  <p className="text-xl font-black text-[#fabf37]">{t("product_journey_optimal")}</p>
                </div>
                <div className="h-8 w-px bg-zinc-100 hidden md:block" />
                <div className="space-y-1 text-center md:text-left">
-                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Global Ranking</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("product_journey_global_ranking")}</p>
                   <div className="flex items-center gap-2">
                     <ChartBar className="size-4" />
-                    <p className="text-xl font-black">Top 1%</p>
+                    <p className="text-xl font-black">{t("product_journey_top_1")}</p>
                   </div>
                </div>
             </div>
@@ -444,42 +446,42 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                       {/* Title with Sparkle */}
                       <div className="flex items-center gap-2">
                         <h4 className={`text-2xl md:text-3xl font-black uppercase tracking-tight ${item.completed ? 'text-black' : 'text-zinc-400'}`}>
-                          {item.status}
+                          {t(item.status)}
                         </h4>
                         {item.completed && <Sparkles className="size-5 text-[#fabf37]" />}
                       </div>
 
                       {/* Time and Location */}
                       <div className="flex flex-wrap items-center gap-4 text-sm font-bold text-zinc-400">
-                        <span className="flex items-center gap-2"><Calendar className="size-4 text-zinc-300" /> {item.time}</span>
-                        <span className="flex items-center gap-2 text-black"><MapPin className="size-4" /> {item.location}</span>
+                        <span className="flex items-center gap-2"><Calendar className="size-4 text-zinc-300" /> {t(item.time)}</span>
+                        <span className="flex items-center gap-2 text-black"><MapPin className="size-4" /> {t(item.location)}</span>
                       </div>
 
                       {/* Verified By */}
                       <div className="flex items-center gap-2 text-emerald-600 text-sm font-black uppercase">
-                        <User className="size-4" /> {item.verifiedBy}
+                        <User className="size-4" /> {t(item.verifiedBy)}
                       </div>
 
                       {/* Unit Badge */}
                       {item.completed && (
                         <div className="inline-flex items-center gap-2 px-6 py-3 bg-black text-[#fabf37] rounded-full text-xs font-black uppercase tracking-widest">
-                          <ShieldCheck className="size-4" /> {item.unit}
+                          <ShieldCheck className="size-4" /> {t(item.unit)}
                         </div>
                       )}
 
                       {/* Description */}
                       <p className="text-zinc-500 font-bold text-base leading-relaxed">
-                        {item.desc}
+                        {t(item.desc)}
                       </p>
 
                       {/* Footer Actions */}
                       {item.completed && (
                         <div className="pt-6 border-t border-zinc-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-400">
-                            <Activity className="size-4" /> Real-time Node Logs Verified
+                            <Activity className="size-4" /> {t("product_journey_real_time_node_logs_verified")}
                           </div>
                           <button onClick={() => go("factory-live")} className="text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-black transition-colors flex items-center gap-2">
-                            View Machine Data <ChevronRight className="size-4" />
+                            {t("product_journey_view_machine_data")} <ChevronRight className="size-4" />
                           </button>
                         </div>
                       )}
@@ -495,8 +497,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
         <div className="mt-32 pt-20 border-t border-zinc-100">
            <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
               <div className="space-y-4">
-                <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#fabf37]">Digital Factory Hub</p>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">Factory <span className="text-zinc-300">Pulse</span></h2>
+                <p className="text-[12px] font-black uppercase tracking-[0.2em] text-[#fabf37]">{t("product_journey_digital_factory_hub")}</p>
+                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none">{t("business_factory")} <span className="text-zinc-300">{t("our_erp_pulse")}</span></h2>
               </div>
               <div className="flex gap-4">
                  <button onClick={() => document.getElementById('factory-pulse-scroller')?.scrollBy({ left: -520, behavior: 'smooth' })} className="size-16 rounded-full bg-white border border-black/5 flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-sm group">
@@ -518,12 +520,12 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                    <div className="relative h-72 overflow-hidden">
                       <ImageWithFallback 
                         src={post.image} 
-                        alt={post.title}
+                        alt={t(post.title)}
                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-110"
                       />
                       <div className="absolute top-8 left-8 flex gap-3">
                         <div className="px-5 py-2.5 bg-black text-[#fabf37] rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
-                           {post.category}
+                           {t(post.category)}
                         </div>
                         <div className="size-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-black">
                            {post.platform}
@@ -531,8 +533,8 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                       </div>
                    </div>
                    <div className="p-12 space-y-6">
-                      <p className="text-[11px] font-black uppercase tracking-widest text-zinc-400">{post.date} • {post.platformName}</p>
-                      <h3 className="text-3xl font-black uppercase tracking-tight leading-tight group-hover:text-black transition-colors">{post.title}</h3>
+                      <p className="text-[11px] font-black uppercase tracking-widest text-zinc-400">{t(post.date)} • {t(post.platformName)}</p>
+                      <h3 className="text-3xl font-black uppercase tracking-tight leading-tight group-hover:text-black transition-colors">{t(post.title)}</h3>
                       <div className="flex items-center justify-between pt-6 border-t border-zinc-50">
                          <div className="flex items-center gap-3">
                             <div className="flex -space-x-3">
@@ -542,10 +544,10 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
                                   </div>
                                ))}
                             </div>
-                            <p className="text-[11px] font-black text-zinc-400">{post.likes} Engagements</p>
+                            <p className="text-[11px] font-black text-zinc-400">{t(post.likes)} {t("product_journey_engagements")}</p>
                          </div>
                          <button onClick={() => go("socials")} className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all group/btn">
-                            Read Post <ChevronRight className="size-4 text-[#fabf37]" />
+                            {t("product_journey_read_post")} <ChevronRight className="size-4 text-[#fabf37]" />
                          </button>
                       </div>
                    </div>
@@ -590,6 +592,7 @@ export function ProductJourneyPage({ onBack }: { onBack?: () => void }) {
 }
 /** Lightweight area chart for the batch-consistency panel: polyline + gradient fill, x labels, no chart library. */
 function ConsistencySparkline({ data }: { data: Array<{ time: string; consistency: number }> }) {
+  const { t } = useLanguage();
   const W = 600, H = 192, padX = 8, padTop = 12, padBottom = 24;
   const ys = data.map((d) => d.consistency);
   const min = Math.min(...ys) - 0.5, max = Math.max(...ys) + 0.5;
@@ -600,7 +603,7 @@ function ConsistencySparkline({ data }: { data: Array<{ time: string; consistenc
   const area = `${pts.join(" ")} ${px(data.length - 1).toFixed(1)},${H - padBottom} ${px(0).toFixed(1)},${H - padBottom}`;
   const title = `Batch consistency, ${data[0]?.time} to ${data[data.length - 1]?.time}: ${ys.map((y) => `${y}%`).join(", ")}`;
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="size-full" role="img" aria-label={title} preserveAspectRatio="none">
+    <svg viewBox={`0 0 ${W} ${H}`} className="size-full" role="img" aria-label={t(title)} preserveAspectRatio="none">
       <defs>
         <linearGradient id="colorCons" x1="0" y1="0" x2="0" y2="1">
           <stop offset="5%" stopColor="#fabf37" stopOpacity={0.3} />

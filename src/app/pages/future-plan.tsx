@@ -64,17 +64,17 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
           <div className="relative z-10 max-w-4xl space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900 rounded-full border border-zinc-800">
               <Sparkles className="size-4 text-[#fabf37]" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">Our Roadmap</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#fabf37]">{t("future_plan_our_roadmap")}</span>
             </div>
             <h1 className="text-[40px] md:text-[80px] font-black uppercase tracking-tighter leading-[0.9]">
-              The Future of <br /><span className="text-[#fabf37]">Packaging</span>
+              {t("future_plan_the_future_of")} <br /><span className="text-[#fabf37]">{t("future_plan_packaging")}</span>
             </h1>
             <p className="text-zinc-400 font-bold text-lg md:text-2xl max-w-2xl leading-relaxed">
-              Where Paperware is heading: more capacity, cleaner energy and less plastic.
+              {t("future_plan_where_paperware_is_heading_more")}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <button onClick={() => go("contact")} className="bg-[#fabf37] text-black px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl flex items-center gap-3">
-                <Download className="size-5" /> Request Vision PDF
+                <Download className="size-5" /> {t("future_plan_request_vision_pdf")}
               </button>
             </div>
           </div>
@@ -85,10 +85,10 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
       <section className="container mx-auto px-4 mb-40">
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
           <div className="space-y-4">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">Strategic Timeline</h2>
-            <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Evolutionary <br />Roadmap</h3>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400">{t("future_plan_strategic_timeline")}</h2>
+            <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">{t("future_plan_evolutionary")} <br />{t("future_plan_roadmap")}</h3>
           </div>
-          <p className="text-zinc-500 font-bold max-w-md text-right">Our production milestones and where we are investing next.</p>
+          <p className="text-zinc-500 font-bold max-w-md text-right">{t("future_plan_our_production_milestones_and_where")}</p>
         </div>
 
         <div className="grid md:grid-cols-5 gap-6">
@@ -100,9 +100,9 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
               transition={{ delay: i * 0.1 }}
               className="relative p-8 bg-zinc-50 rounded-[40px] border border-black/5 group hover:bg-black hover:text-white transition-all duration-500"
             >
-              <div className="text-[#fabf37] font-black text-3xl mb-8">{item.year}</div>
-              <h4 className="text-lg font-black uppercase tracking-tight mb-4 group-hover:text-[#fabf37] transition-colors text-[rgb(0,0,0)]">{item.title}</h4>
-              <p className="text-zinc-500 font-bold text-sm leading-relaxed group-hover:text-zinc-400 transition-colors">{item.desc}</p>
+              <div className="text-[#fabf37] font-black text-3xl mb-8">{t(item.year)}</div>
+              <h4 className="text-lg font-black uppercase tracking-tight mb-4 group-hover:text-[#fabf37] transition-colors text-[rgb(0,0,0)]">{t(item.title)}</h4>
+              <p className="text-zinc-500 font-bold text-sm leading-relaxed group-hover:text-zinc-400 transition-colors">{t(item.desc)}</p>
               <div className="mt-8 pt-8 border-t border-black/5 group-hover:border-white/10">
                 <Calendar className="size-5 text-zinc-300 group-hover:text-zinc-600" />
               </div>
@@ -120,12 +120,12 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
                 {s.icon}
               </div>
               <div className="space-y-3">
-                <h4 className="text-xl font-black uppercase tracking-tight text-[rgb(0,0,0)]">{s.title}</h4>
-                <p className="text-zinc-500 font-bold text-sm leading-relaxed">{s.desc}</p>
+                <h4 className="text-xl font-black uppercase tracking-tight text-[rgb(0,0,0)]">{t(s.title)}</h4>
+                <p className="text-zinc-500 font-bold text-sm leading-relaxed">{t(s.desc)}</p>
               </div>
               <div className="pt-6 border-t border-zinc-100 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Target Metric</span>
-                <span className="font-black text-emerald-600 italic">{s.stat}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">{t("future_plan_target_metric")}</span>
+                <span className="font-black text-emerald-600 italic">{t(s.stat)}</span>
               </div>
             </div>
           ))}

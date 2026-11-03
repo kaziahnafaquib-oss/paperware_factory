@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { useLanguage } from "../../context/LanguageContext";
 
 interface MediaPlayerProps {
   src: string;
@@ -23,6 +24,7 @@ export function MediaPlayer({
   muted = true,
   loop = true
 }: MediaPlayerProps) {
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [isMuted, setIsMuted] = useState(muted);
   const [showControls, setShowControls] = useState(false);
@@ -63,7 +65,7 @@ export function MediaPlayer({
   if (type === 'image') {
     return (
       <div className={className}>
-        <ImageWithFallback src={src} alt={alt} className="w-full h-full object-cover" />
+        <ImageWithFallback src={src} alt={t(alt)} className="w-full h-full object-cover" />
       </div>
     );
   }
@@ -74,7 +76,7 @@ export function MediaPlayer({
     if (!videoId) {
       return (
         <div className={`${className} flex items-center justify-center bg-zinc-900 text-white`}>
-          <p className="text-sm font-bold">Invalid YouTube URL</p>
+          <p className="text-sm font-bold">{t("media_player_invalid_youtube_url")}</p>
         </div>
       );
     }
@@ -83,7 +85,7 @@ export function MediaPlayer({
       <div className={`${className} relative`}>
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=${autoPlay ? 1 : 0}&mute=${muted ? 1 : 0}&loop=${loop ? 1 : 0}&playlist=${videoId}`}
-          title={alt}
+          title={t(alt)}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="w-full h-full border-0"
@@ -118,7 +120,7 @@ export function MediaPlayer({
       {/* Thumbnail Overlay (when paused) */}
       {!isPlaying && thumbnail && (
         <div className="absolute inset-0">
-          <ImageWithFallback src={thumbnail} alt={alt} className="w-full h-full object-cover" />
+          <ImageWithFallback src={thumbnail} alt={t(alt)} className="w-full h-full object-cover" />
         </div>
       )}
 

@@ -45,8 +45,10 @@ import cookieBoxes from '@/assets/products/cookie-boxes.webp';
 import tissueBoxes from '@/assets/products/tissue-boxes.webp';
 import partnerBanner from 'figma:asset/b075043713f864ee3b46a98de066b431d81fde8c.webp';
 import { useGo } from "../lib/useGo";
+import { useLanguage } from "../context/LanguageContext";
 
 export function PartnerProgramPage() {
+  const { t } = useLanguage();
   const go = useGo();
   const { scrollY, scrollYProgress } = useScroll();
   const heroTitleY = useTransform(scrollY, [0, 500], [0, 150]);
@@ -191,7 +193,7 @@ export function PartnerProgramPage() {
               variants={itemVariants}
               className="inline-flex items-center justify-between px-6 py-3 bg-[#fabf37] text-black rounded-full font-black text-sm uppercase tracking-widest mb-8 border border-[#fabf37]/20 shadow-[0_0_20px_rgba(250,191,55,0.3)] hover:scale-105 transition-transform cursor-default"
             >
-               <span>Partner Program</span>
+               <span>{t("partnerprogram_partner_program")}</span>
                <ChevronRight className="size-5 ml-2" />
             </motion.div>
             
@@ -205,7 +207,7 @@ export function PartnerProgramPage() {
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                SCALE WITH
+                {t("partnerprogram_scale_with")}
               </motion.span> 
               <br/>
               <motion.span 
@@ -237,7 +239,7 @@ export function PartnerProgramPage() {
             
             <motion.div style={{ y: heroTextY }}>
             <motion.p variants={itemVariants} className="text-xl md:text-2xl text-zinc-500 mb-12 leading-relaxed font-light max-w-2xl mx-auto">
-              Join the leading B2B sustainable packaging network. Unlock exclusive pricing, dedicated support, and premium marketing resources to grow your business.
+              {t("partnerprogram_join_the_leading_b2b_sustainable")}
             </motion.p>
             </motion.div>
 
@@ -249,14 +251,14 @@ export function PartnerProgramPage() {
                   whileHover={{ scale: 1.05, boxShadow: "0px 0px 30px rgba(250,191,55,0.4)" }}
                   whileTap={{ scale: 0.95 }}
               >
-                  Join The Network
+                  {t("partnerprogram_join_the_network")}
               </motion.button>
               <div className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-100 border border-zinc-200">
                 <span className="flex h-2 w-2 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
-                <span className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Applications Open</span>
+                <span className="text-sm font-bold text-zinc-500 uppercase tracking-wider">{t("partnerprogram_applications_open")}</span>
               </div>
             </motion.div>
             </motion.div>
@@ -275,7 +277,7 @@ export function PartnerProgramPage() {
         >
             <div className="max-w-5xl mx-auto bg-[#fabf37] text-black rounded-[32px] px-8 py-12 md:px-16 text-center">
               <p className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-[1.1]">
-                Trusted by cafés, restaurants, hospitals and brands across Bangladesh
+                {t("clients_trusted_by_caf_s_restaurants")}
               </p>
             </div>
         </motion.div>
@@ -310,8 +312,8 @@ export function PartnerProgramPage() {
                         <div className={`size-14 rounded-xl flex items-center justify-center mb-10 transition-all duration-300 ${item.isFirst ? 'bg-[#fabf37] text-black shadow-lg shadow-[#fabf37]/30' : 'bg-zinc-100 border border-zinc-200 text-black group-hover:bg-[#fabf37] group-hover:text-black group-hover:border-[#fabf37]'}`}>
                             <item.icon className="size-7" />
                         </div>
-                        <h3 className="text-lg font-black mb-4 uppercase tracking-widest leading-tight text-black">{item.title}</h3>
-                        <p className="text-zinc-500 leading-relaxed text-sm font-semibold group-hover:text-zinc-600">{item.desc}</p>
+                        <h3 className="text-lg font-black mb-4 uppercase tracking-widest leading-tight text-black">{t(item.title)}</h3>
+                        <p className="text-zinc-500 leading-relaxed text-sm font-semibold group-hover:text-zinc-600">{t(item.desc)}</p>
                     </motion.div>
                 ))}
             </div>
@@ -336,9 +338,9 @@ export function PartnerProgramPage() {
                       viewport={{ once: true }}
                       className="flex flex-col items-center"
                     >
-                      <h2 className="text-4xl md:text-5xl font-black uppercase mb-6 tracking-tight leading-none text-black">Become a <span className="text-[#fabf37]">Partner</span> Today</h2>
+                      <h2 className="text-4xl md:text-5xl font-black uppercase mb-6 tracking-tight leading-none text-black">{t("partnerprogram_become_a")} <span className="text-[#fabf37]">{t("partnerprogram_partner")}</span> {t("partnerprogram_today")}</h2>
                       <p className="text-zinc-500 mb-12 text-lg font-light leading-relaxed max-w-2xl mx-auto">
-                          Ready to expand your product portfolio? Complete the application form and our partnership team will review your profile.
+                          {t("partnerprogram_ready_to_expand_your_product")}
                       </p>
                     </motion.div>
 
@@ -368,8 +370,8 @@ export function PartnerProgramPage() {
                                     {item.step}
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-lg text-black mb-1">{item.title}</h4>
-                                    <p className="text-zinc-500 text-sm">{item.desc}</p>
+                                    <h4 className="font-bold text-lg text-black mb-1">{t(item.title)}</h4>
+                                    <p className="text-zinc-500 text-sm">{t(item.desc)}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -388,12 +390,12 @@ export function PartnerProgramPage() {
                             {/* Basic Info */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">First Name</label>
-                                    <input {...register("firstName", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="John" />
+                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_first_name")}</label>
+                                    <input {...register("firstName", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder={t("partnerprogram_john")} />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Last Name</label>
-                                    <input {...register("lastName", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="Doe" />
+                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_last_name")}</label>
+                                    <input {...register("lastName", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder={t("partnerprogram_doe")} />
                                 </div>
                             </div>
 
@@ -401,11 +403,11 @@ export function PartnerProgramPage() {
                             <div className="space-y-6">
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Company Name</label>
-                                        <input {...register("company", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="Your Company Ltd." />
+                                        <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("auth_modal_company_name")}</label>
+                                        <input {...register("company", { required: true })} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder={t("partnerprogram_your_company_ltd")} />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Website</label>
+                                        <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_website")}</label>
                                         <input {...register("website")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="https://..." />
                                     </div>
                                 </div>
@@ -413,10 +415,10 @@ export function PartnerProgramPage() {
                                 {/* Emails */}
                                 <div className="space-y-3">
                                   <div className="flex items-center justify-between">
-                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Email Address(es)</label>
+                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_email_address_es")}</label>
                                     {emails.length < 3 && (
                                       <button type="button" onClick={addEmail} className="text-[10px] font-bold text-[#fabf37] hover:underline flex items-center gap-1">
-                                        <Plus className="size-3" /> Add
+                                        <Plus className="size-3" /> {t("export_request_form_add")}
                                       </button>
                                     )}
                                   </div>
@@ -428,7 +430,7 @@ export function PartnerProgramPage() {
                                           required={idx === 0}
                                           value={email}
                                           onChange={(e) => updateEmail(idx, e.target.value)}
-                                          placeholder={idx === 0 ? "Primary Email Address" : "Secondary Email Address"}
+                                          placeholder={t(idx === 0 ? "Primary Email Address" : "Secondary Email Address")}
                                           className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs"
                                         />
                                         {idx > 0 && (
@@ -449,10 +451,10 @@ export function PartnerProgramPage() {
                             {/* Contact Numbers Dynamic */}
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Contact Number(s)</label>
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("export_request_form_contact_number_s")}</label>
                                   {contactNumbers.length < 3 && (
                                     <button type="button" onClick={addContactNumber} className="text-[10px] font-bold text-[#fabf37] hover:underline flex items-center gap-1">
-                                      <Plus className="size-3" /> Add
+                                      <Plus className="size-3" /> {t("export_request_form_add")}
                                     </button>
                                   )}
                                 </div>
@@ -475,11 +477,11 @@ export function PartnerProgramPage() {
                                           value={contact.number}
                                           required={idx === 0}
                                           onChange={(e) => updateContactNumber(idx, e.target.value)}
-                                          placeholder={idx === 0 ? "Primary Contact Number" : "Alternative Number"}
+                                          placeholder={t(idx === 0 ? "Primary Contact Number" : "Alternative Number")}
                                           className="w-full bg-transparent border-b border-zinc-200 py-2 font-bold text-xs outline-none focus:border-[#fabf37] transition-colors text-black placeholder:text-zinc-400 pr-8"
                                         />
                                         <div className="flex flex-wrap gap-2 items-center">
-                                          <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mr-2">Available on:</span>
+                                          <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-wider mr-2">{t("export_request_form_available_on")}</span>
                                           {['WhatsApp', 'Viber', 'IMO', 'Direct Call'].map((app) => (
                                             <button
                                               key={app}
@@ -491,7 +493,7 @@ export function PartnerProgramPage() {
                                                   : 'bg-white text-zinc-400 border-zinc-200 hover:border-black hover:text-black'
                                               }`}
                                             >
-                                              {app}
+                                              {t(app)}
                                             </button>
                                           ))}
                                         </div>
@@ -503,7 +505,7 @@ export function PartnerProgramPage() {
 
                             {/* Social Verification */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Social Verification (Optional)</label>
+                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("export_request_form_social_verification_optional")}</label>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                   {[
                                     { icon: Facebook, placeholder: "Facebook Profile URL", name: "facebook" },
@@ -517,7 +519,7 @@ export function PartnerProgramPage() {
                                       <input 
                                         type="text"
                                         {...register(social.name)}
-                                        placeholder={social.placeholder}
+                                        placeholder={t(social.placeholder)}
                                         className="flex-1 bg-transparent border-none outline-none text-[10px] font-bold text-black placeholder:text-zinc-400"
                                       />
                                     </div>
@@ -528,39 +530,39 @@ export function PartnerProgramPage() {
                             {/* Location */}
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Country</label>
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_country")}</label>
                                   <select {...register("country")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black font-bold text-xs appearance-none">
-                                    <option value="">Select Country</option>
-                                    <option>United Kingdom</option>
-                                    <option>United Arab Emirates</option>
-                                    <option>Germany</option>
-                                    <option>United States</option>
-                                    <option>Australia</option>
-                                    <option>Saudi Arabia</option>
-                                    <option>Netherlands</option>
-                                    <option>Bangladesh</option>
-                                    <option>Other</option>
+                                    <option value="">{t("partnerprogram_select_country")}</option>
+                                    <option>{t("export_request_form_united_kingdom")}</option>
+                                    <option>{t("export_request_form_united_arab_emirates")}</option>
+                                    <option>{t("export_request_form_germany")}</option>
+                                    <option>{t("export_request_form_united_states")}</option>
+                                    <option>{t("export_request_form_australia")}</option>
+                                    <option>{t("export_request_form_saudi_arabia")}</option>
+                                    <option>{t("export_request_form_netherlands")}</option>
+                                    <option>{t("partnerprogram_bangladesh")}</option>
+                                    <option>{t("action_modal_other")}</option>
                                   </select>
                                 </div>
                                 <div className="space-y-2">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">City / Region</label>
-                                  <input {...register("city")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="e.g. London" />
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_city_region")}</label>
+                                  <input {...register("city")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder={t("partnerprogram_e_g_london")} />
                                 </div>
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Zip / Postal Code</label>
-                                  <input {...register("zip")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="e.g. E1 6AN" />
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_zip_postal_code")}</label>
+                                  <input {...register("zip")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder={t("partnerprogram_e_g_e1_6an")} />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Business Type</label>
+                                    <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_business_type")}</label>
                                     <div className="relative">
                                         <select {...register("type")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black appearance-none cursor-pointer font-bold text-xs">
-                                            <option value="distributor">Distributor</option>
-                                            <option value="wholesaler">Wholesaler</option>
-                                            <option value="reseller">Reseller</option>
-                                            <option value="consultant">Sales Consultant</option>
+                                            <option value="distributor">{t("partnerprogram_distributor")}</option>
+                                            <option value="wholesaler">{t("partnerprogram_wholesaler")}</option>
+                                            <option value="reseller">{t("partnerprogram_reseller")}</option>
+                                            <option value="consultant">{t("partnerprogram_sales_consultant")}</option>
                                         </select>
                                         <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
                                             <ChevronRight className="size-4 text-zinc-500 rotate-90" />
@@ -572,26 +574,26 @@ export function PartnerProgramPage() {
                             {/* Products & Quantity */}
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Primary Product Interest</label>
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_primary_product_interest")}</label>
                                   <div className="relative">
                                       <select {...register("productInterest")} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black appearance-none cursor-pointer font-bold text-xs">
-                                        <option value="">Select Product Type</option>
-                                        <optgroup label="Paper Cups & Accessories">
-                                          <option>Paper Cup (All Sizes)</option>
-                                          <option>Paper Cup Accessories</option>
+                                        <option value="">{t("export_request_form_select_product_type")}</option>
+                                        <optgroup label={t("export_request_form_paper_cups_accessories")}>
+                                          <option>{t("export_request_form_paper_cup_all_sizes")}</option>
+                                          <option>{t("partnerprogram_paper_cup_accessories")}</option>
                                         </optgroup>
-                                        <optgroup label="Restaurant & Food Service">
-                                          <option>Food Boxes</option>
-                                          <option>Paper Bags</option>
-                                          <option>Cutlery & Straws</option>
+                                        <optgroup label={t("export_request_form_restaurant_food_service")}>
+                                          <option>{t("partnerprogram_food_boxes")}</option>
+                                          <option>{t("partnerprogram_paper_bags")}</option>
+                                          <option>{t("partnerprogram_cutlery_straws")}</option>
                                         </optgroup>
-                                        <optgroup label="Pharma & Medical">
-                                          <option>Medicine Boxes</option>
-                                          <option>Prescription Pads</option>
+                                        <optgroup label={t("partnerprogram_pharma_medical")}>
+                                          <option>{t("partnerprogram_medicine_boxes")}</option>
+                                          <option>{t("partnerprogram_prescription_pads")}</option>
                                         </optgroup>
-                                        <optgroup label="Garments">
-                                          <option>Hangtags & Labels</option>
-                                          <option>Packaging Boxes</option>
+                                        <optgroup label={t("partnerprogram_garments")}>
+                                          <option>{t("partnerprogram_hangtags_labels")}</option>
+                                          <option>{t("partnerprogram_packaging_boxes")}</option>
                                         </optgroup>
                                       </select>
                                       <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -600,14 +602,14 @@ export function PartnerProgramPage() {
                                   </div>
                                 </div>
                                 <div className="space-y-2">
-                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Est. Monthly Volume (Units)</label>
+                                  <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_est_monthly_volume_units")}</label>
                                   <input {...register("volume")} type="number" className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 font-bold text-xs" placeholder="e.g. 50,000" />
                                 </div>
                             </div>
                             
                             {/* Certifications Checkboxes */}
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Required Certifications</label>
+                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("export_request_form_required_certifications")}</label>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                   {[
                                     { id: 'fsc', label: 'FSC Certified' },
@@ -620,7 +622,7 @@ export function PartnerProgramPage() {
                                       <div className="size-3.5 border border-zinc-300 rounded flex items-center justify-center group-has-[:checked]:bg-[#fabf37] group-has-[:checked]:border-[#fabf37]">
                                         <CheckCircle className="size-2.5 text-black opacity-0 group-has-[:checked]:opacity-100" />
                                       </div>
-                                      <span className="text-[8px] font-black uppercase tracking-tight text-zinc-500 group-has-[:checked]:text-[#fabf37]">{cert.label}</span>
+                                      <span className="text-[8px] font-black uppercase tracking-tight text-zinc-500 group-has-[:checked]:text-[#fabf37]">{t(cert.label)}</span>
                                     </label>
                                   ))}
                                 </div>
@@ -628,12 +630,12 @@ export function PartnerProgramPage() {
 
                             {/* Additional Info & Upload */}
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Additional Information / Requirements</label>
-                                <textarea {...register("message")} rows={4} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 resize-none font-bold text-xs" placeholder="Tell us about your distribution network, target market, or specific requirements..." />
+                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_additional_information_requirements")}</label>
+                                <textarea {...register("message")} rows={4} className="w-full px-6 py-4 bg-zinc-50 rounded-2xl border border-zinc-200 focus:border-[#fabf37] focus:ring-1 focus:ring-[#fabf37] outline-none transition-all text-black placeholder:text-zinc-400 resize-none font-bold text-xs" placeholder={t("partnerprogram_tell_us_about_your_distribution")} />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">Company Profile / Docs (Optional)</label>
+                                <label className="text-[10px] font-black uppercase tracking-wider text-zinc-500 ml-1">{t("partnerprogram_company_profile_docs_optional")}</label>
                                 <div className="relative group">
                                   <div className={`border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center text-center transition-all cursor-pointer ${attachment ? 'border-[#fabf37] bg-[#fabf37]/5' : 'border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50'}`}>
                                     <input 
@@ -644,7 +646,7 @@ export function PartnerProgramPage() {
                                           setAttachment(e.target.files[0]);
                                         }
                                       }}
-                                      aria-label="Attach a file (PDF, Word or image)"
+                                      aria-label={t("partnerprogram_attach_a_file_pdf_word")}
                                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     />
                                     {attachment ? (
@@ -652,7 +654,7 @@ export function PartnerProgramPage() {
                                         <div className="size-10 bg-zinc-100 rounded-xl flex items-center justify-center mb-2 overflow-hidden text-[#fabf37]">
                                           <Upload className="size-5" />
                                         </div>
-                                        <p className="text-[10px] font-black text-black">{attachment.name}</p>
+                                        <p className="text-[10px] font-black text-black">{t(attachment.name)}</p>
                                         <p className="text-[8px] font-bold text-zinc-400">{(attachment.size / 1024 / 1024).toFixed(2)} MB</p>
                                         <button 
                                           type="button"
@@ -662,14 +664,14 @@ export function PartnerProgramPage() {
                                           }}
                                           className="mt-2 text-[9px] font-bold text-red-500 hover:underline z-10 relative"
                                         >
-                                          Remove File
+                                          {t("partnerprogram_remove_file")}
                                         </button>
                                       </div>
                                     ) : (
                                       <div className="flex flex-col items-center text-zinc-400">
                                         <Upload className="size-8 mb-3 opacity-50" />
-                                        <p className="text-[10px] font-bold text-zinc-500">Click to upload or drag and drop</p>
-                                        <p className="text-[8px] opacity-60">PDF, DOC, Images (Max 10MB)</p>
+                                        <p className="text-[10px] font-bold text-zinc-500">{t("export_request_form_click_to_upload_or_drag")}</p>
+                                        <p className="text-[8px] opacity-60">{t("partnerprogram_pdf_doc_images_max_10mb")}</p>
                                       </div>
                                     )}
                                   </div>
@@ -682,7 +684,7 @@ export function PartnerProgramPage() {
                                 disabled={isSubmitting}
                                 className="w-full py-5 bg-[#fabf37] text-black font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-black hover:text-white transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(250,191,55,0.3)] hover:shadow-lg"
                             >
-                                {isSubmitting ? "Processing..." : "Submit Application"}
+                                {t(isSubmitting ? "Processing..." : "Submit Application")}
                                 {!isSubmitting && <ArrowRight className="size-5" />}
                             </motion.button>
                         </form>
@@ -696,11 +698,11 @@ export function PartnerProgramPage() {
       <section className="py-24 bg-zinc-50 border-t border-zinc-200 overflow-hidden">
         <div className="container mx-auto px-4 mb-12 flex justify-between items-end">
           <div>
-            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-black mb-4">Top Selling <span className="text-[#fabf37]">Products</span></h2>
-            <p className="text-zinc-500 max-w-xl">High-demand packaging solutions ready for immediate wholesale distribution.</p>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tight text-black mb-4">{t("partnerprogram_top_selling")} <span className="text-[#fabf37]">{t("partnerprogram_products")}</span></h2>
+            <p className="text-zinc-500 max-w-xl">{t("partnerprogram_high_demand_packaging_solutions_ready")}</p>
           </div>
           <button onClick={() => go("products")} className="hidden md:flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#fabf37] hover:text-black transition-colors">
-            View Catalog <ArrowRight className="size-4" />
+            {t("partnerprogram_view_catalog")} <ArrowRight className="size-4" />
           </button>
         </div>
         
@@ -725,22 +727,22 @@ export function PartnerProgramPage() {
                      className="min-w-[280px] md:min-w-[320px] bg-white rounded-3xl p-4 border border-zinc-100 hover:border-[#fabf37] transition-all group shadow-sm hover:shadow-xl hover:-translate-y-2 whitespace-normal"
                    >
                      <div className="relative h-64 rounded-2xl overflow-hidden mb-4 bg-zinc-100">
-                       <img src={product.img} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                       <img src={product.img} alt={t(product.name)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                      </div>
                      <div className="px-2">
-                       <h3 className="font-bold text-lg text-black mb-2">{product.name}</h3>
+                       <h3 className="font-bold text-lg text-black mb-2">{t(product.name)}</h3>
                        <div className="flex items-center justify-between mb-4">
                          <div className="flex flex-col">
-                           <span className="text-[10px] text-zinc-400 uppercase font-bold">Price</span>
-                           <span className="text-[#fabf37] font-black text-lg">{product.price}</span>
+                           <span className="text-[10px] text-zinc-400 uppercase font-bold">{t("partnerprogram_price")}</span>
+                           <span className="text-[#fabf37] font-black text-lg">{t(product.price)}</span>
                          </div>
                          <div className="flex flex-col text-right">
                            <span className="text-[10px] text-zinc-400 uppercase font-bold">MOQ</span>
-                           <span className="text-zinc-900 font-bold">{product.min}</span>
+                           <span className="text-zinc-900 font-bold">{t(product.min)}</span>
                          </div>
                        </div>
                        <button onClick={() => go("quote")} className="w-full py-3 rounded-xl bg-zinc-100 text-black font-bold text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
-                         <ShoppingBag className="size-4" /> Add to Inquiry
+                         <ShoppingBag className="size-4" /> {t("partnerprogram_add_to_inquiry")}
                        </button>
                      </div>
                    </div>
@@ -769,7 +771,7 @@ export function PartnerProgramPage() {
                           className="flex items-center gap-2"
                        >
                           <item.icon className="size-6 text-zinc-400" />
-                          <span className="font-bold text-sm text-zinc-400">{item.text}</span>
+                          <span className="font-bold text-sm text-zinc-400">{t(item.text)}</span>
                        </motion.div>
                    ))}
               </div>
@@ -785,11 +787,11 @@ export function PartnerProgramPage() {
         >
           {[...Array(6)].map((_, i) => (
             <div key={i} className="flex items-center gap-12 text-sm md:text-base font-black uppercase tracking-[0.2em]">
-              <span className="flex items-center gap-3"><Instagram className="size-5" /> Follow on Instagram</span>
+              <span className="flex items-center gap-3"><Instagram className="size-5" /> {t("live_social_feeds_follow_on_instagram")}</span>
               <Star className="size-4 text-white/20" />
-              <span className="flex items-center gap-3"><Facebook className="size-5" /> Like on Facebook</span>
+              <span className="flex items-center gap-3"><Facebook className="size-5" /> {t("partnerprogram_like_on_facebook")}</span>
               <Star className="size-4 text-white/20" />
-              <span className="flex items-center gap-3"><Linkedin className="size-5" /> Connect on LinkedIn</span>
+              <span className="flex items-center gap-3"><Linkedin className="size-5" /> {t("partnerprogram_connect_on_linkedin")}</span>
               <Star className="size-4 text-white/20" />
             </div>
           ))}

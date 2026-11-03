@@ -85,13 +85,13 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
             className="flex items-center gap-3 mb-6"
           >
             <div className="size-2 rounded-full bg-[#fabf37]" />
-            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">Food-Grade Packaging Solutions</span>
+            <span className="text-[#fabf37] font-black uppercase tracking-[0.4em] text-xs">{t("restaurant_supplies_food_grade_packaging_solutions")}</span>
           </motion.div>
           <h1 className="text-[56px] md:text-[90px] font-black uppercase tracking-tighter leading-[0.85] mb-8 text-black">
-            Restaurant <br /> <span className="text-zinc-500">Supplies</span>
+            {t("restaurant_supplies_restaurant")} <br /> <span className="text-zinc-500">{t("fmcg_garments_supplies")}</span>
           </h1>
           <p className="text-zinc-500 font-bold text-lg max-w-2xl leading-relaxed">
-            Our food packaging is engineered for the modern culinary industry. Leak-proof, heat-retaining, sustainable materials that keep your food as fresh as it was in the kitchen.
+            {t("restaurant_supplies_our_food_packaging_is_engineered")}
           </p>
         </div>
       </section>
@@ -116,8 +116,8 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
               <div className="size-16 rounded-2xl bg-zinc-50 flex items-center justify-center mb-6 text-[#fabf37] group-hover:scale-110 transition-transform duration-300">
                 {item.icon}
               </div>
-              <h4 className="text-xl font-black uppercase mb-4 text-black">{item.title}</h4>
-              <p className="text-zinc-500 font-bold text-sm leading-relaxed">{item.desc}</p>
+              <h4 className="text-xl font-black uppercase mb-4 text-black">{t(item.title)}</h4>
+              <p className="text-zinc-500 font-bold text-sm leading-relaxed">{t(item.desc)}</p>
             </motion.div>
           ))}
         </div>
@@ -134,7 +134,7 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
             >
               <div className="aspect-square overflow-hidden">
                 {p.image ? (
-                  <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <ImageWithFallback src={p.image} alt={t(p.name)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full bg-[#fabf37] flex items-center justify-center text-black/80 group-hover:scale-110 transition-transform duration-700">
                     <p.icon className="size-20" strokeWidth={1} />
@@ -146,13 +146,13 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
                    <div className="size-12 rounded-xl bg-zinc-50 flex items-center justify-center text-black group-hover:bg-black group-hover:text-[#fabf37] transition-all">
                      <p.icon className="size-5" />
                    </div>
-                   <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{p.category}</span>
+                   <span className="text-[8px] font-black uppercase tracking-widest px-3 py-1 bg-zinc-100 rounded-full text-[rgb(0,0,0)]">{t(p.category)}</span>
                 </div>
-                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{p.name}</h3>
-                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{p.desc}</p>
+                <h3 className="text-lg font-black uppercase tracking-tight mb-3 text-black">{t(p.name)}</h3>
+                <p className="text-zinc-500 font-bold text-xs mb-6 leading-relaxed line-clamp-2">{t(p.desc)}</p>
                 <div className="flex items-center justify-between">
                   <button type="button" className="flex items-center gap-2 min-h-11 text-[9px] font-black uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
-                    Order Now <ArrowRight className="size-4" />
+                    {t("marketing_materials_order_now")} <ArrowRight className="size-4" />
                   </button>
                   <Zap className="size-4 text-[#fabf37]" />
                 </div>
@@ -167,11 +167,11 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
         <div className="bg-[#fabf37] rounded-[60px] p-12 lg:p-20 flex flex-col lg:flex-row items-center gap-12 overflow-hidden relative">
           <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none"><Truck className="size-64 text-black" /></div>
           <div className="lg:w-1/2 space-y-6">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">Express <br /> Food-Pack</h2>
-            <p className="text-black/60 font-bold text-lg max-w-md">Need packaging urgently for your restaurant? We dispatch within 12-24 hours for standard sizes.</p>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black">{t("restaurant_supplies_express")} <br /> {t("restaurant_supplies_food_pack")}</h2>
+            <p className="text-black/60 font-bold text-lg max-w-md">{t("restaurant_supplies_need_packaging_urgently_for_your")}</p>
           </div>
           <div className="lg:w-1/2 flex justify-end">
-            <button onClick={() => go("quote")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">Start Express Order</button>
+            <button onClick={() => go("quote")} className="bg-black text-[#fabf37] px-12 py-6 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all shadow-2xl">{t("restaurant_supplies_start_express_order")}</button>
           </div>
         </div>
       </section>
@@ -184,10 +184,10 @@ export function RestaurantSuppliesPage({ onProductClick }: { onProductClick: (p:
         <div className="container mx-auto px-12 relative z-10">
           <div className="max-w-3xl space-y-8">
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white">
-              Scale Your <span className="text-[#fabf37]">Chain</span>
+              {t("papercups_scale_your")} <span className="text-[#fabf37]">{t("pharma_supplies_chain")}</span>
             </h2>
             <p className="text-zinc-500 font-bold text-xl leading-relaxed">
-              Supporting global food chains with consistent high-volume supply.
+              {t("restaurant_supplies_supporting_global_food_chains_with")}
             </p>
           </div>
         </div>

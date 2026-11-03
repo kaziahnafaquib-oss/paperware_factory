@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Send, Paperclip, Phone, MessageCircle, Star, Mail, Info } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function ManagerCard() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [rating, setRating] = useState(0);
@@ -36,15 +38,15 @@ export function ManagerCard() {
          <div className="absolute top-0 right-0 w-32 h-32 bg-[#fabf37]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="size-16 rounded-full overflow-hidden border-2 border-[#fabf37] relative z-10">
-          <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
+          <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label={t("manager_card_account_manager")}>AM</div>
           <div className="absolute bottom-0 right-0 size-3 bg-emerald-500 border-2 border-white rounded-full" />
         </div>
         
         <div className="space-y-1 relative z-10 flex-1">
           <div className="flex justify-between items-start">
             <div>
-                <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">Your Manager</p>
-                <p className="text-sm font-black text-black">Account Manager</p>
+                <p className="text-[8px] font-black uppercase tracking-widest text-[#fabf37]">{t("manager_card_your_manager")}</p>
+                <p className="text-sm font-black text-black">{t("manager_card_account_manager_2")}</p>
             </div>
             <Info className="size-4 text-zinc-400 group-hover:text-[#fabf37] transition-colors" />
           </div>
@@ -54,7 +56,7 @@ export function ManagerCard() {
                 className="text-[9px] font-bold text-zinc-500 underline decoration-[#fabf37] hover:text-black transition-colors flex items-center gap-1"
              >
                 <MessageCircle className="size-3" />
-                Direct Message
+                {t("manager_card_direct_message")}
             </button>
            <span className="text-[9px] text-zinc-300">|</span>
            <button 
@@ -62,15 +64,15 @@ export function ManagerCard() {
                 className="text-[9px] font-bold text-zinc-500 hover:text-black transition-colors flex items-center gap-1"
             >
                 <Phone className="size-3" />
-                Call Now
+                {t("manager_card_call_now")}
             </button>
              <span className="text-[9px] text-zinc-300">|</span>
              <button 
-                onClick={(e) => { e.stopPropagation(); window.open('https://wa.me/8801901459110', '_blank'); }} 
+                onClick={(e) => { e.stopPropagation(); window.open('https://wa.me/8801901459110', '_blank', 'noopener,noreferrer'); }} 
                 className="text-[9px] font-bold text-green-600 hover:text-green-700 transition-colors flex items-center gap-1"
             >
                 <MessageCircle className="size-3" />
-                WhatsApp
+                {t("contact_menu_whatsapp")}
             </button>
           </div>
         </div>
@@ -98,15 +100,15 @@ export function ManagerCard() {
 
                     <div className="flex flex-col items-center text-center space-y-4 mb-8">
                          <div className="size-24 rounded-full overflow-hidden border-4 border-[#fabf37] relative shadow-lg">
-                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
+                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label={t("manager_card_account_manager")}>AM</div>
                         </div>
                         <div>
-                             <h3 className="text-2xl font-black uppercase tracking-tight">Account Manager</h3>
-                             <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Your Paperware Contact</p>
+                             <h3 className="text-2xl font-black uppercase tracking-tight">{t("manager_card_account_manager_2")}</h3>
+                             <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{t("manager_card_your_paperware_contact")}</p>
                         </div>
                         <div className="flex gap-2">
-                             <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[9px] font-black uppercase">Online</span>
-                             <span className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[9px] font-black uppercase">Response: &lt; 5m</span>
+                             <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[9px] font-black uppercase">{t("manager_card_online")}</span>
+                             <span className="px-3 py-1 bg-zinc-100 text-zinc-500 rounded-full text-[9px] font-black uppercase">{t("manager_card_response_5m")}</span>
                         </div>
                     </div>
 
@@ -114,21 +116,21 @@ export function ManagerCard() {
                         <div className="grid grid-cols-2 gap-3">
                             <button onClick={() => { setIsOpen(true); setShowDetails(false); }} className="flex items-center justify-center gap-2 py-4 bg-black text-white rounded-2xl hover:bg-[#fabf37] hover:text-black transition-colors">
                                 <MessageCircle className="size-4" />
-                                <span className="text-[10px] font-black uppercase tracking-widest">Chat</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest">{t("manager_card_chat")}</span>
                             </button>
-                             <button onClick={() => window.open('https://wa.me/8801901459110', '_blank')} className="flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white rounded-2xl hover:bg-[#128C7E] transition-colors">
+                             <button onClick={() => window.open('https://wa.me/8801901459110', '_blank', 'noopener,noreferrer')} className="flex items-center justify-center gap-2 py-4 bg-[#25D366] text-white rounded-2xl hover:bg-[#128C7E] transition-colors">
                                 <MessageCircle className="size-4" />
-                                <span className="text-[10px] font-black uppercase tracking-widest">WhatsApp</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest">{t("contact_menu_whatsapp")}</span>
                             </button>
                         </div>
                          <button className="w-full flex items-center justify-center gap-2 py-4 bg-zinc-50 text-black border border-black/5 rounded-2xl hover:bg-black hover:text-white transition-colors">
                             <Mail className="size-4" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Email Manager</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">{t("manager_card_email_manager")}</span>
                         </button>
                     </div>
 
                     <div className="bg-zinc-50 rounded-3xl p-6 text-center space-y-3">
-                         <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Rate Service Experience</p>
+                         <p className="text-[9px] font-black uppercase tracking-widest text-zinc-400">{t("manager_card_rate_service_experience")}</p>
                          <div className="flex justify-center gap-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <button 
@@ -163,13 +165,13 @@ export function ManagerCard() {
                 <div className="p-4 bg-black text-white flex items-center justify-between">
                     <div className="flex items-center gap-3">
                          <div className="size-8 rounded-full overflow-hidden border border-white/20">
-                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label="Account manager">AM</div>
+                            <div className="size-full bg-black text-[#fabf37] flex items-center justify-center font-black text-[0.9em]" aria-label={t("manager_card_account_manager")}>AM</div>
                         </div>
                         <div>
-                             <p className="text-xs font-black uppercase tracking-wide">Account Manager</p>
+                             <p className="text-xs font-black uppercase tracking-wide">{t("manager_card_account_manager_2")}</p>
                              <div className="flex items-center gap-1.5">
                                 <div className="size-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                                <p className="text-[8px] text-zinc-400 uppercase tracking-widest">Online</p>
+                                <p className="text-[8px] text-zinc-400 uppercase tracking-widest">{t("manager_card_online")}</p>
                              </div>
                         </div>
                     </div>
@@ -184,7 +186,7 @@ export function ManagerCard() {
                     {messages.map(msg => (
                         <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                             <div className={`max-w-[80%] p-3 rounded-2xl text-[11px] font-bold leading-relaxed ${msg.sender === 'user' ? 'bg-black text-white rounded-br-none' : 'bg-white border border-black/5 text-zinc-700 rounded-bl-none shadow-sm'}`}>
-                                {msg.text}
+                                {t(msg.text)}
                             </div>
                         </div>
                     ))}
@@ -196,7 +198,7 @@ export function ManagerCard() {
                     <input 
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
-                        placeholder="Type a message..."
+                        placeholder={t("manager_card_type_a_message")}
                         className="flex-1 bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-2 text-xs font-bold outline-none focus:border-[#fabf37] transition-colors"
                     />
                     <button type="submit" className="p-2 bg-[#fabf37] rounded-xl hover:scale-105 transition-transform"><Send className="size-4 text-black" /></button>

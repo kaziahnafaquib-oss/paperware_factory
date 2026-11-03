@@ -91,13 +91,13 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
             className="flex items-center gap-4 text-black font-black uppercase tracking-[0.4em] text-[10px]"
           >
             <div className="h-[2px] w-12 bg-[#fabf37]" />
-            {t('prod_intel') || "Production Power"}
+            {t(t('prod_intel') || "Production Power")}
           </motion.div>
           <h2 className="text-4xl md:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none">
-            {t('scaling_excellence') || "Manufacturing Excellence."}
+            {t(t('scaling_excellence') || "Manufacturing Excellence.")}
           </h2>
           <p className="text-zinc-500 font-bold text-xs md:text-sm max-w-2xl leading-relaxed uppercase tracking-widest pt-4">
-            {t('machinery_desc') || "World-class machinery powering high-speed production with unmatched precision and quality."}
+            {t(t('machinery_desc') || "World-class machinery powering high-speed production with unmatched precision and quality.")}
           </p>
         </div>
 
@@ -124,24 +124,24 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
                   {stat.icon}
                 </div>
                 <span className="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400">
-                  Unit {i + 1}
+                  {t("machinery_showcase_unit")} {i + 1}
                 </span>
               </div>
 
               {/* Value */}
               <div className="mb-2">
                 <div className="text-5xl md:text-6xl font-black italic tracking-tighter leading-none text-black">
-                  {stat.value}
+                  {t(stat.value)}
                 </div>
                 <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mt-1">
-                  {stat.unit}
+                  {t(stat.unit)}
                 </div>
               </div>
 
               {/* Label */}
               <div className="mt-6 mb-4">
                 <h4 className="text-sm md:text-base font-black uppercase tracking-tight text-black">
-                  {stat.label}
+                  {t(stat.label)}
                 </h4>
               </div>
             </motion.div>
@@ -172,10 +172,10 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
               {/* Value */}
               <div className="mb-6">
                 <div className="text-6xl md:text-7xl font-black italic tracking-tighter leading-none text-black">
-                  {machine.val}
+                  {t(machine.val)}
                 </div>
                 <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-400 mt-2">
-                  {machine.unit}
+                  {t(machine.unit)}
                 </div>
               </div>
 
@@ -184,16 +184,16 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
                 <h3 className={`text-xl md:text-2xl font-black uppercase tracking-tight mb-2 leading-tight ${
                   i === 0 ? 'text-[#fabf37]' : 'text-black'
                 }`}>
-                  {machine.mainTitle}
+                  {t(machine.mainTitle)}
                 </h3>
                 <p className="text-xs font-bold uppercase tracking-wide text-zinc-400">
-                  {machine.subtitle}
+                  {t(machine.subtitle)}
                 </p>
               </div>
 
               {/* Description */}
               <p className="text-[10px] font-bold text-black leading-relaxed uppercase tracking-wide mb-6">
-                {machine.detail}
+                {t(machine.detail)}
               </p>
 
               {/* Specs List */}
@@ -204,7 +204,7 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
                       i === 0 ? 'bg-[#fabf37]' : 'bg-zinc-400'
                     }`} />
                     <p className="text-[10px] font-bold text-zinc-600 uppercase tracking-wide leading-relaxed">
-                      {spec}
+                      {t(spec)}
                     </p>
                   </div>
                 ))}
@@ -219,12 +219,12 @@ export const MachineryShowcase = React.memo(function MachineryShowcase() {
               <Zap className="size-6 md:size-8" />
             </div>
             <div>
-              <p className="text-[#fabf37] font-black uppercase tracking-widest text-[8px] md:text-[10px]">{t('smart_factory') || "Smart Factory Integration"}</p>
-              <h4 className="text-white text-lg md:text-2xl font-black uppercase tracking-tight mt-1">{t('live_diagnostics') || "Real-time Production Analytics"}</h4>
+              <p className="text-[#fabf37] font-black uppercase tracking-widest text-[8px] md:text-[10px]">{t(t('smart_factory') || "Smart Factory Integration")}</p>
+              <h4 className="text-white text-lg md:text-2xl font-black uppercase tracking-tight mt-1">{t(t('live_diagnostics') || "Real-time Production Analytics")}</h4>
             </div>
           </div>
           <button className="w-full lg:w-auto bg-white text-black px-8 md:px-10 py-4 md:py-5 rounded-full font-black uppercase tracking-widest text-[10px] md:text-xs hover:bg-[#fabf37] transition-all">
-            {t('tech_audit_report') || "Technical Audit Report"}
+            {t(t('tech_audit_report') || "Technical Audit Report")}
           </button>
         </div>
       </div>
