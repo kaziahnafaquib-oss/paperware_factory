@@ -24,3 +24,4 @@ factory-floor-wide.mp4      | ~15s | /Volumes/Client SSD/SHAKHAWAT FOOTAGE 27.AP
 cup-forming-closeups.mp4    | ~12s | CARD 02 C9108 + C9109 + C9112 (owner shoot, 4K), 1280x720 muted. Manufacturing page footage band. Same CSS grade.
 delivery-dispatch.mp4       |  8.0s | CARD 02 C9064.MP4 @ 3-11 (owner shoot, Paperware boxes on delivery truck), 1280x720 muted. Order tracking page. Same CSS grade.
 quality-lab.mp4             |  8.0s | CARD 03 C9386.MP4 @ 0-8 (owner shoot, caliper check of a cup), 1280x720 muted. Compliance page under leak-test image. Same CSS grade.
+reels/cha-chill.mp4         | 40.1s | facebook.com/reel/2542781386064650 (Paperware Factory page, Cha & Chill cups) — SD progressive rendition via yt-dlp, 4 Nov 2026; hosted locally because Facebook refuses to embed it (licensed audio). Poster src/assets/video-posters/cha-chill.jpg
