@@ -118,7 +118,7 @@ const getLinks = (t: (key: string) => string) => [
     items: [
       { name: t('factory_live') || "Factory Live", id: "factory-live" },
       { name: t('machinery') || "Machinery", id: "manufacturing" },
-      { name: t('material_lab') || "Material Lab", id: "manufacturing" }
+      { name: t('material_lab') || "Material Lab", id: "materials" }
     ]
   },
   { name: t('export_intelligence') || "Export", id: "export" },

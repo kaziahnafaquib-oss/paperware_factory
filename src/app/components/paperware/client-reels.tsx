@@ -50,26 +50,34 @@ function SlideRow({ reels, from }: { reels: Reel[]; from: "left" | "right" }) {
       ref={ref}
       className={`grid grid-cols-1 gap-6 sm:grid-cols-3 md:gap-8 transition-all duration-700 ease-out motion-reduce:transition-none ${shown ? "translate-x-0 opacity-100" : `${hidden} opacity-0 motion-reduce:translate-x-0 motion-reduce:opacity-100`}`}
     >
-      {reels.map((r) => <ReelCard key={r.id} reel={r} autoplay={shown} />)}
+      {reels.map((r) => <ReelCard key={r.id} reel={r} />)}
     </div>
   );
 }
 
-function ReelCard({ reel, tall, autoplay }: { reel: Reel; tall?: boolean; autoplay?: boolean }) {
+function ReelCard({ reel, tall }: { reel: Reel; tall?: boolean }) {
   const { t } = useLanguage();
+  // Owner (4 Nov 2026): no reel autoplays. Every card shows its Play button until pressed, then plays with sound.
   const [open, setOpen] = React.useState(false);
-  const boxRef = React.useRef<HTMLDivElement>(null);
-  // Featured Facebook reels start (muted) once scrolled into view; the rest load on click.
-  // Owner (4 Nov 2026): a self-hosted reel never autoplays — poster + Play button until pressed.
-  React.useEffect(() => {
-    const el = boxRef.current;
-    if (!autoplay || !el || reel.local) return;
-    setOpen(true);
-  }, [autoplay, reel.local]);
   const url = `https://www.facebook.com/reel/${reel.id}/`;
+  const playButton = (bg: React.ReactNode, cls: string) => (
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className={`absolute inset-0 flex flex-col items-center justify-center gap-3 text-white ${cls}`}
+      aria-label={`Play ${reel.client} reel`}
+    >
+      {bg}
+      <span className="relative flex size-16 items-center justify-center rounded-full bg-[#fabf37] text-black transition-transform group-hover:scale-110">
+        <Play className="size-7 translate-x-0.5" fill="currentColor" />
+      </span>
+      <span className="relative px-4 text-center text-lg font-black uppercase tracking-tight">{reel.client}</span>
+      <span className="relative px-4 text-center text-sm font-bold">{t("clients_reel_press_play")}</span>
+    </button>
+  );
   return (
     <figure className="group flex flex-col gap-3">
-      <div ref={boxRef} className={`relative overflow-hidden rounded-3xl bg-zinc-900 ${tall ? "aspect-[9/16]" : "aspect-[9/16]"}`}>
+      <div className={`relative overflow-hidden rounded-3xl bg-zinc-900 ${tall ? "aspect-[9/16]" : "aspect-[9/16]"}`}>
         {reel.local ? (
           open ? (
             <video
@@ -84,40 +92,24 @@ function ReelCard({ reel, tall, autoplay }: { reel: Reel; tall?: boolean; autopl
               aria-label={`${reel.client} reel`}
             />
           ) : (
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white"
-              aria-label={`Play ${reel.client} reel`}
-            >
-              <img src={reel.local.poster} alt="" className="absolute inset-0 size-full object-cover" />
-              <span className="absolute inset-0 bg-black/35" aria-hidden="true" />
-              <span className="relative flex size-16 items-center justify-center rounded-full bg-[#fabf37] text-black transition-transform group-hover:scale-110">
-                <Play className="size-7 translate-x-0.5" fill="currentColor" />
-              </span>
-              <span className="relative px-4 text-center text-sm font-bold">{t("clients_reel_press_play")}</span>
-            </button>
+            playButton(
+              <>
+                <img src={reel.local.poster} alt="" className="absolute inset-0 size-full object-cover" />
+                <span className="absolute inset-0 bg-black/35" aria-hidden="true" />
+              </>,
+              "",
+            )
           )
         ) : open ? (
           <iframe
             title={`${reel.client} reel`}
-            src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=true&mute=1`}
+            src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=true&mute=0`}
             className="absolute inset-0 size-full border-0"
             allow="autoplay; encrypted-media; picture-in-picture; web-share"
             allowFullScreen
           />
         ) : (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-zinc-800 to-black text-white"
-            aria-label={`Play ${reel.client} reel`}
-          >
-            <span className="flex size-16 items-center justify-center rounded-full bg-[#fabf37] text-black transition-transform group-hover:scale-110">
-              <Play className="size-7 translate-x-0.5" fill="currentColor" />
-            </span>
-            <span className="px-4 text-center text-lg font-black uppercase tracking-tight">{reel.client}</span>
-          </button>
+          playButton(null, "bg-gradient-to-br from-zinc-800 to-black")
         )}
       </div>
       <figcaption className="px-1">
