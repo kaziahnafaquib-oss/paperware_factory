@@ -1,18 +1,22 @@
 import React from "react";
 import { Play } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
+import { mediaUrl } from "./factory-clip";
+import posterChaChill from "../../../assets/video-posters/cha-chill.jpg";
 
 /**
  * Facebook reels from the owner's page (facebook.com/paperwarefactory).
  * Client label = the brand named in the reel's own caption/hashtags (verified 3 Nov 2026).
  * Each reel appears once. Featured embeds start muted when scrolled into view; product videos load on click.
  */
-type Reel = { id: string; client: string; note?: string };
+// local: Facebook refuses to embed the reel ("may contain content owned by someone else", i.e. licensed audio),
+// so the owner had it downloaded (4 Nov 2026) and it plays from public/media/reels (see public/media/SOURCES.txt).
+type Reel = { id: string; client: string; note?: string; local?: { src: string; poster: string } };
 
 const FEATURED: Reel[] = [
   { id: "2176346162786287", client: "Beanspout", note: "Eco-friendly paper cups" },
   { id: "666181465980371", client: "Dhakaiya Khana", note: "Paper cups" },
-  { id: "2542781386064650", client: "Cha & Chill", note: "Paper cups" },
+  { id: "2542781386064650", client: "Cha & Chill", note: "Paper cups", local: { src: mediaUrl("reels/cha-chill.mp4"), poster: posterChaChill } },
 ];
 
 const PRODUCT_VIDEOS: Reel[] = [
@@ -63,7 +67,20 @@ function ReelCard({ reel, tall, autoplay }: { reel: Reel; tall?: boolean; autopl
   return (
     <figure className="group flex flex-col gap-3">
       <div ref={boxRef} className={`relative overflow-hidden rounded-3xl bg-zinc-900 ${tall ? "aspect-[9/16]" : "aspect-[9/16]"}`}>
-        {open ? (
+        {reel.local ? (
+          <video
+            ref={(el) => { if (el && autoplay) { el.muted = true; void el.play()?.catch?.(() => {}); } }}
+            src={reel.local.src}
+            poster={reel.local.poster}
+            className="absolute inset-0 size-full object-cover"
+            controls
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={`${reel.client} reel`}
+          />
+        ) : open ? (
           <iframe
             title={`${reel.client} reel`}
             src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=true&mute=1`}

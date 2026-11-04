@@ -24,11 +24,12 @@ import fOffsetPress from "../../assets/factory/offset-press.webp";
 import fTeam from "../../assets/factory/team.webp";
 import fOperatorInspecting from "../../assets/factory/operator-inspecting.webp";
 import fOperatorsCupMachines from "../../assets/factory/operators-cup-machines.webp";
-import fOperatorFormingLine from "../../assets/factory/operator-forming-line.webp";
+import fFormingTurret from "../../assets/factory/forming-turret.webp";
 import mDieCutting from "../../assets/machinery/die-cutting.webp"; // owner brochure, src/assets/machinery/SOURCES.txt
 import { useGo } from "../lib/useGo";
 
-const imgInnovation = fOperatorFormingLine;
+// Owner (4 Nov 2026): Smart Manufacturing shows the forming turret itself, not the operator shot used above.
+const imgInnovation = fFormingTurret;
 
 const FACTORY_FLOOR = [
   { src: fFloorCupMachines, alt: "Production floor with cup machines" },
@@ -84,6 +85,15 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
     if (!v) return;
     if (v.paused) { void v.play(); setHeroPaused(false); } else { v.pause(); setHeroPaused(true); }
   };
+  // Owner (4 Nov 2026): the hero footage must autoplay. Browsers can leave a muted <video autoPlay> paused
+  // after hydration or a client-side route change, so kick play() once the element exists.
+  React.useEffect(() => {
+    const v = heroVideoRef.current;
+    if (!v) return;
+    v.muted = true;
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => setHeroPaused(true));
+  }, []);
   const heroHeadRef = React.useRef<HTMLHeadingElement>(null);
   const mandateGridRef = React.useRef<HTMLDivElement>(null);
   const statsGridRef = React.useRef<HTMLDivElement>(null);
@@ -258,7 +268,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
   return (
     <div className="relative bg-white selection:bg-[#fabf37] selection:text-black">
       {/* 1. HERO SECTION - INDUSTRIAL MAXIMALISM */}
-      <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pb-16 md:pb-24 overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[70vh] md:min-h-screen flex items-center pt-32 md:pt-36 pb-16 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           {/* Owner (2 Nov 2026): no overlay of any kind on the hero footage. Text readability comes from the text shadows only. */}
           <div ref={heroBgRef} className="w-full h-full will-change-transform" style={{ opacity: 1, transform: "scale(1.08)" }}>
@@ -404,6 +414,8 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                     <div className="h-14 w-20 rounded-2xl overflow-hidden bg-zinc-100 shrink-0">
                       {"video" in stat && stat.video ? (
                         <video
+                          /* Owner (4 Nov 2026): unit clips must autoplay; preload="none" left them on the poster, so load metadata and kick play(). */
+                          ref={(el) => { if (el) { el.muted = true; void el.play()?.catch?.(() => {}); } }}
                           src={stat.video}
                           poster={("poster" in stat && stat.poster) || stat.photo}
                           className="w-full h-full object-cover"
@@ -411,7 +423,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                           muted
                           loop
                           playsInline
-                          preload="none"
+                          preload="metadata"
                           aria-label={t(stat.photoAlt)}
                         />
                       ) : (
@@ -546,7 +558,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
                   <MediaPlayer
                     type={aboutUsVideos?.smartManufacturingType || "image"}
                     src={aboutUsVideos?.smartManufacturing || imgInnovation}
-                    alt={t("about_us_operator_at_the_cup_forming")}
+                    alt={t("about_us_cup_forming_turret")}
                     className="w-full h-full object-cover"
                   />
                 </div>

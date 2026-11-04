@@ -1162,7 +1162,6 @@ const AR: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "محوَّل عن مكبات النفايات",
   "impact_dashboard_zero_waste_initiative": "مبادرة صفر هدر",
   "impact_dashboard_biomass_grid_mix": "مزيج الكتلة الحيوية والشبكة",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP قيد الانتظار",
   "impact_dashboard_grs_certified": "معتمد GRS",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

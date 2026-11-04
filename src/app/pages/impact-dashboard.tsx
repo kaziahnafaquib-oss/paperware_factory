@@ -165,7 +165,7 @@ export function ImpactDashboardPage() {
 
         {/* Global Certifications */}
         <div className="mt-20 py-16 border-t border-white/5 flex flex-wrap justify-center items-center gap-12 grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all">
-          {["ISO 14001", "FSC-C123456", "B-CORP PENDING", "GRS CERTIFIED", "OEKO-TEX"].map((cert, i) => (
+          {["ISO 14001"].map((cert, i) => (
             <span key={i} className="text-2xl font-black uppercase tracking-tighter italic">{t(cert)}</span>
           ))}
         </div>

@@ -1553,7 +1553,6 @@ const JA: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "埋立回避",
   "impact_dashboard_zero_waste_initiative": "ゼロ・ウェイスト・イニシアチブ",
   "impact_dashboard_biomass_grid_mix": "バイオマス＆系統電力ミックス",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP 審査中",
   "impact_dashboard_grs_certified": "GRS認証",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

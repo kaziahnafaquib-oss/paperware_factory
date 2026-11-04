@@ -1,12 +1,12 @@
 import React from "react";
 import { Sparkles, ArrowRight, Pause, Play } from "lucide-react";
 import { useScrollScrub, clamp01, smooth, easeOut3 } from "../../lib/useScrollScrub";
-import pGiftBags from "../../../assets/products/gift-bags.webp";
 import fQcCupInspection from "../../../assets/factory/qc-cup-inspection.webp";
 import fOffsetPress from "../../../assets/factory/offset-press.webp";
 import fFormingTurret from "../../../assets/factory/forming-turret.webp";
 import fCupFormingMachines from "../../../assets/factory/cup-forming-machines.webp";
 import posterLamination from "../../../assets/video-posters/lamination.webp";
+import posterPrintedCups from "../../../assets/video-posters/gallery-printed-cups.webp";
 import { useGo } from "../../lib/useGo";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -16,6 +16,8 @@ import { useLanguage } from "../../context/LanguageContext";
 const FOUNDED_2020_VIDEO = `${import.meta.env.BASE_URL}media/founded-2020.mp4`;
 /** Owner (2 Nov 2026): lamination footage from the Paperware YouTube short "Drying and Lamination" (public/media/SOURCES.txt). */
 const LAMINATION_VIDEO = `${import.meta.env.BASE_URL}media/lamination.mp4`;
+// Owner (4 Nov 2026): the product-lines milestone plays the printed-cups clip (public/media/SOURCES.txt).
+const PRINTED_CUPS_VIDEO = `${import.meta.env.BASE_URL}media/gallery-printed-cups.mp4`;
 
 // Helper to extract YouTube embed URL
 const getYouTubeEmbed = (url: string): string | null => {
@@ -81,8 +83,9 @@ const DEFAULT_MILESTONES: Milestone[] = [
     year: "Today",
     title: "Paper cups, food packaging, pharma boxes, stationery",
     stat: "Product lines",
-    videoUrl: pGiftBags,
-    videoType: "image"
+    videoUrl: PRINTED_CUPS_VIDEO,
+    videoType: "video",
+    poster: posterPrintedCups
   }
 ];
 
@@ -108,6 +111,13 @@ function MilestoneItem({ milestone }: MilestoneItemProps) {
   // pause control (WCAG 2.2.2), like the map in nationwide-export.tsx.
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [videoPaused, setVideoPaused] = React.useState(false);
+  // Owner (4 Nov 2026): kick play() after mount; a muted autoPlay <video> can stay paused after a client-side route change.
+  React.useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    void v.play()?.catch?.(() => setVideoPaused(true));
+  }, [milestone.videoUrl]);
   const toggleVideo = () => {
     const v = videoRef.current;
     if (!v) return;

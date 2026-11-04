@@ -1553,7 +1553,6 @@ const RU: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "Отведено со свалок",
   "impact_dashboard_zero_waste_initiative": "Инициатива «ноль отходов»",
   "impact_dashboard_biomass_grid_mix": "Биомасса и сетевой энергобаланс",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP В ПРОЦЕССЕ",
   "impact_dashboard_grs_certified": "СЕРТИФИКАТ GRS",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

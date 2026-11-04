@@ -1553,7 +1553,6 @@ const NL: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "Van de stortplaats gehouden",
   "impact_dashboard_zero_waste_initiative": "Zero-waste-initiatief",
   "impact_dashboard_biomass_grid_mix": "Biomassa en netmix",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP IN BEHANDELING",
   "impact_dashboard_grs_certified": "GRS-GECERTIFICEERD",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

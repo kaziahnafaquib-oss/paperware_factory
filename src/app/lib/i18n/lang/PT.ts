@@ -1553,7 +1553,6 @@ const PT: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "Resíduos desviados de aterro",
   "impact_dashboard_zero_waste_initiative": "Iniciativa Zero Desperdício",
   "impact_dashboard_biomass_grid_mix": "Biomassa e mix da rede elétrica",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP PENDENTE",
   "impact_dashboard_grs_certified": "CERTIFICADO GRS",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

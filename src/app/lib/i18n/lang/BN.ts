@@ -1556,7 +1556,6 @@ const BN: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "ল্যান্ডফিল থেকে সরানো বর্জ্য",
   "impact_dashboard_zero_waste_initiative": "জিরো ওয়েস্ট উদ্যোগ",
   "impact_dashboard_biomass_grid_mix": "বায়োমাস ও গ্রিড মিক্স",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP PENDING",
   "impact_dashboard_grs_certified": "GRS CERTIFIED",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

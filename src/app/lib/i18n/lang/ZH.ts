@@ -1553,7 +1553,6 @@ const ZH: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "转移出填埋场",
   "impact_dashboard_zero_waste_initiative": "零废弃倡议",
   "impact_dashboard_biomass_grid_mix": "生物质与电网混合能源",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP 申请中",
   "impact_dashboard_grs_certified": "GRS 认证",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

@@ -1553,7 +1553,6 @@ const TR: Record<string, string> = {
   "impact_dashboard_landfill_diverted": "Çöplükten Uzaklaştırılan",
   "impact_dashboard_zero_waste_initiative": "Sıfır atık girişimi",
   "impact_dashboard_biomass_grid_mix": "Biyokütle ve şebeke karışımı",
-  "impact_dashboard_fsc_c123456": "FSC-C123456",
   "impact_dashboard_b_corp_pending": "B-CORP BEKLEMEDE",
   "impact_dashboard_grs_certified": "GRS SERTİFİKALI",
   "impact_dashboard_oeko_tex": "OEKO-TEX",

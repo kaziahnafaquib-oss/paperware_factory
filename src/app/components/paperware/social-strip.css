@@ -14,15 +14,20 @@
    Facebook iframe takes focus on load and would freeze the strip for good. */
 /* Pause on pointer hover or keyboard focus on a post link (:has on the link only: embedded
    iframes take focus on load and would freeze the strip for good). */
-.pwf-marquee-viewport:hover .pwf-marquee-track,
+/* Hover pause only on real pointers: on touch screens :hover sticks after a tap and froze the row. */
+@media (hover: hover) {
+  .pwf-marquee-viewport:hover .pwf-marquee-track { animation-play-state: paused; }
+}
 .pwf-marquee-viewport:has(a:focus-visible) .pwf-marquee-track,
 .pwf-marquee-paused .pwf-marquee-track {
   animation-play-state: paused;
 }
-/* Reduced motion: no auto-scroll. The row is a normal horizontally scrollable strip; the
-   duplicate copy is hidden so posts are not repeated. */
+/* Reduced motion: the owner wants the strip to keep moving (verified on a Mac with Reduce Motion ON,
+   4 Nov 2026). Slow it to half speed, keep it infinite (the global reset in src/styles/index.css forces
+   iteration-count 1 / 0.01ms, which froze the row), and keep the hover / focus / button pause above. */
 @media (prefers-reduced-motion: reduce) {
-  .pwf-marquee-viewport { overflow-x: auto; overscroll-behavior-x: contain; }
-  .pwf-marquee-track { animation: none !important; transform: none; width: max-content; }
-  .pwf-marquee-track > [aria-hidden="true"] { display: none; }
+  .pwf-marquee-track {
+    animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2) !important;
+    animation-iteration-count: infinite !important;
+  }
 }
