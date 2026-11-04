@@ -3,42 +3,57 @@ import React from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 import { Globe, ArrowRight, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
 import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.webp";
+import brandLogo from "figma:asset/2cf02ce26ccdbb62dfe9c412f2f673ebd0977bb2.webp";
 import { useLanguage } from "../context/LanguageContext";
 import { LiveSocialFeeds } from "../components/paperware/live-social-feeds";
 import { SocialStrip } from "../components/paperware/social-strip";
 import { BrandBadge, type BrandKey } from "../components/paperware/brand-icons";
 import imgCover from "@/assets/social/paperware-cover.jpg";
-import imgLogo from "@/assets/logo.png";
 
-// Real profile cards: the page's cover photo, logo and name + link to the real profile only. No posts are shown.
-// Owner (4 Nov 2026): cover = PAPERWARE BRANDING 2/cover.png (the brand cover used on the pages), not product shots.
-const ProfileCard = React.memo(({ link }: { link: { url: string; handle: string; brand?: BrandKey; label?: string; name: string } }) => (
-  <motion.a
-    href={link.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label={`${link.label} - ${link.handle}`}
-    whileHover={{ y: -8 }}
-    className="group block bg-white border border-black/5 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
-  >
-    <div className="aspect-[16/7] relative overflow-hidden bg-[#c98f1a]">
-      <img loading="lazy" src={imgCover} alt="" className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
-      <BrandBadge brand={link.brand!} className="absolute top-3 right-3 size-9 rounded-xl ring-2 ring-white/80 shadow-lg" iconClass="size-4" />
+// Owner (4 Nov 2026): one profile banner — the page cover, the brand logo and the name — with the five
+// platforms as a row of buttons under it. Links go to the real profiles only; no posts are shown here.
+type SocialLink = { url: string; handle: string; brand?: BrandKey; label?: string; name: string };
+const ProfileBanner = React.memo(({ links, tagline }: { links: SocialLink[]; tagline: string }) => (
+  <section aria-label="Paperware Factory profiles" className="overflow-hidden rounded-[40px] border border-black/5 bg-white shadow-sm">
+    <div className="relative aspect-[21/8] bg-[#c98f1a] md:aspect-[21/6]">
+      <img src={imgCover} alt="" className="size-full object-cover" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" aria-hidden="true" />
     </div>
-    <div className="relative px-5 pb-5 pt-9">
-      <span className="absolute -top-8 left-5 flex size-16 items-center justify-center overflow-hidden rounded-full bg-white ring-4 ring-white shadow-md">
-        <img src={imgLogo} alt="" className="size-full object-cover" />
-      </span>
-      <p className="text-base font-black uppercase tracking-tight text-black">{link.name}</p>
-      <p className="mt-0.5 text-[11px] font-bold text-zinc-500 truncate">{link.handle}</p>
+    <div className="relative px-6 pb-8 md:px-10 md:pb-10">
+      <div className="-mt-14 flex flex-col gap-5 md:-mt-16 md:flex-row md:items-end md:gap-8">
+        <span className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-4 ring-white shadow-xl md:size-32">
+          <img src={brandLogo} alt="" className="size-full scale-[1.9] object-contain" />
+        </span>
+        <div className="min-w-0 pb-1">
+          <h3 className="text-3xl font-black uppercase tracking-tight text-black md:text-4xl">Paperware Factory</h3>
+          <p className="mt-1 text-sm font-bold text-zinc-500">{tagline}</p>
+        </div>
+      </div>
+      <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        {links.map((l) => (
+          <li key={l.label}>
+            <motion.a
+              href={l.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${l.label} - ${l.handle}`}
+              whileHover={{ y: -4 }}
+              className="group flex items-center gap-3 rounded-2xl border border-black/5 bg-zinc-50 p-3 transition-colors hover:bg-[#fabf37]"
+            >
+              <BrandBadge brand={l.brand!} className="size-11 rounded-xl" iconClass="size-5" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-[11px] font-black uppercase tracking-widest text-black">{l.label}</span>
+                <span className="block truncate text-[11px] font-semibold text-zinc-500 group-hover:text-black/70">{l.handle}</span>
+              </span>
+              <ArrowRight className="size-4 shrink-0 text-black transition-transform group-hover:translate-x-1" />
+            </motion.a>
+          </li>
+        ))}
+      </ul>
     </div>
-    <div className="px-5 py-3 flex items-center justify-between gap-3 bg-[#fabf37]">
-      <p className="text-[11px] font-black uppercase tracking-widest text-black">{link.label}</p>
-      <ArrowRight className="size-4 text-black shrink-0" />
-    </div>
-  </motion.a>
+  </section>
 ));
-ProfileCard.displayName = "ProfileCard";
+ProfileBanner.displayName = "ProfileBanner";
 
 export function SocialsPage() {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -354,10 +369,8 @@ export function SocialsPage() {
 
             </motion.div>
 
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-24">
-              {socialLinks.filter((l) => l.brand).map((link) => (
-                <ProfileCard key={link.label} link={link} />
-              ))}
+            <div className="w-full mb-24">
+              <ProfileBanner links={socialLinks.filter((l) => l.brand)} tagline={t("socials_profile_tagline")} />
             </div>
 
             <LiveSocialFeeds />

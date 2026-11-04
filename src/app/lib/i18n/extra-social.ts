@@ -59,4 +59,5 @@ export const EXTRA: Record<string, { EN: string }> = {
   "faq_x_50": { EN: "Yes. Use the Tracking page to follow your shipment, or contact us and we will update you." },
   "faq_x_51": { EN: "Yes. We make custom-printed packaging. Send us your logo or artwork and our studio team will prepare a preview for approval." },
   "faq_x_52": { EN: "Yes. We ship from Chittagong Port and can arrange FOB or door-to-door delivery. Ask us for a quote for your destination." },
+  "socials_profile_tagline": { EN: "Paper cups and custom paper packaging, made in Dhaka" }
 };
