@@ -20,13 +20,13 @@ const ProfileBanner = React.memo(({ links, tagline }: { links: SocialLink[]; tag
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/35 to-transparent" aria-hidden="true" />
     </div>
     <div className="relative px-6 pb-6 md:px-8 md:pb-8">
-      <div className="-mt-10 flex flex-col gap-4 md:-mt-12 md:flex-row md:items-end md:gap-6">
-        <span className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-4 ring-white shadow-xl md:size-24">
+      <div className="-mt-7 flex flex-col gap-3 md:-mt-8 md:flex-row md:items-end md:gap-4">
+        <span className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-[3px] ring-white shadow-lg md:size-16">
           <img src={brandLogo} alt="" className="size-full scale-[1.9] object-contain" />
         </span>
         <div className="min-w-0 pb-1">
-          <h3 className="text-xl font-black uppercase tracking-tight text-black md:text-2xl">Paperware Factory</h3>
-          <p className="mt-0.5 text-xs font-bold text-zinc-500">{tagline}</p>
+          <h3 className="text-base font-black uppercase tracking-tight text-black md:text-lg">Paperware Factory</h3>
+          <p className="mt-0.5 text-[11px] font-semibold text-zinc-500">{tagline}</p>
         </div>
       </div>
       <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -38,12 +38,12 @@ const ProfileBanner = React.memo(({ links, tagline }: { links: SocialLink[]; tag
               rel="noopener noreferrer"
               aria-label={`${l.label} - ${l.handle}`}
               whileHover={{ y: -4 }}
-              className="group flex items-center gap-2.5 rounded-2xl border border-black/5 bg-zinc-50 p-3 transition-colors hover:bg-[#fabf37]"
+              className="group flex items-center gap-2 rounded-xl border border-black/5 bg-zinc-50 px-2.5 py-2 transition-colors hover:bg-[#fabf37]"
             >
-              <BrandBadge brand={l.brand!} className="size-9 rounded-lg" iconClass="size-4" />
+              <BrandBadge brand={l.brand!} className="size-8 rounded-lg" iconClass="size-3.5" />
               <span className="min-w-0 flex-1">
-                <span className="block text-[10px] font-black uppercase tracking-widest text-black">{l.label}</span>
-                <span className="block break-all text-[10px] font-semibold leading-tight text-zinc-500 group-hover:text-black/70">{l.handle}</span>
+                <span className="block text-[9px] font-black uppercase tracking-widest text-black">{l.label}</span>
+                <span className="block break-all text-[8px] font-medium leading-tight text-zinc-500 group-hover:text-black/70">{l.handle}</span>
               </span>
               <ArrowRight className="size-3.5 shrink-0 text-black transition-transform group-hover:translate-x-1" />
             </motion.a>
