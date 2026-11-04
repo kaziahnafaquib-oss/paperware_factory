@@ -361,7 +361,7 @@ export function SocialsPage() {
             </div>
 
             <LiveSocialFeeds />
-            <div className="w-full -mx-4"><SocialStrip postsOnly /></div>
+            <div className="w-screen relative left-1/2 -translate-x-1/2"><SocialStrip postsOnly /></div>
 
           </div>
         </div>
