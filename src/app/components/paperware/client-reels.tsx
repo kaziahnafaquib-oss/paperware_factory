@@ -3,6 +3,7 @@ import { Play } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { mediaUrl } from "./factory-clip";
 import posterChaChill from "../../../assets/video-posters/cha-chill.jpg";
+import { BrandBadge } from "./brand-icons";
 
 /**
  * Facebook reels from the owner's page (facebook.com/paperwarefactory).
@@ -55,31 +56,48 @@ function SlideRow({ reels, from }: { reels: Reel[]; from: "left" | "right" }) {
 }
 
 function ReelCard({ reel, tall, autoplay }: { reel: Reel; tall?: boolean; autoplay?: boolean }) {
+  const { t } = useLanguage();
   const [open, setOpen] = React.useState(false);
   const boxRef = React.useRef<HTMLDivElement>(null);
-  // Featured reels start (muted) once scrolled into view; the rest load on click.
+  // Featured Facebook reels start (muted) once scrolled into view; the rest load on click.
+  // Owner (4 Nov 2026): a self-hosted reel never autoplays — poster + Play button until pressed.
   React.useEffect(() => {
     const el = boxRef.current;
-    if (!autoplay || !el) return;
+    if (!autoplay || !el || reel.local) return;
     setOpen(true);
-  }, [autoplay]);
+  }, [autoplay, reel.local]);
   const url = `https://www.facebook.com/reel/${reel.id}/`;
   return (
     <figure className="group flex flex-col gap-3">
       <div ref={boxRef} className={`relative overflow-hidden rounded-3xl bg-zinc-900 ${tall ? "aspect-[9/16]" : "aspect-[9/16]"}`}>
         {reel.local ? (
-          <video
-            ref={(el) => { if (el && autoplay) { el.muted = true; void el.play()?.catch?.(() => {}); } }}
-            src={reel.local.src}
-            poster={reel.local.poster}
-            className="absolute inset-0 size-full object-cover"
-            controls
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={`${reel.client} reel`}
-          />
+          open ? (
+            <video
+              ref={(el) => { if (el) void el.play()?.catch?.(() => {}); }}
+              src={reel.local.src}
+              poster={reel.local.poster}
+              className="absolute inset-0 size-full object-cover"
+              controls
+              loop
+              playsInline
+              preload="metadata"
+              aria-label={`${reel.client} reel`}
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white"
+              aria-label={`Play ${reel.client} reel`}
+            >
+              <img src={reel.local.poster} alt="" className="absolute inset-0 size-full object-cover" />
+              <span className="absolute inset-0 bg-black/35" aria-hidden="true" />
+              <span className="relative flex size-16 items-center justify-center rounded-full bg-[#fabf37] text-black transition-transform group-hover:scale-110">
+                <Play className="size-7 translate-x-0.5" fill="currentColor" />
+              </span>
+              <span className="relative px-4 text-center text-sm font-bold">{t("clients_reel_press_play")}</span>
+            </button>
+          )
         ) : open ? (
           <iframe
             title={`${reel.client} reel`}
@@ -105,6 +123,17 @@ function ReelCard({ reel, tall, autoplay }: { reel: Reel; tall?: boolean; autopl
       <figcaption className="px-1">
         <div className="text-sm font-black uppercase tracking-wide text-black">{reel.client}</div>
         {reel.note && <div className="text-xs font-medium text-zinc-500">{reel.note}</div>}
+        {reel.local && (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-2 text-xs font-bold text-zinc-700 hover:text-black"
+          >
+            <BrandBadge brand="facebook" className="size-7 rounded-lg" iconClass="size-4" />
+            {t("clients_reel_watch_on_facebook")}
+          </a>
+        )}
       </figcaption>
     </figure>
   );

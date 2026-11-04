@@ -6,6 +6,8 @@ export const SITE_I18N: Record<string, Row> = {
   "about_us_paper_cups_collection": { EN: "Paper Cups Collection" },
   "about_us_paperware_production_floor": { EN: "Paperware production floor" },
   "about_us_established_2020_dhaka": { EN: "Established 2020 • Dhaka" },
+  "clients_reel_press_play": { EN: "To watch, please press the play button" },
+  "clients_reel_watch_on_facebook": { EN: "Watch on Facebook" },
   "about_us_cup_forming_turret": { EN: "Cup forming machine turret with freshly formed cups" },
   "about_us_the": { EN: "The" },
   "about_us_engine": { EN: "Engine" },
