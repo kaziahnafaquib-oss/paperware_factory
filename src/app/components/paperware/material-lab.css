@@ -1,0 +1,48 @@
+/* Material Lab motion. Reveal on scroll, a scan line over the test footage, cups that lift on hover.
+   Reduced motion: everything settles instantly, nothing loops (owner's Mac runs Reduce Motion). */
+.ml-reveal .ml-reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--ml-delay, 0ms);
+}
+.ml-reveal.is-in .ml-reveal-item {
+  opacity: 1;
+  transform: none;
+}
+.ml-clip {
+  box-shadow: 0 30px 80px -30px rgba(250, 191, 55, 0.35);
+}
+.ml-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(250, 191, 55, 0.18) 50%, transparent 100%);
+  background-size: 100% 22%;
+  background-repeat: no-repeat;
+  animation: ml-scan 4.5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+@keyframes ml-scan {
+  0% { background-position: 0 -30%; }
+  100% { background-position: 0 130%; }
+}
+.ml-dot {
+  animation: ml-blink 1.4s ease-in-out infinite;
+}
+@keyframes ml-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.ml-cup {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+li:hover .ml-cup {
+  transform: translateY(-8px) rotate(-3deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ml-reveal .ml-reveal-item { opacity: 1; transform: none; transition: none; }
+  .ml-scan, .ml-dot { animation: none; }
+  .ml-scan { background: none; }
+  .ml-cup, li:hover .ml-cup { transition: none; transform: none; }
+}

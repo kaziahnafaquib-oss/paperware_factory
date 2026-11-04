@@ -35,5 +35,10 @@ export const EXTRA: Record<string, { EN: string }> = {
   "ml_pla_text": { EN: "Our 'Green Line' features a plant-based PLA lining that is 100% industrially compostable." },
   "ml_cta_title": { EN: "Need help choosing a build?" },
   "ml_cta_text": { EN: "Talk to our sales team about your cup, volume and branding." },
-  "ml_cta_button": { EN: "Contact Sales" }
+  "ml_cta_button": { EN: "Contact Sales" },
+  "ml_test_video_label": { EN: "cup wall caliper check" },
+  "ml_test_badge": { EN: "QC bench" },
+  "ml_test_caption": { EN: "Caliper check on a finished cup, filmed on our QC bench" },
+  "ml_lamination_video_label": { EN: "board lamination line" },
+  "ml_lamination_badge": { EN: "Lamination line" }
 };

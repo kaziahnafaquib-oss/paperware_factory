@@ -4,17 +4,15 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "mot
 import { Globe, ArrowRight, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
 import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.webp";
 import { useLanguage } from "../context/LanguageContext";
-import imgTakeaway from "@/assets/products/takeaway-food-box.webp";
-import imgGiftBags from "@/assets/products/gift-bags.webp";
-import imgCookie from "@/assets/products/cookie-boxes.webp";
-import imgTissue from "@/assets/products/tissue-boxes.webp";
 import { LiveSocialFeeds } from "../components/paperware/live-social-feeds";
 import { SocialStrip } from "../components/paperware/social-strip";
 import { BrandBadge, type BrandKey } from "../components/paperware/brand-icons";
-import imgChowmein from "@/assets/products/chowmein-boxes.webp";
+import imgCover from "@/assets/social/paperware-cover.jpg";
+import imgLogo from "@/assets/logo.png";
 
-// Real profile cards: product photo + link to the real profile only. No posts are shown.
-const ProfileCard = React.memo(({ link, img }: { link: { url: string; handle: string; brand?: BrandKey; label?: string }; img: string }) => (
+// Real profile cards: the page's cover photo, logo and name + link to the real profile only. No posts are shown.
+// Owner (4 Nov 2026): cover = PAPERWARE BRANDING 2/cover.png (the brand cover used on the pages), not product shots.
+const ProfileCard = React.memo(({ link }: { link: { url: string; handle: string; brand?: BrandKey; label?: string; name: string } }) => (
   <motion.a
     href={link.url}
     target="_blank"
@@ -23,12 +21,19 @@ const ProfileCard = React.memo(({ link, img }: { link: { url: string; handle: st
     whileHover={{ y: -8 }}
     className="group block bg-white border border-black/5 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
   >
-    <div className="aspect-[4/3] relative overflow-hidden bg-zinc-100">
-      <img loading="lazy" src={img} alt="" className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
-      <BrandBadge brand={link.brand!} className="absolute top-4 left-4 size-10 rounded-xl ring-2 ring-white/80 shadow-lg" iconClass="size-5" />
+    <div className="aspect-[16/7] relative overflow-hidden bg-[#c98f1a]">
+      <img loading="lazy" src={imgCover} alt="" className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      <BrandBadge brand={link.brand!} className="absolute top-3 right-3 size-9 rounded-xl ring-2 ring-white/80 shadow-lg" iconClass="size-4" />
     </div>
-    <div className="p-6 flex items-center justify-between gap-3 bg-[#fabf37]">
-      <p className="text-xs font-black uppercase tracking-tight text-black truncate">{link.handle}</p>
+    <div className="relative px-5 pb-5 pt-9">
+      <span className="absolute -top-8 left-5 flex size-16 items-center justify-center overflow-hidden rounded-full bg-white ring-4 ring-white shadow-md">
+        <img src={imgLogo} alt="" className="size-full object-cover" />
+      </span>
+      <p className="text-base font-black uppercase tracking-tight text-black">{link.name}</p>
+      <p className="mt-0.5 text-[11px] font-bold text-zinc-500 truncate">{link.handle}</p>
+    </div>
+    <div className="px-5 py-3 flex items-center justify-between gap-3 bg-[#fabf37]">
+      <p className="text-[11px] font-black uppercase tracking-widest text-black">{link.label}</p>
       <ArrowRight className="size-4 text-black shrink-0" />
     </div>
   </motion.a>
@@ -350,8 +355,8 @@ export function SocialsPage() {
             </motion.div>
 
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-24">
-              {[imgTakeaway, imgGiftBags, imgCookie, imgTissue, imgChowmein].map((img, i) => (
-                <ProfileCard key={i} link={socialLinks[i]} img={img} />
+              {socialLinks.filter((l) => l.brand).map((link) => (
+                <ProfileCard key={link.label} link={link} />
               ))}
             </div>
 
