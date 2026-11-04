@@ -378,7 +378,7 @@ export const Navbar = React.memo(({
                                 onClick={() => handleInternalPageChange(item.id)}
                                 className="w-full flex items-center justify-between px-6 py-4 rounded-full bg-[#f3f3f5] hover:bg-[#fabf37] group transition-all text-left relative overflow-hidden"
                               >
-                                <span className="text-sm font-black uppercase tracking-widest text-black/70 group-hover:text-black transition-colors relative z-10">{item.name}</span>
+                                <span className="text-xs font-semibold uppercase tracking-widest text-black/70 group-hover:text-black transition-colors relative z-10">{item.name}</span>
                                 <ChevronDown className="size-3 text-black/20 group-hover:text-black -rotate-90 transition-all relative z-10" />
                                 <div className="absolute inset-0 bg-[#fabf37]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                               </motion.button>
@@ -434,7 +434,7 @@ export const Navbar = React.memo(({
                                 <div className="space-y-3 relative z-10">
                                   <div className="flex items-center gap-2">
                                     <motion.div className="size-1 bg-[#fabf37] rounded-full shadow-[0_0_8px_rgba(250,191,55,0.4)]" animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 2, repeat: Infinity, delay: idx * 0.1 }} />
-                                    <h4 className="text-sm md:text-base font-black uppercase text-black tracking-[0.12em] group-hover/item:text-[#fabf37] transition-colors">{cat.title}</h4>
+                                    <h4 className="text-xs font-bold uppercase text-black tracking-[0.15em] group-hover/item:text-[#fabf37] transition-colors">{cat.title}</h4>
                                   </div>
                                   <div className="flex flex-col gap-1">
                                     {cat.items.map((sub: string, subIdx: number) => (
@@ -443,7 +443,7 @@ export const Navbar = React.memo(({
                                         className="w-full flex items-center justify-between px-2.5 py-1 rounded-full bg-[#f3f3f5] hover:bg-[#fabf37] group/subitem transition-all text-left relative overflow-hidden"
                                         initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.05 + subIdx * 0.02 }}
                                       >
-                                        <span className="text-sm font-black uppercase tracking-wider text-black/70 group-hover/subitem:text-black transition-colors relative z-10">{t(sub)}</span>
+                                        <span className="text-xs font-medium uppercase tracking-wider text-black/70 group-hover/subitem:text-black transition-colors relative z-10">{t(sub)}</span>
                                         <div className="absolute inset-0 bg-[#fabf37]/10 opacity-0 group-hover/subitem:opacity-100 transition-opacity" />
                                       </motion.button>
                                     ))}
