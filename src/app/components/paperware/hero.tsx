@@ -151,15 +151,15 @@ export const Hero = React.memo(function Hero({
             className="pt-6 md:pt-12 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6"
           >
             <motion.a
-              href={`${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2024.pdf`}
-              download="Paperware-Brochure-2024.pdf"
+              href={`${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2026.pdf`}
+              download="Paperware-Brochure-2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={() => {
                 // Predictive pre-fetching logic
                 const link = document.createElement('link');
                 link.rel = 'prefetch';
-                link.href = `${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2024.pdf`;
+                link.href = `${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2026.pdf`;
                 document.head.appendChild(link);
               }}
               whileHover={{
