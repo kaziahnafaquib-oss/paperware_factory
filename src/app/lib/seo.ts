@@ -147,7 +147,7 @@ export function initializeSEO() {
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+880-XXX-XXXXXX',
+      telephone: '+8801901459110',
       contactType: 'customer service',
       areaServed: 'BD',
       availableLanguage: ['en', 'bn'],

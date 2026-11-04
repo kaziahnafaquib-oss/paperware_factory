@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { openWhatsAppInquiry } from '../lib/inquiry';
 
 interface ChatContextType {
   isChatOpen: boolean;
@@ -13,12 +12,10 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 export function ChatProvider({ children }: { children: ReactNode }) {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // The on-site chat had no backend: it showed canned "AI" replies and messages
-  // reached nobody. Until a real chat exists, every chat entry point opens WhatsApp,
-  // which reaches the sales team. The widget panel therefore never opens.
-  const openChat = () => openWhatsAppInquiry("Chat from the website");
+  // Opens the rule-based Assistant panel (ChatWidget). WhatsApp is a separate option in ContactMenu.
+  const openChat = () => setIsChatOpen(true);
   const closeChat = () => setIsChatOpen(false);
-  const toggleChat = openChat;
+  const toggleChat = () => setIsChatOpen((v) => !v);
 
   return (
     <ChatContext.Provider value={{ isChatOpen, openChat, closeChat, toggleChat }}>

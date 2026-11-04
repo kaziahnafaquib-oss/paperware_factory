@@ -1,408 +1,259 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageSquare, X, Send, Bot, Sparkles, ShieldCheck, ChevronDown, Trash2, Paperclip, Smile, ThumbsUp, ThumbsDown, Maximize2, Minimize2, Mic, Image as ImageIcon, FileText, Loader2, Download } from "lucide-react";
+import { X, Send, Bot, MessageCircle, RotateCcw } from "lucide-react";
+import { useNavigate } from "react-router";
 import { useChat } from "../context/ChatContext";
+import { useLanguage } from "../context/LanguageContext";
+import { answerQuestion } from "../lib/chatKnowledge";
+import { SALES_EMAIL, whatsAppInquiryUrl, emailInquiryHref } from "../lib/inquiry";
+import { pathFor } from "../routes/routeTable";
+
+/**
+ * Rule-based FAQ assistant. No AI model, no network calls, nothing persisted:
+ * everything lives in React state and disappears when the tab closes.
+ * Human handoff = WhatsApp / email links with the summary prefilled.
+ */
+type Step = "name" | "phone" | "question" | "chat";
+type Msg = {
+  id: number;
+  role: "bot" | "user";
+  text: string;
+  page?: { id: string; labelKey: string };
+  handoff?: { question: string };
+};
+
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+const validName = (v: string) => /^[\p{L}][\p{L}\p{M} .'-]{1,59}$/u.test(v);
+const validPhone = (v: string) => {
+  if (!/^\+?[\d\s()-]+$/.test(v)) return false;
+  const digits = v.replace(/\D/g, "");
+  return digits.length >= 7 && digits.length <= 15;
+};
+const validQuestion = (v: string) => v.length >= 3 && v.length <= 500 && /\p{L}|\d/u.test(v);
 
 export function ChatWidget() {
-  const { isChatOpen, closeChat, toggleChat } = useChat();
-  const [chatMessages, setChatMessages] = useState([
-    { role: 'ai', text: 'Hello! I am Paperware AI. How can I assist you with your sustainable packaging needs today?', timestamp: Date.now() }
-  ]);
-  const [chatInput, setChatInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { isChatOpen, closeChat } = useChat();
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+
+  const idRef = useRef(0);
+  const nextId = () => ++idRef.current;
+  const initialMsgs = useCallback(
+    (): Msg[] => [
+      { id: nextId(), role: "bot", text: t("chat_intro") },
+      { id: nextId(), role: "bot", text: t("chat_consent") },
+      { id: nextId(), role: "bot", text: t("chat_ask_name") },
+    ],
+    [t],
+  );
+  const [msgs, setMsgs] = useState<Msg[]>(initialMsgs);
+  const [step, setStep] = useState<Step>("name");
+  const [profile, setProfile] = useState({ name: "", phone: "" });
+  const [input, setInput] = useState("");
+  const [error, setError] = useState("");
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const logRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+
+  // Focus management: remember the opener, focus the input, hand focus back on close.
+  useEffect(() => {
+    if (!isChatOpen) return;
+    returnFocusRef.current = document.activeElement as HTMLElement | null;
+    const id = window.setTimeout(() => inputRef.current?.focus(), 30);
+    return () => {
+      window.clearTimeout(id);
+      const back = returnFocusRef.current;
+      (back && back.isConnected ? back : document.querySelector<HTMLElement>("[data-chat-launcher]"))?.focus?.();
+    };
+  }, [isChatOpen]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    const el = logRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [msgs, isChatOpen]);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      e.stopPropagation();
+      closeChat();
+      return;
     }
-  }, [chatMessages, isChatOpen, isExpanded]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateXValue = ((y - centerY) / centerY) * -20;
-    const rotateYValue = ((x - centerX) / centerX) * 20;
-    
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
-  };
-
-  const handleMouseLeave = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
-  const handleDownloadChat = () => {
-    const chatContent = chatMessages.map(msg => `[${new Date(msg.timestamp || Date.now()).toLocaleString()}] ${msg.role.toUpperCase()}: ${msg.text}`).join('\n\n');
-    const blob = new Blob([chatContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'paperware-chat-history.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
-  const handleEmojiClick = (emoji: string) => {
-    setChatInput(prev => prev + emoji);
-    setShowEmojiPicker(false);
-  };
-
-  const handleClearChat = () => {
-    setChatMessages([
-      { role: 'ai', text: 'Chat history cleared. How can I help you now?', timestamp: Date.now() }
-    ]);
-  };
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Simulate file upload
-      const userMsg = { 
-        role: 'user' as const, 
-        text: `Uploaded: ${file.name}`, 
-        type: 'file',
-        fileName: file.name,
-        timestamp: Date.now() 
-      };
-      setChatMessages(prev => [...prev, userMsg]);
-      setIsTyping(true);
-      
-      // Simulate AI response to file
-      setTimeout(() => {
-        setIsTyping(false);
-        const aiResponse = { 
-          role: 'ai' as const, 
-          text: `I've received your file "${file.name}". Our team will review the specifications properly.`,
-          timestamp: Date.now()
-        };
-        setChatMessages(prev => [...prev, aiResponse]);
-      }, 1500);
+    if (e.key !== "Tab" || !dialogRef.current) return;
+    const items = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)).filter((n) => n.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    if (e.shiftKey && (active === first || !dialogRef.current.contains(active))) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && (active === last || !dialogRef.current.contains(active))) {
+      e.preventDefault();
+      first.focus();
     }
   };
 
-  const handleVoiceInput = () => {
-    if (!isListening) {
-      setIsListening(true);
-      // Mock listening state
-      setTimeout(() => {
-        setIsListening(false);
-        setChatInput("I need help with bulk ordering custom boxes.");
-      }, 2000);
-    } else {
-      setIsListening(false);
-    }
+  const reset = () => {
+    idRef.current = 0;
+    setMsgs(initialMsgs());
+    setStep("name");
+    setProfile({ name: "", phone: "" });
+    setInput("");
+    setError("");
+    inputRef.current?.focus();
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!chatInput.trim()) return;
-
-    const userMsg = chatInput;
-    const newUserMessage = { role: 'user' as const, text: userMsg, timestamp: Date.now() };
-    setChatMessages(prev => [...prev, newUserMessage]);
-    setChatInput("");
-    setIsTyping(true);
-
-    // Save logic same as before...
-    setTimeout(() => {
-      setIsTyping(false);
-      const responses = [
-         "I've analyzed your request. Based on our current production capacity, we can definitely accommodate this.",
-         "Connecting you to our admin portal... A human agent has been notified of your priority status.",
-         "That's a great question about our sustainable materials. Let me flag this for our technical director.",
-         "I've logged your interest in our bulk manufacturing. Preparing a preliminary quote..."
+  const answer = (question: string, who: { name: string; phone: string }): Msg[] => {
+    const hit = answerQuestion(question, t);
+    if (hit && !hit.restricted) {
+      return [
+        { id: nextId(), role: "bot", text: hit.text, page: hit.page },
+        { id: nextId(), role: "bot", text: t("chat_followup"), handoff: { question } },
       ];
-      
-      const aiResponse = { 
-        role: 'ai' as const, 
-        text: responses[Math.floor(Math.random() * responses.length)],
-        timestamp: Date.now()
-      };
-      
-      setChatMessages(prev => [...prev, aiResponse]);
-    }, 2000);
+    }
+    return [{ id: nextId(), role: "bot", text: hit ? hit.text : t("chat_nomatch"), handoff: { question } }];
   };
 
-  return (
-    <>
-      <input 
-        type="file" 
-        ref={fileInputRef} 
-        className="hidden" 
-        onChange={handleFileUpload}
-      />
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const value = input.replace(/[\u0000-\u001F\u007F]/g, " ").trim();
+    if (step === "name") {
+      if (!validName(value)) return setError(t("chat_err_name"));
+      setProfile((p) => ({ ...p, name: value }));
+      setMsgs((m) => [...m, { id: nextId(), role: "user", text: value }, { id: nextId(), role: "bot", text: `${t("chat_thanks_name").replace("{name}", value)} ${t("chat_ask_phone")}` }]);
+      setStep("phone");
+    } else if (step === "phone") {
+      if (!validPhone(value)) return setError(t("chat_err_phone"));
+      setProfile((p) => ({ ...p, phone: value }));
+      setMsgs((m) => [...m, { id: nextId(), role: "user", text: value }, { id: nextId(), role: "bot", text: `${t("chat_got_phone")} ${t("chat_ask_question")}` }]);
+      setStep("question");
+    } else {
+      if (!validQuestion(value)) return setError(t("chat_err_question"));
+      setMsgs((m) => [...m, { id: nextId(), role: "user", text: value }, ...answer(value, profile)]);
+      setStep("chat");
+    }
+    setError("");
+    setInput("");
+  };
 
-      {/* Floating Toggle Button (This stays in the normal DOM flow) */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={toggleChat}
-        className="hidden" 
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)` }}
-      >
-        {isChatOpen ? <X className="size-6" /> : <MessageSquare className="size-6" />}
-      </motion.button>
+  const placeholder = step === "name" ? t("chat_ph_name") : step === "phone" ? t("chat_ph_phone") : step === "question" ? t("chat_ph_question") : t("chat_ph_followup");
+  const handoffFields = (q: string) => ({ Name: profile.name, Phone: profile.phone, Question: q });
+  const waTitle = t("chat_whatsapp_prefill");
 
-      {/* AI Live Chat Interface - Rendered via Portal to escape stacking contexts */}
-      {createPortal(
-        <AnimatePresence>
-          {isChatOpen && (
-            <motion.div 
-              layout
-              initial={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                y: 0, 
-                x: 0
-              }}
-              exit={{ opacity: 0, scale: 0.9, y: 20, x: 20 }}
-              style={{ zIndex: 2147483647 }} // Maximum Z-Index to ensure it's on top of everything
-              className={`fixed flex flex-col overflow-hidden bg-white shadow-2xl border border-black/5 ${
-                isExpanded 
-                  ? "inset-0 md:inset-10 rounded-none md:rounded-2xl border-0 md:border" 
-                  : "bottom-24 right-6 w-[90vw] md:w-[380px] h-[550px] max-h-[70vh] rounded-[30px]"
-              }`}
-            >
-              {/* Chat Header */}
-              <div className="bg-black p-5 flex items-center justify-between shrink-0">
-                 <div className="flex items-center gap-4">
-                    <div className="size-10 rounded-full bg-[#fabf37] flex items-center justify-center border-2 border-white/10 relative">
-                       <Bot className="size-5 text-black" />
-                       <div className="absolute -bottom-1 -right-1 size-3 rounded-full bg-emerald-500 border-2 border-black" />
-                    </div>
-                    <div>
-                       <h3 className="text-white font-black uppercase text-sm tracking-wide">Paperware AI</h3>
-                       <div className="flex items-center gap-2">
-                          <span className="text-[#fabf37] text-[9px] font-bold uppercase tracking-widest">Connected to Admin</span>
-                          <div className="size-1.5 rounded-full bg-[#fabf37] animate-pulse" />
-                       </div>
-                    </div>
-                 </div>
-                 <div className="flex items-center gap-2">
-                   <button 
-                     onClick={() => setIsExpanded(!isExpanded)}
-                     className="size-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white group"
-                     title={isExpanded ? "Minimize" : "Maximize"}
-                   >
-                     {isExpanded ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
-                   </button>
-
-                   <button 
-                     onClick={handleClearChat}
-                     className="size-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white group"
-                     title="Clear Chat"
-                   >
-                     <Trash2 className="size-4 group-hover:text-red-400 transition-colors" />
-                   </button>
-                   <button 
-                     onClick={closeChat}
-                     className="size-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white"
-                   >
-                     <ChevronDown className="size-4" />
-                   </button>
-                 </div>
+  return createPortal(
+    <AnimatePresence>
+      {isChatOpen && (
+        <motion.div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pw-chat-title"
+          aria-describedby="pw-chat-sub"
+          onKeyDown={onKeyDown}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          style={{ zIndex: 2147483647 }}
+          className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-[390px] h-[min(600px,calc(100dvh-24px))] flex flex-col overflow-hidden bg-white shadow-2xl border border-black/10 rounded-[24px]"
+        >
+          <div className="bg-black p-4 flex items-center justify-between shrink-0 gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="size-10 rounded-full bg-[#fabf37] flex items-center justify-center shrink-0">
+                <Bot className="size-5 text-black" aria-hidden="true" />
               </div>
-
-              {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-zinc-50/50 relative scroll-smooth" ref={scrollRef}>
-                 {/* Enhanced Message List */}
-                 {chatMessages.map((msg: any, i) => (
-                   <motion.div 
-                     key={i}
-                     initial={{ opacity: 0, y: 10 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     className={`group flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
-                   >
-                      {/* Avatar */}
-                      <div className={`size-8 rounded-full shrink-0 flex items-center justify-center shadow-sm ${msg.role === 'ai' ? 'bg-[#fabf37] text-black' : 'bg-black text-white'}`}>
-                         {msg.role === 'ai' ? <Sparkles className="size-3.5" /> : <span className="text-[9px] font-black">YOU</span>}
-                      </div>
-
-                      {/* Message Content */}
-                      <div className={`flex flex-col max-w-[80%] ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-                         <div className={`p-3.5 rounded-[20px] text-[12px] font-medium leading-relaxed relative hover:shadow-md transition-shadow ${
-                            msg.role === 'ai' 
-                              ? 'bg-[#fabf37] rounded-tl-none text-black' 
-                              : 'bg-white border border-zinc-200 text-zinc-800 rounded-tr-none'
-                         }`}>
-                            {msg.type === 'file' ? (
-                              <div className="flex items-center gap-2">
-                                <div className="size-8 bg-zinc-800 rounded-lg flex items-center justify-center">
-                                  <FileText className="size-4 text-white" />
-                                </div>
-                                <span className="underline decoration-zinc-500/50 underline-offset-4">{msg.fileName}</span>
-                              </div>
-                            ) : (
-                              msg.text
-                            )}
-                            
-                            {/* AI Actions (Copy/Rate) */}
-                            {msg.role === 'ai' && (
-                              <div className="absolute -bottom-6 left-0 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2 py-1">
-                                 <button 
-                                   type="button"
-                                   onClick={() => navigator.clipboard.writeText(msg.text)}
-                                   className="text-[10px] text-zinc-400 hover:text-zinc-600 flex items-center gap-1 bg-white px-2 py-0.5 rounded-full border shadow-sm cursor-pointer hover:bg-zinc-50"
-                                 >
-                                   Copy
-                                 </button>
-                                 <div className="flex gap-1">
-                                   <button className="p-1 rounded-full bg-white border shadow-sm hover:text-emerald-500 hover:border-emerald-200 text-zinc-400">
-                                      <ThumbsUp className="size-2.5" />
-                                   </button>
-                                   <button className="p-1 rounded-full bg-white border shadow-sm hover:text-red-500 hover:border-red-200 text-zinc-400">
-                                      <ThumbsDown className="size-2.5" />
-                                   </button>
-                                 </div>
-                              </div>
-                            )}
-                         </div>
-                         
-                         {/* Timestamp */}
-                         <span className="text-[10px] text-zinc-300 mt-1 px-1 font-medium select-none">
-                            {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now'}
-                         </span>
-                      </div>
-                   </motion.div>
-                 ))}
-                 
-                 {/* Typing Indicator */}
-                 {isTyping && (
-                   <motion.div 
-                     initial={{ opacity: 0, y: 10 }}
-                     animate={{ opacity: 1, y: 0 }}
-                     className="flex gap-3"
-                   >
-                      <div className="size-8 rounded-full bg-[#fabf37] shrink-0 flex items-center justify-center text-black shadow-sm">
-                         <Sparkles className="size-3.5 animate-spin-slow" />
-                      </div>
-                      <div className="bg-white border border-zinc-100 rounded-[20px] rounded-tl-none p-4 shadow-sm flex items-center gap-1">
-                         <div className="size-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '0ms' }} />
-                         <div className="size-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '150ms' }} />
-                         <div className="size-1.5 rounded-full bg-zinc-400 animate-bounce" style={{ animationDelay: '300ms' }} />
-                      </div>
-                   </motion.div>
-                 )}
-
-                 {/* Quick Replies (if not typing and last msg is AI) */}
-                 {!isTyping && chatMessages.length > 0 && chatMessages[chatMessages.length - 1].role === 'ai' && (
-                   <motion.div 
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex flex-wrap gap-2 pl-11 pb-2"
-                   >
-                      {['📦 Order Status', '💰 Pricing', '📞 Contact Support', '♻️ Sustainability', '🎨 Custom Design', '🚚 Shipping Info'].map((chip, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setChatInput(chip)}
-                          className="text-[10px] font-semibold bg-black border border-black text-white px-3 py-1.5 rounded-full hover:bg-zinc-800 transition-colors shadow-sm"
-                        >
-                          {chip}
-                        </button>
-                      ))}
-                   </motion.div>
-                 )}
+              <div className="min-w-0">
+                <h2 id="pw-chat-title" className="text-white font-black text-sm tracking-wide leading-tight">{t("chat_title")}</h2>
+                <p id="pw-chat-sub" className="text-[#fabf37] text-[11px] font-semibold leading-tight">{t("chat_subtitle")}</p>
               </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button type="button" onClick={reset} aria-label={t("chat_reset")} title={t("chat_reset")} className="size-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fabf37]">
+                <RotateCcw className="size-4" aria-hidden="true" />
+              </button>
+              <button type="button" onClick={closeChat} aria-label={t("chat_close")} title={t("chat_close")} className="size-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fabf37]">
+                <X className="size-4" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
 
-              {/* Chat Input */}
-              <div className="p-4 bg-white border-t border-zinc-100">
-                 <form onSubmit={handleSendMessage} className="relative">
-                    {/* Emoji Picker */}
-                    <AnimatePresence>
-                      {showEmojiPicker && (
-                        <motion.div 
-                          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                          className="absolute bottom-16 left-0 bg-white border border-zinc-200 shadow-xl rounded-xl p-2 z-50 flex flex-wrap gap-1 w-[280px]"
-                        >
-                          {['👍', '👎', '👋', '📦', '🎉', '🤔', '🔥', '❤️', '😊', '😂', '🙏', '✅'].map(emoji => (
-                            <button
-                              key={emoji}
-                              type="button"
-                              onClick={() => handleEmojiClick(emoji)}
-                              className="text-lg hover:bg-zinc-100 p-2 rounded-lg transition-colors size-9 flex items-center justify-center"
-                            >
-                              {emoji}
-                            </button>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+          <a
+            href={whatsAppInquiryUrl(waTitle)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 flex items-center justify-center gap-2 bg-[#25D366] text-black text-xs font-bold py-2 hover:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+          >
+            <MessageCircle className="size-4" aria-hidden="true" />
+            {t("chat_whatsapp_link")}
+          </a>
 
-                    <div className="relative flex items-center">
-                      <button 
-                        type="button" 
-                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                        className="absolute left-3 text-zinc-400 hover:text-[#fabf37] transition-colors p-1"
-                        title="Add Emoji"
-                      >
-                        <Smile className="size-4" />
-                      </button>
-                      <button 
-                        type="button" 
-                        onClick={() => fileInputRef.current?.click()}
-                        className="absolute left-10 text-zinc-400 hover:text-[#fabf37] transition-colors p-1"
-                        title="Attach File"
-                      >
-                        <Paperclip className="size-4" />
-                      </button>
-                      <input 
-                        type="text" 
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        placeholder={isListening ? "Listening..." : "Type your message..."}
-                        className={`w-full bg-zinc-50 border rounded-full py-3.5 pl-20 pr-20 text-sm font-bold focus:outline-none focus:border-[#fabf37] focus:bg-white transition-all placeholder:text-zinc-300 text-[rgb(0,0,0)] ${isListening ? 'border-red-400 bg-red-50 animate-pulse' : 'border-zinc-200'}`}
-                      />
-                      <div className="absolute right-12 flex items-center gap-1">
-                         <button 
-                           type="button"
-                           onClick={handleVoiceInput}
-                           className={`transition-colors p-1 ${isListening ? 'text-red-500 bg-red-100 rounded-full' : 'text-zinc-400 hover:text-[#fabf37]'}`}
-                           title="Voice Input"
-                         >
-                           {isListening ? <Loader2 className="size-4 animate-spin" /> : <Mic className="size-4" />}
-                         </button>
-                      </div>
-                      <button 
-                        type="submit"
-                        disabled={!chatInput.trim() || isTyping}
-                        className="absolute right-1.5 size-9 rounded-full bg-black text-[#fabf37] flex items-center justify-center hover:bg-[#fabf37] hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <Send className="size-3.5" />
-                      </button>
-                    </div>
-                 </form>
-                 <div className="mt-2.5 flex justify-center items-center gap-2">
-                    <ShieldCheck className="size-3 text-zinc-300" />
-                    <p className="text-[8px] font-bold text-zinc-300 uppercase tracking-widest">End-to-End Encrypted</p>
-                 </div>
+          <div ref={logRef} role="log" aria-live="polite" aria-relevant="additions" aria-label={t("chat_log_label")} className="flex-1 overflow-y-auto p-4 space-y-3 bg-zinc-50">
+            {msgs.map((m) => (
+              <div key={m.id} className={`flex flex-col ${m.role === "user" ? "items-end" : "items-start"}`}>
+                <span className="sr-only">{m.role === "user" ? t("chat_you") : t("chat_bot")}:</span>
+                <div className={`max-w-[88%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-line rounded-2xl ${m.role === "bot" ? "bg-[#fabf37] text-black rounded-tl-sm" : "bg-white border border-zinc-200 text-zinc-900 rounded-tr-sm"}`}>
+                  {m.text}
+                </div>
+                {m.page && (
+                  <button
+                    type="button"
+                    onClick={() => { navigate(pathFor(m.page!.id)); closeChat(); }}
+                    className="mt-1.5 text-xs font-bold underline underline-offset-2 text-zinc-800 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+                  >
+                    {t("chat_open_page").replace("{page}", t(m.page.labelKey))}
+                  </button>
+                )}
+                {m.handoff && (
+                  <div className="mt-2 flex flex-col gap-1.5 max-w-[88%]">
+                    <a
+                      href={whatsAppInquiryUrl(waTitle, handoffFields(m.handoff.question))}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-black text-white text-xs font-bold px-4 py-2 hover:bg-zinc-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#fabf37]"
+                    >
+                      <MessageCircle className="size-4 text-[#25D366]" aria-hidden="true" />
+                      {t("chat_handoff_whatsapp")}
+                    </a>
+                    <a
+                      href={emailInquiryHref(waTitle, handoffFields(m.handoff.question))}
+                      className="text-xs font-semibold underline underline-offset-2 text-zinc-700 hover:text-black px-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+                    >
+                      {t("chat_handoff_email")} ({SALES_EMAIL})
+                    </a>
+                  </div>
+                )}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
+            ))}
+          </div>
+
+          <form onSubmit={submit} className="p-3 bg-white border-t border-zinc-100 shrink-0" noValidate>
+            {error && <p role="alert" className="text-xs font-semibold text-red-700 mb-2 px-1">{error}</p>}
+            <div className="flex items-center gap-2">
+              <label htmlFor="pw-chat-input" className="sr-only">{t("chat_input_label")}</label>
+              <input
+                id="pw-chat-input"
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={placeholder}
+                maxLength={step === "name" ? 60 : step === "phone" ? 20 : 500}
+                type={step === "phone" ? "tel" : "text"}
+                inputMode={step === "phone" ? "tel" : undefined}
+                autoComplete={step === "name" ? "off" : "off"}
+                aria-invalid={!!error}
+                className="flex-1 min-w-0 bg-zinc-50 border border-zinc-300 rounded-full py-3 px-4 text-base sm:text-sm text-black focus:outline-none focus:border-black focus:ring-2 focus:ring-[#fabf37] placeholder:text-zinc-500"
+              />
+              <button type="submit" aria-label={t("chat_send")} title={t("chat_send")} className="size-11 shrink-0 rounded-full bg-black text-[#fabf37] flex items-center justify-center hover:bg-[#fabf37] hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black">
+                <Send className="size-4" aria-hidden="true" />
+              </button>
+            </div>
+          </form>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>,
+    document.body,
   );
 }

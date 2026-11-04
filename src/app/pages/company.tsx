@@ -1,4 +1,5 @@
 import React from "react";
+import "../components/paperware/social-strip.css";
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "motion/react";
 import { ArrowRight, Leaf, ShieldCheck, Zap, Factory, Users, MoveRight, Sparkles } from "lucide-react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";

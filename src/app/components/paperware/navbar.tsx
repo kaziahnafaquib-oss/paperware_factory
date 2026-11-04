@@ -740,7 +740,7 @@ export const Navbar = React.memo(({
 
                   {[
                     { icon: Search, action: onSearchOpen, label: "Search" },
-                    { icon: Phone, action: () => window.location.href = "tel:+8809638011101", label: "Call Us" },
+                    { icon: Phone, action: () => window.location.href = "tel:+8801901459110", label: "Call Us" },
                     { icon: Send, action: onEmailOpen, label: "Request a quote" }
                   ].map((item, idx) => (
                     <Tooltip.Root key={idx}>

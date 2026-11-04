@@ -54,6 +54,8 @@ export const ContactMenu = () => {
         style={{ perspective: "1000px" }}
       >
         <motion.button
+          data-chat-launcher
+          aria-label={t("chat_menu_online")}
           onClick={() => setIsOpen(!isOpen)}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
@@ -119,7 +121,7 @@ export const ContactMenu = () => {
                 <div className="mb-6 relative z-10">
                   <div className="flex items-center gap-2 mb-3">
                     <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-black uppercase tracking-widest text-emerald-400">{t("contact_menu_online_now")}</span>
+                    <span className="text-xs font-black uppercase tracking-widest text-emerald-400">{t("chat_menu_online")}</span>
                   </div>
                   <h3 className="font-black uppercase tracking-tight text-white leading-none mb-1 text-[16px]">{t("contact_menu_get_in_touch")}</h3>
                   <p className="text-xs font-semibold text-zinc-400">{t("contact_menu_choose_your_preferred_channel")}</p>
@@ -157,8 +159,8 @@ export const ContactMenu = () => {
                       <Bot className="size-6" strokeWidth={2.5} />
                     </div>
                     <div className="text-left flex-1">
-                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">{t("contact_menu_ai_assistant")}</p>
-                      <p className="text-[8px] font-bold opacity-70 leading-none">{t("contact_menu_instant_responses")}</p>
+                      <p className="font-black uppercase tracking-tight leading-none mb-1 text-[12px]">{t("chat_menu_assistant")}</p>
+                      <p className="text-[8px] font-bold opacity-70 leading-none">{t("chat_menu_assistant_sub")}</p>
                     </div>
                     <div className="size-8 rounded-full bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <Bot className="size-4" />
@@ -170,7 +172,7 @@ export const ContactMenu = () => {
                 <div className="mt-5 pt-5 border-t border-white/10 relative z-10">
                   <div className="flex items-center justify-center gap-2">
                     <div className="size-1.5 rounded-full bg-[#fabf37]" />
-                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t("contact_menu_available_24_7")}</p>
+                    <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{t("chat_menu_footer")}</p>
                   </div>
                 </div>
               </div>

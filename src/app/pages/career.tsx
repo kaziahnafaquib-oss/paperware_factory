@@ -6,20 +6,27 @@ import {
   Cpu, Lightbulb, ShieldCheck, UserCheck,
   Target, Heart, Leaf, Shield, Quote, ChevronDown, Plus, Minus,
   Factory, Cog, Recycle, Truck, Settings, GraduationCap, Clock,
-  Activity, ChartBar, Binary, Wrench
+  Activity, ChartBar, Binary, Wrench, Building2
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 import imgTeam from "@/assets/factory/team.webp";
-import imgOperators from "@/assets/factory/operators-cup-machines.webp";
-import imgPress from "@/assets/factory/press-operator.webp";
 import imgFloor from "@/assets/factory/floor-wide.webp";
 import { useGo } from "../lib/useGo";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterFloor from "@/assets/video-posters/career-floor.webp";
+import posterFactoryWide from "@/assets/video-posters/factory-floor-wide.jpg";
+import posterDelivery from "@/assets/video-posters/delivery-dispatch.jpg";
+import posterTeam from "@/assets/video-posters/company-team.webp";
 
 const FLOOR_VIDEO = mediaUrl("career-floor.mp4");
+// Real footage for "Life at Paperware": factory floor, dispatch and the team. No office photos exist yet.
+const LIFE_CLIPS = [
+  { src: mediaUrl("factory-floor-wide.mp4"), poster: posterFactoryWide, labelKey: "career_life_clip_floor", graded: true },
+  { src: mediaUrl("delivery-dispatch.mp4"), poster: posterDelivery, labelKey: "career_life_clip_dispatch", graded: true },
+  { src: mediaUrl("company-team.mp4"), poster: posterTeam, labelKey: "career_life_clip_team", graded: false },
+];
 
 const jobs = [
   { title: "Factory Supervisor", location: "Dhaka, BD", type: "Full-time" },
@@ -77,7 +84,6 @@ const steps = [
   { title: "Onboarding", desc: "Join the paperware ecosystem", icon: Rocket },
 ];
 
-const lifeImages = [imgTeam, imgOperators, imgPress];
 
 const faqs = [
   { q: "What is the typical interview process?", a: "It usually involves a screening call, a technical task, and a final interview with the leadership team." },
@@ -149,36 +155,6 @@ function PerspectiveJobCard({ children }: { children: React.ReactNode }) {
     >
       {children}
     </motion.div>
-  );
-}
-
-function FloatingGallery({ images }: { images: string[] }) {
-  const { t } = useLanguage();
-  return (
-    <div className="relative h-[600px] w-full flex items-center justify-center perspective-2000 py-20">
-      {images.map((img, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, rotateY: 45, x: i * 100 }}
-          whileInView={{ opacity: 1, rotateY: -25, x: (i - 1) * 250 }}
-          whileHover={{ 
-            rotateY: 0, 
-            z: 200, 
-            scale: 1.1,
-            zIndex: 50,
-            boxShadow: "0 50px 100px rgba(0,0,0,0.3)" 
-          }}
-          transition={{ type: "spring", stiffness: 100 }}
-          className="absolute w-[300px] h-[450px] rounded-[40px] overflow-hidden border-8 border-white shadow-2xl cursor-pointer"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <ImageWithFallback src={img} alt={t("career_gallery")} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end p-8">
-            <span className="text-white font-black uppercase text-xs tracking-widest">{t("career_workspace_view_0")}{i+1}</span>
-          </div>
-        </motion.div>
-      ))}
-    </div>
   );
 }
 
@@ -839,7 +815,25 @@ export function CareerPage() {
             </div>
           </div>
           
-          <FloatingGallery images={lifeImages} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {LIFE_CLIPS.map((c) => (
+              <FactoryClip
+                key={c.labelKey}
+                src={c.src}
+                poster={c.poster}
+                label={t(c.labelKey)}
+                graded={c.graded}
+                className="aspect-[4/5] rounded-[32px] shadow-xl"
+              />
+            ))}
+            {/* Honest placeholder: no office photos in the project yet (owner to supply). */}
+            <div className="aspect-[4/5] rounded-[32px] border-2 border-dashed border-[#fabf37] bg-zinc-950 text-white flex flex-col items-center justify-center text-center gap-3 p-8">
+              <Building2 className="size-10 text-[#fabf37]" aria-hidden="true" />
+              <h3 className="text-xl font-black uppercase tracking-tight">{t("career_workspace_title")}</h3>
+              <p className="text-sm font-bold uppercase tracking-widest text-[#fabf37]">{t("career_office_photos_soon")}</p>
+              <p className="text-xs text-white/60 max-w-[22ch]">{t("career_office_photos_soon_desc")}</p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Referral Section */}

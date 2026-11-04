@@ -6,55 +6,68 @@ import {
   Settings, ShieldCheck, Truck, 
   Leaf, ChevronRight, Zap,
   MessageCircle, ArrowUpRight,
-  HardHat, Microscope
+  HardHat, Microscope, Package, Briefcase
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 const categories = [
-  { id: 'all', label: 'All Protocols', icon: CircleHelp },
+  { id: 'all', label: 'All Questions', icon: CircleHelp },
   { id: 'prod', label: 'Production', icon: Settings },
-  { id: 'log', label: 'Logistics', icon: Truck },
-  { id: 'sust', label: 'Sustainability', icon: Leaf },
-  { id: 'qual', label: 'Quality Control', icon: ShieldCheck },
+  { id: 'products', label: 'Products', icon: Package },
+  { id: 'orders', label: 'Orders', icon: Truck },
+  { id: 'biz', label: 'Business', icon: Briefcase },
 ];
 
+// Answers only restate facts already on the site. No lead-time, price or certificate numbers.
 const faqs = [
-  { 
-    cat: 'prod',
-    q: "What is the Minimum Order Quantity (MOQ)?", 
-    a: "Minimum order quantities depend on the product and print. Tell us your volume and we will confirm the MOQ for your order.",
-    tags: ["Bulk", "Customization"]
-  },
-  { 
-    cat: 'log',
-    q: "Do you offer international supply chain support?", 
-    a: "Yes. We ship from Chittagong Port and can arrange FOB or door-to-door delivery. Ask us for a quote for your destination.",
-    tags: ["Export", "Global"]
-  },
-  { 
-    cat: 'sust',
-    q: "Are your materials food-safe and eco-friendly?", 
-    a: "We use food-grade paper stock and soy-based inks. Ask us for the documentation your market requires.",
-    tags: ["Food Safe"]
-  },
-  { 
-    cat: 'prod',
-    q: "Can we request a physical prototype before mass production?", 
-    a: "Our studio team prepares digital previews of your design, and physical samples can be sent by courier after design approval.",
-    tags: ["Studio", "Prototyping"]
-  },
-  { 
-    cat: 'qual',
-    q: "What is your quality assurance (QA) protocol?", 
+  { cat: 'prod', q: "How are Paperware products printed?",
+    a: "We print with multi-colour offset and flexo printing, using soy-based inks, so your brand colours and artwork carry through on the finished packaging.",
+    tags: ["Printing"] },
+  { cat: 'prod', q: "What do you make in the factory?",
+    a: "Paperware Factory makes custom-printed paper cups and paper packaging in Bangladesh. Printing, cutting and cup forming are done in our own factory.",
+    tags: ["Factory"] },
+  { cat: 'prod', q: "What is your quality assurance (QA) protocol?",
     a: "We implement a 5-tier QA check: Raw material inspection, In-line production monitoring, Automated leak testing, Random batch sampling, and Pre-shipment final audit.",
-    tags: ["Quality", "Audit"]
-  },
-  { 
-    cat: 'sust',
-    q: "How do you handle production waste?", 
+    tags: ["Quality", "Audit"] },
+  { cat: 'prod', q: "How do you handle production waste?",
     a: "Paper offcuts from production are collected for recycling.",
-    tags: ["Recycling", "Sustainability"]
-  }
+    tags: ["Recycling", "Sustainability"] },
+  { cat: 'products', q: "Which products do you offer?",
+    a: "Our range includes paper cups, takeaway food boxes, pizza boxes, chowmein and noodle boxes, cookie boxes, gift bags, tissue boxes and kraft carry bags. Browse the Products page or ask us if you need something else.",
+    tags: ["Range"] },
+  { cat: 'products', q: "Are your materials food-safe and eco-friendly?",
+    a: "We use food-grade paper stock and soy-based inks. Ask us for the documentation your market requires.",
+    tags: ["Food Safe"] },
+  { cat: 'products', q: "What are your cups lined with?",
+    a: "Our cups use PE or biodegradable PLA lining with water-based coatings for liquid resistance. Tell us which option you need when you ask for a quote.",
+    tags: ["Materials"] },
+  { cat: 'products', q: "Can I get kraft or recycled-paper packaging?",
+    a: "Yes. Kraft packaging, including recycled kraft, is part of our range. Ask us which products are available in kraft.",
+    tags: ["Kraft"] },
+  { cat: 'orders', q: "How do I request a quote?",
+    a: "Use the Quote page or contact us with the product, quantity and artwork you have. We will reply with the details for your order.",
+    tags: ["Quote"] },
+  { cat: 'orders', q: "What is the Minimum Order Quantity (MOQ)?",
+    a: "Minimum order quantities depend on the product and print. Tell us your volume and we will confirm the MOQ for your order.",
+    tags: ["Bulk", "Customization"] },
+  { cat: 'orders', q: "How long will my order take?",
+    a: "Lead time depends on the product, quantity and print. We confirm the schedule with you when we confirm your order.",
+    tags: ["Lead time"] },
+  { cat: 'orders', q: "Can we request a physical prototype before mass production?",
+    a: "Our studio team prepares digital previews of your design, and physical samples can be sent by courier after design approval.",
+    tags: ["Studio", "Prototyping"] },
+  { cat: 'orders', q: "Can I track my order?",
+    a: "Yes. Use the Tracking page to follow your shipment, or contact us and we will update you.",
+    tags: ["Tracking"] },
+  { cat: 'biz', q: "Do you offer international supply chain support?",
+    a: "Yes. We ship from Chittagong Port and can arrange FOB or door-to-door delivery. Ask us for a quote for your destination.",
+    tags: ["Export", "Global"] },
+  { cat: 'biz', q: "Can you print my own brand on the packaging?",
+    a: "Yes. We make custom-printed packaging. Send us your logo or artwork and our studio team will prepare a preview for approval.",
+    tags: ["Branding"] },
+  { cat: 'biz', q: "How do I become a partner or reseller?",
+    a: "Contact us with details about your business and the markets you serve. See the Partner Program page for how we work with partners.",
+    tags: ["Partners"] },
 ];
 
 export function FAQPage() {
@@ -65,7 +78,7 @@ export function FAQPage() {
   // State for interactivity
   const [activeCat, setActiveCat] = React.useState("all");
   const [search, setSearch] = React.useState("");
-  const [activeIdx, setActiveIdx] = React.useState<number | null>(null);
+  const [activeKey, setActiveKey] = React.useState<string | null>(null);
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   // Spring animations for cursor
@@ -312,36 +325,41 @@ export function FAQPage() {
                       translateZ: 20,
                     }}
                     style={{ transformStyle: "preserve-3d", willChange: "transform" }}
-                    className={`bg-white rounded-[40px] border-2 transition-all overflow-hidden ${activeIdx === i ? 'border-[#fabf37] shadow-2xl shadow-[#fabf37]/10' : 'border-black/5 hover:border-black/20'}`}
+                    className={`bg-white rounded-[40px] border-2 transition-all overflow-hidden ${activeKey === faq.q ? 'border-[#fabf37] shadow-2xl shadow-[#fabf37]/10' : 'border-black/5 hover:border-black/20'}`}
                   >
                     <button 
                       type="button"
-                      aria-expanded={activeIdx === i}
-                      onClick={() => setActiveIdx(activeIdx === i ? null : i)}
-                      className="w-full p-8 lg:p-10 flex items-start justify-between text-left group"
+                      aria-expanded={activeKey === faq.q}
+                      aria-controls={`faq-panel-${i}`}
+                      id={`faq-btn-${i}`}
+                      onClick={() => setActiveKey(activeKey === faq.q ? null : faq.q)}
+                      className="w-full p-6 sm:p-8 lg:p-10 flex items-start justify-between gap-4 text-left group"
                     >
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3">
+                      <span className="block space-y-4 min-w-0">
+                        <span className="flex flex-wrap items-center gap-3">
                            {faq.tags.map(tag => (
                              <span key={tag} className="text-[8px] font-black uppercase tracking-widest px-2 py-1 bg-zinc-100 rounded text-zinc-400">#{t(tag)}</span>
                            ))}
-                        </div>
-                        <h3 className="text-xl lg:text-2xl font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{t(faq.q)}</h3>
-                      </div>
-                      <div className={`size-12 rounded-2xl flex items-center justify-center shrink-0 transition-all ${activeIdx === i ? 'bg-black text-[#fabf37] rotate-180' : 'bg-zinc-100 text-black group-hover:bg-[#fabf37]'}`}>
-                        {activeIdx === i ? <Minus className="size-6" /> : <Plus className="size-6" />}
+                        </span>
+                        <span className="block text-xl lg:text-2xl font-black uppercase tracking-tight text-black group-hover:text-[#fabf37] transition-colors">{t(faq.q)}</span>
+                      </span>
+                      <div className={`size-12 rounded-2xl flex items-center justify-center shrink-0 transition-all ${activeKey === faq.q ? 'bg-black text-[#fabf37] rotate-180' : 'bg-zinc-100 text-black group-hover:bg-[#fabf37]'}`}>
+                        {activeKey === faq.q ? <Minus className="size-6" /> : <Plus className="size-6" />}
                       </div>
                     </button>
                     
                     <AnimatePresence>
-                      {activeIdx === i && (
+                      {activeKey === faq.q && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           className="overflow-hidden"
+                          id={`faq-panel-${i}`}
+                          role="region"
+                          aria-labelledby={`faq-btn-${i}`}
                         >
-                          <div className="px-10 pb-10">
+                          <div className="px-6 sm:px-10 pb-8 sm:pb-10">
                             <div className="h-[2px] w-12 bg-[#fabf37] mb-8" />
                             <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-3xl">
                               {t(faq.a)}

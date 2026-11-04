@@ -1,26 +1,28 @@
 @keyframes pwf-marquee {
-  to { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 .pwf-marquee-viewport { overflow: hidden; width: 100%; }
 .pwf-marquee-track {
   display: flex;
   width: max-content;
   animation: pwf-marquee var(--pwf-marquee-dur, 30s) linear infinite;
-  will-change: transform;
+  backface-visibility: hidden;
 }
 .pwf-marquee-reverse { animation-direction: reverse; }
 /* Pause only while the pointer is over the strip. No focus-within: an embedded
    Facebook iframe takes focus on load and would freeze the strip for good. */
+/* Pause on pointer hover or keyboard focus on a post link (:has on the link only: embedded
+   iframes take focus on load and would freeze the strip for good). */
 .pwf-marquee-viewport:hover .pwf-marquee-track,
+.pwf-marquee-viewport:has(a:focus-visible) .pwf-marquee-track,
 .pwf-marquee-paused .pwf-marquee-track {
   animation-play-state: paused;
 }
-/* Owner wants auto-scroll kept under reduced motion: just slow it down. */
+/* Reduced motion: no auto-scroll. The row is a normal horizontally scrollable strip; the
+   duplicate copy is hidden so posts are not repeated. */
 @media (prefers-reduced-motion: reduce) {
-  /* !important: the global reduced-motion reset in styles/index.css sets every animation to 0.01ms. */
-  .pwf-marquee-track {
-    animation-duration: calc(var(--pwf-marquee-dur, 30s) * 2) !important;
-    /* The same reset forces iteration-count 1: without this the strip scrolls one lap and stops. */
-    animation-iteration-count: infinite !important;
-  }
+  .pwf-marquee-viewport { overflow-x: auto; overscroll-behavior-x: contain; }
+  .pwf-marquee-track { animation: none !important; transform: none; width: max-content; }
+  .pwf-marquee-track > [aria-hidden="true"] { display: none; }
 }

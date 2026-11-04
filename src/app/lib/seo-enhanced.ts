@@ -47,7 +47,7 @@ export const pageSEOConfig: Record<string, PageSEO> = {
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+880-XXX-XXXXXX',
+        telephone: '+8801901459110',
         contactType: 'customer service',
         areaServed: ['BD', 'US', 'EU', 'ME'],
         availableLanguage: ['en', 'bn', 'ar']

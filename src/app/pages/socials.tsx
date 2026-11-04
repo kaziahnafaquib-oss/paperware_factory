@@ -1,7 +1,7 @@
 import image_8788d2f066ca9921baf05e502ac560c2c717da5a from 'figma:asset/8788d2f066ca9921baf05e502ac560c2c717da5a.webp';
 import React from "react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
-import { Facebook, Instagram, Linkedin, Globe, ArrowRight, Music2, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
+import { Globe, ArrowRight, Share2, Smartphone, QrCode, Factory, Zap, TrendingUp, Users, Sparkles, Map, Activity, MessageSquareQuote, Radio } from "lucide-react";
 import mainLogo from "figma:asset/195a383e60328bb286c8bb694dbc23dfe8f65ab6.webp";
 import { useLanguage } from "../context/LanguageContext";
 import imgTakeaway from "@/assets/products/takeaway-food-box.webp";
@@ -9,21 +9,23 @@ import imgGiftBags from "@/assets/products/gift-bags.webp";
 import imgCookie from "@/assets/products/cookie-boxes.webp";
 import imgTissue from "@/assets/products/tissue-boxes.webp";
 import { LiveSocialFeeds } from "../components/paperware/live-social-feeds";
+import { SocialStrip } from "../components/paperware/social-strip";
+import { BrandBadge, type BrandKey } from "../components/paperware/brand-icons";
+import imgChowmein from "@/assets/products/chowmein-boxes.webp";
 
 // Real profile cards: product photo + link to the real profile only. No posts are shown.
-const ProfileCard = React.memo(({ link, img }: { link: { url: string; handle: string; icon: any }; img: string }) => (
+const ProfileCard = React.memo(({ link, img }: { link: { url: string; handle: string; brand?: BrandKey; label?: string }; img: string }) => (
   <motion.a
     href={link.url}
     target="_blank"
     rel="noopener noreferrer"
+    aria-label={`${link.label} - ${link.handle}`}
     whileHover={{ y: -8 }}
     className="group block bg-white border border-black/5 rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-shadow"
   >
     <div className="aspect-[4/3] relative overflow-hidden bg-zinc-100">
       <img loading="lazy" src={img} alt="" className="size-full object-cover group-hover:scale-105 transition-transform duration-700" />
-      <div className="absolute top-4 left-4 p-2 bg-black/80 rounded-xl border border-white/10">
-        <link.icon className="size-4 text-[#fabf37]" />
-      </div>
+      <BrandBadge brand={link.brand!} className="absolute top-4 left-4 size-10 rounded-xl ring-2 ring-white/80 shadow-lg" iconClass="size-5" />
     </div>
     <div className="p-6 flex items-center justify-between gap-3 bg-[#fabf37]">
       <p className="text-xs font-black uppercase tracking-tight text-black truncate">{link.handle}</p>
@@ -84,35 +86,48 @@ export function SocialsPage() {
       name: "Paperware Factory",
       handle: "facebook.com/paperwarefactory",
       url: "https://www.facebook.com/paperwarefactory",
-      icon: Facebook,
+      brand: "facebook" as BrandKey,
+      label: "Facebook",
       color: "hover:bg-[#1877F2]/10"
     },
     {
       name: "Paperware Factory",
       handle: "instagram.com/paperware_factory",
       url: "https://www.instagram.com/paperware_factory/",
-      icon: Instagram,
+      brand: "instagram" as BrandKey,
+      label: "Instagram",
       color: "hover:bg-[#E4405F]/10"
     },
     {
       name: "Paperware Factory",
       handle: "linkedin.com/company/paperwarefactory",
-      url: "https://www.linkedin.com/company/paperwarefactory/?viewAsMember=true",
-      icon: Linkedin,
+      url: "https://www.linkedin.com/company/paperwarefactory/",
+      brand: "linkedin" as BrandKey,
+      label: "LinkedIn",
       color: "hover:bg-[#0A66C2]/10"
     },
     {
       name: "Paperware Factory",
       handle: "tiktok.com/@paperwarefactory",
       url: "https://www.tiktok.com/@paperwarefactory",
-      icon: Music2,
+      brand: "tiktok" as BrandKey,
+      label: "TikTok",
       color: "hover:bg-black/5"
+    },
+    {
+      name: "Paperware Factory",
+      handle: "youtube.com/@PaperwareFactory",
+      url: "https://www.youtube.com/@PaperwareFactory",
+      brand: "youtube" as BrandKey,
+      label: "YouTube",
+      color: "hover:bg-[#FF0000]/10"
     },
     {
       name: "Paperware Factory",
       handle: "www.paperwarefactory.com",
       url: "https://www.paperwarefactory.com",
-      icon: Globe,
+      brand: undefined as BrandKey | undefined,
+      label: "Website",
       color: "hover:bg-[#fabf37]/10"
     }
   ];
@@ -308,11 +323,11 @@ export function SocialsPage() {
                               whileHover={{ y: -4, scale: 1.02, backgroundColor: "#fdf2d7" }}
                               className="flex items-center gap-4 p-5 bg-white border border-zinc-100 rounded-[24px] shadow-sm hover:shadow-md hover:border-[#fabf37]/30 transition-all group"
                             >
-                              <div className="size-12 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-400 group-hover:bg-[#fabf37] group-hover:text-black transition-colors">
-                                <link.icon className="size-6" />
+                              <div className="size-12 rounded-2xl bg-zinc-50 flex items-center justify-center text-zinc-400 shrink-0">
+                                {link.brand ? <BrandBadge brand={link.brand} className="size-12 rounded-2xl" /> : <Globe className="size-6" aria-hidden="true" />}
                               </div>
                               <div className="flex-1 text-left">
-                                <p className="text-[11px] font-black uppercase tracking-tight text-zinc-800 leading-none mb-1">{t(link.name)}</p>
+                                <p className="text-[11px] font-black uppercase tracking-tight text-zinc-800 leading-none mb-1">{t(link.label)}</p>
                                 <p className="text-[9px] font-bold text-zinc-400 truncate">{t(link.handle)}</p>
                               </div>
                               <ArrowRight className="size-4 text-zinc-200 group-hover:text-black transition-colors" />
@@ -334,13 +349,14 @@ export function SocialsPage() {
 
             </motion.div>
 
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-              {[imgTakeaway, imgGiftBags, imgCookie, imgTissue].map((img, i) => (
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-24">
+              {[imgTakeaway, imgGiftBags, imgCookie, imgTissue, imgChowmein].map((img, i) => (
                 <ProfileCard key={i} link={socialLinks[i]} img={img} />
               ))}
             </div>
 
             <LiveSocialFeeds />
+            <div className="w-full -mx-4"><SocialStrip postsOnly /></div>
 
           </div>
         </div>

@@ -175,7 +175,7 @@ export function AboutPage({ aboutUsVideos = {} }: AboutPageProps) {
         const s = 1.08 - 0.08 * easeOut3(p);
         bg.style.transform = `scale(${s.toFixed(4)})`;
         // Owner (2 Nov 2026): footage stays at full strength; only fade once the hero scrolls away.
-        bg.style.opacity = (1 - 0.6 * p).toFixed(3);
+        bg.style.opacity = "1"; // no fade to the white page: clean video edge
       }
       const lines = heroHeadRef.current?.querySelectorAll<HTMLElement>("[data-hero-line]");
       lines?.forEach((el, i) => {

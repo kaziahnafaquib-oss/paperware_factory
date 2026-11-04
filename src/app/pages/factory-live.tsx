@@ -7,7 +7,8 @@ import imgFloorCupMachines from "../../assets/factory/floor-cup-machines.webp";
 import imgQcCupInspection from "../../assets/factory/qc-cup-inspection.webp";
 import imgCupsStacking from "../../assets/factory/cups-stacking.webp";
 import imgOperatorForming from "../../assets/factory/operator-forming-line.webp";
-import imgFloorPlan from "../../assets/factory/floor-plan.webp"; // owner: ~/Downloads/PWF FLOOR PLAN.jpg
+import imgFloorPlanGround from "../../assets/factory/floor-plan-ground.webp"; // owner 4 Nov 2026
+import imgFloorPlanSecond from "../../assets/factory/floor-plan-second.webp"; // owner 4 Nov 2026
 
 const TOUR_VIDEO = `${import.meta.env.BASE_URL}media/factory-tour.mp4`;
 
@@ -184,20 +185,21 @@ export function FactoryLivePage() {
               Forming, printing, cutting, lamination, warehouse and offices under one roof.
             </p>
           </div>
-          <div className="[perspective:1600px] group">
-            <div className="relative rounded-[32px] md:rounded-[48px] overflow-hidden border border-white/10 bg-zinc-900 shadow-[0_60px_120px_-40px_rgba(0,0,0,0.9)] transition-transform duration-700 ease-out [transform-style:preserve-3d] [transform:rotateX(14deg)_rotateZ(-1.5deg)] group-hover:[transform:rotateX(0deg)_rotateZ(0deg)] motion-reduce:[transform:none]">
-              <img
-                src={imgFloorPlan}
-                alt="Paperware Factory floor plan: forming machines F1-F6, printing P1-P2, cutting C1-C3, lamination L1, UV U1, bulling B1, warehouse, finished goods, lab, offices"
-                loading="lazy"
-                decoding="async"
-                className="w-full h-auto block"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80 group-hover:opacity-0 transition-opacity duration-700" />
-              <div className="absolute top-5 left-5 md:top-8 md:left-8 px-4 py-2 bg-black/70 backdrop-blur-xl border border-white/10 rounded-full">
-                <span className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">Factory floor plan</span>
+          <div className="space-y-10 md:space-y-16">
+            {[
+              { src: imgFloorPlanGround, label: "Factory floor plan", alt: "Paperware Factory ground floor plan: distributor warehouse, paper stock, cartons, finished goods, forming machines F1-F4, printing P1-P2, cutting C1, packing P3, lab, production and accounts, offices, canteen, staff quarter" },
+              { src: imgFloorPlanSecond, label: "2nd floor plan", alt: "Paperware Factory 2nd floor plan: buffer stock, inspection area, manual packaging, canteen, accounts and sales, sales and costing, production management and design, quality control lab, conference and board room, prayer hall, manager and director rooms" },
+            ].map((plan) => (
+              <div key={plan.label} className="[perspective:1600px] group">
+                <div className="relative rounded-[32px] md:rounded-[48px] overflow-hidden border border-white/10 bg-zinc-900 shadow-[0_60px_120px_-40px_rgba(0,0,0,0.9)] transition-transform duration-700 ease-out [transform-style:preserve-3d] [transform:rotateX(14deg)_rotateZ(-1.5deg)] group-hover:[transform:rotateX(0deg)_rotateZ(0deg)] motion-reduce:[transform:none]">
+                  <img src={plan.src} alt={plan.alt} loading="lazy" decoding="async" className="w-full h-auto block" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-80 group-hover:opacity-0 transition-opacity duration-700" />
+                  <div className="absolute top-5 left-5 md:top-8 md:left-8 px-4 py-2 bg-black/70 backdrop-blur-xl border border-white/10 rounded-full">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[#fabf37]">{plan.label}</span>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
       </div>

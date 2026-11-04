@@ -152,6 +152,7 @@ const MarketingMaterialsPage = React.lazy(() => import("./pages/marketing-materi
 const PharmaSuppliesPage = React.lazy(() => import("./pages/pharma-supplies").then(module => ({ default: module.PharmaSuppliesPage })));
 const FMCGSuppliesPage = React.lazy(() => import("./pages/fmcg-garments").then(module => ({ default: module.FMCGSuppliesPage })));
 const GarmentSuppliesPage = React.lazy(() => import("./pages/garments").then(module => ({ default: module.GarmentSuppliesPage })));
+const MaterialLab = React.lazy(() => import("./components/paperware/material-lab").then(m => ({ default: m.MaterialLab })));
 const SustainabilityPage = React.lazy(() => import("./pages/sustainability").then(module => ({ default: module.SustainabilityPage })));
 const ContactPage = React.lazy(() => import("./pages/contact").then(module => ({ default: module.ContactPage })));
 const QuoteRequestPage = React.lazy(() => import("./pages/quote-request").then(module => ({ default: module.QuoteRequestPage })));
@@ -648,6 +649,7 @@ export function MainContent() {
       case "fmcg-supplies": return <FMCGSuppliesPage onProductClick={handleProductClick} />;
       case "garments": return <GarmentSuppliesPage onProductClick={handleProductClick} />;
       case "sustainability": return <SustainabilityPage />;
+      case "materials": return <MaterialLab as="h1" onPageChange={handlePageChange} />;
       case "solutions": return <SolutionsPage />;
       case "contact": return <ContactPage onFeedbackClick={() => handlePageChange("product-feedback")} />;
       case "more": return <MorePage onPageChange={handlePageChange} />;

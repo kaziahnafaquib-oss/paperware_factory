@@ -1,0 +1,21 @@
+// New EN strings for the home page and gallery. Other languages fall back to EN until translated.
+export const EXTRA: Record<string, { EN: string }> = {
+  "home_bottom_cta_line1": { EN: "Send your artwork." },
+  "home_bottom_cta_line2": { EN: "We print it." },
+  "gallery_cookie_boxes": { EN: "Cookie Boxes" },
+  "gallery_confectionery_boxes": { EN: "Confectionery Boxes" },
+  "gallery_tissue_boxes": { EN: "Printed Tissue Boxes" },
+  "gallery_desk_calendars": { EN: "Desk Calendars" },
+  "gallery_brochures": { EN: "Brochures" },
+  "gallery_magazines": { EN: "Magazines" },
+  "gallery_stickers": { EN: "Stickers and Labels" },
+  "gallery_purple_gift_bags": { EN: "Purple Gift Bags" },
+  "gallery_flyers": { EN: "Flyers" },
+  "gallery_prescription_pads": { EN: "Prescription Pads" },
+  "gallery_cat_bakery": { EN: "Bakery" },
+  "gallery_cat_confectionery": { EN: "Confectionery" },
+  "gallery_cat_hospitality": { EN: "Hospitality" },
+  "gallery_cat_corporate": { EN: "Corporate" },
+  "gallery_cat_print": { EN: "Print" },
+  "gallery_cat_packaging": { EN: "Packaging" },
+};

@@ -123,9 +123,9 @@ export const HomeBottom: React.FC<HomeBottomProps> = ({ onNavigate }) => {
       <section ref={ctaRef} className="hb-cta" aria-labelledby="hb-cta-h" data-testid="home-cta">
         <div className="hb-wrap">
           <h2 id="hb-cta-h" className="hb-display">
-            {t("home_bottom_your_brand")}
+            {t("home_bottom_cta_line1")}
             <br />
-            {t("home_bottom_on_our_paper")}
+            {t("home_bottom_cta_line2")}
           </h2>
           <div className="hb-cta-row">
             <p className="hb-sub">{t("home_bottom_from_a_single_cup_design")}</p>

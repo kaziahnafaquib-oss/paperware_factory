@@ -2802,7 +2802,12 @@ export const SITE_I18N: Record<string, Row> = {
 import { EXTRA as EXTRA_EXPORT } from "./extra-export";
 import { EXTRA as EXTRA_FORMS } from "./extra-forms";
 import { EXTRA as EXTRA_SUSTAIN } from "./extra-sustain";
-Object.assign(SITE_I18N, EXTRA_EXPORT, EXTRA_FORMS, EXTRA_SUSTAIN);
+import { EXTRA as EXTRA_MATERIALLAB } from "./extra-materiallab";
+import { EXTRA as EXTRA_HOME } from "./extra-home";
+import { EXTRA as EXTRA_CHAT } from "./extra-chat";
+import { EXTRA as EXTRA_COMPANY } from "./extra-company";
+import { EXTRA as EXTRA_SOCIAL } from "./extra-social";
+Object.assign(SITE_I18N, EXTRA_EXPORT, EXTRA_FORMS, EXTRA_SUSTAIN, EXTRA_MATERIALLAB, EXTRA_COMPANY, EXTRA_CHAT, EXTRA_SOCIAL);
 
 // Existing keys that were still English (or truncated) in the older language objects.
 export const EXISTING_FILL: Record<string, Partial<Record<"BN" | "AR" | "TR" | "ES" | "FR" | "DE" | "IT" | "PT" | "RU" | "ZH" | "JA", string>>> = {

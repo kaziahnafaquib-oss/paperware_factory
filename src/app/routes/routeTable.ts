@@ -48,6 +48,7 @@ export const ROUTES: readonly RouteEntry[] = [
   { id: "clients", path: "/clients", title: `Clients | ${SITE}` },
   { id: "partners", path: "/partners", title: `Partners | ${SITE}` },
   { id: "sustainability", path: "/sustainability", title: `Sustainability | ${SITE}`, surface: "dark" },
+  { id: "materials", path: "/materials", title: `Material Lab | ${SITE}`, surface: "dark" },
   { id: "compliance", path: "/compliance", title: `Compliance | ${SITE}` },
   { id: "future-plan", path: "/future-plan", title: `Future Plan | ${SITE}`, surface: "dark" },
   { id: "csr", path: "/csr", title: `CSR | ${SITE}` },

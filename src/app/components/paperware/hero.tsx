@@ -151,14 +151,15 @@ export const Hero = React.memo(function Hero({
             className="pt-6 md:pt-12 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6"
           >
             <motion.a
-              href="https://paperwarefactory.com/wp-content/uploads/2025/10/PAPERWARE-brochure-comp-2024.compressed-compressed-2.pdf"
+              href={`${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2024.pdf`}
+              download="Paperware-Brochure-2024.pdf"
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={() => {
                 // Predictive pre-fetching logic
                 const link = document.createElement('link');
                 link.rel = 'prefetch';
-                link.href = 'https://paperwarefactory.com/wp-content/uploads/2025/10/PAPERWARE-brochure-comp-2024.compressed-compressed-2.pdf';
+                link.href = `${import.meta.env.BASE_URL}downloads/Paperware-Brochure-2024.pdf`;
                 document.head.appendChild(link);
               }}
               whileHover={{

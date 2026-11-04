@@ -6,6 +6,16 @@ import imgGiftBags from "../../assets/products/gift-bags.webp";
 import imgChowmein from "../../assets/products/chowmein-boxes.webp";
 import imgCarryBag from "../../assets/products/carry-bag-pink.webp";
 import imgMedicine from "../../assets/products/medicine-boxes.webp";
+import imgCookie from "../../assets/products/cookie-boxes.webp";
+import imgConf from "../../assets/products/confectionery-boxes.webp";
+import imgTissue from "../../assets/products/tissue-box-rose.webp";
+import imgCalendar from "../../assets/products/desk-calendars.webp";
+import imgBrochure from "../../assets/products/brochures.webp";
+import imgMagazine from "../../assets/products/magazines.webp";
+import imgStickers from "../../assets/products/stickers.webp";
+import imgPurpleBag from "../../assets/products/gift-bag-purple.webp";
+import imgFlyers from "../../assets/products/flyers.webp";
+import imgRx from "../../assets/products/prescription-pad.webp";
 import { useScrollScrub, clamp01, easeOut3 } from "../lib/useScrollScrub";
 import { FactoryClip, mediaUrl } from "../components/paperware/factory-clip";
 import posterCups from "../../assets/video-posters/gallery-printed-cups.webp";
@@ -24,6 +34,16 @@ const galleryImages: GalleryItem[] = [
   { url: posterPress, video: mediaUrl("manufacturing-press.mp4"), poster: posterPress, title: "Offset Printing Unit", client: "In the Factory" },
   { url: imgMedicine, title: "Medicine Boxes", client: "Pharma" },
   { url: yCupStack, title: "Ripple Cups", client: "Hot Drinks" },
+  { url: imgCookie, title: "gallery_cookie_boxes", client: "gallery_cat_bakery" },
+  { url: imgConf, title: "gallery_confectionery_boxes", client: "gallery_cat_confectionery" },
+  { url: imgTissue, title: "gallery_tissue_boxes", client: "gallery_cat_hospitality" },
+  { url: imgCalendar, title: "gallery_desk_calendars", client: "gallery_cat_corporate" },
+  { url: imgBrochure, title: "gallery_brochures", client: "gallery_cat_print" },
+  { url: imgMagazine, title: "gallery_magazines", client: "gallery_cat_print" },
+  { url: imgStickers, title: "gallery_stickers", client: "gallery_cat_packaging" },
+  { url: imgPurpleBag, title: "gallery_purple_gift_bags", client: "Retail" },
+  { url: imgFlyers, title: "gallery_flyers", client: "gallery_cat_print" },
+  { url: imgRx, title: "gallery_prescription_pads", client: "Pharma" },
 ];
 
 export function GalleryPage() {

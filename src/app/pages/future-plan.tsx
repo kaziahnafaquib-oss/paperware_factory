@@ -16,7 +16,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
 
   const roadmap = [
     { year: "2025", title: "Smart Factory 1.0", desc: "Full ERPNext integration across all production lines." },
-    { year: "2026", title: "Carbon Neutrality Phase 1", desc: "Solar power for the Dhaka factory site." },
+    { year: "2026", title: "future_plan_2026_title", desc: "future_plan_2026_desc" },
     { year: "2027", title: "Predictive Maintenance", desc: "Sensor-based maintenance to reduce downtime." },
     { year: "2028", title: "Global Fulfillment Hubs", desc: "Localized distribution centers in Europe and GCC." },
     { year: "2030", title: "Zero-Waste Manufacturing", desc: "Circular economy model for all paper-based products." },
@@ -32,7 +32,7 @@ export function FuturePlanPage({ onPageChange }: { onPageChange?: (page: string)
     { 
       icon: <Leaf className="size-8" />, 
       title: "Sustainability", 
-      desc: "Moving toward solar power and plastic-free packaging.",
+      desc: "future_plan_sustain_desc",
       stat: "Net Zero Ready"
     },
     { 

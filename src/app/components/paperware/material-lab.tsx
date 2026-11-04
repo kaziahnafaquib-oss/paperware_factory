@@ -1,212 +1,112 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Beaker, Droplets, Wind, ShieldCheck, Box, Fingerprint, Layers, Cpu } from "lucide-react";
-import yProductBoxes from "figma:asset/55b419d02b7ddadaade19007eb86f22b10b4285a.webp";
-import imgQcLeakTest from "../../../assets/factory/qc-leak-test.webp";
-import imgKraftBag from "../../../assets/cutouts/carry-bag-kraft.webp";
-import { useScrollScrub, clamp01, easeOut3 } from "../../lib/useScrollScrub";
+import React from "react";
+import { ArrowRight, Flame, Leaf, ShieldCheck, Layers } from "lucide-react";
+import imgSingle from "../../../assets/cutouts/cup.webp";
+import imgRipple from "../../../assets/cutouts/cup-ripple-orange.webp";
+import imgDouble from "../../../assets/cutouts/cup-wave-yellow.webp";
 import { useLanguage } from "../../context/LanguageContext";
 
-export const MaterialLab = React.memo(function MaterialLab() {
+type Props = { as?: "h1" | "h2"; onPageChange?: (page: string) => void };
+
+const SPECS = ["liquid", "outer", "use", "print"] as const;
+
+const WALLS = [
+  { id: "single", img: imgSingle, featured: false },
+  { id: "ripple", img: imgRipple, featured: true },
+  { id: "double", img: imgDouble, featured: false },
+] as const;
+
+const COATINGS = [
+  { id: "pe_pla", Icon: Layers },
+  { id: "aqueous", Icon: ShieldCheck },
+  { id: "pla", Icon: Leaf },
+] as const;
+
+export const MaterialLab = React.memo(function MaterialLab({ as = "h2", onPageChange }: Props) {
   const { t } = useLanguage();
-  const [activeMaterial, setActiveMaterial] = useState(0);
-
-  const materials = [
-    {
-      id: 0,
-      name: "Coated Kraft V1",
-      texture: "Smooth / Matte",
-      grade: "Premium 300GSM",
-      properties: {
-        liquidResistant: 95,
-        stiffness: 88,
-        printClarity: 100,
-        ecoRating: 92
-      },
-      description: "Optimized for high-end retail packaging with a specialized clay coating for vibrant color reproduction.",
-      image: yProductBoxes
-    },
-    {
-      id: 1,
-      name: "Bio-Shield Barrier",
-      texture: "Satin / Protective",
-      grade: "Industrial 240GSM",
-      properties: {
-        liquidResistant: 100,
-        stiffness: 72,
-        printClarity: 85,
-        ecoRating: 100
-      },
-      description: "100% plastic-free aqueous barrier coating that provides superior moisture protection without compromising recyclability.",
-      image: imgQcLeakTest
-    },
-    {
-      id: 2,
-      name: "Unbleached Nordic",
-      texture: "Rough / Natural",
-      grade: "Eco-Grade 280GSM",
-      properties: {
-        liquidResistant: 60,
-        stiffness: 94,
-        printClarity: 70,
-        ecoRating: 100
-      },
-      description: "Raw, unbleached long-fiber pulp from sustainable Nordic forests. Extreme structural integrity for heavy industrial use.",
-      image: imgKraftBag
-    }
-  ];
-
-  const visualRef = React.useRef<HTMLDivElement>(null);
-  const listRef = React.useRef<HTMLDivElement>(null);
-
-  // Scroll-scrubbed: the scan panel rises and settles; the material list follows with a short lag.
-  useScrollScrub(() => {
-    const h = window.innerHeight || 1;
-    const vis = visualRef.current;
-    if (vis) {
-      const r = vis.getBoundingClientRect();
-      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)));
-      vis.style.transform = `translate3d(0,${((1 - u) * 72).toFixed(1)}px,0) scale(${(0.96 + 0.04 * u).toFixed(4)})`;
-      vis.style.opacity = (0.2 + 0.8 * u).toFixed(3);
-    }
-    const list = listRef.current;
-    if (list) {
-      const r = list.getBoundingClientRect();
-      const u = easeOut3(clamp01((h - r.top) / (h * 0.7)) - 0.1);
-      list.style.transform = `translate3d(0,${((1 - u) * 56).toFixed(1)}px,0)`;
-      list.style.opacity = (0.2 + 0.8 * u).toFixed(3);
-    }
-  });
+  const H = as;
 
   return (
-    <section className="py-24 bg-[#0a0a0a] text-white overflow-x-clip border-y border-white/5 relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(250,191,55,0.05)_0%,_transparent_50%)]" />
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row gap-20 items-center">
-          
-          {/* Left: Material Visualization */}
-          <div ref={visualRef} className="w-full lg:w-1/2 relative group will-change-transform">
-             <div className="absolute -inset-10 bg-[#fabf37]/20 blur-[120px] rounded-full opacity-60" />
-             
-             <div className="relative aspect-square md:aspect-video rounded-[40px] md:rounded-[60px] overflow-hidden border border-white/10 bg-zinc-900/80 shadow-2xl backdrop-blur-3xl">
-                <AnimatePresence mode="wait">
-                  <motion.img loading="lazy" decoding="async" 
-                    key={activeMaterial}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.7 }}
-                    src={materials[activeMaterial].image}
-                    alt={t(materials[activeMaterial].name)}
-                    className="size-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-60 transition-all duration-700"
-                  />
-                </AnimatePresence>
+    <section aria-labelledby="ml-title" className="relative overflow-x-clip bg-[#0a0a0a] pb-20 pt-36 text-white md:pb-28 md:pt-44">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(250,191,55,0.08)_0%,transparent_55%)]" />
+      <div className="container relative z-10 mx-auto px-4">
+        <header className="max-w-3xl">
+          <p className="mb-5 flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#fabf37]">
+            <span className="h-px w-12 bg-[#fabf37]" aria-hidden="true" />
+            {t("ml_eyebrow")}
+          </p>
+          <H id="ml-title" className="text-4xl font-black uppercase leading-[0.95] tracking-tighter md:text-7xl">
+            {t("ml_title_a")} <span className="text-[#fabf37]">{t("ml_title_b")}</span>
+          </H>
+          <p className="mt-6 max-w-xl text-lg font-bold leading-relaxed text-zinc-300">{t("ml_intro")}</p>
+        </header>
 
-                {/* HUD Elements */}
-                <div className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between overflow-hidden">
-                   <div className="flex justify-between items-start">
-                      <div className="space-y-1">
-                         <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#fabf37]">{t("material_lab_microscopic_scan_v4_2")}</p>
-                         <h3 className="text-xl md:text-3xl font-black uppercase tracking-tight italic">{t(materials[activeMaterial].name)}</h3>
-                      </div>
-                      <div className="size-10 md:size-12 rounded-xl bg-[#fabf37] flex items-center justify-center text-black">
-                         <Fingerprint className="size-5 md:size-6" />
-                      </div>
-                   </div>
-
-                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                      {Object.entries(materials[activeMaterial].properties).map(([key, val], idx) => (
-                        <div key={idx} className="bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl md:rounded-2xl p-3 md:p-4 space-y-1 md:space-y-2">
-                           <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-zinc-300 line-clamp-1">{key.replace(/([A-Z])/g, ' $1')}</p>
-                           <p className="text-sm md:text-lg font-black text-[#fabf37]">{val}%</p>
-                           <div className="h-0.5 md:h-1 bg-white/10 rounded-full overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${val}%` }}
-                                className="h-full bg-[#fabf37]"
-                              />
-                           </div>
-                        </div>
-                      ))}
-                   </div>
-                </div>
-             </div>
-
-             {/* Material Selection Tabs */}
-             <div className="mt-8 flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                {materials.map((m, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveMaterial(i)}
-                    className={`shrink-0 px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] border-2 transition-all ${
-                      activeMaterial === i 
-                        ? "bg-[#fabf37] border-[#fabf37] text-black" 
-                        : "bg-transparent border-white/10 text-white hover:border-white/30"
-                    }`}
-                  >
-                    {t(m.name)}
-                  </button>
+        <h2 className="sr-only">{t("ml_walls_title")}</h2>
+        <ul className="mt-12 grid grid-cols-1 gap-6 md:mt-16 lg:grid-cols-3">
+          {WALLS.map((w) => (
+            <li
+              key={w.id}
+              className={`relative flex flex-col rounded-[32px] border p-6 md:p-8 ${
+                w.featured ? "border-[#fabf37] bg-[#fabf37] text-black" : "border-white/10 bg-zinc-900/70 text-white"
+              }`}
+            >
+              {w.featured && (
+                <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-black px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#fabf37]">
+                  <Flame className="size-3" aria-hidden="true" />
+                  {t("ml_recommended")}
+                </span>
+              )}
+              <div className="flex h-44 items-center justify-center md:h-52">
+                <img src={w.img} alt="" loading="lazy" decoding="async" className="h-full w-auto object-contain" />
+              </div>
+              <h3 className="mt-4 text-2xl font-black uppercase tracking-tight md:text-3xl">{t(`ml_${w.id}_name`)}</h3>
+              <dl className={`mt-6 divide-y ${w.featured ? "divide-black/15" : "divide-white/10"}`}>
+                {SPECS.map((s) => (
+                  <div key={s} className="flex items-baseline justify-between gap-4 py-3">
+                    <dt className={`text-[11px] font-black uppercase tracking-widest ${w.featured ? "text-black/75" : "text-zinc-400"}`}>
+                      {t(`ml_spec_${s}`)}
+                    </dt>
+                    <dd className={`text-right text-lg font-black tracking-tight ${w.featured ? "" : "text-white"}`}>
+                      {t(`ml_v_${w.id}_${s}`)}
+                    </dd>
+                  </div>
                 ))}
-             </div>
-          </div>
+              </dl>
+            </li>
+          ))}
+        </ul>
 
-          {/* Right: Technical Specs */}
-          <div ref={listRef} className="w-full lg:w-1/2 space-y-12 will-change-transform">
-             <div className="space-y-6">
-                <div className="flex items-center gap-4 text-[#fabf37] font-black uppercase tracking-[0.4em] text-[10px]">
-                  <div className="h-[1px] w-12 bg-[#fabf37]" />
-                  {t("material_lab_material_intelligence")}
-                </div>
-                <h2 className="text-[32px] md:text-[64px] font-black uppercase tracking-tighter leading-none">
-                  {t("material_lab_engineered")} <br /> <span className="text-zinc-600 italic">{t("material_lab_for_b2b")}</span> <br /> {t("material_lab_scale")}
-                </h2>
-                <p className="text-zinc-500 font-bold text-lg leading-relaxed max-w-xl">
-                  {t(materials[activeMaterial].description)}
-                </p>
-             </div>
-
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="flex gap-6 p-8 bg-zinc-900/80 backdrop-blur-xl rounded-[32px] border border-white/10 hover:border-[#fabf37]/30 transition-all group">
-                   <div className="size-14 rounded-2xl bg-black flex items-center justify-center text-[#fabf37] group-hover:scale-110 transition-transform">
-                      <Layers className="size-8" />
-                   </div>
-                   <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("material_lab_gsm_grade")}</p>
-                      <p className="text-xl font-black uppercase">{t(materials[activeMaterial].grade)}</p>
-                   </div>
-                </div>
-                <div className="flex gap-6 p-8 bg-zinc-900/80 backdrop-blur-xl rounded-[32px] border border-white/10 hover:border-[#fabf37]/30 transition-all group">
-                   <div className="size-14 rounded-2xl bg-black flex items-center justify-center text-[#fabf37] group-hover:scale-110 transition-transform">
-                      <Beaker className="size-8" />
-                   </div>
-                   <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{t("material_lab_texture_profile")}</p>
-                      <p className="text-xl font-black uppercase">{t(materials[activeMaterial].texture)}</p>
-                   </div>
-                </div>
-             </div>
-
-             <div className="bg-[#fabf37] p-8 md:p-12 rounded-[40px] md:rounded-[50px] text-black relative overflow-hidden group">
-                <div className="relative z-10 space-y-6">
-                   <div className="flex items-center gap-3">
-                      <Cpu className="size-6 animate-pulse" />
-                      <span className="text-[10px] font-black uppercase tracking-widest">{t("material_lab_sustainability_audit")}</span>
-                   </div>
-                   <h3 className="text-2xl font-black uppercase tracking-tight leading-none italic">
-                     {t("material_lab_this_material_reduces_carbon_footprint")} {(activeMaterial + 1) * 14}{t("material_lab_compared_to_traditional_plastic_lined")}
-                   </h3>
-                   <button className="bg-black text-white px-8 py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:translate-x-2 transition-transform">
-                      {t("material_lab_request_material_swatch_kit")}
-                   </button>
-                </div>
-                {/* Abstract Pattern */}
-                <div className="absolute -bottom-10 -right-10 opacity-10 group-hover:rotate-12 transition-transform duration-1000">
-                   <Box className="size-64" />
-                </div>
-             </div>
-          </div>
-
+        <div className="mt-20 md:mt-28">
+          <h2 className="text-3xl font-black uppercase tracking-tighter md:text-5xl">{t("ml_coatings_title")}</h2>
+          <p className="mt-4 max-w-xl text-base font-bold text-zinc-300">{t("ml_coatings_intro")}</p>
+          <ul className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {COATINGS.map(({ id, Icon }) => (
+              <li key={id} className="rounded-[28px] border border-white/10 bg-zinc-900/70 p-6 md:p-8">
+                <span className="flex size-12 items-center justify-center rounded-2xl bg-black text-[#fabf37]">
+                  <Icon className="size-6" aria-hidden="true" />
+                </span>
+                <h3 className="mt-5 text-xl font-black uppercase tracking-tight">{t(`ml_${id}_title`)}</h3>
+                <p className="mt-3 text-base font-semibold leading-relaxed text-zinc-300">{t(`ml_${id}_text`)}</p>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        {onPageChange && (
+          <div className="mt-16 flex flex-col items-start justify-between gap-6 rounded-[32px] border border-white/10 bg-zinc-900/70 p-8 md:flex-row md:items-center md:p-10">
+            <div>
+              <h2 className="text-2xl font-black uppercase tracking-tight md:text-3xl">{t("ml_cta_title")}</h2>
+              <p className="mt-2 font-bold text-zinc-300">{t("ml_cta_text")}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onPageChange("contact")}
+              className="inline-flex shrink-0 items-center gap-3 rounded-full bg-[#fabf37] px-8 py-4 text-[11px] font-black uppercase tracking-widest text-black transition-transform hover:translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white motion-reduce:transition-none motion-reduce:hover:translate-x-0"
+            >
+              {t("ml_cta_button")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

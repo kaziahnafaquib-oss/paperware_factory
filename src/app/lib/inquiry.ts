@@ -9,6 +9,7 @@
 
 export const SALES_WHATSAPP_NUMBER = "8801901459110";
 export const SALES_WHATSAPP_DISPLAY = "+880 1901-459110";
+// Main number = SALES_WHATSAPP_* (+8801901459110). The hotline below is the second number.
 export const SALES_PHONE_TEL = "+8809638011101";
 export const SALES_PHONE_DISPLAY = "+880 9638-011101";
 export const SALES_EMAIL = "paperwarefactory@gmail.com";
