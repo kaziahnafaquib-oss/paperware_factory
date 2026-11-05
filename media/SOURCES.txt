@@ -26,3 +26,4 @@ delivery-dispatch.mp4       |  8.0s | CARD 02 C9064.MP4 @ 3-11 (owner shoot, Pap
 quality-lab.mp4             |  8.0s | CARD 03 C9386.MP4 @ 0-8 (owner shoot, caliper check of a cup), 1280x720 muted. Compliance page under leak-test image. Same CSS grade.
 reels/cha-chill.mp4         | 40.1s | facebook.com/reel/2542781386064650 (Paperware Factory page, Cha & Chill cups) — SD progressive rendition via yt-dlp, 4 Nov 2026; hosted locally because Facebook refuses to embed it (licensed audio). Poster src/assets/video-posters/cha-chill.jpg
 social/paperware-cover.jpg | ~/Downloads/PAPERWARE BRANDING 2/cover.png (owner brand cover, 2319x858) resized 1600w, 4 Nov 2026. Social Hub profile cards.
+products/cups/*.jpg | Google Sheet "Products" > "Paper Cup Attributes" cell pictures (owner's branded cup posters), 1471x1839 PNG from the xlsx export, resized 1000px JPEG, 5 Nov 2026 (replaces the 640px copies). Keyed by CupSize.image in src/app/data/paper-cup-sizes.ts
